@@ -189,7 +189,7 @@ async function copyFile(fileId, fileName) {
     try {
       response = await gapi.client.drive.files.update({
         'fileId': newFileId,
-        'resource': { 'name': fileName }
+        'resource': { 'name': fileName, 'capabilities': {'canDownload': true}}
       });
       return newFileId;
       console.log(response);
@@ -199,18 +199,15 @@ async function copyFile(fileId, fileName) {
     }
 }
 
-
 async function getPlaintextFileContents(fileId) {
     console.log("Getting plaintext file contents: " + fileId);
 
     try {
-        const file = await gapi.client.drive.files.get({
+        const response = await gapi.client.drive.files.export({
             fileId: fileId,
-            alt: 'media',
+            mimeType: 'text/plain'
         });
-        console.log(file);
-        console.log(file.status);
-        return file.status;
+        return response.body;
     } catch (err) {
         document.getElementById('content').innerText = err.message;
     throw err;

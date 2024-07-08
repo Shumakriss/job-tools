@@ -20,6 +20,15 @@ function companySpecificName(companyName, templateName) {
 
 let newFileId;
 let newResumeId;
+
+function enableScanButtons() {
+
+    let scanButtons = document.getElementsByClassName("scan-button");
+    for (let i=0; i<scanButtons.length; i++) {
+        scanButtons[i].disabled = false;
+    }
+}
+
 function cloneTemplates() {
     console.log("Handling tailor resume")
     let resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -39,10 +48,8 @@ function cloneTemplates() {
             document.getElementById('tailored-resume-link').innerHTML = newResumeName;
             document.getElementById('tailored-resume-link').href = gDocLinkFromId(newFileId);
             document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
-            let scanButtons = document.getElementsByClassName("scan-button");
-            for (let i=0; i<scanButtons.length; i++) {
-                scanButtons[i].disabled = false;
-            }
+            document.getElementById('clone-button').disabled = true;
+            enableScanButtons();
         })
     });
 
@@ -52,11 +59,10 @@ function cloneTemplates() {
         newFileId.then(function (newFileId) {
             document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
             document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newFileId);
-            document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
+            document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
+            document.getElementById('clone-button').disabled = true;
         })
     });
-
-    document.getElementById('clone-button').disabled = true;
 }
 
 function exportResume() {
@@ -72,7 +78,10 @@ function tailorLetter() {
 }
 
 function minScan() {
-    let contents = getPlaintextFileContents(newResumeId);
+    let content = getPlaintextFileContents(newResumeId);
+    content.then(function (content) {
+        console.log(content);
+    });
     // Retrieve resume plaintext
     // Retrieve jd from text field
     // Format API request to jobscan.co
