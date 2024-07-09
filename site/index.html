@@ -8,42 +8,28 @@
 <body>
 <h1>Maker Consulting Job Application Tool</h1>
 
-<h2>Quick Links</h2>
+<h2>Links</h2>
+<h3>Favorites</h3>
 <ul>
     <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
     <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
-    <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Sheets Log</a></li>
+    <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
+    <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
+    <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Google Sheet</a></li>
 </ul>
 
-<h2>Google Auth</h2>
+<h3>LinkedIn Queries</h3>
+<label>Software Engineer:</label><br/>
+<textarea rows="4" cols="60" id="linkedin-query"></textarea><br/>
+<button onclick="handleLinkedInQueryClipboard()">Copy to Clipboard</button>
 
-<label>Google Client ID:</label><br/>
-<input id="google-client-id" type="password" size=80 /><br/><br/>
-
-<label>Google API Key:</label><br/>
-<input id="google-api-key" type="password" size=80/> <br/><br/>
-<button id="save-google-credentials" onclick="handleSaveGoogleCredentials()">Save</button>
-
-<button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
-<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-<br/><br/>
-
-<h2>Clone Templates</h2>
-
-<label>Resume Template:</label><br/>
-<input id="resume-template-name" type="text" size=80 value="Chris Shumaker"/><br/><br/>
-
-<label>Cover Letter Template:</label><br/>
-<input id="cover-letter-template-name" type="text" size=80 value="Chris Shumaker Cover Letter"/> <br/><br/>
+<h2>Tailor</h2>
 
 <label>Company Name:</label><br/>
-<input type="text" size=80 id="company-name" value="Example" /><br/><br/>
+<input type="text" size=60 id="company-name" value="Example" /><br/><br/>
 
-<label>Cloned Templates:</label>
-<button id="clone-button" onclick="cloneTemplates()">Reload/Clone</button><br/>
+<button id="clone-button" onclick="cloneTemplates()">Reload/Clone Copied Docs</button><br/>
 <br/>
-
-<pre id="content" style="white-space: pre-wrap;"></pre>
 
 <label>Tailored Resume: </label>
 <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
@@ -51,36 +37,24 @@
 <label>Tailored Cover Letter: </label>
 <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/><br/>
 
-
-<h2>Resume Scanning</h2>
-
-<label>Jobscan Cookie:</label><br/>
-<input type="password" size=80 id="jobscan-cookie"/><br/><br/>
-
-<label>Jobscan XSRF Token:</label><br/>
-<input type="password" size=80 id="jobscan-xsrf-token"/><br/><br/>
-
-<button id="load-jobscan-credentials" onclick="loadJobScanCredentials()">Load</button>
-<button id="save-jobscan-credentials" onclick="saveJobScanCredentials()">Save</button>
-<br/><br/>
-
+<h2>Scan</h2>
 <label>Minimum Requirements:</label><br/>
-<textarea id="minimum-requirements" rows="4" cols="80"></textarea>
+<textarea id="minimum-requirements" rows="4" cols="60"></textarea>
 <label id="minimum-score"></label>
 <br/>
 
 <label>Preferred Requirements:</label><br/>
-<textarea id="preferred-requirements" rows="4" cols="80"></textarea>
+<textarea id="preferred-requirements" rows="4" cols="60"></textarea>
 <label id="preferred-score"></label>
 <br/>
 
 <label>Job Duties:</label><br/>
-<textarea id="job-duties" rows="4" cols="80"></textarea>
+<textarea id="job-duties" rows="4" cols="60"></textarea>
 <label id="job-duties-score"></label>
 <br/>
 
 <label>Company Information:</label><br/>
-<textarea id="company-information" rows="4" cols="80"></textarea>
+<textarea id="company-information" rows="4" cols="60"></textarea>
 <label id="company-information-score"></label>
 <br/>
 
@@ -90,30 +64,30 @@
 <button onclick="handleScanButton()" id="scan-button" disabled>Scan</button>
 
 
-<h2>Automated Tailoring</h2>
+<!--<h2>Automated Tailoring</h2>-->
 
-<label>Job Title:</label><br/>
-<input type="text" size=80/><br/><br/>
+<!--<label>Job Title:</label><br/>-->
+<!--<input type="text" size=60/><br/><br/>-->
 
-<button onclick="tailorResume()">Tailor Resume</button>
-<br/><br/>
+<!--<button onclick="tailorResume()">Tailor Resume</button>-->
+<!--<br/><br/>-->
 
-<h3>Cover Letter Tailoring</h3>
+<!--<h3>Cover Letter Tailoring</h3>-->
 
-<label>Recipient:</label><br/>
-<input type="text" size=80 value="Hiring Manager"/> <br/><br/>
+<!--<label>Recipient:</label><br/>-->
+<!--<input type="text" size=60 value="Hiring Manager"/> <br/><br/>-->
 
-<label>City, State:</label><br/>
-<input type="text" size=80/> <br/><br/>
+<!--<label>City, State:</label><br/>-->
+<!--<input type="text" size=60/> <br/><br/>-->
 
-<label>Specific Values:</label><br/>
-<input type="text" size=80/> <br/><br/>
+<!--<label>Specific Values:</label><br/>-->
+<!--<input type="text" size=60/> <br/><br/>-->
 
-<label>Specific Experience:</label><br/>
-<input type="text" size=80/> <br/><br/>
+<!--<label>Specific Experience:</label><br/>-->
+<!--<input type="text" size=60/> <br/><br/>-->
 
-<button onclick="tailorLetter()">Tailor Cover Letter</button>
-<br/><br/>
+<!--<button onclick="tailorLetter()">Tailor Cover Letter</button>-->
+<!--<br/><br/>-->
 
 <h2>Application Submission</h2>
 
@@ -126,11 +100,54 @@
 <button onclick="handleLinkedInClipboard()">LinkedIn</button>
 <button onclick="handleGithubClipboard()">GitHub</button>
 <button onclick="handleSiteClipboard()">Website</button>
+<br/><br/>
+<!--<h3>Application Logs</h3>-->
+<!--<label>Spreadsheet Name:</label><br/>-->
+<!--<input id="spreadsheet-name" type="text" size=60 value="Job Hunt 2024"/><br/><br/>-->
+<!--<button onclick="updateGoogleSheet()">Log Application In Google Sheets</button>-->
 
-<h3>Application Logs</h3>
-<label>Spreadsheet Name:</label><br/>
-<input id="spreadsheet-name" type="text" size=80 value="Job Hunt 2024"/><br/><br/>
-<button onclick="updateGoogleSheet()">Log Application In Google Sheets</button>
+<h2>Configure Templates</h2>
+
+<label>Resume Template:</label><br/>
+<input id="resume-template-name" type="text" size=60 value="Chris Shumaker"/><br/><br/>
+
+<label>Cover Letter Template:</label><br/>
+<input id="cover-letter-template-name" type="text" size=60 value="Chris Shumaker Cover Letter"/> <br/><br/>
+
+
+<h2>Credentials</h2>
+
+<h3>Google</h3>
+
+<label>Google Client ID:</label><br/>
+<input id="google-client-id" type="password" size=60 /><br/><br/>
+
+<label>Google API Key:</label><br/>
+<input id="google-api-key" type="password" size=60/> <br/><br/>
+<button id="save-google-credentials" onclick="handleSaveGoogleCredentials()">Save</button>
+
+<button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
+<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+<pre id="content" style="white-space: pre-wrap;"></pre>
+<br/>
+
+<h3>Jobscan</h3>
+
+<label>Jobscan Cookie:</label><br/>
+<input type="password" size=60 id="jobscan-cookie"/><br/><br/>
+
+<label>Jobscan XSRF Token:</label><br/>
+<input type="password" size=60 id="jobscan-xsrf-token"/><br/><br/>
+
+<button id="load-jobscan-credentials" onclick="loadJobScanCredentials()">Load</button>
+<button id="save-jobscan-credentials" onclick="saveJobScanCredentials()">Save</button>
+<br/><br/>
+
+<h2>Extra Links</h2>
+<h3>Alternate Job Sites</h3>
+<ul>
+    <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
+</ul>
 
 </body>
 
@@ -140,7 +157,7 @@
 <script async defer type='text/javascript' src='./modules/gdrive.js'></script>
 <script async defer type='text/javascript' src='./modules/jobscan.js'></script>
 <script async defer type='text/javascript' src='./modules/gsheets.js'></script>
-<script async defer type='text/javascript' src='./modules/clipboard.js'></script>
+<script async defer type='text/javascript' src='./modules/clipboard.js' onload="updateLinkedInQuery()"></script>
 <script async defer type='text/javascript' src='./script.js' onload="initialize()"></script>
 
 </html>
