@@ -8,7 +8,7 @@
 <body>
 <h1>Maker Consulting Job Application Tool</h1>
 
-<h2>Links</h2>
+<h2>Search</h2>
 <h3>Favorites</h3>
 <ul>
     <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
@@ -19,14 +19,14 @@
 </ul>
 
 <h3>LinkedIn Queries</h3>
-<label>Software Engineer:</label><br/>
-<textarea rows="4" cols="60" id="linkedin-query"></textarea><br/>
+<label>Standard Query:</label><br/>
+<textarea rows="4" cols="60" id="linkedin-query"></textarea>
 <button onclick="handleLinkedInQueryClipboard()">Copy to Clipboard</button>
 
 <h2>Tailor</h2>
 
 <label>Company Name:</label><br/>
-<input type="text" size=60 id="company-name" value="Example" /><br/><br/>
+<input type="text" size=60 id="company-name" value="Example" />
 
 <button id="clone-button" onclick="cloneTemplates()">Reload/Clone Copied Docs</button><br/>
 <br/>
@@ -117,31 +117,13 @@
 
 <h2>Credentials</h2>
 
-<h3>Google</h3>
+<label>Credential file:</label>
+<input id="credential-file" type="file"/><br/>
 
-<label>Google Client ID:</label><br/>
-<input id="google-client-id" type="password" size=60 /><br/><br/>
-
-<label>Google API Key:</label><br/>
-<input id="google-api-key" type="password" size=60/> <br/><br/>
-<button id="save-google-credentials" onclick="handleSaveGoogleCredentials()">Save</button>
-
+<label>Google OAuth:</label>
 <button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
 <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 <pre id="content" style="white-space: pre-wrap;"></pre>
-<br/>
-
-<h3>Jobscan</h3>
-
-<label>Jobscan Cookie:</label><br/>
-<input type="password" size=60 id="jobscan-cookie"/><br/><br/>
-
-<label>Jobscan XSRF Token:</label><br/>
-<input type="password" size=60 id="jobscan-xsrf-token"/><br/><br/>
-
-<button id="load-jobscan-credentials" onclick="loadJobScanCredentials()">Load</button>
-<button id="save-jobscan-credentials" onclick="saveJobScanCredentials()">Save</button>
-<br/><br/>
 
 <h2>Extra Links</h2>
 <h3>Alternate Job Sites</h3>
@@ -151,8 +133,8 @@
 
 </body>
 
-<script async defer src="https://apis.google.com/js/api.js"></script>
-<script async defer src="https://accounts.google.com/gsi/client"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
 <script async defer type='text/javascript' src='./modules/gapi.js'></script>
 <script async defer type='text/javascript' src='./modules/gdrive.js'></script>
 <script async defer type='text/javascript' src='./modules/jobscan.js'></script>

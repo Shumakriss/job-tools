@@ -21,6 +21,7 @@ document.getElementById('signout_button').style.visibility = 'hidden';
 */
 function gapiLoaded(apiKey) {
     gapi.load('client', (apiKey)=>{initializeGapiClient(apiKey)});
+    maybeEnableButtons();
 }
 
 /**
@@ -61,7 +62,7 @@ function gisLoaded(clientId) {
 */
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
-      document.getElementById('authorize_button').style.visibility = 'visible';
+        document.getElementById('authorize_button').style.visibility = 'visible';
     }
 }
 

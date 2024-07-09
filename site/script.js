@@ -15,6 +15,7 @@ var jobDuties;
 var companyInformation;
 var googleClientId;
 var googleApiKey;
+var credentialFile;
 
 function setCloneVars() {
     resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -38,7 +39,7 @@ function updateNewResumeData(newResumeId) {
     document.getElementById('tailored-resume-link').innerHTML = newResumeName;
     document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
     document.getElementById('clone-button').disabled = true;
-    enableScanButtons();
+    document.getElementById("scan-button").disabled = false;
     document.getElementById('resume-download-button').disabled = false;
 }
 
@@ -90,50 +91,66 @@ async function cloneTemplates() {
     console.log("All files cloned");
 }
 
-function loadJobScanCredentials() {
-    console.log("Loading jobscan credentials");
-    if ( sessionStorage.getItem("jobscan-xsrf-token" ) ) {
-        jobscanXsrfToken = sessionStorage.getItem("jobscan-xsrf-token" );
-        document.getElementById('jobscan-xsrf-token').value = jobscanXsrfToken;
-    } else {
-        console.log("Did not find jobscan token");
-    }
 
-    if ( sessionStorage.getItem("jobscan-cookie") ) {
-        jobscanCookie = sessionStorage.getItem("jobscan-cookie");
-        document.getElementById('jobscan-cookie').value = jobscanCookie;
-    } else {
-        console.log("Did not find jobscan cookie");
-    }
+function initCredentialFileListener() {
+    document.getElementById('credential-file').addEventListener('change', function (event) {
+        let fr = new FileReader();
+        fr.onload = function () {
+
+            credentials = JSON.parse(fr.result);
+            googleApiKey = credentials['google-api-key'];
+            googleClientId = credentials['google-client-id'];
+            jobscanXsrfToken = credentials['jobscan-xsrf-token'];
+            jobscanCookie = credentials['jobscan-cookie'];
+            sessionStorage.setItem('google-api-key', googleApiKey);
+            sessionStorage.setItem('google-client-id', googleClientId);
+            sessionStorage.setItem('jobscan-xsrf-token', jobscanXsrfToken);
+            sessionStorage.setItem('jobscan-cookie', jobscanCookie);
+            if (googleApiKey && googleClientId) {
+                gapiLoaded(googleApiKey);
+                gisLoaded(googleClientId);
+            }
+            console.log("Finished loading credentials");
+        }
+
+        fr.readAsText(this.files[0]);
+    });
+
+    console.log("Registered event listener for credential file");
 }
 
-function loadGoogleCredentials() {
-    console.log("Loading google credentials");
+function loadCredentialsFromSession() {
+    console.log("Loading credentials from session");
 
-    let clientId = sessionStorage.getItem("google-client-id");
-    if (clientId) {
-        googleClientId = clientId;
-        document.getElementById('google-client-id').value = googleClientId;
-    } else {
-        console.log("Google client ID not found in session storage");
+    if (sessionStorage.getItem("google-client-id")) {
+        googleClientId = sessionStorage.getItem("google-client-id");
+        console.log("Loaded Google Client ID from session");
     }
 
-    let apiKey = sessionStorage.getItem("google-api-key");
-    if (apiKey) {
-        googleApiKey = apiKey;
-        document.getElementById('google-api-key').value = apiKey;
-    } else {
-        console.log("Google API key not found in session storage");
+    if (sessionStorage.getItem("google-api-key")) {
+        googleApiKey = sessionStorage.getItem("google-api-key");
+        console.log("Loaded Google API key from session");
+    }
+
+    if (sessionStorage.getItem("jobscan-cookie")) {
+        jobscanCookie = sessionStorage.getItem("jobscan-cookie");
+        console.log("Loaded Jobscan Cookie from session");
+    }
+
+    if (sessionStorage.getItem("jobscan-xsrf-token")) {
+        jobscanXsrfToken = sessionStorage.getItem("jobscan-xsrf-token");
+        console.log("Loaded Jobscan XSRF Token from session");
+    }
+
+    if (googleClientId && googleApiKey) {
+        gapiLoaded(googleApiKey);
+        gisLoaded(googleClientId);
     }
 }
 
 async function initialize() {
-    loadJobScanCredentials();
-    loadGoogleCredentials();
-    if (googleApiKey && googleClientId) {
-        await gapiLoaded(googleApiKey);
-        await gisLoaded(googleClientId);
-    }
+    initCredentialFileListener();
+    loadCredentialsFromSession();
 }
 
 async function handleSaveGoogleCredentials() {
@@ -179,24 +196,10 @@ function handleSignoutClick() {
     }
 }
 
-function saveJobScanCredentials() {
-    jobscanCookie = document.getElementById('jobscan-cookie').value;
-    jobscanXsrfToken = document.getElementById('jobscan-xsrf-token').value;
-    sessionStorage.setItem("jobscan-cookie", jobscanCookie);
-    sessionStorage.setItem("jobscan-xsrf-token", jobscanXsrfToken);
-}
-
 function checkJobscanVars() {
     return companyName && resumeTemplateId && jobscanCookie && jobscanXsrfToken && minimumRequirements;
 }
 
-function initJobscanVars() {
-    if ( !checkJobscanVars() ) {
-        initCloneVars();
-        saveJobScanCredentials();
-        minimumRequirements = document.getElementById("minimum-requirements").value;
-    }
-}
 
 function getPreferredRequirements() {
    let minReqs = document.getElementById("minimum-requirements").value;
@@ -204,20 +207,13 @@ function getPreferredRequirements() {
    return minReqs + prefReqs;
 }
 
-async function doSingleScan(jobDescription) {
-    console.log("Scanning resume");
-    let scanResults = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
-    return scanResults;
-}
-
 async function handleScanButton() {
     console.log("Scanning resume against minimum requirements");
 
-    initJobscanVars();
     resumePlainText = await getPlaintextFileContents(newResumeId);
 
-    let jobDescription = minimumRequirements;
-    let results = await doSingleScan(jobDescription);
+    let jobDescription = document.getElementById("minimum-requirements").value;;
+    let results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
     let score = results.matchRate.score;
     document.getElementById("minimum-score").innerHTML = "Score: " + score;
 
@@ -225,7 +221,7 @@ async function handleScanButton() {
     includePreferred = document.getElementById("include-preferred-checkbox").checked;
     if (includePreferred && preferredRequirements) {
         jobDescription = jobDescription + preferredRequirements;
-        results = await doSingleScan(jobDescription);
+        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("preferred-score").innerHTML = "Score: " + score;
     }
@@ -234,7 +230,7 @@ async function handleScanButton() {
     includeJobDuties = document.getElementById("include-job-duties-checkbox").checked;
     if ( includeJobDuties && jobDuties ) {
         jobDescription = jobDescription + jobDuties;
-        results = await doSingleScan(jobDescription);
+        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("job-duties-score").innerHTML = "Score: " + score;
     }
@@ -243,7 +239,7 @@ async function handleScanButton() {
     includeCompanyInformation = document.getElementById("include-company-information-checkbox").checked;
     if ( includeCompanyInformation && companyInformation ) {
         jobDescription = jobDescription + document.getElementById("company-information").value;
-        results = await doSingleScan(jobDescription);
+        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("company-information-score").innerHTML = "Score: " + score;
     }
@@ -251,19 +247,6 @@ async function handleScanButton() {
 
 function companySpecificName(companyName, templateName) {
     return companyName + " " + templateName;
-}
-
-function enableScanButtons() {
-//    let scanButtons = document.getElementsByClassName("scan-button");
-//    for (let i=0; i<scanButtons.length; i++) {
-//        scanButtons[i].disabled = false;
-//    }
-    document.getElementById("scan-button").disabled = false;
-}
-
-
-function updateGoogleSheet() {
-
 }
 
 
@@ -293,5 +276,10 @@ function tailorResume   () {
 }
 
 function tailorLetter() {
+
+}
+
+
+function updateGoogleSheet() {
 
 }
