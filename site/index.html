@@ -31,7 +31,7 @@
 <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 <br/><br/>
 
-<label>Google Drive:</label>
+<label>Cloned Templates:</label>
 <button id="reload-clones-button" onclick="reloadClones()">Reload</button>
 <button id="clone-button" onclick="cloneTemplates()">Clone</button><br/>
 <br/>
@@ -108,9 +108,11 @@
 <a id="tailored-cover-letter-link" href="" target="_blank">Not Ready</a><br/><br/>
 
 <button onclick="exportResume()">Export Resume</button> <br/><br/>
-<button onclick="liToClip()">Copy LinkedIn Profile To Clipboard</button>
-<button onclick="ghToClip()">Copy GitHub Profile To Clipboard</button>
-<button onclick="siteToClip()">Copy Website To Clipboard</button>
+
+<h3>Clipboard Profile Links</h3>
+<button onclick="handleLinkedInClipboard()">LinkedIn</button>
+<button onclick="handleGithubClipboard()">GitHub</button>
+<button onclick="handleSiteClipboard()">Website</button>
 
 <h3>Application Logs</h3>
 <label>Spreadsheet Name:</label><br/>
@@ -119,10 +121,12 @@
 
 </body>
 
-<script type='text/javascript' src='./modules/gdrive-credentials.js'></script>
+<script type='text/javascript' src='./modules/gapi-credentials.js'></script>
+<script type='text/javascript' src='./modules/gapi.js'></script>
 <script type='text/javascript' src='./modules/gdrive.js'></script>
 <script type='text/javascript' src='./modules/jobscan.js'></script>
 <script type='text/javascript' src='./modules/gsheets.js'></script>
+<script type='text/javascript' src='./modules/clipboard.js'></script>
 <script type='text/javascript' src='./script.js'></script>
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>

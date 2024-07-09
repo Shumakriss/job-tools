@@ -1,35 +1,5 @@
-function liToClip() {
-    navigator.clipboard.writeText("https://www.linkedin.com/in/christophershumaker/");
-}
 
-function ghToClip() {
-    navigator.clipboard.writeText("https://github.com/Shumakriss");
-}
-
-function siteToClip() {
-    navigator.clipboard.writeText("https://www.makerconsulting.llc/maker-consulting");
-}
-
-function gDocLinkFromId(gDocId) {
-    return "https://docs.google.com/document/d/" + gDocId + "/edit";
-}
-
-function companySpecificName(companyName, templateName) {
-    return companyName + " " + templateName;
-}
-
-let newFileId;
-let newResumeId;
-
-function enableScanButtons() {
-
-    let scanButtons = document.getElementsByClassName("scan-button");
-    for (let i=0; i<scanButtons.length; i++) {
-        scanButtons[i].disabled = false;
-    }
-}
-
-function reloadClones() {
+async function reloadClones() {
     let resumeTemplateName = document.getElementById('resume-template-name').value;
     let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
     let companyName = document.getElementById('company-name').value;
@@ -39,25 +9,23 @@ function reloadClones() {
         return;
     }
 
-    let newResumeName = companySpecificName(companyName, resumeTemplateName)
-    getDocumentIdByName(newResumeName).then(function (newResumeId) {
-        document.getElementById('tailored-resume-link').innerHTML = newResumeName;
-        document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
-        document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
-        document.getElementById('clone-button').disabled = true;
-        enableScanButtons();
-    });
+    let newResumeName = companySpecificName(companyName, resumeTemplateName);
+    let newResumeId = await getDocumentIdByName(newResumeName);
+    document.getElementById('tailored-resume-link').innerHTML = newResumeName;
+    document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
+    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
+    document.getElementById('clone-button').disabled = true;
+    enableScanButtons();
 
-    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName)
-    getDocumentIdByName(newCoverLetterName).then(function (newCoverLetterId) {
-        document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
-        document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
-        document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
-        document.getElementById('clone-button').disabled = true;
-    });
+    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+    let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
+    document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
+    document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
+    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
+    document.getElementById('clone-button').disabled = true;
 }
 
-function cloneTemplates() {
+async function cloneTemplates() {
     console.log("Handling tailor resume")
     let resumeTemplateName = document.getElementById('resume-template-name').value;
     let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
@@ -68,39 +36,23 @@ function cloneTemplates() {
         return;
     }
 
-    let newResumeName = companySpecificName(companyName, resumeTemplateName)
-    getDocumentIdByName(resumeTemplateName).then(function (resumeTemplateId) {
-        copyFile(resumeTemplateId, newResumeName).then(function (newResumeId) {
-            newResumeId = newFileId;
-            document.getElementById('tailored-resume-link').innerHTML = newResumeName;
-            document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
-            document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
-            document.getElementById('clone-button').disabled = true;
-            enableScanButtons();
-        })
-    });
+    let newResumeName = companySpecificName(companyName, resumeTemplateName);
+    let resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
+    let newResumeId = await copyFile(resumeTemplateId, newResumeName);
+    document.getElementById('tailored-resume-link').innerHTML = newResumeName;
+    document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
+    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
+    document.getElementById('clone-button').disabled = true;
+    enableScanButtons();
 
-    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName)
-    getDocumentIdByName(coverLetterTemplateName).then(function (coverLetterId) {
-        copyFile(coverLetterId, newCoverLetterName).then(function (newCoverLetterId) {
-            document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
-            document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
-            document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
-            document.getElementById('clone-button').disabled = true;
-        })
-    });
-}
+    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+    let coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
+    let newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
 
-function exportResume() {
-    console.log("Function exportResume() is not yet implemented.");
-}
-
-function tailorResume   () {
-
-}
-
-function tailorLetter() {
-
+    document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
+    document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
+    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
+    document.getElementById('clone-button').disabled = true;
 }
 
 function loadJobScanCredentials() {
@@ -125,7 +77,7 @@ function saveJobScanCredentials() {
     sessionStorage.setItem("jobscan-xsrf-token", document.getElementById('jobscan-xsrf-token').value);
 }
 
-function minScan() {
+async function minScan() {
     let resumeTemplateName = document.getElementById('resume-template-name').value;
     let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
     let companyName = document.getElementById('company-name').value;
@@ -139,15 +91,12 @@ function minScan() {
     }
 
     let newResumeName = companySpecificName(companyName, resumeTemplateName)
-    getDocumentIdByName(newResumeName).then(function (fileId) {
-        getPlaintextFileContents(fileId).then(function (resumePlainText) {
-            jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, minimumRequirements).then((scanResult) => {
-                console.log("Received scan results");
-                document.getElementById("min-reqs-score").innerHTML = "Score: " + scanResult.matchRate.score;
-                });
-        });
-    });
+    let newResumeId = await getDocumentIdByName(newResumeName);
+    let resumePlainText = await getPlaintextFileContents(newResumeId);
+    let scanResult = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, minimumRequirements);
 
+    console.log("Received scan results");
+    document.getElementById("min-reqs-score").innerHTML = "Score: " + scanResult.matchRate.score;
 }
 
 function minPrefScan() {
@@ -162,6 +111,31 @@ function completeScan() {
 
 }
 
+function companySpecificName(companyName, templateName) {
+    return companyName + " " + templateName;
+}
+
+function enableScanButtons() {
+
+    let scanButtons = document.getElementsByClassName("scan-button");
+    for (let i=0; i<scanButtons.length; i++) {
+        scanButtons[i].disabled = false;
+    }
+}
+
+
 function updateGoogleSheet() {
+
+}
+
+function exportResume() {
+    console.log("Function exportResume() is not yet implemented.");
+}
+
+function tailorResume   () {
+
+}
+
+function tailorLetter() {
 
 }

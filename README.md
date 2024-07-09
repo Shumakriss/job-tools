@@ -8,8 +8,8 @@ Download the repo and create credential file:
 ```bash
 git clone git@github.com:Shumakriss/job-tools.git
 cd job-tools
-touch site/modules/gdrive-credentials.js
-open site/modules/gdrive-credentials.js
+touch site/modules/gapi-credentials.js
+open site/modules/gapi-credentials.js
 ```
 
 Add your own credentials
