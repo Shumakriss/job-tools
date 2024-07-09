@@ -29,6 +29,35 @@ function enableScanButtons() {
     }
 }
 
+function reloadClones() {
+    let resumeTemplateName = document.getElementById('resume-template-name').value;
+    let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
+    let companyName = document.getElementById('company-name').value;
+
+    if (!companyName || !resumeTemplateName || !coverLetterTemplateName) {
+        console.log("Must supply company name, resume template, and cover letter template names!");
+        return;
+    }
+
+    let newResumeName = companySpecificName(companyName, resumeTemplateName)
+    getDocumentIdByName(newResumeName).then(function (fileId) {
+        newResumeId = newFileId;
+        document.getElementById('tailored-resume-link').innerHTML = newResumeName;
+        document.getElementById('tailored-resume-link').href = gDocLinkFromId(newFileId);
+        document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
+        document.getElementById('clone-button').disabled = true;
+        enableScanButtons();
+    });
+
+    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName)
+    getDocumentIdByName(newCoverLetterName).then(function (fileId) {
+        document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
+        document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newFileId);
+        document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
+        document.getElementById('clone-button').disabled = true;
+    });
+}
+
 function cloneTemplates() {
     console.log("Handling tailor resume")
     let resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -77,15 +106,53 @@ function tailorLetter() {
 
 }
 
+function loadJobScanCredentials() {
+    console.log("Loading jobscan credentials");
+    if (sessionStorage.getItem("jobscan-xsrf-token") ) {
+        document.getElementById('jobscan-xsrf-token').value = sessionStorage.getItem("jobscan-xsrf-token");
+    } else {
+        console.log("Did not find token");
+    }
+
+    if (sessionStorage.getItem("jobscan-cookie") ) {
+        document.getElementById('jobscan-cookie').value = sessionStorage.getItem("jobscan-cookie");
+    } else {
+        console.log("Did not find cookie");
+    }
+}
+
+loadJobScanCredentials();
+
+function saveJobScanCredentials() {
+    sessionStorage.setItem("jobscan-cookie", document.getElementById('jobscan-cookie').value);
+    sessionStorage.setItem("jobscan-xsrf-token", document.getElementById('jobscan-xsrf-token').value);
+}
+
 function minScan() {
-    let content = getPlaintextFileContents(newResumeId);
-    content.then(function (content) {
-        console.log(content);
+    let resumeTemplateName = document.getElementById('resume-template-name').value;
+    let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
+    let companyName = document.getElementById('company-name').value;
+
+    if (!companyName || !resumeTemplateName || !coverLetterTemplateName) {
+        console.log("Must supply company name, resume template, and cover letter template names!");
+        return;
+    }
+
+    let newResumeName = companySpecificName(companyName, resumeTemplateName)
+    getDocumentIdByName(newResumeName).then(function (fileId) {
+        getPlaintextFileContents(fileId).then(function (resumePlainText) {
+            let jobscanCookie = document.getElementById("jobscan-cookie").value;
+            let jobscanXsrfToken = document.getElementById("jobscan-xsrf-token").value;
+            let minimumRequirements = document.getElementById("minimum-requirements").value;
+
+            let scanResultPromise = jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, minimumRequirements);
+            scanResultPromise.then((scanResult) => {
+                console.log("Received scan results");
+                document.getElementById("min-reqs-score").innerHTML = "Score: " + scanResult.matchRate.score;
+                });
+        });
     });
-    // Retrieve resume plaintext
-    // Retrieve jd from text field
-    // Format API request to jobscan.co
-    // Render score to page
+
 }
 
 function minPrefScan() {

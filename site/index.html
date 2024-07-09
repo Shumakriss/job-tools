@@ -11,6 +11,7 @@
 <h2>Quick Links</h2>
 <ul>
     <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
+    <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
     <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Sheets Log</a></li>
 </ul>
 
@@ -25,17 +26,33 @@
 <label>Company Name:</label><br/>
 <input type="text" size=80 id="company-name" value="Example" /><br/><br/>
 
-<label>Google Auth:</label><br/>
+<label>Google Auth:</label>
 <button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
 <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-<button id="clone-button" onclick="cloneTemplates()">Clone Templates</button><br/>
+<br/><br/>
+
+<label>Google Drive:</label>
+<button id="reload-clones-button" onclick="reloadClones()">Reload</button>
+<button id="clone-button" onclick="cloneTemplates()">Clone</button><br/>
 <br/>
 
 <label id="clone-status"></label>
 <pre id="content" style="white-space: pre-wrap;"></pre>
 
 <h2>Resume Scanning</h2>
-<label>Minimum Requirements:</label><br/><textarea rows="4" cols="80"></textarea><br/>
+
+<label>Jobscan Cookie:</label><br/>
+<input type="text" size=80 id="jobscan-cookie"/><br/><br/>
+
+<label>Jobscan XSRF Token:</label><br/>
+<input type="text" size=80 id="jobscan-xsrf-token"/><br/><br/>
+
+<button id="load-jobscan-credentials" onclick="loadJobScanCredentials()">Load</button>
+<button id="save-jobscan-credentials" onclick="saveJobScanCredentials()">Save</button>
+<br/><br/>
+
+<label>Minimum Requirements:</label><br/>
+<textarea id="minimum-requirements" rows="4" cols="80"></textarea><br/>
 <button onclick="minScan()" class="scan-button" disabled>Scan</button>
 <label id="min-reqs-score"></label>
 <br/><br/>

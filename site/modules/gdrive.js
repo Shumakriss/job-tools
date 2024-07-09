@@ -9,7 +9,7 @@ const SCOPES = 'https://www.googleapis.com/auth/drive';
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
-let storedToken = JSON.parse(sessionStorage.getItem("token"));
+let storedGApiToken = JSON.parse(sessionStorage.getItem("gapi-token"));
 
 // TODO: Check existing token to setup buttons
 document.getElementById('authorize_button').style.visibility = 'hidden';
@@ -39,9 +39,9 @@ async function initializeGapiClient() {
     });
     gapiInited = true;
     maybeEnableButtons();
-    if (storedToken && storedToken != null && storedToken != "null") {
-        console.log("Loaded stored token");
-        gapi.client.setToken(storedToken);
+    if (storedGApiToken && storedGApiToken != null && storedGApiToken != "null") {
+        console.log("Loaded stored gAPI token");
+        gapi.client.setToken(storedGApiToken);
         document.getElementById('authorize_button').innerText = 'Refresh';
         document.getElementById('authorize_button').style.visibility = 'visible';
         document.getElementById('signout_button').style.visibility = 'visible';
@@ -81,7 +81,7 @@ function handleAuthClick() {
       }
       document.getElementById('signout_button').style.visibility = 'visible';
       document.getElementById('authorize_button').innerText = 'Refresh';
-      sessionStorage.setItem("token", JSON.stringify(gapi.client.getToken()));
+      sessionStorage.setItem("gapi-token", JSON.stringify(gapi.client.getToken()));
 //      await listFiles();
     };
 
@@ -203,6 +203,7 @@ async function getPlaintextFileContents(fileId) {
     console.log("Getting plaintext file contents: " + fileId);
 
     try {
+        // This only works on Google Docs formatted files!
         const response = await gapi.client.drive.files.export({
             fileId: fileId,
             mimeType: 'text/plain'
