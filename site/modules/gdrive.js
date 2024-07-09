@@ -106,3 +106,58 @@ async function getPlaintextFileContents(fileId) {
     }
 
 }
+
+async function getPdfFileContents(fileId) {
+    console.log("Getting PDF file contents: " + fileId);
+
+    try {
+        // This only works on Google Docs formatted files!
+        const response = await gapi.client.drive.files.export({
+            fileId: fileId,
+            mimeType: 'application/pdf'
+        });
+        return response.body;
+    } catch (err) {
+        document.getElementById('content').innerText = err.message;
+    throw err;
+    }
+
+}
+
+async function createFile(fileId) {
+    console.log("Creating PDF in Google Drive: " + fileName);
+
+    try {
+        // This only works on Google Docs formatted files!
+        const response = await gapi.client.drive.files.create({
+            fileId: fileId,
+            media: {
+                mimeType: "application/pdf",
+                body: content
+            }
+        });
+        return response.body;
+    } catch (err) {
+        document.getElementById('content').innerText = err.message;
+    throw err;
+    }
+
+}
+
+async function getPdfLink(fileId) {
+    console.log("Getting file from Google Drive: " + fileId);
+
+    try {
+        // This only works on Google Docs formatted files!
+        const response = await gapi.client.drive.files.get({
+            fileId: fileId,
+            fields: 'exportLinks'
+        });
+        let file = JSON.parse(response.body);
+        return file.exportLinks['application/pdf'];
+    } catch (err) {
+        document.getElementById('content').innerText = err.message;
+    throw err;
+    }
+
+}

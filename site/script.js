@@ -13,6 +13,8 @@ var minimumRequirements;
 var preferredRequirements;
 var jobDuties;
 var companyInformation;
+var googleClientId;
+var googleApiKey;
 
 function setCloneVars() {
     resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -37,16 +39,18 @@ function updateNewResumeData(newResumeId) {
     document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
     document.getElementById('clone-button').disabled = true;
     enableScanButtons();
+    document.getElementById('resume-download-button').disabled = false;
 }
 
 function updateNewCoverLetterData(newCoverLetterId) {
     document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
     document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
     document.getElementById('clone-button').disabled = true;
+    document.getElementById('cover-letter-download-button').disabled = false;
 }
 
 async function reloadClones() {
-    console.log("Reloading cloned templates");
+    console.log("Attempting to reload cloned templates");
 
     initCloneVars();
 
@@ -60,17 +64,30 @@ async function reloadClones() {
 async function cloneTemplates() {
     console.log("Cloning templates");
 
-    initCloneVars();
+    await reloadClones();
+    console.log(newResumeId);
 
-    resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
-    newResumeName = companySpecificName(companyName, resumeTemplateName);
-    newResumeId = await copyFile(resumeTemplateId, newResumeName);
-    updateNewResumeData(newResumeId);
+    if ( !newResumeId ) {
+        resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
+        newResumeName = companySpecificName(companyName, resumeTemplateName);
+        newResumeId = await copyFile(resumeTemplateId, newResumeName);
+        updateNewResumeData(newResumeId);
+        console.log("Resume was not reloaded so it was created");
+    } else {
+        console.log("Reloaded resume clone");
+    }
 
-    newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
-    coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
-    newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
-    updateNewCoverLetterData(newCoverLetterId);
+    if ( !newCoverLetterId ) {
+        newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+        coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
+        newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
+        updateNewCoverLetterData(newCoverLetterId);
+        console.log("Cover letter was not reloaded so it was created");
+    } else {
+        console.log("Reloaded cover letter clone");
+    }
+
+    console.log("All files cloned");
 }
 
 function loadJobScanCredentials() {
@@ -90,7 +107,77 @@ function loadJobScanCredentials() {
     }
 }
 
-loadJobScanCredentials();
+function loadGoogleCredentials() {
+    console.log("Loading google credentials");
+
+    let clientId = sessionStorage.getItem("google-client-id");
+    if (clientId) {
+        googleClientId = clientId;
+        document.getElementById('google-client-id').value = googleClientId;
+    } else {
+        console.log("Google client ID not found in session storage");
+    }
+
+    let apiKey = sessionStorage.getItem("google-api-key");
+    if (apiKey) {
+        googleApiKey = apiKey;
+        document.getElementById('google-api-key').value = apiKey;
+    } else {
+        console.log("Google API key not found in session storage");
+    }
+}
+
+async function initialize() {
+    loadJobScanCredentials();
+    loadGoogleCredentials();
+    if (googleApiKey && googleClientId) {
+        await gapiLoaded(googleApiKey);
+        await gisLoaded(googleClientId);
+    }
+}
+
+async function handleSaveGoogleCredentials() {
+    sessionStorage.setItem("google-client-id", document.getElementById('google-client-id').value);
+    sessionStorage.setItem("google-api-key", document.getElementById('google-api-key').value);
+}
+/**
+*  Sign in the user upon button click.
+*/
+function handleAuthClick() {
+    tokenClient.callback = async (resp) => {
+      if (resp.error !== undefined) {
+        throw (resp);
+      }
+      document.getElementById('signout_button').style.visibility = 'visible';
+      document.getElementById('authorize_button').innerText = 'Refresh';
+      sessionStorage.setItem("gapi-token", JSON.stringify(gapi.client.getToken()));
+//      await listFiles();
+    };
+
+    if (gapi.client.getToken() === null) {
+      // Prompt the user to select a Google Account and ask for consent to share their data
+      // when establishing a new session.
+      tokenClient.requestAccessToken({prompt: 'consent'});
+    } else {
+      // Skip display of account chooser and consent dialog for an existing session.
+      tokenClient.requestAccessToken({prompt: ''});
+    }
+
+}
+
+/**
+*  Sign out the user upon button click.
+*/
+function handleSignoutClick() {
+    const token = gapi.client.getToken();
+    if (token !== null) {
+        google.accounts.oauth2.revoke(token.access_token);
+        gapi.client.setToken('');
+//        document.getElementById('content').innerText = '';
+        document.getElementById('authorize_button').innerText = 'Authorize';
+        document.getElementById('signout_button').style.visibility = 'hidden';
+    }
+}
 
 function saveJobScanCredentials() {
     jobscanCookie = document.getElementById('jobscan-cookie').value;
@@ -179,8 +266,26 @@ function updateGoogleSheet() {
 
 }
 
-function exportResume() {
-    console.log("Function exportResume() is not yet implemented.");
+
+function downloadLink(filename, url) {
+    const a = document.createElement('a')
+    a.href = url
+    a.download = url.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
+
+async function handleDownloadResumeButton() {
+    console.log("Downloading resume");
+    let pdfLink = await getPdfLink(newResumeId);
+    downloadLink(newResumeName +".pdf", pdfLink);
+}
+
+async function handleDownloadCoverLetterButton() {
+    console.log("Downloading cover letter");
+    let pdfLink = await getPdfLink(newCoverLetterId);
+    downloadLink(newCoverLetterName +".pdf", pdfLink);
 }
 
 function tailorResume   () {

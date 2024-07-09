@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shumaker's Job Tools</title>
+    <title>Maker Consulting</title>
 </head>
 
 <body>
-<h1>Maker Consulting Application Tool</h1>
+<h1>Maker Consulting Job Application Tool</h1>
 
 <h2>Quick Links</h2>
 <ul>
@@ -14,6 +14,19 @@
     <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
     <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Sheets Log</a></li>
 </ul>
+
+<h2>Google Auth</h2>
+
+<label>Google Client ID:</label><br/>
+<input id="google-client-id" type="password" size=80 /><br/><br/>
+
+<label>Google API Key:</label><br/>
+<input id="google-api-key" type="password" size=80/> <br/><br/>
+<button id="save-google-credentials" onclick="handleSaveGoogleCredentials()">Save</button>
+
+<button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
+<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+<br/><br/>
 
 <h2>Clone Templates</h2>
 
@@ -26,14 +39,8 @@
 <label>Company Name:</label><br/>
 <input type="text" size=80 id="company-name" value="Example" /><br/><br/>
 
-<label>Google Auth:</label>
-<button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
-<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-<br/><br/>
-
 <label>Cloned Templates:</label>
-<button id="reload-clones-button" onclick="reloadClones()">Reload</button>
-<button id="clone-button" onclick="cloneTemplates()">Clone</button><br/>
+<button id="clone-button" onclick="cloneTemplates()">Reload/Clone</button><br/>
 <br/>
 
 <pre id="content" style="white-space: pre-wrap;"></pre>
@@ -48,10 +55,10 @@
 <h2>Resume Scanning</h2>
 
 <label>Jobscan Cookie:</label><br/>
-<input type="text" size=80 id="jobscan-cookie"/><br/><br/>
+<input type="password" size=80 id="jobscan-cookie"/><br/><br/>
 
 <label>Jobscan XSRF Token:</label><br/>
-<input type="text" size=80 id="jobscan-xsrf-token"/><br/><br/>
+<input type="password" size=80 id="jobscan-xsrf-token"/><br/><br/>
 
 <button id="load-jobscan-credentials" onclick="loadJobScanCredentials()">Load</button>
 <button id="save-jobscan-credentials" onclick="saveJobScanCredentials()">Save</button>
@@ -108,9 +115,12 @@
 <button onclick="tailorLetter()">Tailor Cover Letter</button>
 <br/><br/>
 
-<h2>Applications</h2>
+<h2>Application Submission</h2>
 
-<button onclick="exportResume()">Export Resume</button> <br/><br/>
+<h3>Download PDF's</h3>
+<button onclick="handleDownloadResumeButton()" id="resume-download-button" disabled>Resume</button>
+<button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" disabled>Cover Letter</button>
+<br/><br/>
 
 <h3>Clipboard Profile Links</h3>
 <button onclick="handleLinkedInClipboard()">LinkedIn</button>
@@ -124,15 +134,13 @@
 
 </body>
 
-<script type='text/javascript' src='./modules/gapi-credentials.js'></script>
-<script type='text/javascript' src='./modules/gapi.js'></script>
-<script type='text/javascript' src='./modules/gdrive.js'></script>
-<script type='text/javascript' src='./modules/jobscan.js'></script>
-<script type='text/javascript' src='./modules/gsheets.js'></script>
-<script type='text/javascript' src='./modules/clipboard.js'></script>
-<script type='text/javascript' src='./script.js'></script>
-<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
-
+<script async defer src="https://apis.google.com/js/api.js"></script>
+<script async defer src="https://accounts.google.com/gsi/client"></script>
+<script async defer type='text/javascript' src='./modules/gapi.js'></script>
+<script async defer type='text/javascript' src='./modules/gdrive.js'></script>
+<script async defer type='text/javascript' src='./modules/jobscan.js'></script>
+<script async defer type='text/javascript' src='./modules/gsheets.js'></script>
+<script async defer type='text/javascript' src='./modules/clipboard.js'></script>
+<script async defer type='text/javascript' src='./script.js' onload="initialize()"></script>
 
 </html>

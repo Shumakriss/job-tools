@@ -16,25 +16,20 @@ document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
 
 
-function gdrive() {
-    console.log("gdrive func")
-}
-
-
 /**
 * Callback after api.js is loaded.
 */
-function gapiLoaded() {
-    gapi.load('client', initializeGapiClient);
+function gapiLoaded(apiKey) {
+    gapi.load('client', (apiKey)=>{initializeGapiClient(apiKey)});
 }
 
 /**
 * Callback after the API client is loaded. Loads the
 * discovery doc to initialize the API.
 */
-async function initializeGapiClient() {
+async function initializeGapiClient(apiKey) {
     await gapi.client.init({
-      apiKey: API_KEY,
+      apiKey: apiKey,
       discoveryDocs: [DISCOVERY_DOC],
     });
     gapiInited = true;
@@ -51,9 +46,9 @@ async function initializeGapiClient() {
 /**
 * Callback after Google Identity Services are loaded.
 */
-function gisLoaded() {
+function gisLoaded(clientId) {
     tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
+      client_id: clientId,
       scope: SCOPES,
       callback: '', // defined later
     });
@@ -70,42 +65,3 @@ function maybeEnableButtons() {
     }
 }
 
-
-/**
-*  Sign in the user upon button click.
-*/
-function handleAuthClick() {
-    tokenClient.callback = async (resp) => {
-      if (resp.error !== undefined) {
-        throw (resp);
-      }
-      document.getElementById('signout_button').style.visibility = 'visible';
-      document.getElementById('authorize_button').innerText = 'Refresh';
-      sessionStorage.setItem("gapi-token", JSON.stringify(gapi.client.getToken()));
-//      await listFiles();
-    };
-
-    if (gapi.client.getToken() === null) {
-      // Prompt the user to select a Google Account and ask for consent to share their data
-      // when establishing a new session.
-      tokenClient.requestAccessToken({prompt: 'consent'});
-    } else {
-      // Skip display of account chooser and consent dialog for an existing session.
-      tokenClient.requestAccessToken({prompt: ''});
-    }
-
-}
-
-/**
-*  Sign out the user upon button click.
-*/
-function handleSignoutClick() {
-    const token = gapi.client.getToken();
-    if (token !== null) {
-        google.accounts.oauth2.revoke(token.access_token);
-        gapi.client.setToken('');
-//        document.getElementById('content').innerText = '';
-        document.getElementById('authorize_button').innerText = 'Authorize';
-        document.getElementById('signout_button').style.visibility = 'hidden';
-    }
-}
