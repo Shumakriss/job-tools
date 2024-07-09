@@ -10,6 +10,9 @@ var newCoverLetterId;
 var jobscanCookie;
 var jobscanXsrfToken;
 var minimumRequirements;
+var preferredRequirements;
+var jobDuties;
+var companyInformation;
 
 function setCloneVars() {
     resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -32,7 +35,6 @@ function initCloneVars() {
 function updateNewResumeData(newResumeId) {
     document.getElementById('tailored-resume-link').innerHTML = newResumeName;
     document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
-    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
     document.getElementById('clone-button').disabled = true;
     enableScanButtons();
 }
@@ -40,7 +42,6 @@ function updateNewResumeData(newResumeId) {
 function updateNewCoverLetterData(newCoverLetterId) {
     document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
     document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
-    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
     document.getElementById('clone-button').disabled = true;
 }
 
@@ -110,28 +111,55 @@ function initJobscanVars() {
     }
 }
 
-async function minScan() {
+function getPreferredRequirements() {
+   let minReqs = document.getElementById("minimum-requirements").value;
+   let prefReqs = document.getElementById("preferred-requirements").value;
+   return minReqs + prefReqs;
+}
+
+async function doSingleScan(jobDescription) {
+    console.log("Scanning resume");
+    let scanResults = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
+    return scanResults;
+}
+
+async function handleScanButton() {
     console.log("Scanning resume against minimum requirements");
 
     initJobscanVars();
-
     resumePlainText = await getPlaintextFileContents(newResumeId);
-    let scanResult = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, minimumRequirements);
 
-    console.log("Received scan results");
-    document.getElementById("min-reqs-score").innerHTML = "Score: " + scanResult.matchRate.score;
-}
+    let jobDescription = minimumRequirements;
+    let results = await doSingleScan(jobDescription);
+    let score = results.matchRate.score;
+    document.getElementById("minimum-score").innerHTML = "Score: " + score;
 
-function minPrefScan() {
+    preferredRequirements = document.getElementById("preferred-requirements").value;
+    includePreferred = document.getElementById("include-preferred-checkbox").checked;
+    if (includePreferred && preferredRequirements) {
+        jobDescription = jobDescription + preferredRequirements;
+        results = await doSingleScan(jobDescription);
+        score = results.matchRate.score;
+        document.getElementById("preferred-score").innerHTML = "Score: " + score;
+    }
 
-}
+    jobDuties = document.getElementById("job-duties").value;
+    includeJobDuties = document.getElementById("include-job-duties-checkbox").checked;
+    if ( includeJobDuties && jobDuties ) {
+        jobDescription = jobDescription + jobDuties;
+        results = await doSingleScan(jobDescription);
+        score = results.matchRate.score;
+        document.getElementById("job-duties-score").innerHTML = "Score: " + score;
+    }
 
-function minPrefDutyScan() {
-
-}
-
-function completeScan() {
-
+    companyInformation = document.getElementById("company-information").value;
+    includeCompanyInformation = document.getElementById("include-company-information-checkbox").checked;
+    if ( includeCompanyInformation && companyInformation ) {
+        jobDescription = jobDescription + document.getElementById("company-information").value;
+        results = await doSingleScan(jobDescription);
+        score = results.matchRate.score;
+        document.getElementById("company-information-score").innerHTML = "Score: " + score;
+    }
 }
 
 function companySpecificName(companyName, templateName) {
@@ -139,10 +167,11 @@ function companySpecificName(companyName, templateName) {
 }
 
 function enableScanButtons() {
-    let scanButtons = document.getElementsByClassName("scan-button");
-    for (let i=0; i<scanButtons.length; i++) {
-        scanButtons[i].disabled = false;
-    }
+//    let scanButtons = document.getElementsByClassName("scan-button");
+//    for (let i=0; i<scanButtons.length; i++) {
+//        scanButtons[i].disabled = false;
+//    }
+    document.getElementById("scan-button").disabled = false;
 }
 
 

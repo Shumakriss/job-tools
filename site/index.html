@@ -36,8 +36,14 @@
 <button id="clone-button" onclick="cloneTemplates()">Clone</button><br/>
 <br/>
 
-<label id="clone-status"></label>
 <pre id="content" style="white-space: pre-wrap;"></pre>
+
+<label>Tailored Resume: </label>
+<a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
+
+<label>Tailored Cover Letter: </label>
+<a id="tailored-cover-letter-link" href="" target="_blank"></a><br/><br/>
+
 
 <h2>Resume Scanning</h2>
 
@@ -52,25 +58,29 @@
 <br/><br/>
 
 <label>Minimum Requirements:</label><br/>
-<textarea id="minimum-requirements" rows="4" cols="80"></textarea><br/>
-<button onclick="minScan()" class="scan-button" disabled>Scan</button>
-<label id="min-reqs-score"></label>
-<br/><br/>
+<textarea id="minimum-requirements" rows="4" cols="80"></textarea>
+<label id="minimum-score"></label>
+<br/>
 
-<label>Preferred Requirements:</label><br/><textarea rows="4" cols="80"></textarea> <br/>
-<button onclick="minPrefScan()" class="scan-button" disabled>Scan</button>
-<label id="pref-reqs-score"></label>
-<br/><br/>
+<label>Preferred Requirements:</label><br/>
+<textarea id="preferred-requirements" rows="4" cols="80"></textarea>
+<label id="preferred-score"></label>
+<br/>
 
-<label>Job Duties:</label><br/><textarea rows="4" cols="80"></textarea><br/>
-<button onclick="minPrefDutyScan()" class="scan-button" disabled>Scan</button>
-<label id="duties-score"></label>
-<br/><br/>
+<label>Job Duties:</label><br/>
+<textarea id="job-duties" rows="4" cols="80"></textarea>
+<label id="job-duties-score"></label>
+<br/>
 
-<label>Company Information:</label><br/><textarea rows="4" cols="80"></textarea><br/>
-<button onclick="completeScan()" class="scan-button" disabled>Scan</button>
-<label id="complete-score"></label>
-<br/><br/>
+<label>Company Information:</label><br/>
+<textarea id="company-information" rows="4" cols="80"></textarea>
+<label id="company-information-score"></label>
+<br/>
+
+<input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
+<input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
+<input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
+<button onclick="handleScanButton()" id="scan-button" disabled>Scan</button>
 
 
 <h2>Automated Tailoring</h2>
@@ -99,13 +109,6 @@
 <br/><br/>
 
 <h2>Applications</h2>
-<h3>Quick Links</h3>
-
-<label>Tailored Resume: </label>
-<a id="tailored-resume-link" href="" target="_blank">Not Ready</a><br/><br/>
-
-<label>Tailored Cover Letter: </label>
-<a id="tailored-cover-letter-link" href="" target="_blank">Not Ready</a><br/><br/>
 
 <button onclick="exportResume()">Export Resume</button> <br/><br/>
 

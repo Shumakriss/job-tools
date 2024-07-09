@@ -1,7 +1,8 @@
 const jobscanUrl = 'https://api.jobscan.co/v4/scan'
 
 async function jobscan(cookie, xsrfToken, resume, jobDescription) {
-    console.log("Fetching Jobscan data");
+    console.log("Calling jobscan API");
+//    console.log("Calling jobscan with resume\"" + resume + "\" and job description \"" + jobDescription + "\"");
 
     headers = {
         "Accept": "application/json, text/plain, */*",
@@ -46,6 +47,7 @@ async function jobscan(cookie, xsrfToken, resume, jobDescription) {
         }
 
         const json = await response.json();
+        console.log("Scan complete");
         return json;
       } catch (error) {
         console.error(error.message);
