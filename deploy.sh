@@ -1,0 +1,1 @@
+aws s3 sync site/ s3://maker-consulting-misc-web/job-tools/
