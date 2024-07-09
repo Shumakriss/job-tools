@@ -1,98 +1,121 @@
+var resumeTemplateName;
+var resumeTemplateId;
+var coverLetterTemplateName;
+var coverLetterTemplateId;
+var companyName;
+var newResumeName;
+var newResumeId;
+var newCoverLetterName;
+var newCoverLetterId;
+var jobscanCookie;
+var jobscanXsrfToken;
+var minimumRequirements;
 
-async function reloadClones() {
-    let resumeTemplateName = document.getElementById('resume-template-name').value;
-    let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
-    let companyName = document.getElementById('company-name').value;
+function setCloneVars() {
+    resumeTemplateName = document.getElementById('resume-template-name').value;
+    coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
+    companyName = document.getElementById('company-name').value;
+    newResumeName = companySpecificName(companyName, resumeTemplateName);
+    newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+}
 
-    if (!companyName || !resumeTemplateName || !coverLetterTemplateName) {
-        console.log("Must supply company name, resume template, and cover letter template names!");
-        return;
+function checkCloneVars() {
+    return companyName && resumeTemplateName && coverLetterTemplateName;
+}
+
+function initCloneVars() {
+    if (!checkCloneVars()) {
+        setCloneVars();
     }
+}
 
-    let newResumeName = companySpecificName(companyName, resumeTemplateName);
-    let newResumeId = await getDocumentIdByName(newResumeName);
+function updateNewResumeData(newResumeId) {
     document.getElementById('tailored-resume-link').innerHTML = newResumeName;
     document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
     document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
     document.getElementById('clone-button').disabled = true;
     enableScanButtons();
+}
 
-    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
-    let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
+function updateNewCoverLetterData(newCoverLetterId) {
     document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
     document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
     document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
     document.getElementById('clone-button').disabled = true;
 }
 
+async function reloadClones() {
+    console.log("Reloading cloned templates");
+
+    initCloneVars();
+
+    newResumeId = await getDocumentIdByName(newResumeName);
+    updateNewResumeData(newResumeId);
+
+    newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
+    updateNewCoverLetterData(newCoverLetterId);
+}
+
 async function cloneTemplates() {
-    console.log("Handling tailor resume")
-    let resumeTemplateName = document.getElementById('resume-template-name').value;
-    let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
-    let companyName = document.getElementById('company-name').value;
+    console.log("Cloning templates");
 
-    if (!companyName || !resumeTemplateName || !coverLetterTemplateName) {
-        console.log("Must supply company name, resume template, and cover letter template names!");
-        return;
-    }
+    initCloneVars();
 
-    let newResumeName = companySpecificName(companyName, resumeTemplateName);
-    let resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
-    let newResumeId = await copyFile(resumeTemplateId, newResumeName);
-    document.getElementById('tailored-resume-link').innerHTML = newResumeName;
-    document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
-    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links."
-    document.getElementById('clone-button').disabled = true;
-    enableScanButtons();
+    resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
+    newResumeName = companySpecificName(companyName, resumeTemplateName);
+    newResumeId = await copyFile(resumeTemplateId, newResumeName);
+    updateNewResumeData(newResumeId);
 
-    let newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
-    let coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
-    let newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
-
-    document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
-    document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
-    document.getElementById('clone-status').innerHTML = "Templates cloned. Scroll to bottom for links.";
-    document.getElementById('clone-button').disabled = true;
+    newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+    coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
+    newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
+    updateNewCoverLetterData(newCoverLetterId);
 }
 
 function loadJobScanCredentials() {
     console.log("Loading jobscan credentials");
-    if (sessionStorage.getItem("jobscan-xsrf-token") ) {
-        document.getElementById('jobscan-xsrf-token').value = sessionStorage.getItem("jobscan-xsrf-token");
+    if ( sessionStorage.getItem("jobscan-xsrf-token" ) ) {
+        jobscanXsrfToken = sessionStorage.getItem("jobscan-xsrf-token" );
+        document.getElementById('jobscan-xsrf-token').value = jobscanXsrfToken;
     } else {
-        console.log("Did not find token");
+        console.log("Did not find jobscan token");
     }
 
-    if (sessionStorage.getItem("jobscan-cookie") ) {
-        document.getElementById('jobscan-cookie').value = sessionStorage.getItem("jobscan-cookie");
+    if ( sessionStorage.getItem("jobscan-cookie") ) {
+        jobscanCookie = sessionStorage.getItem("jobscan-cookie");
+        document.getElementById('jobscan-cookie').value = jobscanCookie;
     } else {
-        console.log("Did not find cookie");
+        console.log("Did not find jobscan cookie");
     }
 }
 
 loadJobScanCredentials();
 
 function saveJobScanCredentials() {
-    sessionStorage.setItem("jobscan-cookie", document.getElementById('jobscan-cookie').value);
-    sessionStorage.setItem("jobscan-xsrf-token", document.getElementById('jobscan-xsrf-token').value);
+    jobscanCookie = document.getElementById('jobscan-cookie').value;
+    jobscanXsrfToken = document.getElementById('jobscan-xsrf-token').value;
+    sessionStorage.setItem("jobscan-cookie", jobscanCookie);
+    sessionStorage.setItem("jobscan-xsrf-token", jobscanXsrfToken);
+}
+
+function checkJobscanVars() {
+    return companyName && resumeTemplateId && jobscanCookie && jobscanXsrfToken && minimumRequirements;
+}
+
+function initJobscanVars() {
+    if ( !checkJobscanVars() ) {
+        initCloneVars();
+        saveJobScanCredentials();
+        minimumRequirements = document.getElementById("minimum-requirements").value;
+    }
 }
 
 async function minScan() {
-    let resumeTemplateName = document.getElementById('resume-template-name').value;
-    let coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
-    let companyName = document.getElementById('company-name').value;
-    let jobscanCookie = document.getElementById("jobscan-cookie").value;
-    let jobscanXsrfToken = document.getElementById("jobscan-xsrf-token").value;
-    let minimumRequirements = document.getElementById("minimum-requirements").value;
+    console.log("Scanning resume against minimum requirements");
 
-    if (!companyName || !resumeTemplateName || !coverLetterTemplateName || !jobscanCookie || !jobscanXsrfToken || !minimumRequirements) {
-        console.log("Must supply company name, resume template name, cover letter template name, jobscan cookie and xsrf token, and minimum requirements");
-        return;
-    }
+    initJobscanVars();
 
-    let newResumeName = companySpecificName(companyName, resumeTemplateName)
-    let newResumeId = await getDocumentIdByName(newResumeName);
-    let resumePlainText = await getPlaintextFileContents(newResumeId);
+    resumePlainText = await getPlaintextFileContents(newResumeId);
     let scanResult = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, minimumRequirements);
 
     console.log("Received scan results");
@@ -116,7 +139,6 @@ function companySpecificName(companyName, templateName) {
 }
 
 function enableScanButtons() {
-
     let scanButtons = document.getElementsByClassName("scan-button");
     for (let i=0; i<scanButtons.length; i++) {
         scanButtons[i].disabled = false;
