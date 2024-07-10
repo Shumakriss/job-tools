@@ -34,38 +34,36 @@
     </ul>
 
     <h3>LinkedIn Queries</h3>
-    <label>Standard Query:</label><br/>
-    <textarea rows="4" cols="60" id="linkedin-query"></textarea>
-    <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋</button>
+    <label>Standard Query:</label>
+    <br/>
+    <textarea rows="4" cols="80" id="linkedin-query"></textarea>
+    <br/>
+    <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋 Copy to clipboard</button>
 
 </div>
 
-
 <div id="job-description" hidden="hidden" class="page">
-    <br>
-    <h2>Enter job details</h2>
-    <label>Company Name:</label><br/>
+    <h3>Enter job details</h3>
+    <label>Company Name: </label>
     <input type="text" size=60 id="company-name" value="Example" />
     <br/><br/>
 
-
     <label>Company Information:</label><br/>
-    <textarea id="company-information" rows="4" cols="60"></textarea>
+    <textarea id="company-information" rows="10" cols="80"></textarea>
     <br/><br/>
 
     <label>Job Duties:</label><br/>
-    <textarea id="job-duties" rows="4" cols="60"></textarea>
-    <br/>
+    <textarea id="job-duties" rows="10" cols="80"></textarea>
     <br/>
 
     <br/>
     <label>Minimum Requirements (</label><label class="required-field-flag">Required</label><label>):</label><br/>
-    <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
+    <textarea id="minimum-requirements" rows="10" cols="80"></textarea>
     <br/>
     <br/>
 
     <label>Preferred Requirements:</label><br/>
-    <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
+    <textarea id="preferred-requirements" rows="10" cols="80"></textarea>
     <br/>
     <br/>
 
@@ -95,6 +93,7 @@
     <h2>Scan Results</h2>
 
     <h3>Minimum Requirements</h3>
+    <p id="minimum-requirements-display"></p>
     <label id="minimum-score">Score:</label><br/>
     <h4>Keywords:</h4>
     <div id="minimum-requirements-keywords"></div>
@@ -160,6 +159,9 @@
     <input value="https://www.makerconsulting.llc/maker-consulting" size=60 disabled>
     <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
     <br/><br/>
+
+    <h3>Track Applications</h3>
+    <a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Open Google Sheet</a>
 </div>
 
 <div id="configure" hidden="hidden" class="page">

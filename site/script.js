@@ -275,6 +275,7 @@ async function handleScanButton() {
     document.getElementById("minimum-score").innerHTML = "Score: " + score;
     document.getElementById("minimum-requirements-keywords").innerHTML = '';
     document.getElementById("minimum-requirements-keywords").appendChild(formatResults(results));
+    document.getElementById("minimum-requirements-display").value = document.getElementById("minimum-requirements");
 
     preferredRequirements = document.getElementById("preferred-requirements").value;
     includePreferred = document.getElementById("include-preferred-checkbox").checked;
