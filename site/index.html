@@ -11,9 +11,9 @@
 <h1>Maker Consulting</h1>
 
 <div class="nav-bar">
-    <button onclick="handleNavButtonClick(this, 'search')" class="nav-active nav-button">Search</button>
-    <button onclick="handleNavButtonClick(this, 'tailor')" class="nav-inactive nav-button">Tailor</button>
-    <button onclick="handleNavButtonClick(this, 'scan')" class="nav-inactive nav-button">Scan</button>
+    <button onclick="handleNavButtonClick(this, 'search')" class="nav-active nav-button">Start Search</button>
+    <button onclick="handleNavButtonClick(this, 'job-description')" class="nav-inactive nav-button">Provide Job Description</button>
+    <button onclick="handleNavButtonClick(this, 'tailor')" class="nav-inactive nav-button">Scan & Tailor</button>
     <button onclick="handleNavButtonClick(this, 'apply')" class="nav-inactive nav-button">Apply</button>
     <button onclick="handleNavButtonClick(this, 'configure')" class="nav-inactive nav-button">Configure</button>
 </div>
@@ -40,78 +40,34 @@
 
 </div>
 
-<div id="tailor" hidden="hidden" class="page">
-    <br/>
-    <label>Company Name:</label><br/>
-    <input type="text" size=60 id="company-name" value="Example" /><br/><br/>
 
-    <label>Tailored Resume: </label>
-    <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
-
-    <label>Tailored Cover Letter: </label>
-    <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/><br/>
-
-    <button id="clone-button" onclick="cloneTemplates()" class="button">Load Docs</button><br/>
-
-    <!--<h2>Automated Tailoring</h2>-->
-
-    <!--<label>Job Title:</label><br/>-->
-    <!--<input type="text" size=60/><br/><br/>-->
-
-    <!--<button onclick="tailorResume()">Tailor Resume</button>-->
-    <!--<br/><br/>-->
-
-    <!--<h3>Cover Letter Tailoring</h3>-->
-
-    <!--<label>Recipient:</label><br/>-->
-    <!--<input type="text" size=60 value="Hiring Manager"/> <br/><br/>-->
-
-    <!--<label>City, State:</label><br/>-->
-    <!--<input type="text" size=60/> <br/><br/>-->
-
-    <!--<label>Specific Values:</label><br/>-->
-    <!--<input type="text" size=60/> <br/><br/>-->
-
-    <!--<label>Specific Experience:</label><br/>-->
-    <!--<input type="text" size=60/> <br/><br/>-->
-
-    <!--<button onclick="tailorLetter()">Tailor Cover Letter</button>-->
-    <!--<br/><br/>-->
-
-</div>
-
-<div id="scan" hidden="hidden" class="page">
+<div id="job-description" hidden="hidden" class="page">
     <br>
+    <h2>Enter job details</h2>
+    <label>Company Name:</label><br/>
+    <input type="text" size=60 id="company-name" value="Example" />
+    <br/><br/>
+
 
     <label>Company Information:</label><br/>
     <textarea id="company-information" rows="4" cols="60"></textarea>
-    <label id="company-information-score">Score: Unknown</label><br/>
-    <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
-    <br/>
+    <br/><br/>
 
     <label>Job Duties:</label><br/>
     <textarea id="job-duties" rows="4" cols="60"></textarea>
-    <label id="job-duties-score">Score: Unknown</label><br/>
-    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
+    <br/>
     <br/>
 
     <br/>
     <label>Minimum Requirements (</label><label class="required-field-flag">Required</label><label>):</label><br/>
     <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
-    <label id="minimum-score">Score: Unknown</label><br/>
-    <input type="checkbox" checked disabled /><label>Include Minimum Requirements</label><br/>
+    <br/>
     <br/>
 
     <label>Preferred Requirements:</label><br/>
     <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
-    <label id="preferred-score">Score: Unknown</label><br/>
-    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
     <br/>
-
-    <p class="button-instruction">Copy or load resumes in the Tailoring screen to enable scanning</p>
-    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
     <br/>
-
 
     <h2>Score Determination</h2>
     <p>This page aims to address two limitations with Jobscan.co.
@@ -139,6 +95,51 @@
 
 </div>
 
+<div id="tailor" hidden="hidden" class="page">
+
+    <h3>Copy Templates</h3>
+    <p>Copy or load resumes in the Tailoring screen to enable scanning.</p>
+    <button id="clone-button" onclick="cloneTemplates()" class="button">Load Docs</button><br/>
+
+    <h3>Doc Links</h3>
+    <label>Tailored Resume: </label>
+    <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
+
+    <label>Tailored Cover Letter: </label>
+    <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/>
+
+    <h2>Scan</h2>
+    <input type="checkbox" checked disabled /><label>Include Minimum Requirements</label>
+    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label>
+    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label>
+    <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
+    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
+    <br/>
+
+    <h2>Scan Results</h2>
+
+    <h3>Minimum Requirements</h3>
+    <label id="minimum-score">Score:</label><br/>
+    <h4>Keywords:</h4>
+    <div id="minimum-requirements-keywords"></div>
+
+    <h3>Preferred Requirements</h3>
+    <label id="preferred-score">Score:</label><br/>
+    <h4>Keywords:</h4>
+    <div id="preferred-requirements-keywords"></div>
+
+    <h3>Job Duties</h3>
+    <label id="job-duties-score">Score:</label><br/>
+    <h4>Keywords:</h4>
+    <div id="job-duties-keywords"></div>
+
+    <h3>Company Information</h3>
+    <label id="company-information-score">Score:</label><br/>
+    <h4>Keywords:</h4>
+    <div id="company-information-keywords"></div>
+
+</div>
+
 <div id="apply" hidden="hidden" class="page">
 
     <h3>Download PDF's</h3>
@@ -159,10 +160,6 @@
     <input value="https://www.makerconsulting.llc/maker-consulting" size=60 disabled>
     <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
     <br/><br/>
-    <!--<h3>Application Logs</h3>-->
-    <!--<label>Spreadsheet Name:</label><br/>-->
-    <!--<input id="spreadsheet-name" type="text" size=60 value="Job Hunt 2024"/><br/><br/>-->
-    <!--<button onclick="updateGoogleSheet()">Log Application In Google Sheets</button>-->
 </div>
 
 <div id="configure" hidden="hidden" class="page">

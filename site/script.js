@@ -248,6 +248,22 @@ function getPreferredRequirements() {
    return minReqs + prefReqs;
 }
 
+function formatResults(jobscanResults) {
+    let ul = document.createElement('ul');
+
+    let highValueSkills = jobscanResults['highValueSkills'];
+    for (let i=0; i<highValueSkills.length; i++){
+        if (highValueSkills[i].cvCount == 0){
+            let li = document.createElement("li");
+            let text = highValueSkills[i]['skill'] + " (" + highValueSkills[i]['type'] + ")"
+            li.appendChild(document.createTextNode(text));
+            ul.appendChild(li);
+        }
+    }
+
+    return ul
+}
+
 async function handleScanButton() {
     console.log("Scanning resume against minimum requirements");
 
@@ -257,6 +273,8 @@ async function handleScanButton() {
     let results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
     let score = results.matchRate.score;
     document.getElementById("minimum-score").innerHTML = "Score: " + score;
+    document.getElementById("minimum-requirements-keywords").innerHTML = '';
+    document.getElementById("minimum-requirements-keywords").appendChild(formatResults(results));
 
     preferredRequirements = document.getElementById("preferred-requirements").value;
     includePreferred = document.getElementById("include-preferred-checkbox").checked;
@@ -265,6 +283,8 @@ async function handleScanButton() {
         results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("preferred-score").innerHTML = "Score: " + score;
+        document.getElementById("preferred-requirements-keywords").innerHTML = '';
+        document.getElementById("preferred-requirements-keywords").appendChild(formatResults(results));
     }
 
     jobDuties = document.getElementById("job-duties").value;
@@ -274,6 +294,8 @@ async function handleScanButton() {
         results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("job-duties-score").innerHTML = "Score: " + score;
+        document.getElementById("job-duties-keywords").innerHTML = '';
+        document.getElementById("job-duties-keywords").appendChild(formatResults(results));
     }
 
     companyInformation = document.getElementById("company-information").value;
@@ -283,6 +305,8 @@ async function handleScanButton() {
         results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
         score = results.matchRate.score;
         document.getElementById("company-information-score").innerHTML = "Score: " + score;
+        document.getElementById("company-information-keywords").innerHTML = '';
+        document.getElementById("company-information-keywords").appendChild(formatResults(results));
     }
 }
 

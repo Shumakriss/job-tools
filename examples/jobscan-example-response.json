@@ -1,0 +1,2896 @@
+{
+    "isStarred": false,
+    "findings": [
+        {
+            "key": "atsTip",
+            "status": "fail",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "contactPhone",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": "contactInfo",
+            "documentType": "resume"
+        },
+        {
+            "key": "contactEmail",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": "contactInfo",
+            "documentType": "resume"
+        },
+        {
+            "key": "contactAddress",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": "contactInfo",
+            "documentType": "resume"
+        },
+        {
+            "key": "jobTitleMatch",
+            "status": "fail",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": null,
+            "documentType": "resume",
+            "variables": {
+                "jobtitleCvCount": "resume.searchability.jobtitleCvCount",
+                "jdJobTitle": "resume.searchability.jdJobTitle"
+            }
+        },
+        {
+            "key": "educationMatch",
+            "status": "pass",
+            "statusReason": "noDegreeRequired",
+            "category": "searchability",
+            "subCategory": null,
+            "documentType": "resume",
+            "variables": {
+                "requiredEducation": "resume.searchability.requiredEducation",
+                "requiredEducationLevel": "resume.searchability.requiredEducationLevel"
+            }
+        },
+        {
+            "key": "headingWork",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": "sectionHeadings",
+            "documentType": "resume"
+        },
+        {
+            "key": "headingObjective",
+            "status": "skip",
+            "statusReason": "hide",
+            "category": "searchability",
+            "subCategory": "sectionHeadings",
+            "documentType": "resume"
+        },
+        {
+            "key": "headingEducation",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": "sectionHeadings",
+            "documentType": "resume"
+        },
+        {
+            "key": "dateFormatting",
+            "status": "pass",
+            "statusReason": null,
+            "category": "searchability",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "fileFormat",
+            "status": "skip",
+            "statusReason": "noUploadedFile",
+            "category": "searchability",
+            "subCategory": "fileType",
+            "documentType": "resume"
+        },
+        {
+            "key": "fileNameCharacters",
+            "status": "skip",
+            "statusReason": "noUploadedFile",
+            "category": "searchability",
+            "subCategory": "fileType",
+            "documentType": "resume"
+        },
+        {
+            "key": "fileNameLength",
+            "status": "skip",
+            "statusReason": "noFilename",
+            "category": "searchability",
+            "subCategory": "fileType",
+            "documentType": "resume",
+            "variables": {
+                "fileUploadName": "resume.searchability.fileType.fileUploadName",
+                "fileNameLength": "resume.searchability.fileType.fileNameLength"
+            }
+        },
+        {
+            "key": "wordCount",
+            "status": "pass",
+            "statusReason": "nonAustralia",
+            "category": "recruiterTips",
+            "subCategory": null,
+            "documentType": "resume",
+            "variables": {
+                "wordCount": "resume.recruiterTips.wordCount",
+                "country": "resume.recruiterTips.country"
+            }
+        },
+        {
+            "key": "measurableResults",
+            "status": "pass",
+            "statusReason": null,
+            "category": "recruiterTips",
+            "subCategory": null,
+            "documentType": "resume",
+            "evidence": {
+                "title": "Measurable Results",
+                "items": [
+                    "compute costs by nearly 50%.",
+                    "spatial pipelines to enable 300+ engineers, analysts,",
+                    "out zone  used by millions of",
+                    "for the standardization of billions of",
+                    "and angular to handle millions of",
+                    "reducing the workload for thousands of",
+                    "extraction and analysis of billions of",
+                    "to increase utilization of hundreds of",
+                    "servers running thousands of"
+                ]
+            },
+            "variables": {
+                "measurableResultsCount": "resume.recruiterTips.measurableResultsCount"
+            }
+        },
+        {
+            "key": "jobLevelMatch",
+            "status": "pass",
+            "statusReason": null,
+            "category": "recruiterTips",
+            "subCategory": null,
+            "documentType": "resume",
+            "variables": {
+                "jobLevelRequirement": "resume.recruiterTips.jobLevelRequirement",
+                "userJobLevel": "resume.recruiterTips.userJobLevel",
+                "jobLevelMatchDifference": "resume.recruiterTips.jobLevelMatchDifference",
+                "jobLevelMatchPhrase": "resume.recruiterTips.jobLevelMatchPhrase"
+            }
+        },
+        {
+            "key": "resumeTone",
+            "status": "pass",
+            "statusReason": null,
+            "category": "recruiterTips",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "references",
+            "status": "skip",
+            "statusReason": null,
+            "category": "recruiterTips",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "webPresence",
+            "status": "pass",
+            "statusReason": null,
+            "category": "recruiterHighlights",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "industryDepth",
+            "status": "skip",
+            "statusReason": "industryAlignmentNotFound",
+            "category": "recruiterHighlights",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "industryBreadth",
+            "status": "skip",
+            "statusReason": "industryAlignmentNotFound",
+            "category": "recruiterHighlights",
+            "subCategory": null,
+            "documentType": "resume"
+        },
+        {
+            "key": "fontSize",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "fontCount",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "fontFamily",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "fontBold",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "fontColor",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "specialCharacters",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "fontCheck",
+            "documentType": "resume"
+        },
+        {
+            "key": "pageSize",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "pageSetup",
+            "documentType": "resume"
+        },
+        {
+            "key": "pageMargins",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "pageSetup",
+            "documentType": "resume"
+        },
+        {
+            "key": "pageHeaders",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "pageSetup",
+            "documentType": "resume"
+        },
+        {
+            "key": "pageFooters",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "pageSetup",
+            "documentType": "resume"
+        },
+        {
+            "key": "textAlignment",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "layout",
+            "documentType": "resume"
+        },
+        {
+            "key": "tables",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "layout",
+            "documentType": "resume"
+        },
+        {
+            "key": "images",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "layout",
+            "documentType": "resume"
+        },
+        {
+            "key": "columns",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "layout",
+            "documentType": "resume"
+        },
+        {
+            "key": "paragraphLength",
+            "status": "pass",
+            "statusReason": null,
+            "category": "formatting",
+            "subCategory": "layout",
+            "documentType": "resume"
+        },
+        {
+            "key": "wordCount",
+            "status": "fail",
+            "statusReason": "min",
+            "category": "coverletter",
+            "subCategory": null,
+            "documentType": "coverletter",
+            "variables": {
+                "wordCount": "coverletter.coverletter.wordCount"
+            }
+        },
+        {
+            "key": "email",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": "contactInformation",
+            "documentType": "coverletter"
+        },
+        {
+            "key": "phone",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": "contactInformation",
+            "documentType": "coverletter"
+        },
+        {
+            "key": "companyAddress",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": "companyInformation",
+            "documentType": "coverletter"
+        },
+        {
+            "key": "companyName",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": "companyInformation",
+            "documentType": "coverletter",
+            "variables": {
+                "companyName": "coverletter.coverletter.companyInformation.companyName"
+            }
+        },
+        {
+            "key": "jobTitle",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": "companyInformation",
+            "documentType": "coverletter",
+            "variables": {
+                "jobTitle": "coverletter.coverletter.companyInformation.jobTitle"
+            }
+        },
+        {
+            "key": "measurableResults",
+            "status": "fail",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": null,
+            "documentType": "coverletter",
+            "variables": {
+                "measurableResultsCount": "coverletter.coverletter.measurableResultsCount"
+            }
+        },
+        {
+            "key": "coverLetterTone",
+            "status": "pass",
+            "statusReason": null,
+            "category": "coverletter",
+            "subCategory": null,
+            "documentType": "coverletter"
+        }
+    ],
+    "matchRate": {
+        "score": 10,
+        "rawScore": 10,
+        "searchability": {
+            "score": 77.78,
+            "issueCount": 2,
+            "totalCount": 9
+        },
+        "skills": {
+            "score": 0,
+            "issueCount": 8,
+            "totalCount": 8
+        },
+        "recruiterTips": {
+            "score": 100,
+            "issueCount": 0,
+            "totalCount": 4
+        },
+        "formatting": {
+            "score": 100,
+            "issueCount": 0,
+            "totalCount": 15
+        }
+    },
+    "skills": {
+        "soft": [
+            {
+                "skill": "creativity",
+                "softness": "soft",
+                "cv_count": 32261,
+                "jd_count": 32975,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 25641,
+                "weight": "0.333",
+                "stemmed": "creativ",
+                "approved": "yes",
+                "function": "engineer",
+                "industry": "",
+                "function2": "",
+                "created_at": "2015-10-01T05:50:07.000000Z",
+                "updated_at": "2024-07-08T01:10:13.000000Z",
+                "emsi_skill_id": 7349,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "creativity",
+                "type": "soft",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "mentorship",
+                "softness": "soft",
+                "cv_count": 23488,
+                "jd_count": 13712,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 8240,
+                "weight": "0.333",
+                "stemmed": "mentorship",
+                "approved": "yes",
+                "function": "general",
+                "industry": "General",
+                "function2": "",
+                "created_at": "-000001-11-30T00:00:00.000000Z",
+                "updated_at": "2024-07-08T01:08:08.000000Z",
+                "emsi_skill_id": 18327,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "mentorship",
+                "type": "soft",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "collaborative",
+                "softness": "soft",
+                "cv_count": 93250,
+                "jd_count": 89770,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 14711,
+                "weight": "0.333",
+                "stemmed": "collabor",
+                "approved": "yes",
+                "function": "coordinator-supply chain planning",
+                "industry": "General skill",
+                "function2": "",
+                "created_at": "2015-06-16T05:20:57.000000Z",
+                "updated_at": "2024-07-07T01:14:07.000000Z",
+                "emsi_skill_id": null,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [
+                    {
+                        "text": "collaborated",
+                        "count": 1
+                    }
+                ],
+                "name": "collaborative",
+                "type": "soft",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            }
+        ],
+        "hard": [
+            {
+                "skill": "shipping",
+                "softness": "hard",
+                "cv_count": 21315,
+                "jd_count": 15736,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 15054,
+                "weight": "0.200",
+                "stemmed": "ship",
+                "approved": "yes",
+                "function": "truck driver",
+                "industry": "General skill",
+                "function2": "",
+                "created_at": "2015-06-24T07:19:44.000000Z",
+                "updated_at": "2024-07-08T01:22:14.000000Z",
+                "emsi_skill_id": null,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "shipping",
+                "type": "hard",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "microservice",
+                "softness": "hard",
+                "cv_count": 3100,
+                "jd_count": 1351,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 199539,
+                "weight": "0.200",
+                "stemmed": "microservic",
+                "approved": "yes",
+                "function": "",
+                "industry": "Computer Software",
+                "function2": "",
+                "created_at": "2021-12-19T01:12:12.000000Z",
+                "updated_at": "2024-07-08T01:21:07.000000Z",
+                "emsi_skill_id": 18564,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [
+                    {
+                        "text": "microservices",
+                        "count": 1
+                    }
+                ],
+                "name": "microservice",
+                "type": "hard",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "design patterns",
+                "softness": "hard",
+                "cv_count": 8090,
+                "jd_count": 13260,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 7875,
+                "weight": "0.200",
+                "stemmed": "design pattern",
+                "approved": "yes",
+                "function": "",
+                "industry": "Information Technology & Services",
+                "function2": "",
+                "created_at": "-000001-11-30T00:00:00.000000Z",
+                "updated_at": "2024-07-08T01:21:05.000000Z",
+                "emsi_skill_id": null,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "design patterns",
+                "type": "hard",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "Mobile Development",
+                "softness": "hard",
+                "cv_count": 1387,
+                "jd_count": 1832,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 179425,
+                "weight": "0.200",
+                "stemmed": "mobil develop",
+                "approved": "yes",
+                "function": "",
+                "industry": "Information Technology & Services",
+                "function2": "",
+                "created_at": "2021-12-09T18:02:17.000000Z",
+                "updated_at": "2024-07-08T01:19:24.000000Z",
+                "emsi_skill_id": 18956,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "Mobile Development",
+                "type": "hard",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            },
+            {
+                "skill": "software development",
+                "softness": "hard",
+                "cv_count": 101513,
+                "jd_count": 104638,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 14493,
+                "weight": "0.200",
+                "stemmed": "softwar develop",
+                "approved": "yes",
+                "function": "",
+                "industry": "Computer Software",
+                "function2": "",
+                "created_at": "2015-06-12T23:39:59.000000Z",
+                "updated_at": "2024-07-08T01:22:11.000000Z",
+                "emsi_skill_id": 27022,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "variations": [],
+                "name": "software development",
+                "type": "hard",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [
+                    "spearheaded quality delivery of diverse software development projects"
+                ],
+                "isRequired": false
+            }
+        ],
+        "jobtitle": [
+            {
+                "skill": "Maintenance.",
+                "softness": "jobtitle",
+                "cv_count": 0,
+                "jd_count": 0,
+                "skill_type": "",
+                "count": 1,
+                "countCv": 0,
+                "id": 98378,
+                "weight": "1.000",
+                "stemmed": "mainten",
+                "approved": "yes",
+                "function": "",
+                "industry": "",
+                "function2": "",
+                "created_at": "2018-10-26T14:54:42.000000Z",
+                "updated_at": "2023-04-24T18:01:41.000000Z",
+                "emsi_skill_id": null,
+                "emsi_title_id": null,
+                "uncappedCount": 1,
+                "skill_abbreviation": "",
+                "name": "Maintenance.",
+                "type": "jobtitle",
+                "counts": {
+                    "jobDescriptionMatches": 1,
+                    "resumeMatches": 0,
+                    "coverLetterMatches": 0
+                },
+                "phrases": [],
+                "isRequired": false
+            }
+        ],
+        "other": []
+    },
+    "keywords": [],
+    "highValueSkills": [
+        {
+            "skill": "Maintenance.",
+            "jdCount": 1,
+            "type": "job title",
+            "count": 50,
+            "weight": 0.1,
+            "cvCount": 0
+        },
+        {
+            "skill": "shipping",
+            "jdCount": 1,
+            "type": "hard",
+            "count": 20,
+            "weight": "0.200",
+            "cvCount": 0
+        },
+        {
+            "skill": "microservice",
+            "jdCount": 1,
+            "type": "hard",
+            "count": 20,
+            "weight": "0.200",
+            "cvCount": 0
+        },
+        {
+            "skill": "design patterns",
+            "jdCount": 1,
+            "type": "hard",
+            "count": 20,
+            "weight": "0.200",
+            "cvCount": 0
+        },
+        {
+            "skill": "Mobile Development",
+            "jdCount": 1,
+            "type": "hard",
+            "count": 20,
+            "weight": "0.200",
+            "cvCount": 0
+        },
+        {
+            "skill": "software development",
+            "jdCount": 1,
+            "type": "hard",
+            "count": 20,
+            "weight": "0.200",
+            "cvCount": 0
+        },
+        {
+            "skill": "creativity",
+            "jdCount": 1,
+            "type": "soft",
+            "count": 2,
+            "weight": "0.333",
+            "cvCount": 0
+        },
+        {
+            "skill": "mentorship",
+            "jdCount": 1,
+            "type": "soft",
+            "count": 2,
+            "weight": "0.333",
+            "cvCount": 0
+        },
+        {
+            "skill": "collaborative",
+            "jdCount": 1,
+            "type": "soft",
+            "count": 2,
+            "weight": "0.333",
+            "cvCount": 0
+        }
+    ],
+    "resume": "",
+    "jobDescription": "5-8+ years of experience in development on a variety of languages, platforms, frameworks, and technologies.\nExtensive experience with React.\nExtensive experience with mobile development.\nDemonstrates intelligence and creativity with programming to solve complex real-world problems.\nMastery of design patterns and collaborative software development best practices.\nPride in shipping beautiful, clean, and maintainable code.\nExperience with microservice architectures, configuration, operation, and maintenance.\nA self-starter who requires little day-to-day supervision/direction and is comfortable providing mentorship to other engineers.",
+    "coverLetter": "",
+    "relatedScans": [
+        {
+            "id": 35511874,
+            "score": 10
+        },
+        {
+            "id": 35511897,
+            "score": 10
+        },
+        {
+            "id": 35512457,
+            "score": 10
+        },
+        {
+            "id": 35512584,
+            "score": 10
+        },
+        {
+            "id": 35512614,
+            "score": 10
+        },
+        {
+            "id": 35512778,
+            "score": 10
+        },
+        {
+            "id": 35512829,
+            "score": 10
+        },
+        {
+            "id": 35512837,
+            "score": 10
+        },
+        {
+            "id": 35512869,
+            "score": 10
+        },
+        {
+            "id": 35512905,
+            "score": 10
+        },
+        {
+            "id": 35512914,
+            "score": 10
+        },
+        {
+            "id": 35512945,
+            "score": 10
+        }
+    ],
+    "metadata": {
+        "title": "Maintenance.",
+        "variables": {
+            "resume": {
+                "searchability": {
+                    "jobtitleCvCount": "0",
+                    "jdJobTitle": "Maintenance.",
+                    "requiredEducation": "",
+                    "requiredEducationLevel": "",
+                    "fileType": {
+                        "fileUploadName": "",
+                        "fileNameLength": ""
+                    }
+                },
+                "recruiterTips": {
+                    "wordCount": "519",
+                    "country": "United States",
+                    "measurableResultsCount": "9",
+                    "jobLevelRequirement": "junior",
+                    "userJobLevel": "senior",
+                    "jobLevelMatchDifference": "4",
+                    "jobLevelMatchPhrase": "You are applying to a(n) junior level role, but you held senior or higher level positions in the past. If you are a career changer in a new field, we recommend adding a summary statement to explain your shift in trajectory."
+                }
+            },
+            "coverletter": {
+                "coverletter": {
+                    "wordCount": "0",
+                    "companyInformation": {
+                        "companyName": "",
+                        "jobTitle": ""
+                    },
+                    "measurableResultsCount": ""
+                }
+            }
+        },
+        "scan": {
+            "score": 10,
+            "starred": false,
+            "archived": false,
+            "jobtitleid": 0,
+            "modifierid": 0,
+            "country": "United States",
+            "name": "Maintenance.",
+            "notes": "",
+            "cv_name": "",
+            "cv_es_id": "",
+            "jd_es_id": "",
+            "recruitcheck": false,
+            "jd_company": "",
+            "jd_url": "",
+            "cv_id": 27479647,
+            "jd_id": 17582186,
+            "jdlead": "5-8+ years of experience in development on a variety of languages, platforms, frameworks, and technologies.\nExtensive experience with React.\nExtensive experience with mobile development.\nDemonstrates intelligence and creativity with programming to solve complex real-world problems.\nMastery of design patterns and collaborative software development best practices.\nPride in shipping beautiful, clean, and maintainable code.\nExperience with microservice architectures, configuration, operation, and ma",
+            "cvhash": "1776433545",
+            "jdhash": "1745583873",
+            "updated_at": "2024-07-10T14:36:45.000000Z",
+            "created_at": "2024-07-10T14:36:44.000000Z",
+            "id": 35512945,
+            "city": "Arlington",
+            "latitude": 42.41719055175781,
+            "longitude": -71.1611099243164
+        },
+        "owner": [],
+        "jobDescription": {
+            "id": 17582186,
+            "user_id": null,
+            "hash": "c27bf2806c9cd7e25f15d254a5163b17",
+            "education": {
+                "law": [],
+                "doctor": [],
+                "higher": [],
+                "bachelors": [],
+                "doctorate": [],
+                "certification": []
+            },
+            "es_id": null,
+            "company_name": "",
+            "url": "",
+            "is_open": 1,
+            "is_s3_stored": false,
+            "is_es_indexed": false,
+            "scanned_at": "2024-07-10T14:36:44.000000Z",
+            "created_at": "2024-07-10T13:49:27.000000Z",
+            "updated_at": "2024-07-10T14:36:45.000000Z",
+            "ats_matched": 0,
+            "user_jobtitle": "",
+            "jobtitleid": null,
+            "modifierid": null,
+            "es_indexed_at": null,
+            "parsed": {
+                "manager": {
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdContentOriginal": "5-8+ years of experience in development on a variety of languages, platforms, frameworks, and technologies.\nExtensive experience with React.\nExtensive experience with mobile development.\nDemonstrates intelligence and creativity with programming to solve complex real-world problems.\nMastery of design patterns and collaborative software development best practices.\nPride in shipping beautiful, clean, and maintainable code.\nExperience with microservice architectures, configuration, operation, and maintenance.\nA self-starter who requires little day-to-day supervision/direction and is comfortable providing mentorship to other engineers.",
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdContent": "5-8+ years of experience in development on a variety of languages, platforms, frameworks, and technologies.\nextensive experience with react.\nextensive experience with mobile development.\ndemonstrates intelligence and creativity with programming to solve complex real-world problems.\nmastery of design patterns and collaborative software development best practices.\npride in shipping beautiful, clean, and maintainable code.\nexperience with microservice architectures, configuration, operation, and maintenance.\na self-starter who requires little day-to-day supervision/direction and is comfortable providing mentorship to other engineers.",
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdTokens": {
+                        "": 2,
+                        "a": 2,
+                        "in": 2,
+                        "is": 1,
+                        "of": 3,
+                        "on": 1,
+                        "to": 2,
+                        "5-8": 1,
+                        "and": 6,
+                        "who": 1,
+                        "best": 1,
+                        "code": 1,
+                        "with": 4,
+                        "clean": 1,
+                        "other": 1,
+                        "pride": 1,
+                        "react": 1,
+                        "solve": 1,
+                        "years": 1,
+                        "design": 1,
+                        "little": 1,
+                        "mobile": 1,
+                        "complex": 1,
+                        "mastery": 1,
+                        "variety": 1,
+                        "patterns": 1,
+                        "problems": 1,
+                        "requires": 1,
+                        "shipping": 1,
+                        "software": 1,
+                        "beautiful": 1,
+                        "engineers": 1,
+                        "extensive": 2,
+                        "languages": 1,
+                        "operation": 1,
+                        "platforms": 1,
+                        "practices": 1,
+                        "providing": 1,
+                        "creativity": 1,
+                        "day-to-day": 1,
+                        "experience": 4,
+                        "frameworks": 1,
+                        "mentorship": 1,
+                        "real-world": 1,
+                        "comfortable": 1,
+                        "development": 3,
+                        "maintenance": 1,
+                        "programming": 1,
+                        "demonstrates": 1,
+                        "intelligence": 1,
+                        "maintainable": 1,
+                        "microservice": 1,
+                        "self-starter": 1,
+                        "technologies": 1,
+                        "architectures": 1,
+                        "collaborative": 1,
+                        "configuration": 1,
+                        "supervision/direction": 1
+                    },
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdEducation": {
+                        "law": [],
+                        "doctor": [],
+                        "higher": [],
+                        "bachelors": [],
+                        "doctorate": [],
+                        "certification": []
+                    },
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000allJdSkillsTitles": {
+                        "hard": [
+                            {
+                                "id": 14493,
+                                "count": 1,
+                                "skill": "software development",
+                                "weight": "0.200",
+                                "stemmed": "softwar develop",
+                                "approved": "yes",
+                                "cv_count": 101513,
+                                "function": "",
+                                "industry": "Computer Software",
+                                "jd_count": 104638,
+                                "softness": "hard",
+                                "function2": "",
+                                "created_at": "2015-06-12T23:39:59.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:22:11.000000Z",
+                                "emsi_skill_id": 27022,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 179425,
+                                "count": 1,
+                                "skill": "Mobile Development",
+                                "weight": "0.200",
+                                "stemmed": "mobil develop",
+                                "approved": "yes",
+                                "cv_count": 1387,
+                                "function": "",
+                                "industry": "Information Technology & Services",
+                                "jd_count": 1832,
+                                "softness": "hard",
+                                "function2": "",
+                                "created_at": "2021-12-09T18:02:17.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:19:24.000000Z",
+                                "emsi_skill_id": 18956,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 7875,
+                                "count": 1,
+                                "skill": "design patterns",
+                                "weight": "0.200",
+                                "stemmed": "design pattern",
+                                "approved": "yes",
+                                "cv_count": 8090,
+                                "function": "",
+                                "industry": "Information Technology & Services",
+                                "jd_count": 13260,
+                                "softness": "hard",
+                                "function2": "",
+                                "created_at": "-000001-11-30T00:00:00.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:21:05.000000Z",
+                                "emsi_skill_id": null,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 199539,
+                                "count": 1,
+                                "skill": "microservice",
+                                "weight": "0.200",
+                                "stemmed": "microservic",
+                                "approved": "yes",
+                                "cv_count": 3100,
+                                "function": "",
+                                "industry": "Computer Software",
+                                "jd_count": 1351,
+                                "softness": "hard",
+                                "function2": "",
+                                "created_at": "2021-12-19T01:12:12.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:21:07.000000Z",
+                                "emsi_skill_id": 18564,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 15054,
+                                "count": 1,
+                                "skill": "shipping",
+                                "weight": "0.200",
+                                "stemmed": "ship",
+                                "approved": "yes",
+                                "cv_count": 21315,
+                                "function": "truck driver",
+                                "industry": "General skill",
+                                "jd_count": 15736,
+                                "softness": "hard",
+                                "function2": "",
+                                "created_at": "2015-06-24T07:19:44.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:22:14.000000Z",
+                                "emsi_skill_id": null,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            }
+                        ],
+                        "soft": [
+                            {
+                                "id": 14711,
+                                "count": 1,
+                                "skill": "collaborative",
+                                "weight": "0.333",
+                                "stemmed": "collabor",
+                                "approved": "yes",
+                                "cv_count": 93250,
+                                "function": "coordinator-supply chain planning",
+                                "industry": "General skill",
+                                "jd_count": 89770,
+                                "softness": "soft",
+                                "function2": "",
+                                "created_at": "2015-06-16T05:20:57.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-07T01:14:07.000000Z",
+                                "emsi_skill_id": null,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 8240,
+                                "count": 1,
+                                "skill": "mentorship",
+                                "weight": "0.333",
+                                "stemmed": "mentorship",
+                                "approved": "yes",
+                                "cv_count": 23488,
+                                "function": "general",
+                                "industry": "General",
+                                "jd_count": 13712,
+                                "softness": "soft",
+                                "function2": "",
+                                "created_at": "-000001-11-30T00:00:00.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:08:08.000000Z",
+                                "emsi_skill_id": 18327,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            },
+                            {
+                                "id": 25641,
+                                "count": 1,
+                                "skill": "creativity",
+                                "weight": "0.333",
+                                "stemmed": "creativ",
+                                "approved": "yes",
+                                "cv_count": 32261,
+                                "function": "engineer",
+                                "industry": "",
+                                "jd_count": 32975,
+                                "softness": "soft",
+                                "function2": "",
+                                "created_at": "2015-10-01T05:50:07.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2024-07-08T01:10:13.000000Z",
+                                "emsi_skill_id": 7349,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            }
+                        ],
+                        "jobtitle": [
+                            {
+                                "id": 98378,
+                                "count": 1,
+                                "skill": "Maintenance.",
+                                "weight": "1.000",
+                                "stemmed": "mainten",
+                                "approved": "yes",
+                                "cv_count": 0,
+                                "function": "",
+                                "industry": "",
+                                "jd_count": 0,
+                                "softness": "jobtitle",
+                                "function2": "",
+                                "created_at": "2018-10-26T14:54:42.000000Z",
+                                "skill_type": "",
+                                "updated_at": "2023-04-24T18:01:41.000000Z",
+                                "emsi_skill_id": null,
+                                "emsi_title_id": null,
+                                "uncappedCount": 1,
+                                "skill_abbreviation": ""
+                            }
+                        ]
+                    },
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000allJdJobTitles": {
+                        "Maintenance.": {
+                            "id": 98378,
+                            "count": 1,
+                            "skill": "Maintenance.",
+                            "weight": "1.000",
+                            "stemmed": "mainten",
+                            "approved": "yes",
+                            "cv_count": 0,
+                            "function": "",
+                            "industry": "",
+                            "jd_count": 0,
+                            "softness": "jobtitle",
+                            "function2": "",
+                            "created_at": "2018-10-26T14:54:42.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2023-04-24T18:01:41.000000Z",
+                            "emsi_skill_id": null,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        }
+                    },
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000setJobTitle": "Maintenance.",
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000excludedJdSkillSet": [],
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdSkillSet": {
+                        "shipping": {
+                            "id": 15054,
+                            "count": 1,
+                            "skill": "shipping",
+                            "weight": "0.200",
+                            "stemmed": "ship",
+                            "approved": "yes",
+                            "cv_count": 21315,
+                            "function": "truck driver",
+                            "industry": "General skill",
+                            "jd_count": 15736,
+                            "softness": "hard",
+                            "function2": "",
+                            "created_at": "2015-06-24T07:19:44.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:22:14.000000Z",
+                            "emsi_skill_id": null,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "creativity": {
+                            "id": 25641,
+                            "count": 1,
+                            "skill": "creativity",
+                            "weight": "0.333",
+                            "stemmed": "creativ",
+                            "approved": "yes",
+                            "cv_count": 32261,
+                            "function": "engineer",
+                            "industry": "",
+                            "jd_count": 32975,
+                            "softness": "soft",
+                            "function2": "",
+                            "created_at": "2015-10-01T05:50:07.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:10:13.000000Z",
+                            "emsi_skill_id": 7349,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "mentorship": {
+                            "id": 8240,
+                            "count": 1,
+                            "skill": "mentorship",
+                            "weight": "0.333",
+                            "stemmed": "mentorship",
+                            "approved": "yes",
+                            "cv_count": 23488,
+                            "function": "general",
+                            "industry": "General",
+                            "jd_count": 13712,
+                            "softness": "soft",
+                            "function2": "",
+                            "created_at": "-000001-11-30T00:00:00.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:08:08.000000Z",
+                            "emsi_skill_id": 18327,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "microservice": {
+                            "id": 199539,
+                            "count": 1,
+                            "skill": "microservice",
+                            "weight": "0.200",
+                            "stemmed": "microservic",
+                            "approved": "yes",
+                            "cv_count": 3100,
+                            "function": "",
+                            "industry": "Computer Software",
+                            "jd_count": 1351,
+                            "softness": "hard",
+                            "function2": "",
+                            "created_at": "2021-12-19T01:12:12.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:21:07.000000Z",
+                            "emsi_skill_id": 18564,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "collaborative": {
+                            "id": 14711,
+                            "count": 1,
+                            "skill": "collaborative",
+                            "weight": "0.333",
+                            "stemmed": "collabor",
+                            "approved": "yes",
+                            "cv_count": 93250,
+                            "function": "coordinator-supply chain planning",
+                            "industry": "General skill",
+                            "jd_count": 89770,
+                            "softness": "soft",
+                            "function2": "",
+                            "created_at": "2015-06-16T05:20:57.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-07T01:14:07.000000Z",
+                            "emsi_skill_id": null,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "design patterns": {
+                            "id": 7875,
+                            "count": 1,
+                            "skill": "design patterns",
+                            "weight": "0.200",
+                            "stemmed": "design pattern",
+                            "approved": "yes",
+                            "cv_count": 8090,
+                            "function": "",
+                            "industry": "Information Technology & Services",
+                            "jd_count": 13260,
+                            "softness": "hard",
+                            "function2": "",
+                            "created_at": "-000001-11-30T00:00:00.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:21:05.000000Z",
+                            "emsi_skill_id": null,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "Mobile Development": {
+                            "id": 179425,
+                            "count": 1,
+                            "skill": "Mobile Development",
+                            "weight": "0.200",
+                            "stemmed": "mobil develop",
+                            "approved": "yes",
+                            "cv_count": 1387,
+                            "function": "",
+                            "industry": "Information Technology & Services",
+                            "jd_count": 1832,
+                            "softness": "hard",
+                            "function2": "",
+                            "created_at": "2021-12-09T18:02:17.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:19:24.000000Z",
+                            "emsi_skill_id": 18956,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        },
+                        "software development": {
+                            "id": 14493,
+                            "count": 1,
+                            "skill": "software development",
+                            "weight": "0.200",
+                            "stemmed": "softwar develop",
+                            "approved": "yes",
+                            "cv_count": 101513,
+                            "function": "",
+                            "industry": "Computer Software",
+                            "jd_count": 104638,
+                            "softness": "hard",
+                            "function2": "",
+                            "created_at": "2015-06-12T23:39:59.000000Z",
+                            "skill_type": "",
+                            "updated_at": "2024-07-08T01:22:11.000000Z",
+                            "emsi_skill_id": 27022,
+                            "emsi_title_id": null,
+                            "uncappedCount": 1,
+                            "skill_abbreviation": ""
+                        }
+                    },
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdKeywordSet": [],
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdLatentSkills": [
+                        {
+                            "count": 2,
+                            "skill": "teamwork",
+                            "salience": "0.4348196685",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3415608406"
+                                },
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.4348196685"
+                                }
+                            ],
+                            "weighted_salience": 0.2585347095303
+                        },
+                        {
+                            "count": 2,
+                            "skill": "innovative",
+                            "salience": "0.3692271113",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3374665380"
+                                },
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3692271113"
+                                }
+                            ],
+                            "weighted_salience": 0.2353289852169
+                        },
+                        {
+                            "count": 2,
+                            "skill": "collaboration",
+                            "salience": "0.3478511870",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3397782445"
+                                },
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3478511870"
+                                }
+                            ],
+                            "weighted_salience": 0.2289806006895
+                        },
+                        {
+                            "count": 2,
+                            "skill": "inspire",
+                            "salience": "0.3757928014",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3757928014"
+                                },
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3070123494"
+                                }
+                            ],
+                            "weighted_salience": 0.2273741152164
+                        },
+                        {
+                            "count": 2,
+                            "skill": "dedicated",
+                            "salience": "0.3830406368",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3830406368"
+                                },
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2294473350"
+                                }
+                            ],
+                            "weighted_salience": 0.2039584946094
+                        },
+                        {
+                            "count": 2,
+                            "skill": "software engineering",
+                            "salience": "0.3851461411",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3851461411"
+                                },
+                                {
+                                    "skill": "design patterns",
+                                    "salience": "0.2186181396"
+                                }
+                            ],
+                            "weighted_salience": 0.12075285614000002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "node.js",
+                            "salience": 0.9323892188213796,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.9323892188213796
+                                }
+                            ],
+                            "weighted_salience": 0.18647784376427592
+                        },
+                        {
+                            "count": 1,
+                            "skill": "unit testing",
+                            "salience": 0.8967565098218364,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.8967565098218364
+                                }
+                            ],
+                            "weighted_salience": 0.1793513019643673
+                        },
+                        {
+                            "count": 1,
+                            "skill": "mentoring",
+                            "salience": "0.5144351721",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.5144351721"
+                                }
+                            ],
+                            "weighted_salience": 0.1713069123093
+                        },
+                        {
+                            "count": 1,
+                            "skill": "productive",
+                            "salience": "0.4820955992",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.4820955992"
+                                }
+                            ],
+                            "weighted_salience": 0.16053783453360002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "enthusiasm",
+                            "salience": "0.4614350796",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.4614350796"
+                                }
+                            ],
+                            "weighted_salience": 0.1536578815068
+                        },
+                        {
+                            "count": 1,
+                            "skill": "appfolio property manager",
+                            "salience": 0.7681584753911053,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.7681584753911053
+                                }
+                            ],
+                            "weighted_salience": 0.15363169507822105
+                        },
+                        {
+                            "count": 1,
+                            "skill": "innovation",
+                            "salience": "0.4555229545",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.4555229545"
+                                }
+                            ],
+                            "weighted_salience": 0.15168914384850002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "adaptability",
+                            "salience": "0.4362749457",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.4362749457"
+                                }
+                            ],
+                            "weighted_salience": 0.14527955691810002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "deliver high-quality software",
+                            "salience": 0.7262942097183059,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.7262942097183059
+                                }
+                            ],
+                            "weighted_salience": 0.1452588419436612
+                        },
+                        {
+                            "count": 1,
+                            "skill": "distributed system",
+                            "salience": 0.7197539941226427,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.7197539941226427
+                                }
+                            ],
+                            "weighted_salience": 0.14395079882452855
+                        },
+                        {
+                            "count": 1,
+                            "skill": "passion",
+                            "salience": "0.4289552569",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.4289552569"
+                                }
+                            ],
+                            "weighted_salience": 0.14284210054770002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "driven",
+                            "salience": "0.4170066714",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.4170066714"
+                                }
+                            ],
+                            "weighted_salience": 0.1388632215762
+                        },
+                        {
+                            "count": 1,
+                            "skill": "creative",
+                            "salience": "0.4165102243",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.4165102243"
+                                }
+                            ],
+                            "weighted_salience": 0.13869790469190002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "collaborate",
+                            "salience": "0.4133845568",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.4133845568"
+                                }
+                            ],
+                            "weighted_salience": 0.1376570574144
+                        },
+                        {
+                            "count": 1,
+                            "skill": "spring security",
+                            "salience": 0.6560402567222654,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.6560402567222654
+                                }
+                            ],
+                            "weighted_salience": 0.1312080513444531
+                        },
+                        {
+                            "count": 1,
+                            "skill": "self-motivated",
+                            "salience": "0.3899885416",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3899885416"
+                                }
+                            ],
+                            "weighted_salience": 0.1298661843528
+                        },
+                        {
+                            "count": 1,
+                            "skill": "junior",
+                            "salience": "0.3879165649",
+                            "skillclass": "joblevelentry",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3879165649"
+                                }
+                            ],
+                            "weighted_salience": 0.1291762161117
+                        },
+                        {
+                            "count": 1,
+                            "skill": "results-oriented",
+                            "salience": "0.3779086769",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3779086769"
+                                }
+                            ],
+                            "weighted_salience": 0.12584358940770002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "engaging",
+                            "salience": "0.3774023652",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3774023652"
+                                }
+                            ],
+                            "weighted_salience": 0.1256749876116
+                        },
+                        {
+                            "count": 1,
+                            "skill": "mission-driven",
+                            "salience": "0.3716627955",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3716627955"
+                                }
+                            ],
+                            "weighted_salience": 0.1237637109015
+                        },
+                        {
+                            "count": 1,
+                            "skill": "listen",
+                            "salience": "0.3699273467",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3699273467"
+                                }
+                            ],
+                            "weighted_salience": 0.1231858064511
+                        },
+                        {
+                            "count": 1,
+                            "skill": "technical mentor",
+                            "salience": "0.3604162931",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3604162931"
+                                }
+                            ],
+                            "weighted_salience": 0.1200186256023
+                        },
+                        {
+                            "count": 1,
+                            "skill": "TDD",
+                            "salience": 0.598446779351302,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.598446779351302
+                                }
+                            ],
+                            "weighted_salience": 0.1196893558702604
+                        },
+                        {
+                            "count": 1,
+                            "skill": "inspiring",
+                            "salience": "0.3584644794",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3584644794"
+                                }
+                            ],
+                            "weighted_salience": 0.1193686716402
+                        },
+                        {
+                            "count": 1,
+                            "skill": "team-oriented",
+                            "salience": "0.3567300439",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3567300439"
+                                }
+                            ],
+                            "weighted_salience": 0.11879110461870002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "confidence",
+                            "salience": "0.3506959081",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3506959081"
+                                }
+                            ],
+                            "weighted_salience": 0.1167817373973
+                        },
+                        {
+                            "count": 1,
+                            "skill": "flexible",
+                            "salience": "0.3505291343",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3505291343"
+                                }
+                            ],
+                            "weighted_salience": 0.1167262017219
+                        },
+                        {
+                            "count": 1,
+                            "skill": "energetic",
+                            "salience": "0.3487407565",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3487407565"
+                                }
+                            ],
+                            "weighted_salience": 0.1161306719145
+                        },
+                        {
+                            "count": 1,
+                            "skill": "MENTOR",
+                            "salience": "0.3483217955",
+                            "skillclass": "company",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3483217955"
+                                }
+                            ],
+                            "weighted_salience": 0.1159911579015
+                        },
+                        {
+                            "count": 1,
+                            "skill": "mentor",
+                            "salience": "0.3483217955",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3483217955"
+                                }
+                            ],
+                            "weighted_salience": 0.1159911579015
+                        },
+                        {
+                            "count": 1,
+                            "skill": "impact",
+                            "salience": "0.3453111649",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3453111649"
+                                }
+                            ],
+                            "weighted_salience": 0.1149886179117
+                        },
+                        {
+                            "count": 1,
+                            "skill": "passionate",
+                            "salience": "0.3412094712",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3412094712"
+                                }
+                            ],
+                            "weighted_salience": 0.1136227539096
+                        },
+                        {
+                            "count": 1,
+                            "skill": "responsive",
+                            "salience": "0.3409283161",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "collaborative",
+                                    "salience": "0.3409283161"
+                                }
+                            ],
+                            "weighted_salience": 0.11352912926130002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "flexibility",
+                            "salience": "0.3366910219",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3366910219"
+                                }
+                            ],
+                            "weighted_salience": 0.1121181102927
+                        },
+                        {
+                            "count": 1,
+                            "skill": "coaching",
+                            "salience": "0.3365109563",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3365109563"
+                                }
+                            ],
+                            "weighted_salience": 0.1120581484479
+                        },
+                        {
+                            "count": 1,
+                            "skill": "versatility",
+                            "salience": "0.3348098397",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3348098397"
+                                }
+                            ],
+                            "weighted_salience": 0.1114916766201
+                        },
+                        {
+                            "count": 1,
+                            "skill": "coach",
+                            "salience": "0.3302445710",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.3302445710"
+                                }
+                            ],
+                            "weighted_salience": 0.109971442143
+                        },
+                        {
+                            "count": 1,
+                            "skill": "dependability",
+                            "salience": "0.3294516206",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3294516206"
+                                }
+                            ],
+                            "weighted_salience": 0.1097073896598
+                        },
+                        {
+                            "count": 1,
+                            "skill": "dedication",
+                            "salience": "0.3293396235",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3293396235"
+                                }
+                            ],
+                            "weighted_salience": 0.1096700946255
+                        },
+                        {
+                            "count": 1,
+                            "skill": "highly scalable",
+                            "salience": 0.542713567839196,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.542713567839196
+                                }
+                            ],
+                            "weighted_salience": 0.1085427135678392
+                        },
+                        {
+                            "count": 1,
+                            "skill": "expected",
+                            "salience": "0.3147088587",
+                            "skillclass": "other",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3147088587"
+                                }
+                            ],
+                            "weighted_salience": 0.1047980499471
+                        },
+                        {
+                            "count": 1,
+                            "skill": "accountability",
+                            "salience": "0.3140530586",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3140530586"
+                                }
+                            ],
+                            "weighted_salience": 0.1045796685138
+                        },
+                        {
+                            "count": 1,
+                            "skill": "imagination",
+                            "salience": "0.3073295951",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3073295951"
+                                }
+                            ],
+                            "weighted_salience": 0.10234075516830002
+                        },
+                        {
+                            "count": 1,
+                            "skill": "creative thinking",
+                            "salience": "0.3073270321",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3073270321"
+                                }
+                            ],
+                            "weighted_salience": 0.1023399016893
+                        },
+                        {
+                            "count": 1,
+                            "skill": "strategic thinking",
+                            "salience": "0.3069450855",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3069450855"
+                                }
+                            ],
+                            "weighted_salience": 0.1022127134715
+                        },
+                        {
+                            "count": 1,
+                            "skill": "risk taking",
+                            "salience": "0.3067992926",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "creativity",
+                                    "salience": "0.3067992926"
+                                }
+                            ],
+                            "weighted_salience": 0.1021641644358
+                        },
+                        {
+                            "count": 1,
+                            "skill": "team member",
+                            "salience": "0.2933644354",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2933644354"
+                                }
+                            ],
+                            "weighted_salience": 0.0976903569882
+                        },
+                        {
+                            "count": 1,
+                            "skill": "tact",
+                            "salience": "0.2884935439",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2884935439"
+                                }
+                            ],
+                            "weighted_salience": 0.0960683501187
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software development lifecycle",
+                            "salience": "0.4450144172",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.4450144172"
+                                }
+                            ],
+                            "weighted_salience": 0.08900288344000001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "lead",
+                            "salience": "0.2590033114",
+                            "skillclass": "joblevelsenior",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2590033114"
+                                }
+                            ],
+                            "weighted_salience": 0.08624810269620001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "managing a team",
+                            "salience": "0.2498944998",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2498944998"
+                                }
+                            ],
+                            "weighted_salience": 0.08321486843340001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "agile development",
+                            "salience": "0.4085693955",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.4085693955"
+                                }
+                            ],
+                            "weighted_salience": 0.0817138791
+                        },
+                        {
+                            "count": 1,
+                            "skill": "treatment service",
+                            "salience": "0.2439676523",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2439676523"
+                                }
+                            ],
+                            "weighted_salience": 0.0812412282159
+                        },
+                        {
+                            "count": 1,
+                            "skill": "lead by example",
+                            "salience": "0.2345913649",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2345913649"
+                                }
+                            ],
+                            "weighted_salience": 0.0781189245117
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software project",
+                            "salience": "0.3902289569",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3902289569"
+                                }
+                            ],
+                            "weighted_salience": 0.07804579138
+                        },
+                        {
+                            "count": 1,
+                            "skill": "computer science",
+                            "salience": "0.3839962482",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3839962482"
+                                }
+                            ],
+                            "weighted_salience": 0.07679924964000001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software release",
+                            "salience": "0.3764390647",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3764390647"
+                                }
+                            ],
+                            "weighted_salience": 0.07528781294
+                        },
+                        {
+                            "count": 1,
+                            "skill": "fast-track",
+                            "salience": "0.2237139642",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2237139642"
+                                }
+                            ],
+                            "weighted_salience": 0.0744967500786
+                        },
+                        {
+                            "count": 1,
+                            "skill": "freeform",
+                            "salience": "0.2151406407",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2151406407"
+                                }
+                            ],
+                            "weighted_salience": 0.07164183335310001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "internship",
+                            "salience": "0.2145974040",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2145974040"
+                                }
+                            ],
+                            "weighted_salience": 0.071460935532
+                        },
+                        {
+                            "count": 1,
+                            "skill": "game programming",
+                            "salience": "0.2144380510",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2144380510"
+                                }
+                            ],
+                            "weighted_salience": 0.071407870983
+                        },
+                        {
+                            "count": 1,
+                            "skill": "team training",
+                            "salience": "0.2141281068",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2141281068"
+                                }
+                            ],
+                            "weighted_salience": 0.0713046595644
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software design",
+                            "salience": "0.3559989929",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3559989929"
+                                }
+                            ],
+                            "weighted_salience": 0.07119979858
+                        },
+                        {
+                            "count": 1,
+                            "skill": "front-end development",
+                            "salience": "0.2120192647",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2120192647"
+                                }
+                            ],
+                            "weighted_salience": 0.0706024151451
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software development process",
+                            "salience": "0.3501570225",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3501570225"
+                                }
+                            ],
+                            "weighted_salience": 0.0700314045
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software",
+                            "salience": "0.3300136924",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3300136924"
+                                }
+                            ],
+                            "weighted_salience": 0.06600273848
+                        },
+                        {
+                            "count": 1,
+                            "skill": "technology vision",
+                            "salience": "0.3277301490",
+                            "skillclass": "soft",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3277301490"
+                                }
+                            ],
+                            "weighted_salience": 0.0655460298
+                        },
+                        {
+                            "count": 1,
+                            "skill": "agile",
+                            "salience": "0.3256690502",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3256690502"
+                                }
+                            ],
+                            "weighted_salience": 0.06513381004
+                        },
+                        {
+                            "count": 1,
+                            "skill": "object-oriented design",
+                            "salience": "0.3012684286",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.3012684286"
+                                }
+                            ],
+                            "weighted_salience": 0.060253685720000005
+                        },
+                        {
+                            "count": 1,
+                            "skill": "architecture",
+                            "salience": "0.2999114990",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": "0.2999114990"
+                                }
+                            ],
+                            "weighted_salience": 0.05998229980000001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "shipping software",
+                            "salience": "0.2941574156",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2941574156"
+                                }
+                            ],
+                            "weighted_salience": 0.05883148312000001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software development life-cycle",
+                            "salience": "0.2872813940",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2872813940"
+                                }
+                            ],
+                            "weighted_salience": 0.05745627880000001
+                        },
+                        {
+                            "count": 1,
+                            "skill": "it application development",
+                            "salience": "0.2871314287",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2871314287"
+                                }
+                            ],
+                            "weighted_salience": 0.057426285740000006
+                        },
+                        {
+                            "count": 1,
+                            "skill": "web application development",
+                            "salience": "0.2832627892",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2832627892"
+                                }
+                            ],
+                            "weighted_salience": 0.05665255784
+                        },
+                        {
+                            "count": 1,
+                            "skill": "release management",
+                            "salience": "0.2820752561",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2820752561"
+                                }
+                            ],
+                            "weighted_salience": 0.056415051220000005
+                        },
+                        {
+                            "count": 1,
+                            "skill": "distributed programming",
+                            "salience": "0.2789756656",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2789756656"
+                                }
+                            ],
+                            "weighted_salience": 0.05579513312
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software architecture",
+                            "salience": "0.2760430276",
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2760430276"
+                                }
+                            ],
+                            "weighted_salience": 0.05520860552
+                        },
+                        {
+                            "count": 1,
+                            "skill": "software development lifecycles",
+                            "salience": "0.2759703100",
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2759703100"
+                                }
+                            ],
+                            "weighted_salience": 0.055194062
+                        },
+                        {
+                            "count": 1,
+                            "skill": "test-driven development",
+                            "salience": 0.26724531749657376,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.26724531749657376
+                                }
+                            ],
+                            "weighted_salience": 0.053449063499314754
+                        },
+                        {
+                            "count": 1,
+                            "skill": "refactoring",
+                            "salience": 0.16537231612608497,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.16537231612608497
+                                }
+                            ],
+                            "weighted_salience": 0.033074463225216996
+                        },
+                        {
+                            "count": 1,
+                            "skill": "service-oriented architecture",
+                            "salience": 0.13293741434444953,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.13293741434444953
+                                }
+                            ],
+                            "weighted_salience": 0.026587482868889907
+                        },
+                        {
+                            "count": 1,
+                            "skill": "WPF",
+                            "salience": 0.1306532663316583,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.1306532663316583
+                                }
+                            ],
+                            "weighted_salience": 0.026130653266331665
+                        },
+                        {
+                            "count": 1,
+                            "skill": "microservices architecture",
+                            "salience": 0.10232983097304706,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.10232983097304706
+                                }
+                            ],
+                            "weighted_salience": 0.020465966194609417
+                        },
+                        {
+                            "count": 1,
+                            "skill": "OOD",
+                            "salience": 0.09365006852444038,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.09365006852444038
+                                }
+                            ],
+                            "weighted_salience": 0.01873001370488808
+                        },
+                        {
+                            "count": 1,
+                            "skill": "JPA",
+                            "salience": 0.08405664687071722,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.08405664687071722
+                                }
+                            ],
+                            "weighted_salience": 0.016811329374143445
+                        },
+                        {
+                            "count": 1,
+                            "skill": "OO design",
+                            "salience": 0.07994518044769301,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.07994518044769301
+                                }
+                            ],
+                            "weighted_salience": 0.015989036089538604
+                        },
+                        {
+                            "count": 1,
+                            "skill": "integration pattern",
+                            "salience": 0.042485153037916855,
+                            "skillclass": "technical",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.042485153037916855
+                                }
+                            ],
+                            "weighted_salience": 0.008497030607583372
+                        },
+                        {
+                            "count": 1,
+                            "skill": "technical framework",
+                            "salience": 0.02375513933302878,
+                            "skillclass": "hard",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "design patterns",
+                                    "salience": 0.02375513933302878
+                                }
+                            ],
+                            "weighted_salience": 0.0047510278666057565
+                        },
+                        {
+                            "skill": "collaborative",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "mentorship",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "creativity",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "software development",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "Mobile Development",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "design patterns",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "microservice",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        },
+                        {
+                            "skill": "shipping",
+                            "salience": 1,
+                            "sourcetype": "original"
+                        }
+                    ],
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jdLatentJobTitles": [
+                        {
+                            "count": 3,
+                            "skill": "engineering leader",
+                            "salience": "0.2798348069",
+                            "skillclass": "title",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.1881660670"
+                                },
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2798348069"
+                                },
+                                {
+                                    "skill": "design patterns",
+                                    "salience": "0.2018301785"
+                                }
+                            ],
+                            "weighted_salience": 0.158992297391
+                        },
+                        {
+                            "count": 1,
+                            "skill": "ship program",
+                            "salience": "0.2805949450",
+                            "skillclass": "title",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "mentorship",
+                                    "salience": "0.2805949450"
+                                }
+                            ],
+                            "weighted_salience": 0.093438116685
+                        },
+                        {
+                            "count": 2,
+                            "skill": "senior software development engineer",
+                            "salience": "0.2531694770",
+                            "skillclass": "title",
+                            "sourcetype": "latent",
+                            "original_keyword": [
+                                {
+                                    "skill": "software development",
+                                    "salience": "0.2111667395"
+                                },
+                                {
+                                    "skill": "design patterns",
+                                    "salience": "0.2531694770"
+                                }
+                            ],
+                            "weighted_salience": 0.0928672433
+                        }
+                    ],
+                    "\u0000App\\Service\\JobDescriptionParserManager\u0000jobLevel": {
+                        "level": {
+                            "min_year": 1,
+                            "max_year": 0,
+                            "average_year": 2,
+                            "job_level": 2,
+                            "mod_array": []
+                        },
+                        "snip": {
+                            "jobtitle": "Maintenance.",
+                            "docPosition": "",
+                            "countCv": 0,
+                            "count": 1,
+                            "industry": "",
+                            "snip": "operation, and maintenance.",
+                            "dates": [
+                                "2017",
+                                "2018"
+                            ]
+                        },
+                        "totalyears": 1
+                    }
+                },
+                "parsed_at": "2024-07-10T14:36:44.000000Z",
+                "algo_version": 1
+            },
+            "education_override": null,
+            "client": null,
+            "education_manual": null,
+            "hash_sha256": "fa07defc8bfc98c3f5763f34e5f58bd00896ea25a006e4578380a68601f49ed3",
+            "job_description_id": null,
+            "opportunity": null
+        },
+        "resume": "",
+        "jobTitle": "Maintenance."
+    }
+}
