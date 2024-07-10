@@ -16,6 +16,7 @@ var companyInformation;
 var googleClientId;
 var googleApiKey;
 var credentialFile;
+var chatGptApiKey;
 
 function setCloneVars() {
     resumeTemplateName = document.getElementById('resume-template-name').value;
@@ -143,10 +144,14 @@ function initCredentialFileListener() {
             googleClientId = credentials['google-client-id'];
             jobscanXsrfToken = credentials['jobscan-xsrf-token'];
             jobscanCookie = credentials['jobscan-cookie'];
+            chatGptApiKey = credentials['chatgpt-api-key'];
+
             sessionStorage.setItem('google-api-key', googleApiKey);
             sessionStorage.setItem('google-client-id', googleClientId);
             sessionStorage.setItem('jobscan-xsrf-token', jobscanXsrfToken);
             sessionStorage.setItem('jobscan-cookie', jobscanCookie);
+            sessionStorage.setItem('chatgpt-api-key', chatGptApiKey);
+            
             if (googleApiKey && googleClientId) {
                 gapiLoaded(googleApiKey);
                 gisLoaded(googleClientId);
@@ -182,6 +187,12 @@ function loadCredentialsFromSession() {
         jobscanXsrfToken = sessionStorage.getItem("jobscan-xsrf-token");
         console.log("Loaded Jobscan XSRF Token from session");
     }
+
+    if (sessionStorage.getItem("chatgpt-api-key")) {
+        chatGptApiKey = sessionStorage.getItem("chatgpt-api-key");
+        console.log("Loaded ChatGPT API Key from session");
+    }
+
 
     if (googleClientId && googleApiKey) {
         gapiLoaded(googleApiKey);
