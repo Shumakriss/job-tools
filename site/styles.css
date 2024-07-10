@@ -41,12 +41,20 @@
 }
 
 .button:hover {
-  background-color: #222255;
-  color: white;
+  background-color: #222255; /* dark blue */
+}
+
+.disabled-button {
+    background-color: #666666; /* dark grey */
+}
+
+.disabled-button:hover {
+    background-color: #666666; /* dark grey */
 }
 
 .scan-button {
-    padding: 5px 125px;
+    padding: 10px 250px;
+    margin: 10px;
 }
 
 .clipboard-button {

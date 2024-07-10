@@ -35,19 +35,44 @@ function initCloneVars() {
     }
 }
 
+function disableCloneButton() {
+    let cloneButton = document.getElementById('clone-button');
+    cloneButton.disabled = true;
+    cloneButton.className = "disabled-button button";
+}
+
+function hideButtonInstruction() {
+    let elements = document.getElementsByClassName("button-instruction");
+    for (let i=0; i < elements.length; i++) {
+        elements[i].hidden = true;
+    }
+}
+
+function enableScanButton() {
+    let scanButton = document.getElementById('scan-button');
+    scanButton.disabled = false;
+    scanButton.className = "scan-button button";
+
+    hideButtonInstruction();
+}
+
 function updateNewResumeData(newResumeId) {
     document.getElementById('tailored-resume-link').innerHTML = newResumeName;
     document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
-    document.getElementById('clone-button').disabled = true;
-    document.getElementById("scan-button").disabled = false;
-    document.getElementById('resume-download-button').disabled = false;
+
+    let resumeDownloadButton = document.getElementById('resume-download-button');
+    resumeDownloadButton.disabled = false;
+    resumeDownloadButton.className = "button fa fa-download";
 }
 
 function updateNewCoverLetterData(newCoverLetterId) {
     document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
     document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
-    document.getElementById('clone-button').disabled = true;
-    document.getElementById('cover-letter-download-button').disabled = false;
+
+//    document.getElementById('cover-letter-download-button').disabled = false;
+    let coverLetterDownloadButton = document.getElementById('cover-letter-download-button');
+    coverLetterDownloadButton.disabled = false;
+    coverLetterDownloadButton.className = "button fa fa-download";
 }
 
 async function reloadClones() {
@@ -64,6 +89,9 @@ async function reloadClones() {
     if (newCoverLetterId) {
         updateNewCoverLetterData(newCoverLetterId);
     }
+
+    disableCloneButton();
+    enableScanButton();
 }
 
 async function cloneTemplates() {

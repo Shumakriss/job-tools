@@ -81,6 +81,11 @@
 </div>
 
 <div id="scan" hidden="hidden" class="page">
+    <br>
+    <p class="button-instruction">Copy or load resumes in the Tailoring screen to enable scanning</p>
+    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
+    <br/>
+
     <br/>
     <label>Minimum Requirements:</label><br/>
     <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
@@ -105,15 +110,14 @@
     <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
     <br/>
 
-    <button onclick="handleScanButton()" id="scan-button" class="button scan-button" disabled>Scan</button>
-
 </div>
 
 <div id="apply" hidden="hidden" class="page">
 
     <h3>Download PDF's</h3>
-    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="button fa fa-download" disabled> Resume</button>
-    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="button fa fa-download" disabled> Cover Letter</button>
+    <p class="button-instruction">Download buttons are once tailored templates are loaded</p>
+    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume</button>
+    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter</button>
     <br/><br/>
 
     <h3>Profile Links</h3>
