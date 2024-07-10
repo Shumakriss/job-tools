@@ -8,10 +8,38 @@
     font-size: 16px;
 }
 
+.nav-inactive:hover {
+  background-color: #222255; /* dark blue */
+  color: white;
+}
+
+.nav-active:hover {
+  background-color: #ee8800;    /* dark orange */
+  color: white;
+}
+
 .nav-inactive {
-    background-color: #333f71;
+    background-color: #333f71; /* maker blue */
 }
 
 .nav-active {
-    background-color: #ff9900;
+    background-color: #ff9900; /* maker orange */
+}
+
+.button {
+    background-color: #333f71; /* maker blue */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin: 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.button:hover {
+  background-color: #222255;
+  color: white;
 }

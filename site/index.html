@@ -35,23 +35,22 @@
     <h3>LinkedIn Queries</h3>
     <label>Standard Query:</label><br/>
     <textarea rows="4" cols="60" id="linkedin-query"></textarea><br/>
-    <button onclick="handleLinkedInQueryClipboard()">Copy to Clipboard</button>
+    <button onclick="handleLinkedInQueryClipboard()" class="button">Copy to Clipboard</button>
 
 </div>
 
 <div id="tailor" hidden="hidden" class="page">
     <br/>
     <label>Company Name:</label><br/>
-    <input type="text" size=60 id="company-name" value="Example" />
-
-    <button id="clone-button" onclick="cloneTemplates()">Reload/Clone Copied Docs</button><br/>
-    <br/>
+    <input type="text" size=60 id="company-name" value="Example" /><br/><br/>
 
     <label>Tailored Resume: </label>
     <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
 
     <label>Tailored Cover Letter: </label>
     <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/><br/>
+
+    <button id="clone-button" onclick="cloneTemplates()" class="button">Load Docs</button><br/>
 
     <!--<h2>Automated Tailoring</h2>-->
 
@@ -83,43 +82,43 @@
 <div id="scan" hidden="hidden" class="page">
     <br/>
     <label>Minimum Requirements:</label><br/>
-    <textarea id="minimum-requirements" rows="4" cols="60"></textarea><br/>
+    <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
     <label id="minimum-score"></label><br/>
     <br/>
 
     <label>Preferred Requirements:</label><br/>
-    <textarea id="preferred-requirements" rows="4" cols="60"></textarea><br/>
+    <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
     <label id="preferred-score"></label><br/>
     <br/>
 
     <label>Job Duties:</label><br/>
-    <textarea id="job-duties" rows="4" cols="60"></textarea><br/>
+    <textarea id="job-duties" rows="4" cols="60"></textarea>
     <label id="job-duties-score"></label><br/>
     <br/>
 
     <label>Company Information:</label><br/>
-    <textarea id="company-information" rows="4" cols="60"></textarea><br/>
+    <textarea id="company-information" rows="4" cols="60"></textarea>
     <label id="company-information-score"></label><br/>
     <br/>
 
     <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
     <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
     <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
-    <button onclick="handleScanButton()" id="scan-button" disabled>Scan</button>
+    <button onclick="handleScanButton()" id="scan-button" class="button" disabled>Scan</button>
 
 </div>
 
 <div id="apply" hidden="hidden" class="page">
 
     <h3>Download PDF's</h3>
-    <button onclick="handleDownloadResumeButton()" id="resume-download-button" disabled>Resume</button>
-    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" disabled>Cover Letter</button>
+    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="button" disabled>Resume</button>
+    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="button" disabled>Cover Letter</button>
     <br/><br/>
 
     <h3>Clipboard Profile Links</h3>
-    <button onclick="handleLinkedInClipboard()">LinkedIn</button>
-    <button onclick="handleGithubClipboard()">GitHub</button>
-    <button onclick="handleSiteClipboard()">Website</button>
+    <button onclick="handleLinkedInClipboard()" class="button">LinkedIn</button>
+    <button onclick="handleGithubClipboard()" class="button">GitHub</button>
+    <button onclick="handleSiteClipboard()" class="button">Website</button>
     <br/><br/>
     <!--<h3>Application Logs</h3>-->
     <!--<label>Spreadsheet Name:</label><br/>-->
@@ -140,11 +139,12 @@
     <h3>Credentials</h3>
 
     <label>Credential file:</label>
+<!--    <label for="credential-file" class="custom-file-upload">Upload </label>-->
     <input id="credential-file" type="file"/><br/>
 
     <label>Google OAuth:</label>
-    <button id="authorize_button" onclick="handleAuthClick()">Sign In</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+    <button id="authorize_button" onclick="handleAuthClick()" class="button">Sign In</button>
+    <button id="signout_button" onclick="handleSignoutClick()" class="button">Sign Out</button>
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
 </div>
