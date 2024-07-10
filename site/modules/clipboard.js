@@ -13,9 +13,10 @@ function handleSiteClipboard() {
 }
 
 function handleLinkedInQueryClipboard() {
-    navigator.clipboard.writeText(LINKEDIN_QUERY);
+    let queryText = document.getElementById("linkedin-query").value;
+    navigator.clipboard.writeText(queryText);
 }
 
-function updateLinkedInQuery() {
-    document.getElementById("linkedin-query").innerHTML = LINKEDIN_QUERY;
+function initLinkedInQuery() {
+    document.getElementById("linkedin-query").value = LINKEDIN_QUERY;
 }
