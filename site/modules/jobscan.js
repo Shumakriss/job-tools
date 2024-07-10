@@ -47,6 +47,7 @@ async function jobscan(cookie, xsrfToken, resume, jobDescription) {
         }
 
         const json = await response.json();
+        console.log(json);
         console.log("Scan complete");
         return json;
       } catch (error) {

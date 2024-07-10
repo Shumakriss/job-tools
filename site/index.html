@@ -82,11 +82,6 @@
 
 <div id="scan" hidden="hidden" class="page">
     <br>
-    <p class="button-instruction">Copy or load resumes in the Tailoring screen to enable scanning</p>
-    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
-    <br/>
-    <label>Scroll down for info about score determination.</label><br/>
-    <br/>
 
     <label>Company Information:</label><br/>
     <textarea id="company-information" rows="4" cols="60"></textarea>
@@ -112,6 +107,11 @@
     <label id="preferred-score">Score: Unknown</label><br/>
     <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
     <br/>
+
+    <p class="button-instruction">Copy or load resumes in the Tailoring screen to enable scanning</p>
+    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
+    <br/>
+
 
     <h2>Score Determination</h2>
     <p>This page aims to address two limitations with Jobscan.co.
