@@ -56,10 +56,14 @@ async function reloadClones() {
     initCloneVars();
 
     newResumeId = await getDocumentIdByName(newResumeName);
-    updateNewResumeData(newResumeId);
+    if (newResumeId) {
+        updateNewResumeData(newResumeId);
+    }
 
     newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
-    updateNewCoverLetterData(newCoverLetterId);
+    if (newCoverLetterId) {
+        updateNewCoverLetterData(newCoverLetterId);
+    }
 }
 
 async function cloneTemplates() {
@@ -70,20 +74,29 @@ async function cloneTemplates() {
 
     if ( !newResumeId ) {
         resumeTemplateId = await getDocumentIdByName(resumeTemplateName);
-        newResumeName = companySpecificName(companyName, resumeTemplateName);
-        newResumeId = await copyFile(resumeTemplateId, newResumeName);
-        updateNewResumeData(newResumeId);
-        console.log("Resume was not reloaded so it was created");
+        if (resumeTemplateId) {
+            newResumeName = companySpecificName(companyName, resumeTemplateName);
+            newResumeId = await copyFile(resumeTemplateId, newResumeName);
+            updateNewResumeData(newResumeId);
+            console.log("Resume was not reloaded so it was created");
+        } else {
+            console.log("Resume Template ID not found. Are you authenticated with Google?");
+        }
+
     } else {
         console.log("Reloaded resume clone");
     }
 
     if ( !newCoverLetterId ) {
-        newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
         coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
-        newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
-        updateNewCoverLetterData(newCoverLetterId);
-        console.log("Cover letter was not reloaded so it was created");
+        if (coverLetterId) {
+            newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+            newCoverLetterId = await copyFile(coverLetterId, newCoverLetterName);
+            updateNewCoverLetterData(newCoverLetterId);
+            console.log("Cover letter was not reloaded so it was created");
+        } else {
+            console.log("Cover Letter Template ID not found. Are you authenticated with Google?");
+        }
     } else {
         console.log("Reloaded cover letter clone");
     }
