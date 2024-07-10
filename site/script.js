@@ -283,3 +283,19 @@ function tailorLetter() {
 function updateGoogleSheet() {
 
 }
+
+function handleNavButtonClick(button, pageName) {
+    let pages = document.getElementsByClassName("page");
+    for (let i = 0; i < pages.length; i++) {
+        pages[i].hidden = true;
+    }
+
+    document.getElementById(pageName).hidden = false;
+
+    let activeButtons = document.getElementsByClassName("nav-active");
+    for (let i = 0; i < activeButtons.length; i++) {
+        activeButtons[i].className = "nav-inactive nav-button";
+    }
+
+    button.className = "nav-active nav-button";
+}

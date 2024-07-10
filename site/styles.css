@@ -1,0 +1,17 @@
+.nav-button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.nav-inactive {
+    background-color: #333f71;
+}
+
+.nav-active {
+    background-color: #ff9900;
+}
