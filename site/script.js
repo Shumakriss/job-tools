@@ -151,7 +151,7 @@ function initCredentialFileListener() {
             sessionStorage.setItem('jobscan-xsrf-token', jobscanXsrfToken);
             sessionStorage.setItem('jobscan-cookie', jobscanCookie);
             sessionStorage.setItem('chatgpt-api-key', chatGptApiKey);
-            
+
             if (googleApiKey && googleClientId) {
                 gapiLoaded(googleApiKey);
                 gisLoaded(googleClientId);
@@ -375,4 +375,36 @@ function handleNavButtonClick(button, pageName) {
     }
 
     button.className = "nav-active nav-button";
+}
+
+async function handleExtractSectionsButton() {
+    console.log("Extracting sections from job description");
+    let jobDescription = document.getElementById("job-description-textarea").value;
+
+    let prompt;
+    let response;
+
+    prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("company-name").value = response;
+
+    prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("job-title").value = response;
+
+    prompt = JOB_DUTIES_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("job-duties").value = response;
+
+    prompt = COMPANY_INFORMATION_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("company-information").value = response;
+
+    prompt = MINIMUM_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("minimum-requirements").value = response;
+
+    prompt = PREFERRED_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+    response = await askChatGpt(chatGptApiKey, prompt);
+    document.getElementById("preferred-requirements").value = response;
 }

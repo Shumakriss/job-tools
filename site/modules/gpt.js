@@ -1,12 +1,15 @@
 const CHATGPT_URL = "https://api.openai.com/v1/chat/completions";
 
-async function askChatGpt(prompt) {
+async function mockAskChatGpt(apiKey, prompt) {
+    return "fake results original prompt: \n" + prompt;
+}
+
+async function askChatGpt(apiKey, prompt) {
     console.log("Testing GPT API calls");
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + CHAPT_API_KEY,
-
+        "Authorization": "Bearer " + apiKey,
     }
 
     let payload = {

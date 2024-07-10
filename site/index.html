@@ -43,9 +43,19 @@
 </div>
 
 <div id="job-description" hidden="hidden" class="page">
-    <h3>Enter job details</h3>
+    <h3>Enter job description</h3>
+    <textarea id="job-description-textarea" rows="10" cols="80"></textarea>
+    <br/>
+    <button onclick="handleExtractSectionsButton()">Extract Sections</button>
+    <br/>
+
+    <h3>Edit/Confirm sections</h3>
     <label>Company Name: </label>
     <input type="text" size=60 id="company-name" value="Example" />
+    <br/><br/>
+
+    <label>Job Title: </label>
+    <input type="text" size=60 id="job-title" value="Staff Software Engineer" />
     <br/><br/>
 
     <label>Company Information:</label><br/>
@@ -196,6 +206,7 @@
 <script async defer type='text/javascript' src='./modules/jobscan.js'></script>
 <script async defer type='text/javascript' src='./modules/gsheets.js'></script>
 <script async defer type='text/javascript' src='./modules/gpt.js'></script>
+<script async defer type='text/javascript' src='./modules/prompts.js'></script>
 <script async defer type='text/javascript' src='./modules/clipboard.js' onload="initLinkedInQuery()"></script>
 <script async defer type='text/javascript' src='./script.js' onload="initialize()"></script>
 
