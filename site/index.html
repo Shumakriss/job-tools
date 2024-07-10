@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Maker Consulting</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-<h1>Maker Consulting Job Application Tool</h1>
+<h1>Maker Consulting</h1>
 
 <div class="nav-bar">
     <button onclick="handleNavButtonClick(this, 'search')" class="nav-active nav-button">Search</button>
@@ -34,8 +35,8 @@
 
     <h3>LinkedIn Queries</h3>
     <label>Standard Query:</label><br/>
-    <textarea rows="4" cols="60" id="linkedin-query"></textarea><br/>
-    <button onclick="handleLinkedInQueryClipboard()" class="button">Copy to Clipboard</button>
+    <textarea rows="4" cols="60" id="linkedin-query"></textarea>
+    <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋</button>
 
 </div>
 
@@ -89,36 +90,43 @@
     <label>Preferred Requirements:</label><br/>
     <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
     <label id="preferred-score"></label><br/>
+    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
     <br/>
 
     <label>Job Duties:</label><br/>
     <textarea id="job-duties" rows="4" cols="60"></textarea>
     <label id="job-duties-score"></label><br/>
+    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
     <br/>
 
     <label>Company Information:</label><br/>
     <textarea id="company-information" rows="4" cols="60"></textarea>
     <label id="company-information-score"></label><br/>
+    <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
     <br/>
 
-    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
-    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
-    <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
-    <button onclick="handleScanButton()" id="scan-button" class="button" disabled>Scan</button>
+    <button onclick="handleScanButton()" id="scan-button" class="button scan-button" disabled>Scan</button>
 
 </div>
 
 <div id="apply" hidden="hidden" class="page">
 
     <h3>Download PDF's</h3>
-    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="button" disabled>Resume</button>
-    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="button" disabled>Cover Letter</button>
+    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="button fa fa-download" disabled> Resume</button>
+    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="button fa fa-download" disabled> Cover Letter</button>
     <br/><br/>
 
-    <h3>Clipboard Profile Links</h3>
-    <button onclick="handleLinkedInClipboard()" class="button">LinkedIn</button>
-    <button onclick="handleGithubClipboard()" class="button">GitHub</button>
-    <button onclick="handleSiteClipboard()" class="button">Website</button>
+    <h3>Profile Links</h3>
+    <input value="https://www.linkedin.com/in/christophershumaker/" size=60 disabled>
+    <button onclick="handleLinkedInClipboard()" class="clipboard-button">📋</button>
+    <br/>
+
+    <input value="https://github.com/Shumakriss" size=60 disabled>
+    <button onclick="handleGithubClipboard()" class="clipboard-button">📋</button>
+    <br/>
+
+    <input value="https://www.makerconsulting.llc/maker-consulting" size=60 disabled>
+    <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
     <br/><br/>
     <!--<h3>Application Logs</h3>-->
     <!--<label>Spreadsheet Name:</label><br/>-->

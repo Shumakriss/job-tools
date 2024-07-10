@@ -2,6 +2,7 @@
     border: none;
     color: white;
     padding: 15px 32px;
+    margin: 1px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -42,4 +43,14 @@
 .button:hover {
   background-color: #222255;
   color: white;
+}
+
+.scan-button {
+    padding: 5px 125px;
+}
+
+.clipboard-button {
+    padding: 3px 3px;
+    margin: 3px;
+    font-size: 18px;
 }
