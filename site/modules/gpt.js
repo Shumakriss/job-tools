@@ -1,11 +1,4 @@
 const CHATGPT_URL = "https://api.openai.com/v1/chat/completions";
-const CHAPT_API_KEY = "<YOUR KEY HERE>";
-
-async function handleButtonClick(){
-    let prompt = document.getElementById("prompt-textarea").value;
-    let response = await askChatGpt(prompt);
-    document.getElementById("response-textarea").value = response;
-}
 
 async function askChatGpt(prompt) {
     console.log("Testing GPT API calls");
