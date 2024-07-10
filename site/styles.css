@@ -62,3 +62,7 @@
     margin: 3px;
     font-size: 18px;
 }
+
+.required-field-flag {
+    color: #ff0000;
+}

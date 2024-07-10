@@ -85,30 +85,57 @@
     <p class="button-instruction">Copy or load resumes in the Tailoring screen to enable scanning</p>
     <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
     <br/>
-
-    <br/>
-    <label>Minimum Requirements:</label><br/>
-    <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
-    <label id="minimum-score"></label><br/>
-    <br/>
-
-    <label>Preferred Requirements:</label><br/>
-    <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
-    <label id="preferred-score"></label><br/>
-    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
-    <br/>
-
-    <label>Job Duties:</label><br/>
-    <textarea id="job-duties" rows="4" cols="60"></textarea>
-    <label id="job-duties-score"></label><br/>
-    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
+    <label>Scroll down for info about score determination.</label><br/>
     <br/>
 
     <label>Company Information:</label><br/>
     <textarea id="company-information" rows="4" cols="60"></textarea>
-    <label id="company-information-score"></label><br/>
+    <label id="company-information-score">Score: Unknown</label><br/>
     <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
     <br/>
+
+    <label>Job Duties:</label><br/>
+    <textarea id="job-duties" rows="4" cols="60"></textarea>
+    <label id="job-duties-score">Score: Unknown</label><br/>
+    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label><br/>
+    <br/>
+
+    <br/>
+    <label>Minimum Requirements (</label><label class="required-field-flag">Required</label><label>):</label><br/>
+    <textarea id="minimum-requirements" rows="4" cols="60"></textarea>
+    <label id="minimum-score">Score: Unknown</label><br/>
+    <input type="checkbox" checked disabled /><label>Include Minimum Requirements</label><br/>
+    <br/>
+
+    <label>Preferred Requirements:</label><br/>
+    <textarea id="preferred-requirements" rows="4" cols="60"></textarea>
+    <label id="preferred-score">Score: Unknown</label><br/>
+    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label><br/>
+    <br/>
+
+    <h2>Score Determination</h2>
+    <p>This page aims to address two limitations with Jobscan.co.
+        First, as we tailor our resume, we must copy/paste repeatedly.
+        Second, we do not know what level of information will be used by ATS scans
+        (i.e. only the minimum or full job description).
+        Thus, more copy/pasting.
+    </p>
+    <label>Our Solution:</label>
+    <ol>
+        <li>Automate retrieval of tailored resume</li>
+        <li>Copy/paste job description once</li>
+        <li>Scan at multiple levels of information</li>
+    </ol>
+    <p>Individual section scores are not useful alone, they must include all previous higher priority information.
+        There are four major levels of info: minimum requirements, preferred requirements, job duties, and other (typically company information).</p>
+    <label>The priority ranking is as follows:</label>
+    <ol>
+        <li>Minimum Requirements</li>
+        <li>Preferred Requirements</li>
+        <li>Job Duties</li>
+        <li>Company Information</li>
+    </ol>
+    <p>If a section is not provided or the corresponding checkbox is not checked, it will not be included in any scores.</p>
 
 </div>
 
