@@ -8,194 +8,184 @@
 </head>
 
 <body>
+
 <h1>Maker Consulting</h1>
+<hr>
+<div class="container">
+    <div class="container-nav">
+        <div class="nav-bar">
+            <button onclick="handleNavButtonClick(this, 'job-description')" class="nav-active nav-button">Job Description</button>
+            <button onclick="handleNavButtonClick(this, 'extract')" class="nav-inactive nav-button">Extract</button>
+            <button onclick="handleNavButtonClick(this, 'scan')" class="nav-inactive nav-button">Scan</button>
+        </div>
+    </div>
+    <div class="container-sidebar-left">
 
-<div class="nav-bar">
-    <button onclick="handleNavButtonClick(this, 'search')" class="nav-active nav-button">Start Search</button>
-    <button onclick="handleNavButtonClick(this, 'job-description')" class="nav-inactive nav-button">Provide Job Description</button>
-    <button onclick="handleNavButtonClick(this, 'tailor')" class="nav-inactive nav-button">Scan & Tailor</button>
-    <button onclick="handleNavButtonClick(this, 'apply')" class="nav-inactive nav-button">Apply</button>
-    <button onclick="handleNavButtonClick(this, 'configure')" class="nav-inactive nav-button">Configure</button>
+        <h3>Favorites</h3>
+        <ul>
+            <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
+            <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
+            <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
+            <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Google Sheet</a></li>
+        </ul>
+
+        <h3>Alternate Job Sites</h3>
+        <ul>
+            <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
+        </ul>
+
+        <h3>LinkedIn Queries</h3>
+        <label>Standard Query:</label>
+        <br/>
+        <textarea rows="5" cols="30" id="linkedin-query"></textarea>
+        <br/>
+        <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋 Copy to clipboard</button>
+
+
+        <h3>Templates</h3>
+        <label>Resume Template:</label><br/>
+        <input id="resume-template-name" type="text" size=30 value="Chris Shumaker"/><br/><br/>
+
+        <label>Cover Letter Template:</label><br/>
+        <input id="cover-letter-template-name" type="text" size=30 value="Chris Shumaker Cover Letter"/> <br/><br/>
+
+
+        <h3>Credentials</h3>
+
+        <label>Credential file:</label>
+    <!--    <label for="credential-file" class="custom-file-upload">Upload </label>-->
+        <input id="credential-file" type="file"/><br/>
+
+        <label>Google OAuth:</label>
+        <button id="authorize_button" onclick="handleAuthClick()" class="button">Sign In</button>
+        <button id="signout_button" onclick="handleSignoutClick()" class="button">Sign Out</button>
+        <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    </div>
+    <div class="container-page">
+
+        <div id="job-description" class="page">
+            <p>Paste your job description below:</p>
+            <textarea id="job-description-textarea" rows="50" cols="65"></textarea>
+            <br/>
+            <button onclick="handleExtractSectionsButton()" class="big-button button">Extract</button>
+            <br/>
+        </div>
+
+        <div id="extract" hidden="hidden" class="page">
+            <label>Company Name: </label><br/>
+            <input type="text" size=60 id="company-name" value="Example" />
+            <br/><br/>
+
+            <label>Job Title: </label><br/>
+            <input type="text" size=60 id="job-title" value="Staff Software Engineer" />
+            <br/><br/>
+
+            <label>Company Information:</label><br/>
+            <textarea id="company-information" rows="10" cols="60"></textarea>
+            <br/><br/>
+
+            <label>Job Duties:</label><br/>
+            <textarea id="job-duties" rows="10" cols="60"></textarea>
+            <br/>
+
+            <br/>
+            <label>Minimum Requirements (</label><label class="required-field-flag">Required</label><label>):</label><br/>
+            <textarea id="minimum-requirements" rows="10" cols="60"></textarea>
+            <br/>
+            <br/>
+
+            <label>Preferred Requirements:</label><br/>
+            <textarea id="preferred-requirements" rows="10" cols="60"></textarea>
+            <br/>
+            <br/>
+
+        </div>
+
+        <div id="scan" hidden="hidden" class="page">
+
+            <input type="checkbox" checked disabled />
+            <label>Include Minimum Requirements</label>
+            <br/>
+
+            <input type="checkbox" checked id="include-preferred-checkbox" />
+            <label>Include Preferred</label>
+            <br/>
+
+            <input type="checkbox" checked id="include-job-duties-checkbox" />
+            <label>Include Job Duties</label>
+            <br/>
+
+            <input type="checkbox" checked id="include-company-information-checkbox" />
+            <label>Include Company Info</label><br/>
+
+            <button onclick="handleScanButton()" id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
+            <br/>
+
+            <h2>Results</h2>
+
+            <h3>Minimum Requirements</h3>
+            <p id="minimum-requirements-display"></p>
+            <label id="minimum-score">Score:</label><br/>
+            <h4>Keywords:</h4>
+            <div id="minimum-requirements-keywords"></div>
+
+            <h3>Preferred Requirements</h3>
+            <label id="preferred-score">Score:</label><br/>
+            <h4>Keywords:</h4>
+            <div id="preferred-requirements-keywords"></div>
+
+            <h3>Job Duties</h3>
+            <label id="job-duties-score">Score:</label><br/>
+            <h4>Keywords:</h4>
+            <div id="job-duties-keywords"></div>
+
+            <h3>Company Information</h3>
+            <label id="company-information-score">Score:</label><br/>
+            <h4>Keywords:</h4>
+            <div id="company-information-keywords"></div>
+        </div>
+
+    </div>
+    <div class="container-sidebar-right">
+
+        <h3>Copy Templates</h3>
+        <p>Copy or load resumes in the Tailoring screen to enable scanning.</p>
+        <button id="clone-button" onclick="cloneTemplates()" class="button">Load Docs</button><br/>
+
+        <h3>Doc Links</h3>
+        <label>Tailored Resume: </label>
+        <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
+
+        <label>Tailored Cover Letter: </label>
+        <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/>
+
+        <h3>Download PDF's</h3>
+        <p class="button-instruction">Download buttons are once tailored templates are loaded</p>
+        <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume</button>
+        <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter</button>
+        <br/><br/>
+
+        <h3>Profile Links</h3>
+        <input value="https://www.linkedin.com/in/christophershumaker/" size=60 disabled>
+        <button onclick="handleLinkedInClipboard()" class="clipboard-button">📋</button>
+        <br/>
+
+        <input value="https://github.com/Shumakriss" size=60 disabled>
+        <button onclick="handleGithubClipboard()" class="clipboard-button">📋</button>
+        <br/>
+
+        <input value="https://www.makerconsulting.llc/maker-consulting" size=60 disabled>
+        <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
+        <br/><br/>
+
+        <h3>Track Applications</h3>
+        <a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Open Google Sheet</a>
+
+    </div>
 </div>
 
-<div id="search" class="page">
-    <h3>Favorites</h3>
-    <ul>
-        <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
-        <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
-        <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
-        <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
-        <li><a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Google Sheet</a></li>
-    </ul>
-
-    <h3>Alternate Job Sites</h3>
-    <ul>
-        <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
-    </ul>
-
-    <h3>LinkedIn Queries</h3>
-    <label>Standard Query:</label>
-    <br/>
-    <textarea rows="4" cols="80" id="linkedin-query"></textarea>
-    <br/>
-    <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋 Copy to clipboard</button>
-
-</div>
-
-<div id="job-description" hidden="hidden" class="page">
-    <h3>Enter job description</h3>
-    <textarea id="job-description-textarea" rows="10" cols="80"></textarea>
-    <br/>
-    <button onclick="handleExtractSectionsButton()">Extract Sections</button>
-    <br/>
-
-    <h3>Edit/Confirm sections</h3>
-    <label>Company Name: </label>
-    <input type="text" size=60 id="company-name" value="Example" />
-    <br/><br/>
-
-    <label>Job Title: </label>
-    <input type="text" size=60 id="job-title" value="Staff Software Engineer" />
-    <br/><br/>
-
-    <label>Company Information:</label><br/>
-    <textarea id="company-information" rows="10" cols="80"></textarea>
-    <br/><br/>
-
-    <label>Job Duties:</label><br/>
-    <textarea id="job-duties" rows="10" cols="80"></textarea>
-    <br/>
-
-    <br/>
-    <label>Minimum Requirements (</label><label class="required-field-flag">Required</label><label>):</label><br/>
-    <textarea id="minimum-requirements" rows="10" cols="80"></textarea>
-    <br/>
-    <br/>
-
-    <label>Preferred Requirements:</label><br/>
-    <textarea id="preferred-requirements" rows="10" cols="80"></textarea>
-    <br/>
-    <br/>
-
-</div>
-
-<div id="tailor" hidden="hidden" class="page">
-
-    <h3>Copy Templates</h3>
-    <p>Copy or load resumes in the Tailoring screen to enable scanning.</p>
-    <button id="clone-button" onclick="cloneTemplates()" class="button">Load Docs</button><br/>
-
-    <h3>Doc Links</h3>
-    <label>Tailored Resume: </label>
-    <a id="tailored-resume-link" href="" target="_blank"></a><br/><br/>
-
-    <label>Tailored Cover Letter: </label>
-    <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/>
-
-    <h2>Scan</h2>
-    <input type="checkbox" checked disabled /><label>Include Minimum Requirements</label>
-    <input type="checkbox" checked id="include-preferred-checkbox" /><label>Include Preferred</label>
-    <input type="checkbox" checked id="include-job-duties-checkbox" /><label>Include Job Duties</label>
-    <input type="checkbox" checked id="include-company-information-checkbox" /><label>Include Company Info</label><br/>
-    <button onclick="handleScanButton()" id="scan-button" class="disabled-button scan-button button" disabled>Scan</button>
-    <br/>
-
-    <h2>Scan Results</h2>
-
-    <h3>Minimum Requirements</h3>
-    <p id="minimum-requirements-display"></p>
-    <label id="minimum-score">Score:</label><br/>
-    <h4>Keywords:</h4>
-    <div id="minimum-requirements-keywords"></div>
-
-    <h3>Preferred Requirements</h3>
-    <label id="preferred-score">Score:</label><br/>
-    <h4>Keywords:</h4>
-    <div id="preferred-requirements-keywords"></div>
-
-    <h3>Job Duties</h3>
-    <label id="job-duties-score">Score:</label><br/>
-    <h4>Keywords:</h4>
-    <div id="job-duties-keywords"></div>
-
-    <h3>Company Information</h3>
-    <label id="company-information-score">Score:</label><br/>
-    <h4>Keywords:</h4>
-    <div id="company-information-keywords"></div>
-
-    <h2>Score Determination</h2>
-    <p>This page aims to address two limitations with Jobscan.co.
-        First, as we tailor our resume, we must copy/paste repeatedly.
-        Second, we do not know what level of information will be used by ATS scans
-        (i.e. only the minimum or full job description).
-        Thus, more copy/pasting.
-    </p>
-    <label>Our Solution:</label>
-    <ol>
-        <li>Automate retrieval of tailored resume</li>
-        <li>Copy/paste job description once</li>
-        <li>Scan at multiple levels of information</li>
-    </ol>
-    <p>Individual section scores are not useful alone, they must include all previous higher priority information.
-        There are four major levels of info: minimum requirements, preferred requirements, job duties, and other (typically company information).</p>
-    <label>The priority ranking is as follows:</label>
-    <ol>
-        <li>Minimum Requirements</li>
-        <li>Preferred Requirements</li>
-        <li>Job Duties</li>
-        <li>Company Information</li>
-    </ol>
-    <p>If a section is not provided or the corresponding checkbox is not checked, it will not be included in any scores.</p>
-
-</div>
-
-<div id="apply" hidden="hidden" class="page">
-
-    <h3>Download PDF's</h3>
-    <p class="button-instruction">Download buttons are once tailored templates are loaded</p>
-    <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume</button>
-    <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter</button>
-    <br/><br/>
-
-    <h3>Profile Links</h3>
-    <input value="https://www.linkedin.com/in/christophershumaker/" size=60 disabled>
-    <button onclick="handleLinkedInClipboard()" class="clipboard-button">📋</button>
-    <br/>
-
-    <input value="https://github.com/Shumakriss" size=60 disabled>
-    <button onclick="handleGithubClipboard()" class="clipboard-button">📋</button>
-    <br/>
-
-    <input value="https://www.makerconsulting.llc/maker-consulting" size=60 disabled>
-    <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
-    <br/><br/>
-
-    <h3>Track Applications</h3>
-    <a href="https://docs.google.com/spreadsheets/d/1bLdu7dBu5LQJ1OrxuH-OhT1rGEL4XuUXZhQyIli16OI/edit?gid=0#gid=0" target="_blank">Open Google Sheet</a>
-</div>
-
-<div id="configure" hidden="hidden" class="page">
-
-    <h3>Templates</h3>
-    <label>Resume Template:</label><br/>
-    <input id="resume-template-name" type="text" size=60 value="Chris Shumaker"/><br/><br/>
-
-    <label>Cover Letter Template:</label><br/>
-    <input id="cover-letter-template-name" type="text" size=60 value="Chris Shumaker Cover Letter"/> <br/><br/>
-
-
-    <h3>Credentials</h3>
-
-    <label>Credential file:</label>
-<!--    <label for="credential-file" class="custom-file-upload">Upload </label>-->
-    <input id="credential-file" type="file"/><br/>
-
-    <label>Google OAuth:</label>
-    <button id="authorize_button" onclick="handleAuthClick()" class="button">Sign In</button>
-    <button id="signout_button" onclick="handleSignoutClick()" class="button">Sign Out</button>
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-
-</div>
 
 </body>
 

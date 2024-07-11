@@ -52,8 +52,8 @@
     background-color: #666666; /* dark grey */
 }
 
-.scan-button {
-    padding: 10px 250px;
+.big-button {
+    padding: 10px 200px;
     margin: 10px;
 }
 
@@ -65,4 +65,37 @@
 
 .required-field-flag {
     color: #ff0000;
+}
+
+.container {
+    display: grid;
+}
+
+.container-nav {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end:1;
+}
+
+.container-sidebar-left {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end:3;
+}
+
+.container-sidebar-right {
+    grid-column-start: 5;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end:3;
+}
+
+.container-page {
+    padding: 20px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end:3;
 }

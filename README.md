@@ -61,4 +61,28 @@ Apply
 Other helpful automations:
 * Look up headquarters address (reliable?)
 * Slice requirements, nice-to-haves, and duties from job description
-  * Get jobscan results from each
+* Get jobscan results from each
+
+<h2>Score Determination</h2>
+<p>This page aims to address two limitations with Jobscan.co.
+    First, as we tailor our resume, we must copy/paste repeatedly.
+    Second, we do not know what level of information will be used by ATS scans
+    (i.e. only the minimum or full job description).
+    Thus, more copy/pasting.
+</p>
+<label>Our Solution:</label>
+<ol>
+    <li>Automate retrieval of tailored resume</li>
+    <li>Copy/paste job description once</li>
+    <li>Scan at multiple levels of information</li>
+</ol>
+<p>Individual section scores are not useful alone, they must include all previous higher priority information.
+    There are four major levels of info: minimum requirements, preferred requirements, job duties, and other (typically company information).</p>
+<label>The priority ranking is as follows:</label>
+<ol>
+    <li>Minimum Requirements</li>
+    <li>Preferred Requirements</li>
+    <li>Job Duties</li>
+    <li>Company Information</li>
+</ol>
+<p>If a section is not provided or the corresponding checkbox is not checked, it will not be included in any scores.</p>
