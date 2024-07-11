@@ -19,6 +19,7 @@ var credentialFile;
 var chatGptApiKey;
 
 function setCloneVars() {
+    console.log("Setting clone variables");
     resumeTemplateName = document.getElementById('resume-template-name').value;
     coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
     companyName = document.getElementById('company-name').value;
@@ -27,10 +28,11 @@ function setCloneVars() {
 }
 
 function checkCloneVars() {
-    return companyName && resumeTemplateName && coverLetterTemplateName;
+    return companyName && resumeTemplateName && coverLetterTemplateName && newResumeName && newCoverLetterName;
 }
 
 function initCloneVars() {
+    console.log("Initializing clone variables");
     if (!checkCloneVars()) {
         setCloneVars();
     }
@@ -39,7 +41,8 @@ function initCloneVars() {
 function disableCloneButton() {
     let cloneButton = document.getElementById('clone-button');
     cloneButton.disabled = true;
-    cloneButton.className = "disabled-button button";
+    cloneButton.className = "disabled-button big-button button";
+    handleNavButtonClick(document.getElementById("nav-button-scan"), "scan");
 }
 
 function hideButtonInstruction() {
@@ -52,7 +55,7 @@ function hideButtonInstruction() {
 function enableScanButton() {
     let scanButton = document.getElementById('scan-button');
     scanButton.disabled = false;
-    scanButton.className = "scan-button button";
+    scanButton.className = "scan-button button big-button";
 
     hideButtonInstruction();
 }
@@ -84,6 +87,8 @@ async function reloadClones() {
     newResumeId = await getDocumentIdByName(newResumeName);
     if (newResumeId) {
         updateNewResumeData(newResumeId);
+    } else {
+        console.log("Resume ID not found for name: " + newResumeName);
     }
 
     newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
@@ -200,9 +205,71 @@ function loadCredentialsFromSession() {
     }
 }
 
+async function onCompanyNameChange(newCompanyName) {
+    console.log("Company named changed");
+    companyName = newCompanyName;
+
+    resumeTemplateName = document.getElementById('resume-template-name').value;
+    coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
+
+    newResumeName = companySpecificName(companyName, resumeTemplateName);
+    newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+
+    let newResumeId = await getDocumentIdByName(newResumeName);
+    let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
+
+    if (newResumeId && newCoverLetterId) {
+        console.log("Found company-specific documents");
+        document.getElementById('tailored-resume-link').innerHTML = "Searching...";
+        reloadClones();
+    } else {
+        console.log("Company-specific documents not found");
+        document.getElementById("clone-button").disabled = false;
+        document.getElementById('clone-button').className = "big-button button";
+    }
+
+}
+
+function initCompanyNameListener() {
+    document.getElementById('company-name').addEventListener('change', function (event) {
+        onCompanyNameChange(event.target.value);
+    });
+
+    console.log("Registered event listener for credential file");
+}
+
+
+function updateExtractWithChatGptButton() {
+    let jobDescription = document.getElementById("job-description-textarea").value;
+    if (jobDescription) {
+        document.getElementById("extract-sections-button").disabled = false;
+        document.getElementById("extract-sections-button").className = "big-button button";
+    } else {
+        document.getElementById("extract-sections-button").disabled = true;
+        document.getElementById("extract-sections-button").className = "big-button disabled-button button";
+    }
+}
+
+function debounce(callback, wait) {
+  let timeout;
+  return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(function () { callback.apply(this, args); }, wait);
+  };
+}
+
+function initJobDescriptionListener() {
+    document.getElementById('job-description-textarea').addEventListener('keydown', debounce( () => {
+        updateExtractWithChatGptButton();
+    }, 200));
+}
+
 async function initialize() {
     initCredentialFileListener();
     loadCredentialsFromSession();
+
+    initCompanyNameListener();
+    initJobDescriptionListener();
 }
 
 async function handleSaveGoogleCredentials() {
@@ -381,12 +448,15 @@ async function handleExtractSectionsButton() {
     console.log("Extracting sections from job description");
     let jobDescription = document.getElementById("job-description-textarea").value;
 
+    handleNavButtonClick(document.getElementById("nav-button-extract"), "extract");
+
     let prompt;
     let response;
 
     prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
     response = await askChatGpt(chatGptApiKey, prompt);
     document.getElementById("company-name").value = response;
+    onCompanyNameChange(response);
 
     prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
     response = await askChatGpt(chatGptApiKey, prompt);

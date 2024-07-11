@@ -42,7 +42,7 @@ async function getDocumentIdByName(name) {
     }
 
     files = response.result.files;
-    if (!files) {
+    if (!files || files.length == 0) {
         console.log("No files found for name: " + name);
         return;
     }
