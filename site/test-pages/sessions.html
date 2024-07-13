@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sessions Test</title>
+</head>
+
+
+<script type='text/javascript' src='../modules/sessions.js'></script>
+<script>
+    var session = new Session();
+    console.log("Created empty session: ", JSON.stringify(session));
+
+    session.load();
+    console.log("Loaded session from storage: ", JSON.stringify(session));
+
+    session.companyName = "Example";
+    console.log("Set a property on the session: ", JSON.stringify(session));
+
+    session.save();
+    console.log("Saved the session");
+    session.load();
+    console.log("Loaded the session: ", JSON.stringify(session));
+    if (session.companyName != "Example") {
+        throw new Error("Failed to save/load session storage");
+    }
+
+    var newSession = new Session();
+    console.log("Created second empty session: ", JSON.stringify(newSession));
+    if (newSession.companyName == "Example") {
+        throw new Error("Initialized session preserved data unexpectedly");
+    }
+
+    newSession.load();
+    console.log("Loaded new session from storage: ", JSON.stringify(newSession));
+
+    if (newSession.companyName != "Example") {
+        throw new Error("Failed to save/load session storage");
+    }
+
+</script>
+</html>

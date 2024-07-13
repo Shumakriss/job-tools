@@ -32,7 +32,7 @@
         </ul>
 
         <h3>LinkedIn Queries</h3>
-        <textarea rows="5" cols="30" id="linkedin-query"></textarea>
+        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
         <br/>
         <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋 Copy to clipboard</button>
 
@@ -52,9 +52,9 @@
         <br/>
 
         <h3>Google:</h3>
-        <button id="authorize_button" onclick="handleAuthClick()" class="button">Sign In To Google</button>
+        <button id="google-authorize-button" onclick="handleAuthClick()" class="disabled-button button" disabled>Google Sign In</button>
         <br/>
-        <button id="signout_button" onclick="handleSignoutClick()" class="button">Sign Out Of Google</button>
+        <button id="google-signout-button" onclick="handleSignoutClick()" class="disabled-button button" disabled>Google Sign Out</button>
         <pre id="content" style="white-space: pre-wrap;"></pre>
 
     </div>
@@ -96,7 +96,7 @@
             <textarea id="company-information" rows="10" class="job-section-text"></textarea>
             <br/><br/>
 
-            <button id="clone-button" onclick="cloneTemplates()" class="big-button disabled-button button" disabled>Create Resume For This Job</button>
+            <button id="create-resume-button" onclick="handleCreateResumeButton()" class="big-button disabled-button button" disabled>Create Resume For This Job</button>
 
         </div>
 
@@ -191,15 +191,18 @@
 
 </body>
 
+
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
-<script async defer type='text/javascript' src='./modules/gapi.js'></script>
-<script async defer type='text/javascript' src='./modules/gdrive.js'></script>
-<script async defer type='text/javascript' src='./modules/jobscan.js'></script>
-<script async defer type='text/javascript' src='./modules/gsheets.js'></script>
-<script async defer type='text/javascript' src='./modules/gpt.js'></script>
-<script async defer type='text/javascript' src='./modules/prompts.js'></script>
-<script async defer type='text/javascript' src='./modules/clipboard.js' onload="initLinkedInQuery()"></script>
-<script async defer type='text/javascript' src='./script.js' onload="initialize()"></script>
+<script type='text/javascript' src='./modules/gdrive.js'></script>
+<script type='text/javascript' src='./modules/jobscan.js'></script>
+<script type='text/javascript' src='./modules/gsheets.js'></script>
+<script type='text/javascript' src='./modules/gpt.js'></script>
+<script type='text/javascript' src='./modules/prompts.js'></script>
+<script type='text/javascript' src='./modules/clipboard.js' onload="initLinkedInQuery()"></script>
+<script type='text/javascript' src='./modules/helpers.js'></script>
+<script type='text/javascript' src='./modules/handlers.js'></script>
+<script type='text/javascript' src='./modules/sessions.js'></script>
+<script type='text/javascript' src='./script.js' onload="initialize()"></script>
 
 </html>

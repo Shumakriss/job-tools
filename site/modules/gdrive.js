@@ -1,3 +1,96 @@
+// Discovery doc URL for APIs
+const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+const SCOPES = 'https://www.googleapis.com/auth/drive';
+const GoogleDriveStates = Object.freeze({
+    UNKNOWN:   Symbol("unknown"),
+    AUTHORIZED:  Symbol("authorized"),
+    UNAUTHORIZED: Symbol("unauthorized")
+});
+
+class GoogleDrive {
+
+    constructor (apiKey, clientId, token, onAuthenticatedCallback) {
+        this.apiKey = apiKey;
+        this.clientId = clientId;
+        this.token = token;
+        this.tokenClient = null;
+        this.state = GoogleDriveStates.UNKNOWN;
+        this.onAuthenticatedCallback = onAuthenticatedCallback;
+    }
+
+
+    async onGapiLoaded() {
+
+        await gapi.client.init({
+            apiKey: this.apiKey,
+            discoveryDocs: [DISCOVERY_DOC]
+            });
+
+        if (this.token) {
+            gapi.client.setToken(this.token);
+            this.state = GoogleDriveStates.AUTHORIZED;
+            this.onAuthenticatedCallback();
+        }
+
+        this.state = GoogleDriveStates.UNAUTHORIZED;
+
+        this.tokenClient = await google.accounts.oauth2.initTokenClient({
+            client_id: this.clientId,
+            scope: SCOPES,
+            callback: '', // defined later
+        });
+        console.debug("Done initializing tokenClient");
+
+        this.tokenClient.callback = async (resp) => {
+            if (resp.error !== undefined) {
+                this.state = GoogleDriveStates.UNAUTHORIZED;
+                throw (resp);
+            }
+            console.debug("Token client callback invoked");
+            this.token = await gapi.client.getToken();
+            this.onAuthenticatedCallback();
+        };
+    }
+
+    init() {
+        console.log("Initializing Google Drive Class");
+        if (!this.apiKey) {
+            this.state = GoogleDriveStates.UNKNOWN;
+            console.log("Missing API Key");
+            return;
+        }
+
+        if (!this.clientId) {
+            this.state = GoogleDriveStates.UNKNOWN;
+            console.log("Missing Client Id");
+            return;
+        }
+
+        gapi.load('client',  () => {this.onGapiLoaded()});
+    }
+
+    async authorize() {
+        console.log("Authorizing Google Drive client");
+        if (gapi.client.getToken() === null) {
+            this.tokenClient.requestAccessToken({prompt: 'consent'});
+            this.state = GoogleDriveStates.AUTHORIZED;
+        } else {
+            this.tokenClient.requestAccessToken({prompt: ''});
+            this.state = GoogleDriveStates.AUTHORIZED;
+        }
+    }
+
+    signOut() {
+        google.accounts.oauth2.revoke(this.token.access_token);
+        gapi.client.setToken('');
+        this.state = GoogleDriveStates.UNAUTHORIZED;
+    }
+}
+
+
 function gDocLinkFromId(gDocId) {
     return "https://docs.google.com/document/d/" + gDocId + "/edit";
 }
