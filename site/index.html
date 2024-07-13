@@ -155,19 +155,15 @@
     </div>
     <div class="container-sidebar-right">
 
-        <label>Tailored Resume: </label><br/>
+        <h3>Documents</h3>
+        <p>Provide templates and company name to view.</p>
+
         <a id="tailored-resume-link" href="" target="_blank"></a>
+        <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
         <br/><br/>
 
-        <label>Tailored Cover Letter: </label><br/>
         <a id="tailored-cover-letter-link" href="" target="_blank"></a>
-        <br/>
-
-        <h3>Download PDF's</h3>
-        <p class="button-instruction">Download buttons are once tailored templates are loaded</p>
-        <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume</button>
-        <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter</button>
-        <br/><br/>
+        <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
 
         <h3>Profile Links</h3>
         <input value="https://www.linkedin.com/in/christophershumaker/" size=40 disabled>

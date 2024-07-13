@@ -56,19 +56,31 @@ async function handleScanButton() {
     }
 }
 
-
 async function handleDownloadResumeButton() {
     console.log("Downloading resume");
-    let pdfLink = await getPdfLink(newResumeId);
-    downloadLink(newResumeName +".pdf", pdfLink);
+    let elementName = "resume-template-name";
+    let docName = document.getElementById(elementName).value;
+    let companyName = document.getElementById("company-name").value;
+    let newDocName = companySpecificName(companyName, docName);
+    let newDocId = await getDocumentIdByName(newDocName);
+    let pdfLink = await getPdfLink(newDocId);
+    downloadLink(pdfLink);
+    session.resumePdfLink = pdfLink;
+    session.save()
 }
 
 async function handleDownloadCoverLetterButton() {
     console.log("Downloading cover letter");
-    let pdfLink = await getPdfLink(newCoverLetterId);
-    downloadLink(newCoverLetterName +".pdf", pdfLink);
+    let elementName = "cover-letter-template-name";
+    let docName = document.getElementById(elementName).value;
+    let companyName = document.getElementById("company-name").value;
+    let newDocName = companySpecificName(companyName, docName);
+    let newDocId = await getDocumentIdByName(newDocName);
+    let pdfLink = await getPdfLink(newDocId);
+    downloadLink(pdfLink);
+    session.coverLetterPdfLink = pdfLink;
+    session.save()
 }
-
 
 function handleNavButtonClick(button, pageName) {
     let pages = document.getElementsByClassName("page");

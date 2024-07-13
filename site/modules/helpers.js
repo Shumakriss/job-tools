@@ -34,7 +34,7 @@ function companySpecificName(companyName, templateName) {
 }
 
 
-function downloadLink(filename, url) {
+function downloadLink(url) {
     const a = document.createElement('a')
     a.href = url
     a.download = url.split('/').pop()

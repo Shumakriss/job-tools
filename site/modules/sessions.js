@@ -8,8 +8,10 @@ class Session {
         this.companyName = null;
         this.newResumeName = null;
         this.newResumeId = null;
+        this.resumePdfLink = null;
         this.newCoverLetterName = null;
         this.newCoverLetterId = null;
+        this.coverLetterPdfLink = null;
         this.minimumRequirements = null;
         this.preferredRequirements = null;
         this.jobDuties = null;
