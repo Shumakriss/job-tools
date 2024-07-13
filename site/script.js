@@ -38,9 +38,9 @@ async function initListeners() {
 */
 
 function initCompanyNameListener() {
-    document.getElementById('company-name').addEventListener('change', function (event) {
+    document.getElementById('company-name').addEventListener('change',debounce( (event) => {
         onCompanyNameChange(event.target.value);
-    });
+    }, 200));
 
     console.debug("Registered event listener for company Name");
 }
@@ -73,7 +73,6 @@ async function initCredentialFileListener() {
 
     console.debug("Registered event listener for credential file");
 }
-
 
 /*
 *  DOM interaction functions
