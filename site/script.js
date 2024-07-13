@@ -12,10 +12,10 @@ var session = new Session();
 async function initialize() {
     session.tryLoad();
 
-    googleDrive = new GoogleDrive(session.googleApiKey,
+    googleDrive = new GoogleApi(session.googleApiKey,
         session.googleClientId,
         JSON.parse(session.googleApiToken),
-        onGoogleDriveAuthenticated);
+        onGoogleApiAuthenticated);
 
     await googleDrive.init();
     console.log("Google Drive initialized");
@@ -193,7 +193,7 @@ function updateUserInputFromSession(session) {
 function setGoogleButtonState() {
     console.debug("Updating Google Buttons based on Drive client state: " + googleDrive.state.toString());
     switch (googleDrive.state) {
-        case  GoogleDriveStates.AUTHORIZED:
+        case  GoogleApiStates.AUTHORIZED:
             console.debug("Updating Google Buttons based on Drive client state 'AUTHORIZED'");
             document.getElementById("google-authorize-button").innerText = "Google Refresh";
             document.getElementById("google-authorize-button").disabled = false;
@@ -202,7 +202,7 @@ function setGoogleButtonState() {
             document.getElementById("google-signout-button").disabled = false;
             document.getElementById("google-signout-button").className = "button"
             break;
-        case  GoogleDriveStates.UNAUTHORIZED:
+        case  GoogleApiStates.UNAUTHORIZED:
             console.debug("Updating Google Buttons based on Drive client state 'UNAUTHORIZED'");
             document.getElementById("google-authorize-button").innerText = "Google Sign In";
             document.getElementById("google-authorize-button").disabled = false;
@@ -240,7 +240,7 @@ function handleSignoutClick() {
     session.save();
 }
 
-function onGoogleDriveAuthenticated() {
+function onGoogleApiAuthenticated() {
     session.googleApiToken = JSON.stringify(googleDrive.token);
     setGoogleButtonState();
     session.save();
