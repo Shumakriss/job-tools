@@ -22,13 +22,14 @@ async function initialize() {
     setGoogleButtonState();
 
     updateUserInputFromSession(session);
-
     initListeners();
 }
 
 async function initListeners() {
     initCredentialFileListener();
     initCompanyNameListener();
+    initResumeTemplateNameListener();
+    initCoverLetterTemplateNameListener();
     initJobDescriptionListener();
     console.log("Registered listeners");
 }
@@ -37,10 +38,98 @@ async function initListeners() {
 *  Event Listeners
 */
 
+async function onDocumentInputChange(resumeTemplateName, coverLetterTemplateName, companyName) {
+
+    if (companyName && resumeTemplateName && coverLetterTemplateName) {
+        console.log("Checking for templates", resumeTemplateName, coverLetterTemplateName);
+        let resumeId = await getDocumentIdByName(resumeTemplateName);
+        let coverLetterId = await getDocumentIdByName(coverLetterTemplateName);
+
+        console.log("Template doc ids:", resumeId, coverLetterId);
+
+        if (resumeId && coverLetterId) {
+            console.log("Template documents found in Google Drive");
+            newResumeName = companySpecificName(companyName, resumeTemplateName);
+            newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
+
+            let newResumeId = await getDocumentIdByName(newResumeName);
+            let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
+
+            if (newResumeId && coverLetterId) {
+                console.log("Customized documents found in Google Drive");
+
+                document.getElementById("create-resume-button").disabled = true;
+                document.getElementById('create-resume-button').className = "big-button button disabled-button";
+                document.getElementById('tailored-resume-link').innerHTML = newResumeName;
+                document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
+                document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
+                document.getElementById('tailored-cover-letter-link').href = gDocLinkFromId(newCoverLetterId);
+
+                let resumeDownloadButton = document.getElementById('resume-download-button');
+                resumeDownloadButton.disabled = false;
+                resumeDownloadButton.className = "button fa fa-download";
+
+                let coverLetterDownloadButton = document.getElementById('cover-letter-download-button');
+                coverLetterDownloadButton.disabled = false;
+                coverLetterDownloadButton.className = "button fa fa-download";
+            } else {
+                console.log("Customized documents not found in Google Drive");
+                document.getElementById("create-resume-button").disabled = false;
+                document.getElementById('create-resume-button').className = "big-button button";
+                document.getElementById('tailored-resume-link').innerHTML = "Not Ready";
+                document.getElementById('tailored-resume-link').href = "";
+                document.getElementById('tailored-cover-letter-link').innerHTML = "Not Ready";
+                document.getElementById('tailored-cover-letter-link').href = "";
+
+                let resumeDownloadButton = document.getElementById('resume-download-button');
+                resumeDownloadButton.disabled = true;
+                resumeDownloadButton.className = "disabled-button button fa fa-download";
+
+                let coverLetterDownloadButton = document.getElementById('cover-letter-download-button');
+                coverLetterDownloadButton.disabled = true;
+                coverLetterDownloadButton.className = "disabled-button button fa fa-download";
+            }
+        } else {
+            console.log("Template documents not found in Google Drive");
+        }
+    } else {
+        console.log("Missing input to document tailoring");
+    }
+}
+
+function initCoverLetterTemplateNameListener() {
+    document.getElementById('cover-letter-template-name').addEventListener('change', debounce( (event) => {
+        session.coverLetterTemplateName = event.target.value;
+        session.save();
+        onDocumentInputChange(session.resumeTemplateName,
+            session.coverLetterTemplateName,
+            session.companyName);
+    }, 100));
+
+    console.debug("Registered event listener for resume template name");
+}
+
+
+function initResumeTemplateNameListener() {
+    document.getElementById('resume-template-name').addEventListener('change', debounce( (event) => {
+        session.resumeTemplateName = event.target.value;
+        session.save();
+        onDocumentInputChange(session.resumeTemplateName,
+            session.coverLetterTemplateName,
+            session.companyName);
+    }, 100));
+
+    console.debug("Registered event listener for resume template name");
+}
+
 function initCompanyNameListener() {
-    document.getElementById('company-name').addEventListener('change',debounce( (event) => {
-        onCompanyNameChange(event.target.value);
-    }, 200));
+    document.getElementById('company-name').addEventListener('change', debounce( (event) => {
+        session.companyName = event.target.value;
+        session.save();
+        onDocumentInputChange(session.resumeTemplateName,
+            session.coverLetterTemplateName,
+            session.companyName);
+    }, 100));
 
     console.debug("Registered event listener for company Name");
 }
@@ -155,6 +244,9 @@ function onGoogleDriveAuthenticated() {
     session.googleApiToken = JSON.stringify(googleDrive.token);
     setGoogleButtonState();
     session.save();
+    onDocumentInputChange(session.resumeTemplateName,
+        session.coverLetterTemplateName,
+        session.companyName);
 }
 
 function updateSessionCredentials(credentialFileObject) {

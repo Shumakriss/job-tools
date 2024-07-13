@@ -99,31 +99,6 @@ function loadCredentialsFromSession() {
     }
 }
 
-async function onCompanyNameChange(newCompanyName) {
-    console.log("Company named changed");
-    companyName = newCompanyName;
-
-    resumeTemplateName = document.getElementById('resume-template-name').value;
-    coverLetterTemplateName = document.getElementById('cover-letter-template-name').value;
-
-    newResumeName = companySpecificName(companyName, resumeTemplateName);
-    newCoverLetterName = companySpecificName(companyName, coverLetterTemplateName);
-
-    let newResumeId = await getDocumentIdByName(newResumeName);
-    let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
-
-    if (newResumeId && newCoverLetterId) {
-        console.log("Found company-specific documents");
-        document.getElementById('tailored-resume-link').innerHTML = "Searching...";
-        reloadClones();
-    } else {
-        console.log("Company-specific documents not found");
-        document.getElementById("create-resume-button").disabled = false;
-        document.getElementById('create-resume-button').className = "big-button button";
-    }
-
-}
-
 
 function setCloneVars() {
     console.log("Setting clone variables");
@@ -135,7 +110,14 @@ function setCloneVars() {
 }
 
 function checkCloneVars() {
-    return companyName && resumeTemplateName && coverLetterTemplateName && newResumeName && newCoverLetterName;
+
+    return (
+        session.companyName &&
+        session.resumeTemplateName &&
+        session.coverLetterTemplateName &&
+        session.newResumeName &&
+        session.newCoverLetterName
+        );
 }
 
 function initCloneVars() {
