@@ -110,7 +110,6 @@ async function handleExtractSectionsButton() {
     prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
     response = await askChatGpt(session.chatGptApiKey, prompt);
     document.getElementById("company-name").value = response;
-    onCompanyNameChange(response);
 
     prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
     response = await askChatGpt(session.chatGptApiKey, prompt);
