@@ -26,7 +26,6 @@ async function listFiles() {
     const output = files.reduce(
         (str, file) => `${str}${file.name} (${file.id})\n`,
         'Files:\n');
-    document.getElementById('content').innerText = "Login successful";
 }
 
 async function getDocumentIdByName(name) {

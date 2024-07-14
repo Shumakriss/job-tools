@@ -3,11 +3,13 @@
 */
 
 // Discovery doc URL for APIs
-const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+const DRIVE_DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+const SHEETS_DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = 'https://www.googleapis.com/auth/drive';
+const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets';
 const GoogleApiStates = Object.freeze({
     UNKNOWN:   Symbol("unknown"),
     AUTHORIZED:  Symbol("authorized"),
@@ -30,7 +32,7 @@ class GoogleApi {
 
         await gapi.client.init({
             apiKey: this.apiKey,
-            discoveryDocs: [DISCOVERY_DOC]
+            discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC]
             });
 
         if (this.token) {

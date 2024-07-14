@@ -2,7 +2,7 @@
     All initialization functions can be found in this file, though they may refer
     to other functions outside this file.
 */
-var googleDrive;
+var googleApi;
 var session = new Session();
 
 /*
@@ -12,12 +12,12 @@ var session = new Session();
 async function initialize() {
     session.tryLoad();
 
-    googleDrive = new GoogleApi(session.googleApiKey,
+    googleApi = new GoogleApi(session.googleApiKey,
         session.googleClientId,
         JSON.parse(session.googleApiToken),
         onGoogleApiAuthenticated);
 
-    await googleDrive.init();
+    await googleApi.init();
     console.log("Google Drive initialized");
     setGoogleButtonState();
 
@@ -150,10 +150,10 @@ async function initCredentialFileListener() {
             updateSessionCredentials(credentials);
             console.log("Attempting to reload Google Drive Client.");
 
-            googleDrive.apiKey = session.googleApiKey;
-            googleDrive.clientId = session.googleClientId;
+            googleApi.apiKey = session.googleApiKey;
+            googleApi.clientId = session.googleClientId;
 
-            await googleDrive.init();
+            await googleApi.init();
             setGoogleButtonState();
         }
 
@@ -191,8 +191,8 @@ function updateUserInputFromSession(session) {
 
 
 function setGoogleButtonState() {
-    console.debug("Updating Google Buttons based on Drive client state: " + googleDrive.state.toString());
-    switch (googleDrive.state) {
+    console.debug("Updating Google Buttons based on Drive client state: " + googleApi.state.toString());
+    switch (googleApi.state) {
         case  GoogleApiStates.AUTHORIZED:
             console.debug("Updating Google Buttons based on Drive client state 'AUTHORIZED'");
             document.getElementById("google-authorize-button").innerText = "Google Refresh";
@@ -228,20 +228,20 @@ function setGoogleButtonState() {
 
 async function handleAuthClick() {
     console.log("Google Sign In / Refresh button clicked");
-    await googleDrive.authorize();
+    await googleApi.authorize();
 }
 
 
 function handleSignoutClick() {
     console.log("Google Sign Out button clicked");
-    googleDrive.signOut();
+    googleApi.signOut();
     setGoogleButtonState();
     session.googleApiToken = null;
     session.save();
 }
 
 function onGoogleApiAuthenticated() {
-    session.googleApiToken = JSON.stringify(googleDrive.token);
+    session.googleApiToken = JSON.stringify(googleApi.token);
     setGoogleButtonState();
     session.save();
     onDocumentInputChange(session.resumeTemplateName,

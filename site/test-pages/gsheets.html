@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Sheets Test</title>
+</head>
+<body>
+<h1>Page loaded</h1>
+<button onclick="handleAuthButtonClick()">Auth</button>
+<button onclick="handleTestSheetsButtonClick()">TestSheets</button>
+<pre id="content" style="white-space: pre-wrap;"></pre>
+<br/>
+</body>
+
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
+<script type='text/javascript' src='../modules/gapi.js'></script>
+<script type='text/javascript' src='../modules/gdrive.js'></script>
+<script async defer type='text/javascript' src='../modules/gsheets.js'></script>
+
+<script>
+    const CLIENT_ID = '535596188929-4vdkchfjuqhqkcdubkc4420766apisc8.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyBajGM65legjWB88DN6Tf3pXJGz2O90Rfs';
+
+    googleApi = new GoogleApi(API_KEY,
+        CLIENT_ID,
+        null,
+        () => {
+            console.log("Google client authorized");
+        });
+
+    googleApi.init();
+
+    async function handleAuthButtonClick() {
+        console.log("Auth button clicked");
+        googleApi.authorize();
+    }
+
+    async function handleTestSheetsButtonClick() {
+        console.log("Sheets button clicked");
+        appendApplicationLog("company name");
+    }
+</script>
+
+</html>
