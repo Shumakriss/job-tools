@@ -32,6 +32,7 @@ async function initListeners() {
     initCoverLetterTemplateNameListener();
     initJobDescriptionListener();
     initApplicationLogSheetNameListener();
+    initMinimumRequirementsListener();
     console.log("Registered listeners");
 }
 
@@ -56,11 +57,13 @@ async function onDocumentInputChange(resumeTemplateName, coverLetterTemplateName
             let newResumeId = await getDocumentIdByName(newResumeName);
             let newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
 
-            if (newResumeId && coverLetterId) {
+            if (newResumeId && newCoverLetterId) {
                 console.log("Customized documents found in Google Drive");
 
                 document.getElementById("create-resume-button").disabled = true;
                 document.getElementById('create-resume-button').className = "big-button button disabled-button";
+                document.getElementById('create-resume-button').innerHTML = "Documents Ready";
+
                 document.getElementById('tailored-resume-link').innerHTML = newResumeName;
                 document.getElementById('tailored-resume-link').href = gDocLinkFromId(newResumeId);
                 document.getElementById('tailored-cover-letter-link').innerHTML = newCoverLetterName;
@@ -77,6 +80,8 @@ async function onDocumentInputChange(resumeTemplateName, coverLetterTemplateName
                 console.log("Customized documents not found in Google Drive");
                 document.getElementById("create-resume-button").disabled = false;
                 document.getElementById('create-resume-button').className = "big-button button";
+                document.getElementById('create-resume-button').innerHTML = "Create Resume For This Job";
+
                 document.getElementById('tailored-resume-link').innerHTML = "Not Ready";
                 document.getElementById('tailored-resume-link').href = "";
                 document.getElementById('tailored-cover-letter-link').innerHTML = "Not Ready";
@@ -139,6 +144,18 @@ function initJobDescriptionListener() {
         updateExtractWithChatGptButton();
     }, 200));
     console.debug("Registered event listener for job description");
+}
+
+function initMinimumRequirementsListener() {
+    document.getElementById('minimum-requirements').addEventListener('keydown', debounce( (event) => {
+
+        if (event.target.value) {
+            enableScanButton();
+        } else {
+            disableScanButton();
+        }
+    }, 200));
+    console.debug("Registered event listener for minimum requirements");
 }
 
 async function initCredentialFileListener() {
@@ -291,6 +308,7 @@ function onGoogleApiAuthenticated() {
         session.companyName);
 
     onApplicationLogStateChange(true);
+    reloadClones();
 }
 
 function updateSessionCredentials(credentialFileObject) {

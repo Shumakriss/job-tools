@@ -114,6 +114,10 @@
     padding: 5px;
 }
 
+.scan-result-score {
+    font-size: 48px;
+}
+
 input {
     border-width: 1px;
     border-radius: 3px;

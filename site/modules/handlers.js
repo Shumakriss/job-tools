@@ -8,16 +8,20 @@ async function handleSaveGoogleCredentials() {
     sessionStorage.setItem("google-api-key", document.getElementById('google-api-key').value);
 }
 
-
-async function handleScanButton() {
+async function handleScanButton(newResumeName) {
     console.log("Scanning resume against minimum requirements");
 
-    resumePlainText = await getPlaintextFileContents(newResumeId);
+    let companySpecificName = session.companyName + " " + session.resumeTemplateName;
+    let companySpecificDocId = await getDocumentIdByName(companySpecificName);
+    let resumePlainText = await getPlaintextFileContents(companySpecificDocId);
 
     let jobDescription = document.getElementById("minimum-requirements").value;;
-    let results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
+    let results = await jobscan(session.jobscanCookie,
+        session.jobscanXsrfToken,
+        resumePlainText,
+        jobDescription);
     let score = results.matchRate.score;
-    document.getElementById("minimum-score").innerHTML = "Score: " + score;
+    document.getElementById("minimum-score").innerHTML = score;
     document.getElementById("minimum-requirements-keywords").innerHTML = '';
     document.getElementById("minimum-requirements-keywords").appendChild(formatResults(results));
     document.getElementById("minimum-requirements-display").value = document.getElementById("minimum-requirements");
@@ -26,9 +30,12 @@ async function handleScanButton() {
     includePreferred = document.getElementById("include-preferred-checkbox").checked;
     if (includePreferred && preferredRequirements) {
         jobDescription = jobDescription + preferredRequirements;
-        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
+        results = await jobscan(session.jobscanCookie,
+            session.jobscanXsrfToken,
+            resumePlainText,
+            jobDescription);
         score = results.matchRate.score;
-        document.getElementById("preferred-score").innerHTML = "Score: " + score;
+        document.getElementById("preferred-score").innerHTML = score;
         document.getElementById("preferred-requirements-keywords").innerHTML = '';
         document.getElementById("preferred-requirements-keywords").appendChild(formatResults(results));
     }
@@ -37,9 +44,12 @@ async function handleScanButton() {
     includeJobDuties = document.getElementById("include-job-duties-checkbox").checked;
     if ( includeJobDuties && jobDuties ) {
         jobDescription = jobDescription + jobDuties;
-        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
+        results = await jobscan(session.jobscanCookie,
+            session.jobscanXsrfToken,
+            resumePlainText,
+            jobDescription);
         score = results.matchRate.score;
-        document.getElementById("job-duties-score").innerHTML = "Score: " + score;
+        document.getElementById("job-duties-score").innerHTML = score;
         document.getElementById("job-duties-keywords").innerHTML = '';
         document.getElementById("job-duties-keywords").appendChild(formatResults(results));
     }
@@ -48,9 +58,12 @@ async function handleScanButton() {
     includeCompanyInformation = document.getElementById("include-company-information-checkbox").checked;
     if ( includeCompanyInformation && companyInformation ) {
         jobDescription = jobDescription + document.getElementById("company-information").value;
-        results = await jobscan(jobscanCookie, jobscanXsrfToken, resumePlainText, jobDescription);
+        results = await jobscan(session.jobscanCookie,
+            session.jobscanXsrfToken,
+            resumePlainText,
+            jobDescription);
         score = results.matchRate.score;
-        document.getElementById("company-information-score").innerHTML = "Score: " + score;
+        document.getElementById("company-information-score").innerHTML = score;
         document.getElementById("company-information-keywords").innerHTML = '';
         document.getElementById("company-information-keywords").appendChild(formatResults(results));
     }

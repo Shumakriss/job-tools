@@ -141,12 +141,26 @@ function hideButtonInstruction() {
     }
 }
 
+function showButtonInstruction() {
+    let elements = document.getElementsByClassName("button-instruction");
+    for (let i=0; i < elements.length; i++) {
+        elements[i].hidden = false;
+    }
+}
+
 function enableScanButton() {
     let scanButton = document.getElementById('scan-button');
     scanButton.disabled = false;
     scanButton.className = "scan-button button big-button";
 
     hideButtonInstruction();
+}
+
+function disableScanButton() {
+    let scanButton = document.getElementById('scan-button');
+    scanButton.disabled = true;
+    scanButton.className = "scan-button button disabled-button big-button";
+    showButtonInstruction();
 }
 
 function updateNewResumeData(newResumeId) {
@@ -176,17 +190,22 @@ async function reloadClones() {
     newResumeId = await getDocumentIdByName(newResumeName);
     if (newResumeId) {
         updateNewResumeData(newResumeId);
+        let minimumRequirements = document.getElementById("minimum-requirements").value;
+        if (minimumRequirements) {
+            enableScanButton();
+        }
     } else {
         console.log("Resume ID not found for name: " + newResumeName);
+        disableScanButton();
     }
 
     newCoverLetterId = await getDocumentIdByName(newCoverLetterName);
     if (newCoverLetterId) {
         updateNewCoverLetterData(newCoverLetterId);
+    } else {
+        console.log("Cover letter Id ID not found for name: " + newCoverLetterName);
     }
 
-    disableCloneButton();
-    enableScanButton();
 }
 
 
