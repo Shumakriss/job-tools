@@ -93,6 +93,11 @@ async function copyFile(fileId, fileName) {
     }
 }
 
+/*
+*
+* Valid Export Types: https://developers.google.com/drive/api/guides/ref-export-formats
+* Google Docs native format (vnd.google-apps.document) is not supported for download
+*/
 async function getPlaintextFileContents(fileId) {
     console.log("Getting plaintext file contents: " + fileId);
 
@@ -107,9 +112,12 @@ async function getPlaintextFileContents(fileId) {
         document.getElementById('content').innerText = err.message;
     throw err;
     }
-
 }
 
+/*
+*
+* Valid Export Types: https://developers.google.com/drive/api/guides/ref-export-formats
+*/
 async function getPdfFileContents(fileId) {
     console.log("Getting PDF file contents: " + fileId);
 
