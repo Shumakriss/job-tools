@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Sheets Test</title>
+</head>
+<body>
+<h1>Page loaded</h1>
+<label>Company Name: </label><input id="company-name"/>
+<!--<button onclick="handleAuthButtonClick()">Auth</button>-->
+<!--<button onclick="handleTestButtonClick()">Test</button>-->
+<button onclick="handleClearStorage()">Clear storage</button><br/>
+<button onclick="handleFancyButton()" id="fancy-button">Fancy Button</button>
+<pre id="content" style="white-space: pre-wrap;"></pre>
+<!--<br/>-->
+</body>
+
+<!--<script src="https://apis.google.com/js/api.js"></script>-->
+<!--<script src="https://accounts.google.com/gsi/client"></script>-->
+<!--<script type='text/javascript' src='../modules/gapi.js'></script>-->
+<script type='text/javascript' src='../modules/app.js'></script>
+
+<script>
+    var app = new WebApplication();
+
+    app.tryLoad();
+    redraw();
+
+    function debounce(callback, wait) {
+        let timeout;
+        return (...args) => {
+          clearTimeout(timeout);
+          timeout = setTimeout(function () { callback.apply(this, args); }, wait);
+        };
+    }
+
+    async function redraw() {
+        document.getElementById("company-name").value = app.company.name;
+        document.getElementById("content").innerHTML = app.company.name;
+
+        if (app.readyForScan()) {
+            console.log("Is it fancy?");
+            document.getElementById("fancy-button").disabled = false;
+            document.getElementById("fancy-button").innerHTML = "Make it fancy";
+        } else {
+            console.log("Not fancy enough");
+            document.getElementById("fancy-button").disabled = true;
+            document.getElementById("fancy-button").innerHTML = "That's fancy enough";
+        }
+    }
+
+    document.getElementById('company-name').addEventListener('change', debounce( (event) => {
+        console.log("Updating company name");
+        app.setCompanyName(event.target.value);
+        app.save();
+        redraw();
+    }, 100));
+
+    function handleClearStorage() {
+        console.log("Button click");
+        app.clearFromStorage();
+    }
+
+    function handleFancyButton() {
+        app.setCompanyName("Now that's fancy!");
+        app.save();
+        redraw();
+    }
+
+</script>
+
+</html>

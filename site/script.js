@@ -220,7 +220,7 @@ function updateUserInputFromSession(session) {
 
 
 function setGoogleButtonState() {
-    console.debug("Updating Google Buttons based on Drive client state: " + googleApi.state.toString());
+    console.log("Updating Google Buttons based on Drive client state: " + googleApi.state.toString());
     switch (googleApi.state) {
         case  GoogleApiStates.AUTHORIZED:
             console.debug("Updating Google Buttons based on Drive client state 'AUTHORIZED'");
