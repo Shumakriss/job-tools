@@ -16,6 +16,7 @@
         <div class="nav-bar">
             <button onclick="handleNavButtonClick(this, 'job-description')" class="nav-active nav-button">Job Description</button>
             <button id="nav-button-extract" onclick="handleNavButtonClick(this, 'extract')" class="nav-inactive nav-button">Extract</button>
+            <button id="nav-button-tailor" onclick="handleNavButtonClick(this, 'tailor')" class="nav-inactive nav-button">Tailor</button>
             <button id="nav-button-scan" onclick="handleNavButtonClick(this, 'scan')" class="nav-inactive nav-button">Scan</button>
         </div>
     </div>
@@ -61,7 +62,7 @@
     <div class="container-page">
 
         <div id="job-description" class="page">
-            <p>Paste your job description below:</p>
+            <Strong>Job Description:</Strong>
             <textarea id="job-description-textarea" rows="50" class="job-section-text"></textarea>
             <br/>
             <button onclick="handleExtractSectionsButton()" class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections With ChatGPT</button>
@@ -69,35 +70,85 @@
         </div>
 
         <div id="extract" hidden="hidden" class="page">
-            <label>Company Name: </label><br/>
+            <Strong>Company Name: </Strong><br/>
             <input type="text" size=60 id="company-name" value="Example" />
             <br/><br/>
 
-            <label>Job Title: </label><br/>
+            <Strong>Job Title: </Strong><br/>
             <input type="text" size=60 id="job-title" value="Staff Software Engineer" />
             <br/><br/>
 
             <br/>
-            <label>Minimum Requirements (</label><label class="required-field-flag" >Required</label><label>):</label><br/>
+            <Strong>Minimum Requirements (</Strong><label class="required-field-flag" >Required</label><label>):</label><br/>
             <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
             <br/>
             <br/>
 
-            <label>Preferred Requirements:</label><br/>
+            <Strong>Preferred Requirements:</Strong><br/>
             <textarea id="preferred-requirements" rows="10" class="job-section-text"></textarea>
             <br/>
             <br/>
 
-            <label>Job Duties:</label><br/>
+            <Strong>Job Duties:</Strong><br/>
             <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
             <br/>
 
-            <label>Company Information:</label><br/>
+            <Strong>Company Information:</Strong><br/>
             <textarea id="company-information" rows="10" class="job-section-text"></textarea>
             <br/><br/>
 
             <button id="create-resume-button" onclick="handleCreateResumeButton()" class="big-button disabled-button button" disabled>Create Resume For This Job</button>
 
+        </div>
+
+        <div id="tailor" hidden="hidden" class="page">
+            <strong>Date: </strong><br/>
+            <input value="{{date}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Company Name: </strong><br/>
+            </label>
+            <input value="{{company-name}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Company Name (possessive): </strong><br/>
+            <input value="{{company-name-possessive}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Company Address: </strong><br/>
+            <input value="{{company-address}}" size="30" disabled /><br/>
+            <textarea rows="5" cols="40" class="textarea"></textarea>
+            <br/><br/>
+
+            <strong>Hiring Manager Name: </strong><br/>
+            <input value="{{hiring-manager-name}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Complete Job Title:</strong><br/>
+            <input value="{{complete-job-title}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Short Job Title:</strong><br/>
+            <input value="{{short-job-title}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Values:</strong><br/>
+            <input value="{{values}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <strong>Relevant Experience:</strong><br/>
+            <input value="{{experiences}}" size="30" disabled /><br/>
+            <input size="40" />
+            <br/><br/>
+
+            <button onclick="handleTailorDocuments()" class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
         </div>
 
         <div id="scan" hidden="hidden" class="page">
@@ -125,29 +176,29 @@
             <div class="scan-result">
                 <h3>Minimum Requirements</h3>
                 <p id="minimum-requirements-display"></p>
-                <label id="minimum-score">Score:</label><br/>
-                <h4>Keywords:</h4>
+                <Strong id="minimum-score">Score:</Strong><br/>
+                <Strong>Keywords:</Strong><br/>
                 <div id="minimum-requirements-keywords"></div>
             </div>
 
             <div class="scan-result">
                 <h3>Preferred Requirements</h3>
-                <label id="preferred-score">Score:</label><br/>
-                <h4>Keywords:</h4>
+                <Strong id="preferred-score">Score:</Strong><br/>
+                <Strong>Keywords:</Strong><br/>
                 <div id="preferred-requirements-keywords"></div>
             </div>
 
             <div class="scan-result">
                 <h3>Job Duties</h3>
-                <label id="job-duties-score">Score:</label><br/>
-                <h4>Keywords:</h4>
+                <Strong id="job-duties-score">Score:</Strong><br/>
+                <Strong>Keywords:</Strong><br/>
                 <div id="job-duties-keywords"></div>
             </div>
 
             <div class="scan-result">
                 <h3>Company Information</h3>
-                <label id="company-information-score">Score:</label><br/>
-                <h4>Keywords:</h4>
+                <Strong id="company-information-score">Score:</Strong><br/>
+                <Strong>Keywords:</Strong><br/>
                 <div id="company-information-keywords"></div>
             </div>
         </div>
