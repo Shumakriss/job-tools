@@ -27,6 +27,8 @@ class Session {
         this.googleApiToken = null;
 
         this.chatGptApiKey = null;
+
+        this.applicationLogSheetName = null;
     }
 
     save() {
@@ -72,6 +74,8 @@ class Session {
         this.googleApiToken = sessionData.googleApiToken;
 
         this.chatGptApiKey = sessionData.chatGptApiKey;
+
+        this.applicationLogSheetName = sessionData.applicationLogSheetName;
 
         console.log("Session loaded");
     }

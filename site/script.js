@@ -31,6 +31,7 @@ async function initListeners() {
     initResumeTemplateNameListener();
     initCoverLetterTemplateNameListener();
     initJobDescriptionListener();
+    initApplicationLogSheetNameListener();
     console.log("Registered listeners");
 }
 
@@ -109,7 +110,6 @@ function initCoverLetterTemplateNameListener() {
     console.debug("Registered event listener for resume template name");
 }
 
-
 function initResumeTemplateNameListener() {
     document.getElementById('resume-template-name').addEventListener('change', debounce( (event) => {
         session.resumeTemplateName = event.target.value;
@@ -163,6 +163,17 @@ async function initCredentialFileListener() {
     console.debug("Registered event listener for credential file");
 }
 
+function initApplicationLogSheetNameListener() {
+    document.getElementById('application-log-sheet-name').addEventListener('change', debounce( (event) => {
+        console.log("Application log sheet name changed");
+        session.applicationLogSheetName = event.target.value;
+        session.save();
+        onApplicationLogStateChange(true);
+    }, 100));
+
+    console.debug("Registered event listener for application log Google Sheet name");
+}
+
 /*
 *  DOM interaction functions
 */
@@ -187,6 +198,7 @@ function updateUserInputFromSession(session) {
     document.getElementById("job-duties").value = session.jobDuties;
     document.getElementById("company-information").value = session.companyInformation;
     document.getElementById("credential-file").value = session.credentialFile;
+    document.getElementById("application-log-sheet-name").value = session.applicationLogSheetName;
 }
 
 
@@ -240,6 +252,36 @@ function handleSignoutClick() {
     session.save();
 }
 
+async function onApplicationLogStateChange(enable) {
+    let sheetId = await getDocumentIdByName(session.applicationLogSheetName);
+    if (enable && sheetId) {
+        document.getElementById("application-log-sheet-link").href = gSheetsLinkFromId(sheetId);
+        document.getElementById("application-log-sheet-link").innerText = "Open Google Sheet";
+
+        document.getElementById("log-application-button").innerHTML = "Log Application";
+        document.getElementById("log-application-button").disabled = false;
+        document.getElementById("log-application-button").className = "button";
+    } else if (sheetId) {
+        document.getElementById("application-log-sheet-link").href = "";
+        document.getElementById("application-log-sheet-link").innerText = "Google Sheet Link Not Ready";
+
+        document.getElementById("log-application-button").innerHTML = "Application Already Logged This Session";
+        document.getElementById("log-application-button").disabled = true;
+        document.getElementById("log-application-button").className = "disabled-button button";
+    } else {
+        document.getElementById("log-application-button").innerHTML = "Application Already Logged This Session";
+        document.getElementById("log-application-button").disabled = true;
+        document.getElementById("log-application-button").className = "disabled-button button";
+    }
+}
+
+async function handleLogApplicationButton() {
+    console.log("Log application button clicked");
+    let sheetId = await getDocumentIdByName(session.applicationLogSheetName);
+    appendApplicationLog(sheetId, session.companyName);
+    onApplicationLogStateChange(false);
+}
+
 function onGoogleApiAuthenticated() {
     session.googleApiToken = JSON.stringify(googleApi.token);
     setGoogleButtonState();
@@ -247,6 +289,8 @@ function onGoogleApiAuthenticated() {
     onDocumentInputChange(session.resumeTemplateName,
         session.coverLetterTemplateName,
         session.companyName);
+
+    onApplicationLogStateChange(true);
 }
 
 function updateSessionCredentials(credentialFileObject) {

@@ -2,8 +2,13 @@ function callback() {
     console.log("Callback");
 }
 
+function gSheetsLinkFromId(gSheetId) {
+    return "https://docs.google.com/spreadsheets/d/" + gSheetId + "/edit";
+}
+
 async function appendApplicationLog(sheetId, companyName) {
     console.log("Append application log");
+
     const currentDate = new Date();
     const dateString = (currentDate.getMonth() + 1) + "/" + currentDate.getDate();
     let values = [
@@ -13,7 +18,7 @@ async function appendApplicationLog(sheetId, companyName) {
       ];
     try {
     gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: "sheetId",
+        spreadsheetId: sheetId,
         range: "Sheet1!A1:D1",
         valueInputOption: "USER_ENTERED",
         resource: {
