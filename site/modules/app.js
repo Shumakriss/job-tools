@@ -287,7 +287,7 @@ class WebApplication {
         return this.job.description && this.chatGpt.isReady();
     }
 
-    readyForScan() {
+    isScanReady() {
         console.log("Checking if ready for scan");
         return false;
     }

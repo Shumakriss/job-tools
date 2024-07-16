@@ -37,30 +37,54 @@ async function redraw() {
     }
 
     document.getElementById("job-title").value = app.job.title;
+    document.getElementById("minimum-requirements").value = app.job.minimumRequirements;
+    document.getElementById("preferred-requirements").value = app.job.preferredRequirements;
+    document.getElementById("job-duties").value = app.job.responsibilities;
+    document.getElementById("company-information").value = app.company.about;
 
+    document.getElementById("application-date").value = app.applicationDate;  // TODO
+    document.getElementById("company-name-tailor").value = app.company.name;
+    document.getElementById("company-name-possessive").value = app.company.namePossessive;  // TODO
 
-    // tailoring company name
-    // job title
-    // min reqs
-    // pref reqs
-    // duties
-    // responsibilities
-    // date
-    // company possessive
-    // address
-    // hiring manager
-    // title
-    // short title
-    // values
-    // experience
-    // scan button
+    document.getElementById("company-address").value; // TODO
+    document.getElementById("hiring-manager-name").value; // TODO
+    document.getElementById("company-address").value; // TODO
+    document.getElementById("complete-job-title").value; // TODO
+    document.getElementById("short-job-title").value; // TODO
+    document.getElementById("company-values").value; // TODO
+    document.getElementById("relevant-experience").value; // TODO
+
+    if (app.isScanReady()) {
+        document.getElementById("scan-button").disabled = false;
+        document.getElementById("scan-button").className = "big-button button";
+    } else {
+        document.getElementById("scan-button").disabled = true;
+        document.getElementById("scan-button").className = "big-button button disabled-button";
+    }
+
+    if (app.isTailorReady()) {
+        document.getElementById("tailor-documents-button").disabled = false;
+        document.getElementById("tailor-documents-button").className = "big-button button";
+    } else {
+        document.getElementById("tailor-documents-button").disabled = true;
+        document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
+    }
+
     // resume link
+    if (app.resume.getPdfLink()) {
+        document.getElementById('tailored-resume-link').innerHTML = app.resume.getName();
+        document.getElementById('tailored-resume-link').href = app.resume.getPdfLink();
+    }
+
     // cover letter link
+
     // pdf button 1
     // pdf button 2
+
     // linkedin link
     // github link
     // site link
+
     // sheet name
     // sheet link
     // log app button

@@ -104,48 +104,48 @@
         <div id="tailor" hidden="hidden" class="page">
             <strong>Date: </strong><br/>
             <input value="{{date}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="application-date" size="40" />
             <br/><br/>
 
             <strong>Company Name: </strong><br/>
             </label>
             <input value="{{company-name}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="company-name-tailor" size="40" />
             <br/><br/>
 
             <strong>Company Name (possessive): </strong><br/>
             <input value="{{company-name-possessive}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="company-name-possessive" size="40" />
             <br/><br/>
 
             <strong>Company Address: </strong><br/>
             <input value="{{company-address}}" size="30" disabled /><br/>
-            <textarea rows="5" cols="40" class="textarea"></textarea>
+            <textarea id="company-address" rows="5" cols="40" class="textarea"></textarea>
             <br/><br/>
 
             <strong>Hiring Manager Name: </strong><br/>
             <input value="{{hiring-manager-name}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="hiring-manager-name" size="40" />
             <br/><br/>
 
             <strong>Complete Job Title:</strong><br/>
             <input value="{{complete-job-title}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="complete-job-title" size="40" />
             <br/><br/>
 
             <strong>Short Job Title:</strong><br/>
             <input value="{{short-job-title}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="short-job-title" size="40" />
             <br/><br/>
 
             <strong>Values:</strong><br/>
             <input value="{{values}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="company-values" size="40" />
             <br/><br/>
 
             <strong>Relevant Experience:</strong><br/>
             <input value="{{experiences}}" size="30" disabled /><br/>
-            <input size="40" />
+            <input id="relevant-experience" size="40" />
             <br/><br/>
 
             <button onclick="handleTailorDocuments()" class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
@@ -255,7 +255,6 @@
 <script type='text/javascript' src='./modules/gpt.js'></script>
 <script type='text/javascript' src='./modules/prompts.js'></script>
 <script type='text/javascript' src='./modules/helpers.js'></script>
-<script type='text/javascript' src='./modules/handlers.js'></script>
 <script type='text/javascript' src='./modules/rendering.js'></script>
 <script type='text/javascript' src='./modules/app.js'></script>
 <script type='text/javascript' src='./script.js' onload="initialize()"></script>
