@@ -3,9 +3,9 @@ const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal 
 class GoogleDoc {
     constructor() {
         this.name;
-        this.id;
+        this.id = null;
         this.exists;
-        this.pdfLink;
+        this.pdfLink = null;
     }
 
     getName() {
@@ -15,36 +15,57 @@ class GoogleDoc {
     setName(name) {
         console.debug("Setting GoogleDoc name to: " + name);
         this.name = name;
+        this.id = null;
+        this.pdfLink = null;
     }
 
     async lookupId() {
-        console.debug("Looking up name: " + this.name);
+        console.debug("GoogleDoc.lookupId - Looking up name: " + this.name);
         let id = await getDocumentIdByName(this.name);
 
-        if (id) {
+        if (id != null) {
+            console.debug("GoogleDoc.lookupId - Found id: " + id + " for name: " + this.name);
             this.exists = true;
             this.id = id;
         } else {
+            console.debug("GoogleDoc.lookupId - ID not found for name: " + this.name);
             this.exists = false;
             this.id = null;
         }
+
+        return this.id;
     }
 
     async getId() {
-        if (this.id) {
+        if (this.id != null) {
+            console.debug("GoogleDoc id is not null: " + this.id);
             return this.id;
         } else {
-            this.id = await lookupId();
+            console.debug("GoogleDoc id is null, looking up ID");
+            this.id = await this.lookupId();
             return this.id;
         }
     }
 
     async getPdfLink() {
+        console.debug("GoogleDoc getting pdf link");
         if (this.pdfLink) {
+            console.debug("Returning existing link: " + this.pdfLink);
             return this.pdfLink;
         } else {
-            this.pdfLink = await getPdfLink(this.getId());
-            return this.pdfLink;
+            console.debug("Fetching new PDF link");
+            let id = await this.getId();
+            console.debug("ID retrieved: " + id);
+            if (id != null){
+                console.debug("Fetching new PDF link for ID: " + id);
+                let pdfLink = await getPdfLink(id);
+                console.debug("PDF link for ID: " + id + " is " + pdfLink);
+                this.pdfLink = pdfLink;
+                return this.pdfLink;
+            } else {
+                console.debug("ID for PDF not found: " + id);
+                return;
+            }
         }
     }
 }
@@ -59,6 +80,15 @@ class Template {
         console.debug("Setting template name: " + name);
         this.name = name;
         this.googleDoc.setName(name);
+    }
+
+    async isReady() {
+        let id = await this.googleDoc.getId();
+        if (id && id != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -80,13 +110,25 @@ class ApplicationLog {
 
 class Company {
     constructor() {
-        this.name;
-        this.about;
-        this.address;
+        this.name = "";
+        this.possessive = "";
+        this.about = "";
+        this.address = "";
+        this.values = "";
     }
 
     setName(name) {
         this.name = name;
+        if(name && name != null && name != "") {
+
+            if(name.endsWith("s")) {
+                this.possessive = name + "'";
+            } else {
+                this.possessive = name + "'s";
+            }
+
+        }
+
     }
 }
 
@@ -95,7 +137,7 @@ class TailoredDocument {
     constructor() {
         this.template = new Template();
         this.company = new Company();
-        this.googleDoc = new GoogleDoc;
+        this.googleDoc = new GoogleDoc();
     }
 
     setTemplate(template) {
@@ -114,8 +156,9 @@ class TailoredDocument {
         return this.name;
     }
 
-    getPdfLink() {
-        return this.googleDoc.getPdfLink();
+    async getPdfLink() {
+        console.log("GoogleDoc.getPdfLink: ", this);
+        return await this.googleDoc.getPdfLink();
     }
 
 }
@@ -123,11 +166,15 @@ class TailoredDocument {
 class JobPosting {
 
     constructor() {
-        this.title;
-        this.description;
-        this.minimumRequirements;
-        this.preferredRequirements;
-        this.responsibilities;
+        this.title = "";
+        this.completeTitle = "";
+        this.shortTitle = "";
+        this.description = "";
+        this.minimumRequirements = "";
+        this.preferredRequirements = "";
+        this.responsibilities = "";
+        this.hiringManager = "Hiring Manager";
+        this.relevantExperience = "";
         this.company = new Company();
     }
 
@@ -137,6 +184,24 @@ class JobPosting {
 
     setDescription(description) {
         this.description = description;
+    }
+
+    setTitle(title) {
+        console.debug("JobPosting.setTitle() - " + title);
+        this.title = title;
+
+        if (this.shortTitle == "") {
+            console.debug("JobPosting.setTitle() - shortTitle is empty, trying to update");
+            if (title.includes(",")){
+                this.shortTitle = title.split(",")[0];
+            } else {
+                this.shortTitle = title;
+            }
+        }
+
+        if (this.completeTitle == "") {
+            this.completeTitle = title;
+        }
     }
 }
 
@@ -219,6 +284,9 @@ class WebApplication {
         this.jobscan = new Jobscan();
         this.googleApi = new GoogleApi();
 
+        const date = new Date();  // Today
+        const month = date.toLocaleString('default', { month: 'long' });
+        this.applicationDate = `${month} ${date.getDate()}, ${date.getFullYear()}`;
         this.applicationLog = new ApplicationLog();
     }
 
@@ -249,34 +317,46 @@ class WebApplication {
         let response;
 
         prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        let companyName = await this.chatGpt.ask(prompt);
-        console.log("ChatGPT discovered companyName:" + companyName);
-        app.setCompanyName(companyName);
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.setCompanyName(response);
 
         prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        let jobTitle = await this.chatGpt.ask(prompt);
-        console.log("ChatGPT discovered job title:" + jobTitle);
-        app.job.title = jobTitle;
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.job.setTitle(response);
 
-//        prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
-//        response = await askChatGpt(session.chatGptApiKey, prompt);
-//        document.getElementById("job-title").value = response;
-//
-//        prompt = JOB_DUTIES_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
-//        response = await askChatGpt(session.chatGptApiKey, prompt);
-//        document.getElementById("job-duties").value = response;
-//
-//        prompt = COMPANY_INFORMATION_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
-//        response = await askChatGpt(session.chatGptApiKey, prompt);
-//        document.getElementById("company-information").value = response;
-//
-//        prompt = MINIMUM_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
-//        response = await askChatGpt(session.chatGptApiKey, prompt);
-//        document.getElementById("minimum-requirements").value = response;
-//
-//        prompt = PREFERRED_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
-//        response = await askChatGpt(session.chatGptApiKey, prompt);
-//        document.getElementById("preferred-requirements").value = response;
+        prompt = JOB_DUTIES_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.job.responsibilities = response;
+
+        prompt = COMPANY_INFORMATION_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.company.about = response;
+
+        prompt = MINIMUM_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.job.minimumRequirements = response;
+
+        prompt = PREFERRED_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        response = await this.chatGpt.ask(prompt);
+        if (response == "No section found.") {
+            response = "";
+        }
+        app.job.preferredRequirements = response;
     }
 
     copyTemplates() {
@@ -290,6 +370,10 @@ class WebApplication {
     isScanReady() {
         console.log("Checking if ready for scan");
         return false;
+    }
+
+    isTailorReady() {
+        return app.googleApi.isReady() && app.coverLetter.template.isReady() ;
     }
 
     scan() {
@@ -354,7 +438,7 @@ class WebApplication {
         this.job = new JobPosting();
         this.job.setCompany(company);
         this.job.setDescription(app.job.description);
-        this.job.title = app.job.title;
+        this.job.setTitle(app.job.title);
 
         // Third-party
         this.chatGpt.apiKey = app.chatGpt.apiKey;

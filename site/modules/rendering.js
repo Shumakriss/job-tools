@@ -42,17 +42,16 @@ async function redraw() {
     document.getElementById("job-duties").value = app.job.responsibilities;
     document.getElementById("company-information").value = app.company.about;
 
-    document.getElementById("application-date").value = app.applicationDate;  // TODO
+    document.getElementById("application-date").value = app.applicationDate;
     document.getElementById("company-name-tailor").value = app.company.name;
-    document.getElementById("company-name-possessive").value = app.company.namePossessive;  // TODO
+    document.getElementById("company-name-possessive").value = app.company.possessive;
 
-    document.getElementById("company-address").value; // TODO
-    document.getElementById("hiring-manager-name").value; // TODO
-    document.getElementById("company-address").value; // TODO
-    document.getElementById("complete-job-title").value; // TODO
-    document.getElementById("short-job-title").value; // TODO
-    document.getElementById("company-values").value; // TODO
-    document.getElementById("relevant-experience").value; // TODO
+    document.getElementById("company-address").value = app.company.address;
+    document.getElementById("hiring-manager-name").value = app.job.hiringManager;
+    document.getElementById("complete-job-title").value = app.job.completeTitle;
+    document.getElementById("short-job-title").value = app.job.shortTitle;
+    document.getElementById("company-values").value = app.company.values;
+    document.getElementById("relevant-experience").value = app.job.relevantExperience;
 
     if (app.isScanReady()) {
         document.getElementById("scan-button").disabled = false;
@@ -71,23 +70,40 @@ async function redraw() {
     }
 
     // resume link
-    if (app.resume.getPdfLink()) {
+    let pdfLink = await app.resume.getPdfLink();
+    if (pdfLink) {
+        console.log("Updating pdf link: " + pdfLink);
         document.getElementById('tailored-resume-link').innerHTML = app.resume.getName();
-        document.getElementById('tailored-resume-link').href = app.resume.getPdfLink();
+        document.getElementById('tailored-resume-link').href = pdfLink;
+    } else {
+        console.log("Cannot update pdf link: " + pdfLink);
+        document.getElementById('tailored-resume-link').innerHTML = "Not ready";
+        document.getElementById('tailored-resume-link').href = "";
     }
 
+    // TODO: linkedin link
+    // TODO: github link
+    // TODO: site link
+
+    // TODO: sheet name
+    // TODO: sheet link
+    // TODO: log app button
+
     // cover letter link
+    pdfLink = await app.coverLetter.getPdfLink();
+    if (pdfLink) {
+        console.log("Updating cover letter pdf link: " + pdfLink);
+        document.getElementById('tailored-cover-letter-link').innerHTML = app.coverLetter.getName();
+        document.getElementById('tailored-cover-letter-link').href = pdfLink;
+    } else {
+        console.log("Cannot update cover letter pdf link: " + pdfLink);
+        document.getElementById('tailored-cover-letter-link').innerHTML = "Not ready";
+        document.getElementById('tailored-cover-letter-link').href = "";
+    }
 
-    // pdf button 1
-    // pdf button 2
+    // TODO: pdf button 1
+    // TODO: pdf button 2
 
-    // linkedin link
-    // github link
-    // site link
-
-    // sheet name
-    // sheet link
-    // log app button
 }
 
 

@@ -52,6 +52,8 @@ function debounce(callback, wait) {
 }
 
 async function addEventListeners() {
+
+    // Global inputs
     document.getElementById('credential-file').addEventListener('change', async function () {
         let fr = new FileReader();
         fr.onload = async function () {
@@ -73,13 +75,6 @@ async function addEventListeners() {
         redraw();
     });
 
-    document.getElementById("company-name").addEventListener("change", debounce( (event) => {
-        console.log("Invoked event listener for company-name");
-        app.setCompanyName(event.target.value);
-        app.save();
-        redraw();
-    }, 100));
-
     document.getElementById("resume-template-name").addEventListener("change", debounce( (event) => {
         console.debug("Invoked event listener for resume-template-name");
         app.resume.template.setName(event.target.value);
@@ -94,24 +89,41 @@ async function addEventListeners() {
         redraw();
     }, 100));
 
-    document.getElementById('job-description-textarea').addEventListener('keydown', debounce( (event) => {
-        app.job.setDescription(event.target.value);
-        app.save();
-        redraw();
-    }, 200));
-
-    document.getElementById('minimum-requirements').addEventListener('keydown', debounce( (event) => {
-        app.job.minimumRequirements = event.target.value;
-        redraw();
-    }, 200));
-
     document.getElementById('application-log-sheet-name').addEventListener('change', debounce( (event) => {
         console.log("Application log sheet name changed");
         app.applicationLog.setName(event.target.value);
         redraw();
     }, 100));
 
-    // job title
+    // Job Description page inputs
+    document.getElementById('job-description-textarea').addEventListener('keydown', debounce( (event) => {
+        app.job.setDescription(event.target.value);
+        app.save();
+        redraw();
+    }, 200));
+
+    // Extract page inputs
+    document.getElementById("company-name").addEventListener("change", debounce( (event) => {
+        console.log("Invoked event listener for company-name");
+        app.setCompanyName(event.target.value);
+        app.save();
+        redraw();
+    }, 100));
+
+    document.getElementById("job-title").addEventListener("change", debounce( (event) => {
+        console.log("Invoked event listener for job-title");
+        app.job.setTitle(event.target.value);
+        app.save();
+        redraw();
+    }, 100));
+
+    document.getElementById('minimum-requirements').addEventListener('keydown', debounce( (event) => {
+        app.job.minimumRequirements = event.target.value;
+        redraw();
+    }, 200));
+
+
+
     // min reqs
     // pref reqs
     // job duties

@@ -159,7 +159,7 @@ async function createFile(fileId) {
 }
 
 async function getPdfLink(fileId) {
-    console.log("Getting file from Google Drive: " + fileId);
+    console.log("Getting PDF link from Google Drive: " + fileId);
 
     try {
         // This only works on Google Docs formatted files!
