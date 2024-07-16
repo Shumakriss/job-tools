@@ -1,3 +1,5 @@
+const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
+
 class GoogleDoc {
     constructor() {
         this.name;
@@ -11,15 +13,13 @@ class GoogleDoc {
     }
 
     setName(name) {
-        if (this.name == name){
-            return;
-        } else {
-            this.lookupId();
-        }
+        console.debug("Setting GoogleDoc name to: " + name);
+        this.name = name;
     }
 
     async lookupId() {
-        this.id = await getDocumentIdByName(this.name);
+        console.debug("Looking up name: " + this.name);
+        let id = await getDocumentIdByName(this.name);
 
         if (id) {
             this.exists = true;
@@ -34,7 +34,7 @@ class GoogleDoc {
         if (this.id) {
             return this.id;
         } else {
-            await lookupId();
+            this.id = await lookupId();
             return this.id;
         }
     }
@@ -56,6 +56,8 @@ class Template {
     }
 
     setName(name) {
+        console.debug("Setting template name: " + name);
+        this.name = name;
         this.googleDoc.setName(name);
     }
 }
@@ -91,34 +93,24 @@ class Company {
 class TailoredDocument {
 
     constructor() {
-        this.name;
-        this.template;
-        this.company;
-        this.googleDoc;
-        this.pdfLink;
-    }
-
-    setName(companyName, templateName) {
-        this.companyName = companyName;
-        this.templateName = templateName;
-        this.googleDoc.setName(this.getName);
+        this.template = new Template();
+        this.company = new Company();
+        this.googleDoc = new GoogleDoc;
     }
 
     setTemplate(template) {
         this.template = template;
+        this.name = this.company.name + " " + this.template.name;
+        this.googleDoc.setName(this.name);
     }
 
-    getTemplate() {
-        return this.template;
-    }
-
-    setCompanyName(companyName) {
-        this.companyName = companyName;
+    setCompany(company) {
+        this.company = company;
+        this.name = this.company.name + " " + this.template.name;
+        this.googleDoc.setName(this.name);
     }
 
     getName() {
-        this.name = this.companyName + " " + this.template.name;
-        this.googleDoc.setName(this.name);
         return this.name;
     }
 
@@ -138,13 +130,13 @@ class JobPosting {
         this.responsibilities;
         this.company = new Company();
     }
-}
 
-class Google {
-    constructor() {
-        this.clientId;
-        this.apiKey;
-        this.token;
+    setCompany(company) {
+        this.company = company;
+    }
+
+    setDescription(description) {
+        this.description = description;
     }
 }
 
@@ -153,45 +145,46 @@ class Jobscan {
         this.xsrfToken;
         this.cookie;
     }
+
+    isReady() {
+        return this.xsrfToken && this.cookie;
+    }
+
 }
 
 
 class ChatGpt {
     constructor() {
         this.apiKey;
-        this.healthCheck;
+        this.healthCheckResult;
     }
 
     isReady() {
-        return healthCheck();
+        return this.apiKey && this.healthCheck();
     }
 
-    healthCheck() {
-        if (this.apiKey) {
-            // invoke test method
-        } else {
-            //throw
-            return false;
+    async healthCheck() {
+        if (!this.healthCheckResult) {
+            this.healthCheckResult = await this.ask("Say hello");
         }
+
+        return this.healthCheckResult;
     }
 
-    ask(prompt, dryRun=false) {
+    async ask(prompt, dryRun=false) {
         if (dryRun){
             return "Mock response from ChatGPT";
-        } else {
-            if (!this.apiKey) {
-                throw new Error("Chat GPT missing API Key");
-                return;
-            }
-
-            if (!this.prompt) {
-                throw new Error("Missing prompt");
-                return;
-            }
-
-            askChatGpt(this.apiKey, prompt);
         }
 
+        if (!this.apiKey){
+            throw new Error("Chat GPT missing API Key");
+        }
+
+        if (!prompt) {
+            throw new Error("Missing prompt");
+        }
+
+        return await askChatGpt(this.apiKey, prompt);
     }
 }
 
@@ -200,30 +193,41 @@ class WebApplication {
     constructor() {
         this.storageKey = "web-application-state";
 
-        this.resumeTemplate = new Template();
-        this.coverLetterTemplate = new Template();
+        let company = new Company();
+        company.name = "";
+        this.company = company;
 
-        this.company = new Company();
-        this.company.name = "";
+        let resumeTemplate = new Template();
+        resumeTemplate.name = null;
 
-        this.resumeTailoredDocument = new TailoredDocument();
-        this.resumeTailoredDocument.company = this.company;
+        let coverLetterTemplate = new Template();
+        coverLetterTemplate.name = "";
 
-        this.coverLetterTailoredDocument = new TailoredDocument();
-        this.coverLetterTailoredDocument.company = this.company;
+        this.resume = new TailoredDocument();
+        this.resume.setCompany(company);
+        this.resume.template = resumeTemplate;
 
-        this.jobPosting = new JobPosting();
-        this.jobPosting.company = this.company;
+        this.coverLetter = new TailoredDocument();
+        this.coverLetter.setCompany(company);
+        this.coverLetter.company = company;
+        this.coverLetter.template = coverLetterTemplate;
+
+        this.job = new JobPosting();
+        this.job.setCompany(company);
 
         this.chatGpt = new ChatGpt();
+        this.jobscan = new Jobscan();
+        this.googleApi = new GoogleApi();
+
+        this.applicationLog = new ApplicationLog();
     }
 
     setCompanyName(name) {
-        this.company.name = name;
-    }
-
-    loadCredentialFile(credentialFile) {
-        this.chatGpt.apiKey = credentialFile.chatGpt.apiKey;
+        console.log("Set company name: " + name);
+        this.company.setName(name);
+        this.resume.setCompany(this.company);
+        this.coverLetter.setCompany(this.company);
+        this.job.setCompany(this.company);
     }
 
     authenticate() {
@@ -240,15 +244,47 @@ class WebApplication {
         // chatgpt.isAuthenticated?
     }
 
-    extractJobDescription() {
+    async extractJobDescriptionSections() {
+        let prompt;
+        let response;
+
+        prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        let companyName = await this.chatGpt.ask(prompt);
+        console.log("ChatGPT discovered companyName:" + companyName);
+        app.setCompanyName(companyName);
+
+        prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
+        let jobTitle = await this.chatGpt.ask(prompt);
+        console.log("ChatGPT discovered job title:" + jobTitle);
+        app.job.title = jobTitle;
+
+//        prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+//        response = await askChatGpt(session.chatGptApiKey, prompt);
+//        document.getElementById("job-title").value = response;
+//
+//        prompt = JOB_DUTIES_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+//        response = await askChatGpt(session.chatGptApiKey, prompt);
+//        document.getElementById("job-duties").value = response;
+//
+//        prompt = COMPANY_INFORMATION_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+//        response = await askChatGpt(session.chatGptApiKey, prompt);
+//        document.getElementById("company-information").value = response;
+//
+//        prompt = MINIMUM_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+//        response = await askChatGpt(session.chatGptApiKey, prompt);
+//        document.getElementById("minimum-requirements").value = response;
+//
+//        prompt = PREFERRED_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ jobDescription;
+//        response = await askChatGpt(session.chatGptApiKey, prompt);
+//        document.getElementById("preferred-requirements").value = response;
     }
 
     copyTemplates() {
 
     }
 
-    readyToExtract() {
-        return this.chatGpt.isReady() && this.jobPosting.description
+    isExtractReady() {
+        return this.job.description && this.chatGpt.isReady();
     }
 
     readyForScan() {
@@ -267,8 +303,19 @@ class WebApplication {
         console.log("Cleared application state from storage");
     }
 
+    replacer(key, value)
+    {
+        if (key=="tokenClient"){
+            console.debug("Skipping serialization of tokenClient");
+            return undefined;
+        } else {
+            return value;
+        }
+    }
+
     save() {
-        localStorage.setItem(this.storageKey, JSON.stringify(this));
+        console.log("Saving app", this);
+        localStorage.setItem(this.storageKey, JSON.stringify(this, this.replacer));
         console.log("Saved application state to local storage");
     }
     
@@ -286,14 +333,35 @@ class WebApplication {
     
     load(webApplicationJson) {
         let app = JSON.parse(webApplicationJson);
-        console.log("App from storage:", app);
+        console.debug("App from storage:", app);
 
-        this.company.name = app.company.name;
+        let company = new Company();
+        this.company = company;
+        this.company.setName(app.company.name);
 
-        this.chatGpt = new ChatGpt();
+        console.log("Set resume template name");
+        let resumeTemplate = new Template();
+        resumeTemplate.setName(app.resume.template.name);
+        this.resume.setTemplate(resumeTemplate);
+        this.resume.setCompany(company);
+
+        console.log("Set cover letter template name");
+        let coverLetterTemplate = new Template();
+        coverLetterTemplate.setName(app.coverLetter.template.name);
+        this.coverLetter.setTemplate(coverLetterTemplate);
+        this.coverLetter.setCompany(company);
+
+        this.job = new JobPosting();
+        this.job.setCompany(company);
+        this.job.setDescription(app.job.description);
+        this.job.title = app.job.title;
+
+        // Third-party
         this.chatGpt.apiKey = app.chatGpt.apiKey;
+        this.googleApi.load(app.googleApi);
+        this.jobscan.cookie = app.jobscan.cookie;
+        this.jobscan.xsrfToken = app.jobscan.xsrfToken;
 
-
-        console.log("Application state loaded", this);
+        console.info("Application state loaded", this);
     }
 }

@@ -5,7 +5,7 @@ async function mockAskChatGpt(apiKey, prompt) {
 }
 
 async function askChatGpt(apiKey, prompt) {
-    console.log("Testing GPT API calls");
+    console.log("Calling ChatGpt API");
 
     headers = {
         "Content-Type": "application/json",

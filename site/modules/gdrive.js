@@ -29,7 +29,10 @@ async function listFiles() {
 }
 
 async function getDocumentIdByName(name) {
-    console.log("Getting doc ID for name: " + name);
+    console.info("Getting doc ID for name: " + name);
+
+    if (!name) return null;
+
     let files;
 
     let response;
