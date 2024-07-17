@@ -1,5 +1,5 @@
-import {TestSuite} from "../lib.js";
-import {GoogleDoc} from "../../modules/app.js";
+import TestSuite from "../lib.js";
+import GoogleDoc from "../../modules/gdocs.js";
 
 
 var testSuite = new TestSuite();

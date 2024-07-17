@@ -206,4 +206,4 @@ class GoogleDrive {
 
 }
 
-export {GoogleDrive};
+export default GoogleDrive;

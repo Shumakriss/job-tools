@@ -122,3 +122,5 @@ class GoogleDoc {
     }
 
 }
+
+export default GoogleDoc;

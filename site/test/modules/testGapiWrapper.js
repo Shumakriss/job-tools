@@ -1,5 +1,5 @@
-import {TestSuite} from "../lib.js";
-import {GoogleApiWrapper} from "../../modules/gapiWrapper.js";
+import TestSuite from "../lib.js";
+import GoogleApiWrapper from "../../modules/gapiWrapper.js";
 
 import {MockGapi, MockGoogle} from "../mocks/MockGapi.js";
 

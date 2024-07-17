@@ -1,8 +1,8 @@
-import {TestSuite} from "../lib.js";
-import {GoogleDrive} from "../../modules/gdrive.js";
+import TestSuite from "../lib.js";
+import GoogleDrive from "../../modules/gdrive.js";
 
 import {MockGapi, MockGoogle} from "../mocks/MockGapi.js";
-import {MockGoogleApiWrapper} from "../mocks/MockGapiWrapper.js";
+import MockGoogleApiWrapper from "../mocks/MockGapiWrapper.js";
 
 var testSuite = new TestSuite();
 

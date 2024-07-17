@@ -193,4 +193,4 @@ class GoogleApiWrapper {
     }
 }
 
-export {GoogleApiWrapper};
+export default GoogleApiWrapper;

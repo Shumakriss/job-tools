@@ -1,195 +1,16 @@
-import GoogleApi from "./gapi.js";
-import {getDocumentIdByName} from './gdrive.js';
+import GoogleApiWrapper from "./gapiWrapper.js";
+
+import Company from "./company.js";
+import Template from "./template.js";
+import TailoredDocument from "./tailoredDocument.js";
 
 const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
-
-class Template {
-    constructor() {
-        this.name;
-        this.googleDoc = new GoogleDoc();
-    }
-
-    setName(name) {
-        console.debug("Setting template name: " + name);
-        this.name = name;
-        this.googleDoc.setName(name);
-    }
-
-    async isReady() {
-        let id = await this.googleDoc.getId();
-        if (id && id != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-class ApplicationLog {
-    constructor() {
-        this.name;
-        this.googleDoc = new GoogleDoc();
-    }
-
-    setName(name) {
-        this.name = name;
-        this.googleDoc.setName(name);
-    }
-
-    logApplication(companyName) {
-        return;
-    }
-}
-
-class Company {
-    constructor() {
-        this.name = "";
-        this.possessive = "";
-        this.about = "";
-        this.address = "";
-        this.values = "";
-    }
-
-    setName(name) {
-        this.name = name;
-        if(name && name != null && name != "") {
-
-            if(name.endsWith("s")) {
-                this.possessive = name + "'";
-            } else {
-                this.possessive = name + "'s";
-            }
-
-        }
-
-    }
-}
-
-class TailoredDocument {
-
-    constructor() {
-        this.template = new Template();
-        this.company = new Company();
-        this.googleDoc = new GoogleDoc();
-    }
-
-    setTemplate(template) {
-        this.template = template;
-        this.name = this.company.name + " " + this.template.name;
-        this.googleDoc.setName(this.name);
-    }
-
-    setCompany(company) {
-        this.company = company;
-        this.name = this.company.name + " " + this.template.name;
-        this.googleDoc.setName(this.name);
-    }
-
-    getName() {
-        return this.name;
-    }
-
-    async getPdfLink() {
-        console.log("GoogleDoc.getPdfLink: ", this);
-        return await this.googleDoc.getPdfLink();
-    }
-
-}
-
-class JobPosting {
-
-    constructor() {
-        this.title = "";
-        this.completeTitle = "";
-        this.shortTitle = "";
-        this.description = "";
-        this.minimumRequirements = "";
-        this.preferredRequirements = "";
-        this.responsibilities = "";
-        this.hiringManager = "Hiring Manager";
-        this.relevantExperience = "";
-        this.company = new Company();
-    }
-
-    setCompany(company) {
-        this.company = company;
-    }
-
-    setDescription(description) {
-        this.description = description;
-    }
-
-    setTitle(title) {
-        console.debug("JobPosting.setTitle() - " + title);
-        this.title = title;
-
-        if (this.shortTitle == "") {
-            console.debug("JobPosting.setTitle() - shortTitle is empty, trying to update");
-            if (title.includes(",")){
-                this.shortTitle = title.split(",")[0];
-            } else {
-                this.shortTitle = title;
-            }
-        }
-
-        if (this.completeTitle == "") {
-            this.completeTitle = title;
-        }
-    }
-}
-
-class Jobscan {
-    constructor() {
-        this.xsrfToken;
-        this.cookie;
-    }
-
-    isReady() {
-        return this.xsrfToken && this.cookie;
-    }
-
-}
-
-
-class ChatGpt {
-    constructor() {
-        this.apiKey;
-        this.healthCheckResult;
-    }
-
-    isReady() {
-        return this.apiKey && this.healthCheck();
-    }
-
-    async healthCheck() {
-        if (!this.healthCheckResult) {
-            this.healthCheckResult = await this.ask("Say hello");
-        }
-
-        return this.healthCheckResult;
-    }
-
-    async ask(prompt, dryRun=false) {
-        if (dryRun){
-            return "Mock response from ChatGPT";
-        }
-
-        if (!this.apiKey){
-            throw new Error("Chat GPT missing API Key");
-        }
-
-        if (!prompt) {
-            throw new Error("Missing prompt");
-        }
-
-        return await askChatGpt(this.apiKey, prompt);
-    }
-}
 
 class WebApplication {
 
     constructor() {
         this.storageKey = "web-application-state";
+        this.gapiWrapper = new GoogleApiWrapper(gapi, google);
 
         let company = new Company();
         company.name = "";
@@ -221,6 +42,14 @@ class WebApplication {
         const month = date.toLocaleString('default', { month: 'long' });
         this.applicationDate = `${month} ${date.getDate()}, ${date.getFullYear()}`;
         this.applicationLog = new ApplicationLog();
+    }
+
+    setGapi(gapi) {
+
+    }
+
+    setGoogle(google) {
+
     }
 
     setCompanyName(name) {
@@ -383,5 +212,4 @@ class WebApplication {
     }
 }
 
-export {Template, GoogleDoc};
 export default WebApplication;

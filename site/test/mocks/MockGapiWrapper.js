@@ -41,4 +41,4 @@ class MockGoogleApiWrapper {
     }
 }
 
-export {MockGoogleApiWrapper};
+export default MockGoogleApiWrapper;

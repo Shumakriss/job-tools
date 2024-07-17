@@ -2,10 +2,15 @@
     All initialization functions can be found in this file, though they may refer
     to other functions outside this file.
 */
-var googleApi;
-var app = new WebApplication();
+import WebApplication from "./modules/webApplication.js"
+
+
+initialize();
 
 async function initialize() {
+    console.log("Initializing...");
+
+    var app = new WebApplication(gapi, google);
 
     app.googleApi.setApiInitCallback(() => {
         console.debug("App callback invoked by Google init");
