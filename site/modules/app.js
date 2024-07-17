@@ -41,6 +41,9 @@ class GoogleDoc {
             console.debug("GoogleDoc id is not null: " + this.id);
             return this.id;
         } else {
+            if (!this.name || this.name == null || this.name == "") {
+                throw new Error("Missing name");
+            }
             console.debug("GoogleDoc id is null, looking up ID");
             this.id = await this.lookupId();
             return this.id;

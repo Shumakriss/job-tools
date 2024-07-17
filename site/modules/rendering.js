@@ -69,7 +69,16 @@ async function redraw() {
         document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
     }
 
+    // TODO: linkedin link
+    // TODO: github link
+    // TODO: site link
+
+    // TODO: sheet name
+    // TODO: sheet link
+    // TODO: log app button
+
     // resume link
+    // TODO: Open the google doc, not the PDF link
     let pdfLink = await app.resume.getPdfLink();
     if (pdfLink) {
         console.log("Updating pdf link: " + pdfLink);
@@ -81,15 +90,8 @@ async function redraw() {
         document.getElementById('tailored-resume-link').href = "";
     }
 
-    // TODO: linkedin link
-    // TODO: github link
-    // TODO: site link
-
-    // TODO: sheet name
-    // TODO: sheet link
-    // TODO: log app button
-
     // cover letter link
+    // TODO: Open the google doc, not the PDF link
     pdfLink = await app.coverLetter.getPdfLink();
     if (pdfLink) {
         console.log("Updating cover letter pdf link: " + pdfLink);
