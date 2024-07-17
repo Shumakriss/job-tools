@@ -1,28 +1,6 @@
-var suite = new TestSuite();
+import {addSuiteResults} from "./lib.js"
+import {gapiWrapperSuite} from "./modules/testGapiWrapper.js"
 
-suite.addTest("GoogleDoc.constructor", () => {
-    let gDoc = new GoogleDoc();
-});
+let container = document.getElementById("test-results-container");
 
-suite.addTest("GoogleDoc.getName", () => {
-    let gDoc = new GoogleDoc();
-    gDoc.getName();
-});
-
-suite.addTest("GoogleDoc.setName", () => {
-    let gDoc = new GoogleDoc();
-    gDoc.setName("foo");
-});
-
-suite.addTest("GoogleDoc.getId throws without name set", async () => {
-    let gDoc = new GoogleDoc();
-    await gDoc.getId();
-}, true);
-
-suite.addTest("GoogleDoc.getId", async () => {
-    let gDoc = new GoogleDoc();
-    gDoc.setName("Foo");
-    await gDoc.getId();
-});
-
-suite.run();
+addSuiteResults(container, "GapiWrapper", await gapiWrapperSuite.run());

@@ -1,77 +1,7 @@
+import GoogleApi from "./gapi.js";
+import {getDocumentIdByName} from './gdrive.js';
+
 const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
-
-class GoogleDoc {
-    constructor() {
-        this.name;
-        this.id = null;
-        this.exists;
-        this.pdfLink = null;
-    }
-
-    getName() {
-        this.name = name;
-    }
-
-    setName(name) {
-        console.debug("Setting GoogleDoc name to: " + name);
-        this.name = name;
-        this.id = null;
-        this.pdfLink = null;
-    }
-
-    async lookupId() {
-        console.debug("GoogleDoc.lookupId - Looking up name: " + this.name);
-        let id = await getDocumentIdByName(this.name);
-
-        if (id != null) {
-            console.debug("GoogleDoc.lookupId - Found id: " + id + " for name: " + this.name);
-            this.exists = true;
-            this.id = id;
-        } else {
-            console.debug("GoogleDoc.lookupId - ID not found for name: " + this.name);
-            this.exists = false;
-            this.id = null;
-        }
-
-        return this.id;
-    }
-
-    async getId() {
-        if (this.id != null) {
-            console.debug("GoogleDoc id is not null: " + this.id);
-            return this.id;
-        } else {
-            if (!this.name || this.name == null || this.name == "") {
-                throw new Error("Missing name");
-            }
-            console.debug("GoogleDoc id is null, looking up ID");
-            this.id = await this.lookupId();
-            return this.id;
-        }
-    }
-
-    async getPdfLink() {
-        console.debug("GoogleDoc getting pdf link");
-        if (this.pdfLink) {
-            console.debug("Returning existing link: " + this.pdfLink);
-            return this.pdfLink;
-        } else {
-            console.debug("Fetching new PDF link");
-            let id = await this.getId();
-            console.debug("ID retrieved: " + id);
-            if (id != null){
-                console.debug("Fetching new PDF link for ID: " + id);
-                let pdfLink = await getPdfLink(id);
-                console.debug("PDF link for ID: " + id + " is " + pdfLink);
-                this.pdfLink = pdfLink;
-                return this.pdfLink;
-            } else {
-                console.debug("ID for PDF not found: " + id);
-                return;
-            }
-        }
-    }
-}
 
 class Template {
     constructor() {
@@ -452,3 +382,6 @@ class WebApplication {
         console.info("Application state loaded", this);
     }
 }
+
+export {Template, GoogleDoc};
+export default WebApplication;

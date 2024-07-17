@@ -7,29 +7,29 @@ var app = new WebApplication();
 
 async function initialize() {
 
-    app.googleApi.apiInitCallback = () => {
+    app.googleApi.setApiInitCallback(() => {
         console.debug("App callback invoked by Google init");
         app.save();
         redraw();
-    };
+    });
 
-    app.googleApi.clientInitCallback = ()=>{
+    app.googleApi.clientInitCallback(()=>{
         console.debug("App callback invoked by Google client init");
         app.save();
         redraw();
-    };
+    });
 
-    app.googleApi.authenticatedCallback = () => {
+    app.googleApi.authenticatedCallback(() => {
         console.debug("App callback invoked by Google authentication");
         app.save();
         redraw();
-    };
+    });
 
-    app.googleApi.tokenClientCallback = () => {
+    app.googleApi.tokenClientCallback(() => {
         console.debug("App callback invoked by Google token client");
         app.save();
         redraw();
-    };
+    });
 
     app.tryLoad();
 

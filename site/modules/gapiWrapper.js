@@ -13,9 +13,19 @@ const DOCS_DISCOVERY_DOC = 'https://docs.googleapis.com/$discovery/rest?version=
 // Don't forget your Discovery Doc Url
 const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/documents';
 
-class GoogleApi {
+class GoogleApiWrapper {
 
-    constructor () {
+    constructor (gapi, google) {
+        if (!gapi) {
+            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without gapi object");
+        }
+
+        if (!google) {
+            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without google object");
+        }
+
+        this.gapi = gapi;
+        this.google = google;
         this.apiKey;
         this.clientId;
         this.token;
@@ -27,45 +37,72 @@ class GoogleApi {
         this.authenticatedCallback;
     }
 
-    setToken() {
-        console.log("setToken");
+    setApiInitCallback(callback) {
+        if (callback && typeof callback === 'function' ) {
+            this.apiInitCallback = callback;
+        }
+    }
+
+    setClientInitCallback() {
+        if (callback && typeof callback === 'function' ) {
+            this.clientInitCallback = callback;
+        }
+    }
+
+    setTokenClientCallback() {
+        if (callback && typeof callback === 'function' ) {
+            this.tokenClientCallback = callback;
+        }
+    }
+
+    setAuthenticatedCallback() {
+        if (callback && typeof callback === 'function' ) {
+            this.authenticatedCallback = callback;
+        }
     }
 
     isReady() {
-        return gapi && gapi.client && gapi.client.getToken();
+        return this.gapi.client && this.gapi.client.getToken();
     }
 
     isSignInReady() {
-        return gapi && gapi.client && !gapi.client.getToken();
+        return this.gapi.client && !this.gapi.client.getToken();
     }
 
     isSignOutReady() {
-        return gapi && gapi.client && gapi.client.getToken();
+        return this.gapi.client && this.gapi.client.getToken();
     }
 
     isRefreshReady() {
-        return gapi && gapi.client && this.consentRequested && gapi.client.getToken();
+        return this.gapi.client && this.consentRequested && this.gapi.client.getToken();
     }
 
     async onGapiLoaded() {
         console.debug("onGapiLoaded");
         this.isApiReady = true;
-        this.apiInitCallback();
 
-        await gapi.client.init({
+        if (this.apiInitCallback) {
+            this.apiInitCallback();
+        }
+
+        await this.gapi.client.init({
             apiKey: this.apiKey,
             discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC, DOCS_DISCOVERY_DOC]
             });
 
-        this.clientInitCallback();
+        if (this.clientInitCallback){
+            this.clientInitCallback();
+        }
 
         if (this.token) {
             console.debug("Reusing token");
-            gapi.client.setToken(this.token);
-            this.authenticatedCallback();
+            this.gapi.client.setToken(this.token);
+            if (this.authenticatedCallback) {
+                this.authenticatedCallback();
+            }
         }
 
-        this.tokenClient = await google.accounts.oauth2.initTokenClient({
+        this.tokenClient = await this.google.accounts.oauth2.initTokenClient({
             client_id: this.clientId,
             scope: SCOPES,
             callback: '', // defined later
@@ -83,10 +120,14 @@ class GoogleApi {
                 this.tokenClient.requestAccessToken({prompt: 'consent'});
             }
 
-            this.token = await gapi.client.getToken();
+            this.token = await this.gapi.client.getToken();
 
-            this.authenticatedCallback();
-            this.tokenClientCallback();
+            if (this.authenticatedCallback) {
+                this.authenticatedCallback();
+            }
+            if (this.tokenClientCallback) {
+                this.tokenClientCallback();
+            }
         };
 
     }
@@ -103,11 +144,15 @@ class GoogleApi {
             return;
         }
 
-        gapi.load('client',  () => {this.onGapiLoaded()});
+        this.gapi.load('client',  () => {this.onGapiLoaded()});
     }
 
     async authorize() {
-        console.debug("Authorizing Google Drive client");
+        console.debug("GapiWrapper.authorize - Authorizing Google Drive client");
+
+        if (!this.isSignInReady() || !this.isRefreshReady()) {
+            throw new Error("Cannot authorize with uninitialized dependences");
+        }
 
         if (this.consentRequested) {
             console.debug("Consent to Google previously given, only refreshing");
@@ -120,6 +165,9 @@ class GoogleApi {
     }
 
     load(googleApi) {
+        if (!googleApi) {
+            throw new Error("GapiWrapper.load - Invalid credentials");
+        }
         this.clientId = googleApi.clientId;
         this.apiKey = googleApi.apiKey;
         this.token = googleApi.token;
@@ -127,15 +175,22 @@ class GoogleApi {
     }
 
     setToken(token) {
+        if (!token || typeof token != "object") {
+            throw new Error("Invalid token");
+        }
+
         console.debug("Set token invoked");
         this.token = token;
-        this.authenticatedCallback();
+        if (this.authenticatedCallback) {
+            this.authenticatedCallback();
+        }
     }
 
     signOut() {
-        google.accounts.oauth2.revoke(gapi.client.getToken().access_token);
-        gapi.client.setToken('');
+        this.google.accounts.oauth2.revoke(this.gapi.client.getToken().access_token);
+        this.gapi.client.setToken('');
         this.consentRequested = false;
     }
 }
 
+export {GoogleApiWrapper};
