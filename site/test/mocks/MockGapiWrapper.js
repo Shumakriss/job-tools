@@ -1,7 +1,10 @@
+import {MockGapi, MockGoogle} from "./MockGapi.js";
+
 class MockGoogleApiWrapper {
 
     constructor () {
-
+        this.gapi = new MockGapi();
+        this.google = new MockGoogle();
     }
 
     setToken() {

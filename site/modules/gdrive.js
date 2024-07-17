@@ -4,29 +4,47 @@
 
 class GoogleDrive {
 
-    constructor(googleApi) {
-        if (!googleApi) {
+    constructor(gapiWrapper) {
+        if (!gapiWrapper) {
             throw new Error("GoogleDrive.constructor() - Must provide GoogleApi-like parameter");
         }
 
-        this.gapi = googleApi;
+        this.gapi = gapiWrapper.gapi;
     }
 
     static gDocLinkFromId(gDocId) {
+        if (!gDocId || gDocId == "") {
+            throw new Error("GoogleDrive.gDocLinkFromId - Invalid Google Drive ID");
+        }
         return "https://docs.google.com/document/d/" + gDocId + "/edit";
     }
     
     async listFiles() {
+        console.debug("GoogleDrive.listFiles called");
         let response;
         try {
-          response = await gapi.client.drive.files.list({
-            'pageSize': 10,
-            'fields': 'files(id, name)',
-          });
+            response = await this.gapi.client.drive.files.list({
+                'pageSize': 10,
+                'fields': 'files(id, name)',
+            });
+            console.debug("GoogleDrive.listFiles got response from google");
         } catch (err) {
-          console.log(err.message);
-          return;
+            console.error(err.message);
+            throw new Error("Failed to list files due to error: " + err.message);
         }
+
+        if (!response) {
+            throw new Error("listFiles response is undefined");
+        }
+
+        if (!response.result) {
+            throw new Error("Did not receive result in listFiles response");
+        }
+
+        if (!response.result.files) {
+            throw new Error("Did not receive files in listFiles response.result");
+        }
+
         const files = response.result.files;
         if (!files || files.length == 0) {
             console.log('No files found.');
@@ -47,7 +65,7 @@ class GoogleDrive {
     
         let response;
         try {
-            response = await gapi.client.drive.files.list({
+            response = await this.gapi.client.drive.files.list({
                 'q': 'name = \'' + name + '\'',
                 'pageSize': 5,
                 'fields': 'nextPageToken, files(id, name)',
@@ -82,7 +100,7 @@ class GoogleDrive {
     
         let response;
         try {
-          response = await gapi.client.drive.files.copy({
+          response = await this.gapi.client.drive.files.copy({
             'fileId': fileId
           });
         } catch (err) {
@@ -94,7 +112,7 @@ class GoogleDrive {
         console.log("Copied " + fileId + " to " + newFileId);
         console.log("Renaming " + newFileId + " to " + fileName);
         try {
-          response = await gapi.client.drive.files.update({
+          response = await this.gapi.client.drive.files.update({
             'fileId': newFileId,
             'resource': { 'name': fileName, 'capabilities': {'canDownload': true}}
           });
@@ -116,7 +134,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await gapi.client.drive.files.export({
+            const response = await this.gapi.client.drive.files.export({
                 fileId: fileId,
                 mimeType: 'text/plain'
             });
@@ -136,7 +154,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await gapi.client.drive.files.export({
+            const response = await this.gapi.client.drive.files.export({
                 fileId: fileId,
                 mimeType: 'application/pdf'
             });
@@ -153,7 +171,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await gapi.client.drive.files.create({
+            const response = await this.gapi.client.drive.files.create({
                 fileId: fileId,
                 media: {
                     mimeType: "application/pdf",
@@ -173,7 +191,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await gapi.client.drive.files.get({
+            const response = await this.gapi.client.drive.files.get({
                 fileId: fileId,
                 fields: 'exportLinks'
             });

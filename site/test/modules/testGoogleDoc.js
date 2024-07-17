@@ -1,6 +1,7 @@
 import {TestSuite} from "../lib.js";
 import {GoogleDoc} from "../../modules/app.js";
 
+
 var testSuite = new TestSuite();
 
 testSuite.addTest("GoogleDoc.constructor", () => {

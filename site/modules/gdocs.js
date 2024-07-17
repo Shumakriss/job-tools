@@ -4,11 +4,11 @@
 
 
 class GoogleDoc {
-    constructor(googleApi) {
-        if (!googleApi) {
+    constructor(gapiWrapper) {
+        if (!gapiWrapper) {
             throw new Error("GoogleDoc.constructor - Must provide GoogleApi-like object");
         }
-        this.gapi = googleApi;
+        this.gapiWrapper = gapiWrapper;
         this.name;
         this.id = null;
         this.exists;
