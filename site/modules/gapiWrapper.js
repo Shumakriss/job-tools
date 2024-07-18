@@ -13,19 +13,19 @@ const DOCS_DISCOVERY_DOC = 'https://docs.googleapis.com/$discovery/rest?version=
 // Don't forget your Discovery Doc Url
 const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/documents';
 
-class GoogleApiWrapper {
+class GapiWrapper {
 
-    constructor (gapi, google) {
-        if (!gapi) {
-            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without gapi object");
-        }
+    constructor () {
+//        if (!gapi) {
+//            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without gapi object");
+//        }
+//
+//        if (!google) {
+//            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without google object");
+//        }
 
-        if (!google) {
-            throw new Error("GoogleApiWrapper.constructor - Cannot initialize without google object");
-        }
-
-        this.gapi = gapi;
-        this.google = google;
+        this.gapi;
+        this.google;
         this.apiKey;
         this.clientId;
         this.token;
@@ -37,47 +37,67 @@ class GoogleApiWrapper {
         this.authenticatedCallback;
     }
 
+    static createFromObject(jsonObject) {
+        if (!jsonObject) {
+            throw new Error("Object to load was undefined");
+        }
+        if (typeof jsonObject != 'object') {
+            throw new Error("Object to load not an object");
+        }
+        try {
+            let temp = new GapiWrapper();
+            // Do the deep copy
+
+            return temp;
+        } catch(err) {
+            throw new Error("Encountered issue during deep-copy. Error: " + err.message, { cause: err })
+        }
+    }
+
     setApiInitCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.apiInitCallback = callback;
         }
     }
 
-    setClientInitCallback() {
+    setClientInitCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.clientInitCallback = callback;
         }
     }
 
-    setTokenClientCallback() {
+    setTokenClientCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.tokenClientCallback = callback;
         }
     }
 
-    setAuthenticatedCallback() {
+    setAuthenticatedCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.authenticatedCallback = callback;
         }
     }
 
     isReady() {
-        return this.gapi.client && this.gapi.client.getToken();
+        return this.gapi && this.gapi.client && this.gapi.client.getToken();
     }
 
     isSignInReady() {
-        return this.gapi.client && !this.gapi.client.getToken();
+        return this.gapi && this.gapi.client && !this.gapi.client.getToken();
     }
 
     isSignOutReady() {
-        return this.gapi.client && this.gapi.client.getToken();
+        return this.gapi && this.gapi.client && this.gapi.client.getToken();
     }
 
     isRefreshReady() {
-        return this.gapi.client && this.consentRequested && this.gapi.client.getToken();
+        return this.gapi && this.gapi.client && this.consentRequested && this.gapi.client.getToken();
     }
 
     async onGapiLoaded() {
+        if (!this.gapi) {
+            throw new Error("Gapi is not loaded");
+        }
         console.debug("onGapiLoaded");
         this.isApiReady = true;
 
@@ -164,8 +184,8 @@ class GoogleApiWrapper {
         }
     }
 
-    load(googleApi) {
-        if (!googleApi) {
+    load(apiWrapper) {
+        if (!apiWrapper || typeof apiWrapper != 'object') {
             throw new Error("GapiWrapper.load - Invalid credentials");
         }
         this.clientId = googleApi.clientId;
@@ -187,10 +207,13 @@ class GoogleApiWrapper {
     }
 
     signOut() {
+        if (!this.gapi || !this.gapi.client || !this.google || !this.google.accounts || !this.google.accounts.oauth){
+            throw new Error("Google API is not ready to perform a signout.");
+        }
         this.google.accounts.oauth2.revoke(this.gapi.client.getToken().access_token);
         this.gapi.client.setToken('');
         this.consentRequested = false;
     }
 }
 
-export default GoogleApiWrapper;
+export default GapiWrapper;

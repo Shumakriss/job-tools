@@ -3,45 +3,26 @@
     to other functions outside this file.
 */
 import WebApplication from "./modules/webApplication.js"
+import {redraw} from "./modules/rendering.js"
 
-
+var app = new WebApplication();
 initialize();
 
 async function initialize() {
     console.log("Initializing...");
 
-    var app = new WebApplication(gapi, google);
-
-    app.googleApi.setApiInitCallback(() => {
-        console.debug("App callback invoked by Google init");
+    app.setStateChangeCallback(() => {
+        console.debug("User callback for app state change");
         app.save();
-        redraw();
-    });
-
-    app.googleApi.clientInitCallback(()=>{
-        console.debug("App callback invoked by Google client init");
-        app.save();
-        redraw();
-    });
-
-    app.googleApi.authenticatedCallback(() => {
-        console.debug("App callback invoked by Google authentication");
-        app.save();
-        redraw();
-    });
-
-    app.googleApi.tokenClientCallback(() => {
-        console.debug("App callback invoked by Google token client");
-        app.save();
-        redraw();
+        redraw(app);
     });
 
     app.tryLoad();
 
-    app.googleApi.init();
+//    app.googleApi.init();
     addEventListeners();
 
-    redraw();
+    redraw(app);
 }
 
 /*
@@ -77,34 +58,34 @@ async function addEventListeners() {
         }
 
         fr.readAsText(this.files[0]);
-        redraw();
+        redraw(app);
     });
 
     document.getElementById("resume-template-name").addEventListener("change", debounce( (event) => {
         console.debug("Invoked event listener for resume-template-name");
         app.resume.template.setName(event.target.value);
         app.save();
-        redraw();
+        redraw(app);
     }, 100));
 
     document.getElementById("cover-letter-template-name").addEventListener("change", debounce( (event) => {
         console.debug("Invoked event listener for cover-letter-template-name");
         app.coverLetter.template.setName(event.target.value);
         app.save();
-        redraw();
+        redraw(app);
     }, 100));
 
     document.getElementById('application-log-sheet-name').addEventListener('change', debounce( (event) => {
         console.log("Application log sheet name changed");
         app.applicationLog.setName(event.target.value);
-        redraw();
+        redraw(app);
     }, 100));
 
     // Job Description page inputs
     document.getElementById('job-description-textarea').addEventListener('keydown', debounce( (event) => {
         app.job.setDescription(event.target.value);
         app.save();
-        redraw();
+        redraw(app);
     }, 200));
 
     // Extract page inputs
@@ -112,22 +93,20 @@ async function addEventListeners() {
         console.log("Invoked event listener for company-name");
         app.setCompanyName(event.target.value);
         app.save();
-        redraw();
+        redraw(app);
     }, 100));
 
     document.getElementById("job-title").addEventListener("change", debounce( (event) => {
         console.log("Invoked event listener for job-title");
         app.job.setTitle(event.target.value);
         app.save();
-        redraw();
+        redraw(app);
     }, 100));
 
     document.getElementById('minimum-requirements').addEventListener('keydown', debounce( (event) => {
         app.job.minimumRequirements = event.target.value;
-        redraw();
+        redraw(app);
     }, 200));
-
-
 
     // min reqs
     // pref reqs
@@ -146,19 +125,19 @@ async function addEventListeners() {
 async function handleAuthClick() {
     console.debug("Google Sign In / Refresh button clicked");
     app.googleApi.authorize();
-    redraw();
+    redraw(app);
 }
 
 function handleSignoutClick() {
     console.debug("Google Sign Out button clicked");
     app.googleApi.signOut();
-    redraw();
+    redraw(app);
 }
 
 async function handleLogApplicationButton() {
     console.debug("Log application button clicked");
     app.applicationLog.append(app.company.getName());
-    redraw();
+    redraw(app);
 }
 
 async function handleSaveGoogleCredentials() {
@@ -273,7 +252,7 @@ async function handleExtractSectionsButton() {
     console.log("Extracting sections from job description");
     await app.extractJobDescriptionSections();
     app.save();
-    redraw();
+    redraw(app);
 }
 
 
@@ -315,3 +294,19 @@ async function handleCreateResumeButton() {
     console.log("All files cloned");
 }
 
+function handleLinkedInClipboard() {
+    navigator.clipboard.writeText("https://www.linkedin.com/in/christophershumaker/");
+}
+
+function handleGithubClipboard() {
+    navigator.clipboard.writeText("https://github.com/Shumakriss");
+}
+
+function handleSiteClipboard() {
+    navigator.clipboard.writeText("https://www.makerconsulting.llc/maker-consulting");
+}
+
+function handleLinkedInQueryClipboard() {
+    let queryText = document.getElementById("linkedin-query").value;
+    navigator.clipboard.writeText(queryText);
+}

@@ -1,124 +1,95 @@
-import GoogleApiWrapper from "./gapiWrapper.js";
-
+import GapiWrapper from "./gapiWrapper.js";
 import Company from "./company.js";
 import Template from "./template.js";
 import TailoredDocument from "./tailoredDocument.js";
+import JobPosting from "./jobPosting.js";
 
 const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
+const STORAGE_KEY = "web-application-state";
 
 class WebApplication {
 
     constructor() {
-        this.storageKey = "web-application-state";
-        this.gapiWrapper = new GoogleApiWrapper(gapi, google);
-
-        let company = new Company();
-        company.name = "";
-        this.company = company;
-
-        let resumeTemplate = new Template();
-        resumeTemplate.name = null;
-
-        let coverLetterTemplate = new Template();
-        coverLetterTemplate.name = "";
-
-        this.resume = new TailoredDocument();
-        this.resume.setCompany(company);
-        this.resume.template = resumeTemplate;
-
-        this.coverLetter = new TailoredDocument();
-        this.coverLetter.setCompany(company);
-        this.coverLetter.company = company;
-        this.coverLetter.template = coverLetterTemplate;
-
-        this.job = new JobPosting();
-        this.job.setCompany(company);
-
-        this.chatGpt = new ChatGpt();
-        this.jobscan = new Jobscan();
-        this.googleApi = new GoogleApi();
-
         const date = new Date();  // Today
         const month = date.toLocaleString('default', { month: 'long' });
-        this.applicationDate = `${month} ${date.getDate()}, ${date.getFullYear()}`;
-        this.applicationLog = new ApplicationLog();
+
+        this.company = new Company();
+        this.gapiWrapper = new GapiWrapper();
+        this.resumeTemplate = new Template();
+        this.coverLetterTemplate = new Template();
+        this.jobPosting = new JobPosting();
+        this.resumeTailoredDocument = new TailoredDocument();
+        this.coverLetterTailoredDocument = new TailoredDocument();
     }
 
-    setGapi(gapi) {
-
+    setStateChangeCallback(callback) {
+        this.stateChangeCallback = callback;
+        if (this.gapiWrapper) {
+            this.gapiWrapper.setApiInitCallback = callback;
+            this.gapiWrapper.setClientInitCallback = callback;
+            this.gapiWrapper.setAuthenticatedCallback = callback;
+            this.gapiWrapper.setTokenClientCallback = callback;
+        }
     }
 
-    setGoogle(google) {
-
+    setGapiWrapper(gapiWrapper) {
+        this.gapiWrapper = gapiWrapper;
     }
 
-    setCompanyName(name) {
-        console.log("Set company name: " + name);
-        this.company.setName(name);
-        this.resume.setCompany(this.company);
-        this.coverLetter.setCompany(this.company);
-        this.job.setCompany(this.company);
+    setCompany(company) {
+        this.company = company;
     }
 
-    authenticate() {
-        // Check if different
-        // Set all variables
-        // Refresh token
+    setResumeTemplate(template) {
+        this.resumeTemplate = template;
+    }
+    
+    setCoverLetterTemplate(template) {
+        this.coverLetterTemplate = template;
+    }
+    
+    setResumeTailoredDocument(tailoredDocument) {
+        this.resumeTailoredDocument = tailoredDocument;
+    }
+    
+    setCoverLetterTailoredDocument(tailoredDocument) {
+        this.coverLetterTailoredDocument = tailoredDocument;
     }
 
-    isAuthenticated() {
-        // Check variables
-        // Test API calls?
-        // googleApi.isAuthenticated?
-        // jobscan.isAuthenticated?
-        // chatgpt.isAuthenticated?
+    setJobPosting(jobPosting) {
+        this.jobPosting = jobPosting;
     }
 
-    async extractJobDescriptionSections() {
-        let prompt;
-        let response;
+    isSignInReady() {
+        return this.gapiWrapper && this.gapiWrapper.isSignInReady();
+    }
 
-        prompt = COMPANY_NAME_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.setCompanyName(response);
+    isRefreshReady() {
+        return this.gapiWrapper && this.gapiWrapper.isRefreshReady();
+    }
 
-        prompt = JOB_TITLE_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.job.setTitle(response);
+    isSignOutReady() {
+        return this.gapiWrapper && this.gapiWrapper.isSignOutReady();
+    }
 
-        prompt = JOB_DUTIES_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.job.responsibilities = response;
+    getResumeTemplateName() {
+        return this.resumeTemplate.name;
+    }
 
-        prompt = COMPANY_INFORMATION_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.company.about = response;
+    getCoverLetterTemplateName() {
+        return this.coverLetterTemplate.name;
+    }
 
-        prompt = MINIMUM_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.job.minimumRequirements = response;
+    getLinkedInQuery() {
+        return LINKEDIN_QUERY;
+    }
 
-        prompt = PREFERRED_JOB_REQUIREMENTS_PROMPT + "\n\nJob Description:\n\n"+ app.job.description;
-        response = await this.chatGpt.ask(prompt);
-        if (response == "No section found.") {
-            response = "";
-        }
-        app.job.preferredRequirements = response;
+    getCompanyName() {
+        return this.company.name;
+    }
+
+    getJobDescription() {
+        return this.jobPosting.description;
     }
 
     copyTemplates() {
@@ -145,7 +116,7 @@ class WebApplication {
     }
 
     clearFromStorage() {
-        localStorage.removeItem(this.storageKey);
+        localStorage.removeItem(STORAGE_KEY);
         console.log("Cleared application state from storage");
     }
 
@@ -161,12 +132,12 @@ class WebApplication {
 
     save() {
         console.log("Saving app", this);
-        localStorage.setItem(this.storageKey, JSON.stringify(this, this.replacer));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this, this.replacer));
         console.log("Saved application state to local storage");
     }
     
     tryLoad() {
-        let storedState = localStorage.getItem(this.storageKey);
+        let storedState = localStorage.getItem(STORAGE_KEY);
         if (storedState) {
             console.log("Found application state in local storage.");
             this.load(storedState);
@@ -176,37 +147,77 @@ class WebApplication {
             return false;
         }
     }
-    
+
     load(webApplicationJson) {
-        let app = JSON.parse(webApplicationJson);
-        console.debug("App from storage:", app);
+        if (!webApplicationJson) {
+            throw new Error("Missing web application JSON input string");
+        }
 
-        let company = new Company();
-        this.company = company;
-        this.company.setName(app.company.name);
+        if (typeof webApplicationJson != 'string') {
+            throw new Error("Web application JSON parameter is not a string");
+        }
 
-        console.log("Set resume template name");
-        let resumeTemplate = new Template();
-        resumeTemplate.setName(app.resume.template.name);
-        this.resume.setTemplate(resumeTemplate);
-        this.resume.setCompany(company);
+        let storedApp = JSON.parse(webApplicationJson);
+        console.debug("WebApplication.load - Deep copying from JSON object:", storedApp);
 
-        console.log("Set cover letter template name");
-        let coverLetterTemplate = new Template();
-        coverLetterTemplate.setName(app.coverLetter.template.name);
-        this.coverLetter.setTemplate(coverLetterTemplate);
-        this.coverLetter.setCompany(company);
+        // Setup company
+        if (storedApp.company) {
+            this.company = Company.createFromObject(storedApp.company);
+            console.log("Company successfully loaded");
+        } else {
+            this.company = new Company();
+            console.log("Company not found, initialized new company");
+        }
+        
+        // Setup Google API Wrapper
+        if (storedApp.gapiWrapper) {
+            this.gapiWrapper = GapiWrapper.createFromObject(storedApp.gapiWrapper);
+            console.log("GapiWrapper successfully loaded");
+        } else {
+            this.gapiWrapper = new GapiWrapper();
+            console.log("GapiWrapper not found, initialized new gapiWrapper");
+        }
 
-        this.job = new JobPosting();
-        this.job.setCompany(company);
-        this.job.setDescription(app.job.description);
-        this.job.setTitle(app.job.title);
+        // Setup Resume Template
+        if (storedApp.resumeTemplate) {
+            this.resumeTemplate = Template.createFromObject(storedApp.resumeTemplate);
+        } else {
+            this.resumeTemplate = new Template();
+        }
+        
+        // Setup Cover Letter Template
+        if (storedApp.coverLetterTemplate) {
+            this.coverLetterTemplate = Template.createFromObject(storedApp.coverLetterTemplate);
+        } else {
+            this.coverLetterTemplate = new Template();
+        }
+        
+        // Setup Job Posting
+        if (storedApp.jobPosting) {
+            this.jobPosting = JobPosting.createFromObject(storedApp.jobPosting);
+        } else {
+            this.jobPosting = new JobPosting();
+        }
+        
+        // Setup Resume TailoredDocument
+        if (storedApp.resumeTailoredDocument) {
+            this.resumeTailoredDocument = TailoredDocument.createFromObject(storedApp.resumeTailoredDocument);
+        } else {
+            this.resumeTailoredDocument = new TailoredDocument();
+        }
+        
+        // Setup Cover Letter TailoredDocument
+        if (storedApp.coverLetterTailoredDocument) {
+            this.coverLetterTailoredDocument = TailoredDocument.createFromObject(storedApp.coverLetterTailoredDocument);
+        } else {
+            this.coverLetterTailoredDocument = new TailoredDocument();
+        }
 
-        // Third-party
-        this.chatGpt.apiKey = app.chatGpt.apiKey;
-        this.googleApi.load(app.googleApi);
-        this.jobscan.cookie = app.jobscan.cookie;
-        this.jobscan.xsrfToken = app.jobscan.xsrfToken;
+//        // Third-party
+//        this.chatGpt.apiKey = app.chatGpt.apiKey;
+//        this.googleApi.load(app.googleApi);
+//        this.jobscan.cookie = app.jobscan.cookie;
+//        this.jobscan.xsrfToken = app.jobscan.xsrfToken;
 
         console.info("Application state loaded", this);
     }

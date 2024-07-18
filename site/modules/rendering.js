@@ -2,30 +2,31 @@
 *  DOM-interaction code
 */
 
-async function redraw() {
+export async function redraw(app) {
     console.log("Redrawing");
 
     // Google sign-in/refresh & sign-out buttons
-    if (app.googleApi.isSignInReady()) {
+    if (app.isSignInReady()) {
         console.debug("Google Sign In ready");
         enableGoogleSignInButton();
     }
 
-    if (app.googleApi.isRefreshReady()) {
+    if (app.isRefreshReady()) {
         console.debug("Google Refresh ready");
         enableGoogleRefreshButton();
     }
 
-    if (app.googleApi.isSignOutReady()) {
+    if (app.isSignOutReady()) {
         console.debug("Google Sign Out ready");
         enableGoogleSignOutButton();
     }
 
-    document.getElementById("resume-template-name").value = app.resume.template.name;
-    document.getElementById("cover-letter-template-name").value = app.coverLetter.template.name;
-    document.getElementById("linkedin-query").value = LINKEDIN_QUERY;
-    document.getElementById("company-name").value = app.company.name;
-    document.getElementById("job-description-textarea").value = app.job.description;
+    debugger;
+    document.getElementById("resume-template-name").value = app.getResumeTemplateName();
+    document.getElementById("cover-letter-template-name").value = app.getCoverLetterTemplateName();
+    document.getElementById("linkedin-query").value = app.getLinkedInQuery();
+    document.getElementById("company-name").value = app.getCompanyName();
+    document.getElementById("job-description-textarea").value = app.getJobDescription();
 
     let extractButton = document.getElementById("extract-sections-button");
     if (app.isExtractReady()) {
@@ -197,20 +198,3 @@ function enableGoogleSignOutButton() {
 //    }
 //}
 
-
-function handleLinkedInClipboard() {
-    navigator.clipboard.writeText("https://www.linkedin.com/in/christophershumaker/");
-}
-
-function handleGithubClipboard() {
-    navigator.clipboard.writeText("https://github.com/Shumakriss");
-}
-
-function handleSiteClipboard() {
-    navigator.clipboard.writeText("https://www.makerconsulting.llc/maker-consulting");
-}
-
-function handleLinkedInQueryClipboard() {
-    let queryText = document.getElementById("linkedin-query").value;
-    navigator.clipboard.writeText(queryText);
-}

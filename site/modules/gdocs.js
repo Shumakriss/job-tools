@@ -4,6 +4,9 @@
 
 
 class GoogleDoc {
+
+    // TODO: Disallow incremental construction?
+    // TODO: Require valid parameters upfront and immediately fetch the id?
     constructor(gapiWrapper) {
         if (!gapiWrapper) {
             throw new Error("GoogleDoc.constructor - Must provide GoogleApi-like object");

@@ -1,3 +1,4 @@
+import Company from "./company.js";
 
 class JobPosting {
 
@@ -11,7 +12,26 @@ class JobPosting {
         this.responsibilities = "";
         this.hiringManager = "Hiring Manager";
         this.relevantExperience = "";
-        this.company = new Company();
+        this.company;
+    }
+
+    static createFromObject(jsonObject) {
+        if (!jsonObject) {
+            throw new Error("Object to load was undefined");
+        }
+        if (typeof jsonObject != 'object') {
+            throw new Error("Object to load not an object");
+        }
+        try {
+            let temp = new JobPosting();
+
+            // Do the deep copy
+            temp.setTitle(jsonObject.title);
+
+            return temp;
+        } catch(err) {
+            throw new Error("Encountered issue during deep-copy. Error: " + err.message, { cause: err })
+        }
     }
 
     setCompany(company) {
