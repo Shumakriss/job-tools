@@ -54,6 +54,28 @@ class GapiWrapper {
         }
     }
 
+    setGapi(gapi) {
+        this.gapi = gapi;
+    }
+
+    setGoogle(google) {
+        this.google = google;
+    }
+
+    setApiKey(apiKey) {
+        if (this.apiKey != apiKey) {
+            this.apiKey = apiKey;
+            this.init();
+        }
+    }
+
+    setClientId(clientId) {
+        if (this.clientId != clientId) {
+            this.clientId = clientId;
+            this.init();
+        }
+    }
+
     setApiInitCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.apiInitCallback = callback;
@@ -161,6 +183,11 @@ class GapiWrapper {
 
         if (!this.clientId) {
             console.warn("Missing Client Id");
+            return;
+        }
+
+        if (!this.gapi) {
+            console.warn("Gapi is not initialized");
             return;
         }
 

@@ -35,7 +35,7 @@
         <h3>LinkedIn Queries</h3>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
         <br/>
-        <button onclick="handleLinkedInQueryClipboard()" class="clipboard-button">📋 Copy to clipboard</button>
+        <button class="clipboard-button">📋 Copy to clipboard</button>
 
         <h3>Templates</h3>
         <label>Resume Template:</label><br/>
@@ -53,9 +53,9 @@
         <br/>
 
         <h3>Google:</h3>
-        <button id="google-authorize-button" onclick="handleAuthClick()" class="disabled-button button" disabled>Google Sign In</button>
+        <button id="google-authorize-button" class="disabled-button button" disabled>Google Sign In</button>
         <br/>
-        <button id="google-signout-button" onclick="handleSignoutClick()" class="disabled-button button" disabled>Google Sign Out</button>
+        <button id="google-signout-button" class="disabled-button button" disabled>Google Sign Out</button>
         <pre id="content" style="white-space: pre-wrap;"></pre>
 
     </div>
@@ -65,7 +65,7 @@
             <Strong>Job Description:</Strong>
             <textarea id="job-description-textarea" rows="50" class="job-section-text"></textarea>
             <br/>
-            <button onclick="handleExtractSectionsButton()" class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections With ChatGPT</button>
+            <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections With ChatGPT</button>
             <br/>
         </div>
 
@@ -97,7 +97,7 @@
             <textarea id="company-information" rows="10" class="job-section-text"></textarea>
             <br/><br/>
 
-            <button id="create-resume-button" onclick="handleCreateResumeButton()" class="big-button disabled-button button" disabled>Create Resume For This Job</button>
+            <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Resume For This Job</button>
 
         </div>
 
@@ -148,7 +148,7 @@
             <input id="relevant-experience" size="40" />
             <br/><br/>
 
-            <button onclick="handleTailorDocuments()" class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
+            <button class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
         </div>
 
         <div id="scan" hidden="hidden" class="page">
@@ -169,7 +169,7 @@
             <label>Include Company Info</label><br/>
 
             <p>Copy or load resumes in the Tailoring screen to enable scanning.</p>
-            <button onclick="handleScanButton()" id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
+            <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
             <br/>
 
             <h2>Results</h2>
@@ -214,38 +214,38 @@
         <p>Provide templates and company name to view.</p>
 
         <a id="tailored-resume-link" href="" target="_blank"></a>
-        <button onclick="handleDownloadResumeButton()" id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
         <br/><br/>
 
         <a id="tailored-cover-letter-link" href="" target="_blank"></a>
-        <button onclick="handleDownloadCoverLetterButton()" id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
 
         <h3>Profile Links</h3>
         <input value="https://www.linkedin.com/in/christophershumaker/" size=40 disabled>
-        <button onclick="handleLinkedInClipboard()" class="clipboard-button">📋</button>
+        <button class="clipboard-button">📋</button>
         <br/>
 
         <input value="https://github.com/Shumakriss" size=40 disabled>
-        <button onclick="handleGithubClipboard()" class="clipboard-button">📋</button>
+        <button class="clipboard-button">📋</button>
         <br/>
 
         <input value="https://www.makerconsulting.llc/maker-consulting" size=40 disabled>
-        <button onclick="handleSiteClipboard()" class="clipboard-button">📋</button>
+        <button class="clipboard-button">📋</button>
         <br/><br/>
 
         <h3>Track Applications</h3>
         <label>Google Sheet Name:</label>
-        <input id="application-log-sheet-name" className=""></br></br>
+        <input id="application-log-sheet-name"></br></br>
 
         <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a><br/></br>
-        <button id="log-application-button" onclick="handleLogApplicationButton()" class="disabled-button button" disabled>Log Application</button>
+        <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
     </div>
 </div>
 
 
 </body>
-<script async defer src="https://apis.google.com/js/api.js" id="google-api"></script>
-<script async defer src="https://accounts.google.com/gsi/client" id="google-auth"></script>
+<script async src="https://apis.google.com/js/api.js" id="google-api-script"></script>
+<script async src="https://accounts.google.com/gsi/client" id="google-auth-script"></script>
 <script async defer type='module' src='./script.js'></script>
 
 </html>

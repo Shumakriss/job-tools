@@ -29,6 +29,7 @@ export async function redraw(app) {
 
     let extractButton = document.getElementById("extract-sections-button");
     if (app.isExtractReady()) {
+        console.log("extract is ready");
         extractButton.className = "big-button button";
         extractButton.disabled = false;
     } else {
@@ -42,7 +43,7 @@ export async function redraw(app) {
     document.getElementById("job-duties").value = app.jobPosting.responsibilities;
     document.getElementById("company-information").value = app.company.about;
 
-    document.getElementById("application-date").value = app.applicationDate;
+    document.getElementById("application-date").value = app.getDate();
     document.getElementById("company-name-tailor").value = app.company.name;
     document.getElementById("company-name-possessive").value = app.company.possessive;
 

@@ -7,6 +7,10 @@ class ChatGpt {
         this.healthCheckResult;
     }
 
+    setApiKey(apiKey) {
+        this.apiKey = apiKey;
+    }
+
     isReady() {
         return this.apiKey && this.healthCheck();
     }
@@ -32,7 +36,7 @@ class ChatGpt {
             throw new Error("Missing prompt");
         }
 
-        return await askChatGpt(this.apiKey, prompt);
+        return await this.askChatGpt(prompt);
     }
 
     setApiKey(apiKey) {
@@ -46,7 +50,7 @@ class ChatGpt {
     async askChatGpt(prompt) {
         console.log("Calling ChatGpt API");
 
-        headers = {
+        let headers = {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + this.apiKey,
         }

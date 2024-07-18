@@ -2,10 +2,16 @@
     All initialization functions can be found in this file, though they may refer
     to other functions outside this file.
 */
+import GapiWrapper from "./modules/gapiWrapper.js"
 import WebApplication from "./modules/webApplication.js"
 import {redraw} from "./modules/rendering.js"
 
+var gapiWrapper = new GapiWrapper();
+gapiWrapper.setGapi(gapi);
+gapiWrapper.setGoogle(google);
+
 var app = new WebApplication();
+app.setGapiWrapper(gapiWrapper);
 initialize();
 
 async function initialize() {
@@ -39,22 +45,15 @@ function debounce(callback, wait) {
 
 async function addEventListeners() {
 
-    // Global inputs
     document.getElementById('credential-file').addEventListener('change', async function () {
         let fr = new FileReader();
         fr.onload = async function () {
             console.log("Credential file changed");
             let credentials = JSON.parse(fr.result);
 
-            app.chatGpt.apiKey = credentials.chatGpt.apiKey;
-            app.googleApi.apiKey = credentials.google.apiKey;
-            app.googleApi.clientId = credentials.google.clientId;
-            app.jobscan.xsrfToken = credentials.jobscan.xsrfToken;
-            app.jobscan.cookie = credentials.jobscan.cookie;
+            app.setCredentials(credentials);
+            app.setGapiWrapper(gapiWrapper);
             app.save();
-
-            console.debug("Attempting to reload Google Drive Client.");
-            await app.googleApi.init();
         }
 
         fr.readAsText(this.files[0]);
@@ -63,27 +62,27 @@ async function addEventListeners() {
 
     document.getElementById("resume-template-name").addEventListener("change", debounce( (event) => {
         console.debug("Invoked event listener for resume-template-name");
-        app.resume.template.setName(event.target.value);
+        app.setResumeTemplateName(event.target.value);
         app.save();
         redraw(app);
     }, 100));
 
     document.getElementById("cover-letter-template-name").addEventListener("change", debounce( (event) => {
         console.debug("Invoked event listener for cover-letter-template-name");
-        app.coverLetter.template.setName(event.target.value);
+        app.setCoverLetterTemplateName(event.target.value);
         app.save();
         redraw(app);
     }, 100));
 
     document.getElementById('application-log-sheet-name').addEventListener('change', debounce( (event) => {
         console.log("Application log sheet name changed");
-        app.applicationLog.setName(event.target.value);
+        app.setApplicationLogName(event.target.value);
         redraw(app);
     }, 100));
 
     // Job Description page inputs
     document.getElementById('job-description-textarea').addEventListener('keydown', debounce( (event) => {
-        app.job.setDescription(event.target.value);
+        app.setJobDescription(event.target.value);
         app.save();
         redraw(app);
     }, 200));
@@ -98,13 +97,13 @@ async function addEventListeners() {
 
     document.getElementById("job-title").addEventListener("change", debounce( (event) => {
         console.log("Invoked event listener for job-title");
-        app.job.setTitle(event.target.value);
+        app.setJobTitle(event.target.value);
         app.save();
         redraw(app);
     }, 100));
 
     document.getElementById('minimum-requirements').addEventListener('keydown', debounce( (event) => {
-        app.job.minimumRequirements = event.target.value;
+        app.setJobMinimumRequirements = event.target.value;
         redraw(app);
     }, 200));
 
@@ -125,30 +124,39 @@ async function addEventListeners() {
 async function addHandlers() {
     let button;
 
-    button = document.getElementById('nav-button-job-description')
-    button.onclick = () => {
-        handleNavButtonClick(button, 'job-description');
+    document.getElementById('nav-button-job-description').onclick = () => {
+        handleNavButtonClick('nav-button-job-description');
     }
 
-    button = document.getElementById('nav-button-extract')
-    button.onclick = () => {
-        handleNavButtonClick(button, 'extract');
+    document.getElementById('nav-button-extract').onclick = () => {
+        handleNavButtonClick('nav-button-extract');
     }
 
-    button = document.getElementById('nav-button-tailor')
-    button.onclick = () => {
-        handleNavButtonClick(button, 'tailor');
+    document.getElementById('nav-button-tailor').onclick = () => {
+        handleNavButtonClick('nav-button-tailor');
     }
 
-    button = document.getElementById('nav-button-scan')
-    button.onclick = () => {
-        handleNavButtonClick(button, 'scan');
+    document.getElementById('nav-button-scan').onclick = () => {
+        handleNavButtonClick('nav-button-scan');
     }
+
+    document.getElementById('extract-sections-button').onclick = () => {
+        app.extractJobDescriptionSections();
+        app.save();
+        redraw(app);
+    }
+
 }
 
-function handleNavButtonClick(button, pageName) {
-    console.log("Nav button clicked: " + pageName, button);
+function handleNavButtonClick(buttonId) {
+    console.log("Nav button clicked: " + buttonId);
+
+    let button = document.getElementById(buttonId);
     let pages = document.getElementsByClassName("page");
+    let pageName = buttonId.replace("nav-button-", "");
+
+    console.log("PageName: " + pageName);
+
     for (let i = 0; i < pages.length; i++) {
         pages[i].hidden = true;
     }

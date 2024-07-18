@@ -43,18 +43,18 @@ function downloadLink(url) {
     document.body.removeChild(a)
 }
 
-
-function updateExtractWithChatGptButton() {
-    let jobDescription = document.getElementById("job-description-textarea").value;
-    if (jobDescription) {
-        document.getElementById("extract-sections-button").disabled = false;
-        document.getElementById("extract-sections-button").className = "big-button button";
-    } else {
-        document.getElementById("extract-sections-button").disabled = true;
-        document.getElementById("extract-sections-button").className = "big-button disabled-button button";
-    }
-}
-
+//
+//function updateExtractWithChatGptButton() {
+//    let jobDescription = document.getElementById("job-description-textarea").value;
+//    if (jobDescription) {
+//        document.getElementById("extract-sections-button").disabled = false;
+//        document.getElementById("extract-sections-button").className = "big-button button";
+//    } else {
+//        document.getElementById("extract-sections-button").disabled = true;
+//        document.getElementById("extract-sections-button").className = "big-button disabled-button button";
+//    }
+//}
+//
 
 
 function loadCredentialsFromSession() {

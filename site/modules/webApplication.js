@@ -1,25 +1,24 @@
 import GapiWrapper from "./gapiWrapper.js";
 import Company from "./company.js";
+import Extractor from "./extractor.js";
+import JobPosting from "./jobPosting.js";
 import Template from "./template.js";
 import TailoredDocument from "./tailoredDocument.js";
-import JobPosting from "./jobPosting.js";
 
 const LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
 const STORAGE_KEY = "web-application-state";
 
 class WebApplication {
 
-    constructor() {
-        const date = new Date();  // Today
-        const month = date.toLocaleString('default', { month: 'long' });
-
+    constructor(gapiWrapper) {
+        this.gapiWrapper = gapiWrapper;
         this.company = new Company();
-        this.gapiWrapper = new GapiWrapper();
         this.resumeTemplate = new Template();
         this.coverLetterTemplate = new Template();
         this.jobPosting = new JobPosting();
         this.resumeTailoredDocument = new TailoredDocument();
         this.coverLetterTailoredDocument = new TailoredDocument();
+        this.extractor = new Extractor();
     }
 
     setStateChangeCallback(callback) {
@@ -60,6 +59,27 @@ class WebApplication {
         this.jobPosting = jobPosting;
     }
 
+    setJobDescription(jobDescription) {
+        this.jobPosting.setDescription(jobDescription);
+    }
+
+    setResumeTemplateName(name) {
+        this.resumeTemplate.setName(name);
+    }
+
+    setCoverLetterTemplateName(name) {
+        this.coverLetterTemplate.setName(name);
+    }
+
+    setCredentials(credentials) {
+        console.log("Updating app credentials");
+        this.gapiWrapper.setApiKey(credentials.google.apiKey);
+        this.gapiWrapper.setClientId(credentials.google.clientId);
+        this.extractor.setApiKey(credentials.chatGpt.apiKey);
+//            app.jobscan.xsrfToken = credentials.jobscan.xsrfToken;
+//            app.jobscan.cookie = credentials.jobscan.cookie;
+    }
+
     isSignInReady() {
         return this.gapiWrapper && this.gapiWrapper.isSignInReady();
     }
@@ -70,6 +90,10 @@ class WebApplication {
 
     isSignOutReady() {
         return this.gapiWrapper && this.gapiWrapper.isSignOutReady();
+    }
+
+    getDate() {
+        return this.coverLetterTailoredDocument.date;
     }
 
     getResumeTemplateName() {
@@ -97,7 +121,22 @@ class WebApplication {
     }
 
     isExtractReady() {
-        return this.jobPosting.description && this.chatGpt.isReady();
+        if (!this.jobPosting.description) {
+            console.warn("Cannot extract description without description");
+            return false;
+        }
+
+        if (!this.jobPosting) {
+            console.warn("Extract is not ready because jobPosting is null");
+            return false;
+        }
+
+        if (!this.extractor.isReady()) {
+            console.warn("Cannot extract because extractor is not ready");
+            return false;
+        }
+
+        return true;
     }
 
     isScanReady() {
@@ -146,6 +185,11 @@ class WebApplication {
             console.log("No application state found in local storage.");
             return false;
         }
+    }
+
+    extractJobDescriptionSections() {
+        console.log("Extracting job description sections is not yet implemented");
+//        this.extractor.extract
     }
 
     load(webApplicationJson) {
@@ -211,6 +255,14 @@ class WebApplication {
             this.coverLetterTailoredDocument = TailoredDocument.createFromObject(storedApp.coverLetterTailoredDocument);
         } else {
             this.coverLetterTailoredDocument = new TailoredDocument();
+        }
+
+        // Setup Extractor
+        if (storedApp.extractor) {
+            console.log("Discovered extractor, reusing");
+            this.extractor = Extractor.createFromObject(storedApp.extractor);
+        } else {
+            this.extractor = new Extractor();
         }
 
 //        // Third-party

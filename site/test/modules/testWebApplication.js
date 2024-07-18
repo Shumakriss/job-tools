@@ -11,10 +11,6 @@ var testSuite = new TestSuite();
 testSuite.addTest("WebApplication.constructor - Defaults all fields", () => {
     let newApp = new WebApplication();
 
-    if (!newApp.gapiWrapper) {
-        throw new Error("Failed to set Google API Wrapper template");
-    }
-
     if (!newApp.company) {
         throw new Error("Failed to set company");
     }
@@ -186,10 +182,6 @@ testSuite.addTest("WebApplication.load - Defaults all fields when load is not pe
 
     let newApp = new WebApplication();
     newApp.load(serializedApp);
-
-    if (!newApp.gapiWrapper) {
-        throw new Error("Failed to set Google API Wrapper template");
-    }
 
     if (!newApp.company) {
         throw new Error("Failed to set company");

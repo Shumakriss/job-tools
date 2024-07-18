@@ -27,6 +27,7 @@ class JobPosting {
 
             // Do the deep copy
             temp.setTitle(jsonObject.title);
+            temp.setDescription(jsonObject.description);
 
             return temp;
         } catch(err) {
