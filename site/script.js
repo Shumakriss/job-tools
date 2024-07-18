@@ -19,8 +19,8 @@ async function initialize() {
 
     app.tryLoad();
 
-//    app.googleApi.init();
     addEventListeners();
+    addHandlers();
 
     redraw(app);
 }
@@ -121,6 +121,47 @@ async function addEventListeners() {
 /*
 *  Click handlers
 */
+
+async function addHandlers() {
+    let button;
+
+    button = document.getElementById('nav-button-job-description')
+    button.onclick = () => {
+        handleNavButtonClick(button, 'job-description');
+    }
+
+    button = document.getElementById('nav-button-extract')
+    button.onclick = () => {
+        handleNavButtonClick(button, 'extract');
+    }
+
+    button = document.getElementById('nav-button-tailor')
+    button.onclick = () => {
+        handleNavButtonClick(button, 'tailor');
+    }
+
+    button = document.getElementById('nav-button-scan')
+    button.onclick = () => {
+        handleNavButtonClick(button, 'scan');
+    }
+}
+
+function handleNavButtonClick(button, pageName) {
+    console.log("Nav button clicked: " + pageName, button);
+    let pages = document.getElementsByClassName("page");
+    for (let i = 0; i < pages.length; i++) {
+        pages[i].hidden = true;
+    }
+
+    document.getElementById(pageName).hidden = false;
+
+    let activeButtons = document.getElementsByClassName("nav-active");
+    for (let i = 0; i < activeButtons.length; i++) {
+        activeButtons[i].className = "nav-inactive nav-button";
+    }
+
+    button.className = "nav-active nav-button";
+}
 
 async function handleAuthClick() {
     console.debug("Google Sign In / Refresh button clicked");
@@ -232,21 +273,7 @@ async function handleDownloadCoverLetterButton() {
     session.save()
 }
 
-function handleNavButtonClick(button, pageName) {
-    let pages = document.getElementsByClassName("page");
-    for (let i = 0; i < pages.length; i++) {
-        pages[i].hidden = true;
-    }
 
-    document.getElementById(pageName).hidden = false;
-
-    let activeButtons = document.getElementsByClassName("nav-active");
-    for (let i = 0; i < activeButtons.length; i++) {
-        activeButtons[i].className = "nav-inactive nav-button";
-    }
-
-    button.className = "nav-active nav-button";
-}
 
 async function handleExtractSectionsButton() {
     console.log("Extracting sections from job description");

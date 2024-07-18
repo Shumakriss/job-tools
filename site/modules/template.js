@@ -1,7 +1,7 @@
 
 class Template {
     constructor() {
-        this.name;
+        this.name = "";
         this.document;
     }
 

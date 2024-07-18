@@ -97,7 +97,7 @@ class WebApplication {
     }
 
     isExtractReady() {
-        return this.job.description && this.chatGpt.isReady();
+        return this.jobPosting.description && this.chatGpt.isReady();
     }
 
     isScanReady() {
@@ -106,7 +106,7 @@ class WebApplication {
     }
 
     isTailorReady() {
-        return app.googleApi.isReady() && app.coverLetter.template.isReady() ;
+        return this.gapiWrapper.isReady() && this.coverLetter.template.isReady() ;
     }
 
     scan() {
