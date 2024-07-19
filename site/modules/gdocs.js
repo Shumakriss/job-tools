@@ -1,3 +1,5 @@
+import GoogleDrive from "./gdrive.js"
+
 /*
 * This file stores functions built on the Google Docs interaction
 */
@@ -5,17 +7,32 @@
 
 class GoogleDoc {
 
-    // TODO: Disallow incremental construction?
-    // TODO: Require valid parameters upfront and immediately fetch the id?
-    constructor(gapiWrapper) {
-        if (!gapiWrapper) {
-            throw new Error("GoogleDoc.constructor - Must provide GoogleApi-like object");
-        }
-        this.gapiWrapper = gapiWrapper;
-        this.name;
+    constructor() {
+        this.gapiWrapper;
+        this.name = "";
         this.id = null;
         this.exists;
         this.pdfLink = null;
+        this.gDrive;
+    }
+
+    static createFromObject(jsonObject) {
+        if (!jsonObject) {
+            throw new Error("Object to load was undefined");
+        }
+        if (typeof jsonObject != 'object') {
+            throw new Error("Object to load not an object");
+        }
+        try {
+            let temp = new GoogleDoc();
+
+            // Do the deep copy
+            temp.name = jsonObject.name;
+
+            return temp;
+        } catch(err) {
+            throw new Error("Encountered issue during deep-copy. Error: " + err.message, { cause: err })
+        }
     }
 
     getName() {
@@ -25,12 +42,19 @@ class GoogleDoc {
     setName(name) {
         console.debug("Setting GoogleDoc name to: " + name);
         this.name = name;
-        this.id = null;
-        this.pdfLink = null;
+    }
+
+    setGapiWrapper(gapiWrapper) {
+        this.gapiWrapper = gapiWrapper;
+        this.gDrive = new GoogleDrive(gapiWrapper);
     }
 
     async exists() {
+        console.debug("Checking if document exists for name: " + this.name);
         this.id = await this.lookupId();
+        if (!this.id) {
+            console.log("No ID found for document named: " + this.name);
+        }
         if (this.id) {
             return this.id;
         } else {
@@ -39,8 +63,23 @@ class GoogleDoc {
     }
 
     async lookupId() {
+        if (!this.name) {
+            console.log("GoogleDoc.lookupId - Name is not set");
+            return;
+        }
+
+        if (!this.gapiWrapper) {
+            console.log("GoogleDoc.lookupId - GapiWrapper is not set");
+            return;
+        }
+
+        if (!await this.gDrive.isReady()) {
+            console.log("GoogleDoc.lookupId - gDrive is not ready");
+            return;
+        }
+
         console.debug("GoogleDoc.lookupId - Looking up name: " + this.name);
-        let id = await this.gapi.getDocumentIdByName(this.name);
+        let id = await this.gDrive.getDocumentIdByName(this.name);
 
         if (id != null) {
             console.debug("GoogleDoc.lookupId - Found id: " + id + " for name: " + this.name);
@@ -52,10 +91,12 @@ class GoogleDoc {
             this.id = null;
         }
 
+    console.debug("GoogleDoc.lookupId - Looking up returning: " + this.id);
         return this.id;
     }
 
     async getId() {
+        console.log("GoogleDoc.getId - This.name: " + this.name);
         if (this.id != null) {
             console.debug("GoogleDoc id is not null: " + this.id);
             return this.id;

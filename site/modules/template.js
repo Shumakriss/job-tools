@@ -1,8 +1,9 @@
+import GoogleDoc from "./gdocs.js"
 
 class Template {
     constructor() {
         this.name = "";
-        this.document;
+        this.document = new GoogleDoc();
     }
 
     static createFromObject(jsonObject) {
@@ -18,6 +19,12 @@ class Template {
             // Do the deep copy
             temp.setName(jsonObject.name);
 
+            if (jsonObject.document){
+                this.document = GoogleDoc.createFromObject(jsonObject.document);
+            } else {
+                this.document = new GoogleDoc();
+            }
+
             return temp;
         } catch(err) {
             throw new Error("Encountered issue during deep-copy. Error: " + err.message, { cause: err })
@@ -28,19 +35,18 @@ class Template {
         this.document = document;
     }
 
+    setGapiWrapper(gapiWrapper) {
+        this.document.setGapiWrapper(gapiWrapper);
+    }
+
     setName(name) {
         console.debug("Setting template name: " + name);
         this.name = name;
-//        this.document.setName(name);
+        this.document.setName(name);
     }
 
     async isReady() {
-        let id = await this.document.getId();
-        if (id && id != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.name && this.document && await this.document.exists();
     }
 
 

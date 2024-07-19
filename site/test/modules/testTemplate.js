@@ -3,7 +3,7 @@ import {Template} from "../../modules/app.js";
 
 var testSuite = new TestSuite();
 
-testSuite.addTest("Template.constructor", () => {
+testSuite.addTest("Template.constructor", async () => {
     let template = new Template();
 });
 

@@ -6,10 +6,13 @@ class GoogleDrive {
 
     constructor(gapiWrapper) {
         if (!gapiWrapper) {
-            throw new Error("GoogleDrive.constructor() - Must provide GoogleApi-like parameter");
+            throw new Error("GoogleDrive.constructor() - Must provide GapiWrapper");
         }
+        this.gapiWrapper = gapiWrapper;
+    }
 
-        this.gapi = gapiWrapper.gapi;
+    async isReady() {
+        return await this.gapiWrapper.isReady();
     }
 
     static gDocLinkFromId(gDocId) {
@@ -23,7 +26,7 @@ class GoogleDrive {
         console.debug("GoogleDrive.listFiles called");
         let response;
         try {
-            response = await this.gapi.client.drive.files.list({
+            response = await this.gapiWrapper.gapi.client.drive.files.list({
                 'pageSize': 10,
                 'fields': 'files(id, name)',
             });
@@ -56,16 +59,19 @@ class GoogleDrive {
             'Files:\n');
     }
     
-    async getDocumentIdByName(name) {
+    async getDocumentIdByName(gapi, name) {
         console.info("Getting doc ID for name: " + name);
-    
+
+        if (!gapi) {
+            throw new Error("Cannot getDocumentIdByName without Gapi client");
+        }
         if (!name) return null;
     
         let files;
     
         let response;
         try {
-            response = await this.gapi.client.drive.files.list({
+            response = await gapi.client.drive.files.list({
                 'q': 'name = \'' + name + '\'',
                 'pageSize': 5,
                 'fields': 'nextPageToken, files(id, name)',
@@ -100,7 +106,7 @@ class GoogleDrive {
     
         let response;
         try {
-          response = await this.gapi.client.drive.files.copy({
+          response = await this.gapiWrapper.gapi.client.drive.files.copy({
             'fileId': fileId
           });
         } catch (err) {
@@ -112,7 +118,7 @@ class GoogleDrive {
         console.log("Copied " + fileId + " to " + newFileId);
         console.log("Renaming " + newFileId + " to " + fileName);
         try {
-          response = await this.gapi.client.drive.files.update({
+          response = await this.gapiWrapper.gapi.client.drive.files.update({
             'fileId': newFileId,
             'resource': { 'name': fileName, 'capabilities': {'canDownload': true}}
           });
@@ -134,7 +140,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await this.gapi.client.drive.files.export({
+            const response = await this.gapiWrapper.gapi.client.drive.files.export({
                 fileId: fileId,
                 mimeType: 'text/plain'
             });
@@ -154,7 +160,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await this.gapi.client.drive.files.export({
+            const response = await this.gapiWrapper.gapi.client.drive.files.export({
                 fileId: fileId,
                 mimeType: 'application/pdf'
             });
@@ -171,7 +177,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await this.gapi.client.drive.files.create({
+            const response = await this.gapiWrapper.gapi.client.drive.files.create({
                 fileId: fileId,
                 media: {
                     mimeType: "application/pdf",
@@ -191,7 +197,7 @@ class GoogleDrive {
     
         try {
             // This only works on Google Docs formatted files!
-            const response = await this.gapi.client.drive.files.get({
+            const response = await this.gapiWrapper.gapi.client.drive.files.get({
                 fileId: fileId,
                 fields: 'exportLinks'
             });

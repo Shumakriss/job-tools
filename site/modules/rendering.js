@@ -6,19 +6,27 @@ export async function redraw(app) {
     console.log("Redrawing");
 
     // Google sign-in/refresh & sign-out buttons
-    if (app.isSignInReady()) {
+
+    if (await app.isSignInReady()) {
         console.debug("Google Sign In ready");
         enableGoogleSignInButton();
+    } else {
+        console.debug("Google Sign In not ready");
     }
 
-    if (app.isRefreshReady()) {
+
+    if (await app.isRefreshReady()) {
         console.debug("Google Refresh ready");
         enableGoogleRefreshButton();
+    } else {
+        console.debug("Google Refresh not ready");
     }
 
-    if (app.isSignOutReady()) {
+    if (await app.isSignOutReady()) {
         console.debug("Google Sign Out ready");
         enableGoogleSignOutButton();
+    } else {
+        console.debug("Google Sign Out not ready");
     }
 
     document.getElementById("resume-template-name").value = app.getResumeTemplateName();
@@ -28,7 +36,7 @@ export async function redraw(app) {
     document.getElementById("job-description-textarea").value = app.getJobDescription();
 
     let extractButton = document.getElementById("extract-sections-button");
-    if (app.isExtractReady()) {
+    if (await app.isExtractReady()) {
         console.log("extract is ready");
         extractButton.className = "big-button button";
         extractButton.disabled = false;
@@ -37,22 +45,33 @@ export async function redraw(app) {
         extractButton.disabled = true;
     }
 
-    document.getElementById("job-title").value = app.jobPosting.title;
-    document.getElementById("minimum-requirements").value = app.jobPosting.minimumRequirements;
-    document.getElementById("preferred-requirements").value = app.jobPosting.preferredRequirements;
-    document.getElementById("job-duties").value = app.jobPosting.responsibilities;
-    document.getElementById("company-information").value = app.company.about;
-
     document.getElementById("application-date").value = app.getDate();
-    document.getElementById("company-name-tailor").value = app.company.name;
-    document.getElementById("company-name-possessive").value = app.company.possessive;
+    
+    document.getElementById("job-title").value = app.getJobTitle();
+    document.getElementById("minimum-requirements").value = app.getMinimumRequirements();
+    document.getElementById("preferred-requirements").value = app.getPreferredRequirements();
+    document.getElementById("job-duties").value = app.getJobDuties();
+    document.getElementById("company-information").value = app.getCompanyInformation();
 
-    document.getElementById("company-address").value = app.company.address;
-    document.getElementById("hiring-manager-name").value = app.jobPosting.hiringManager;
-    document.getElementById("complete-job-title").value = app.jobPosting.completeTitle;
-    document.getElementById("short-job-title").value = app.jobPosting.shortTitle;
-    document.getElementById("company-values").value = app.company.values;
-    document.getElementById("relevant-experience").value = app.jobPosting.relevantExperience;
+    document.getElementById("company-name-tailor").value = app.getCompanyName();
+    document.getElementById("company-name-possessive").value = app.getCompanyNamePossessive();
+    document.getElementById("company-address").value = app.getCompanyAddress();
+    document.getElementById("hiring-manager-name").value = app.getHiringManager();
+    
+    document.getElementById("complete-job-title").value = app.getCompleteJobTitle();
+    document.getElementById("short-job-title").value = app.getShortJobTitle();
+    document.getElementById("company-values").value = app.getCompanyValues();
+    document.getElementById("relevant-experience").value = app.getRelevantExperience();
+
+    if (app.isCreateResumeReady()) {
+        document.getElementById("create-resume-button").disabled = false;
+        document.getElementById("create-resume-button").className = "big-button button";
+        console.log("Create resume button is ready");
+    } else {
+        console.log("Create resume button is not ready");
+        document.getElementById("create-resume-button").disabled = true;
+        document.getElementById("create-resume-button").className = "big-button disabled-button button";
+    }
 
     if (app.isScanReady()) {
         document.getElementById("scan-button").disabled = false;

@@ -8,7 +8,7 @@ import WebApplication from "../../modules/webApplication.js";
 
 var testSuite = new TestSuite();
 
-testSuite.addTest("WebApplication.constructor - Defaults all fields", () => {
+testSuite.addTest("WebApplication.constructor - Defaults all fields", async () => {
     let newApp = new WebApplication();
 
     if (!newApp.company) {
@@ -36,27 +36,27 @@ testSuite.addTest("WebApplication.constructor - Defaults all fields", () => {
     }
 });
 
-testSuite.addTest("WebApplication.load - Throws when provided no input", () => {
+testSuite.addTest("WebApplication.load - Throws when provided no input", async () => {
     let app = new WebApplication();
-    app.load();
+    await app.load();
 }, true);
 
-testSuite.addTest("WebApplication.load - Throws when provided wrong input type", () => {
+testSuite.addTest("WebApplication.load - Throws when provided wrong input type", async () => {
     let app = new WebApplication();
-    app.load({});
+    await app.load({});
 }, true);
 
-testSuite.addTest("WebApplication.load - Throws when provided unparseable JSON string", () => {
+testSuite.addTest("WebApplication.load - Throws when provided unparseable JSON string", async () => {
     let app = new WebApplication();
-    app.load("asdflkjhasdflh");
+    await app.load("asdflkjhasdflh");
 }, true);
 
-testSuite.addTest("WebApplication.load - Does not throw if JSON is empty", () => {
+testSuite.addTest("WebApplication.load - Does not throw if JSON is empty", async () => {
     let app = new WebApplication();
-    app.load("{ }");
+    await app.load("{ }");
 }, false);
 
-testSuite.addTest("WebApplication.load - Sets company when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets company when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let company = new Company();
     storedApp.setCompany(company);
@@ -72,7 +72,7 @@ testSuite.addTest("WebApplication.load - Sets company when valid object is provi
     }
 });
 
-testSuite.addTest("WebApplication.load - Sets Google API Wrapper template when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets Google API Wrapper template when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let gapiWrapper = new GapiWrapper();
     storedApp.setGapiWrapper(gapiWrapper);
@@ -89,7 +89,7 @@ testSuite.addTest("WebApplication.load - Sets Google API Wrapper template when v
     }
 });
 
-testSuite.addTest("WebApplication.load - Sets resume template when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets resume template when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let resumeTemplate = new Template();
     storedApp.setResumeTemplate(resumeTemplate);
@@ -106,7 +106,7 @@ testSuite.addTest("WebApplication.load - Sets resume template when valid object 
     }
 });
 
-testSuite.addTest("WebApplication.load - Sets cover letter template when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets cover letter template when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let coverLetterTemplate = new Template();
     storedApp.setCoverLetterTemplate(coverLetterTemplate);
@@ -123,7 +123,7 @@ testSuite.addTest("WebApplication.load - Sets cover letter template when valid o
     }
 });
 
-testSuite.addTest("WebApplication.load - Sets job posting when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets job posting when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let jobPosting = new JobPosting();
     storedApp.setJobPosting(jobPosting);
@@ -141,7 +141,7 @@ testSuite.addTest("WebApplication.load - Sets job posting when valid object is p
 });
 
 
-testSuite.addTest("WebApplication.load - Sets resume tailored document when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets resume tailored document when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let resumeTailoredDocument = new TailoredDocument();
     storedApp.setResumeTailoredDocument(resumeTailoredDocument);
@@ -158,7 +158,7 @@ testSuite.addTest("WebApplication.load - Sets resume tailored document when vali
     }
 });
 
-testSuite.addTest("WebApplication.load - Sets cover letter tailored document when valid object is provided", () => {
+testSuite.addTest("WebApplication.load - Sets cover letter tailored document when valid object is provided", async () => {
     let storedApp = new WebApplication();
     let coverLetterTailoredDocument = new TailoredDocument();
     storedApp.setCoverLetterTailoredDocument(coverLetterTailoredDocument);
@@ -176,7 +176,7 @@ testSuite.addTest("WebApplication.load - Sets cover letter tailored document whe
 });
 
 
-testSuite.addTest("WebApplication.load - Defaults all fields when load is not performed", () => {
+testSuite.addTest("WebApplication.load - Defaults all fields when load is not performed", async () => {
     let storedApp = new WebApplication();
     let serializedApp = JSON.stringify(storedApp);
 

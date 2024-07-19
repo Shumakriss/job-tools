@@ -46,7 +46,10 @@ class GapiWrapper {
         }
         try {
             let temp = new GapiWrapper();
+
             // Do the deep copy
+            temp.apiKey = jsonObject.apiKey;
+            temp.clientId = jsonObject.clientId;
 
             return temp;
         } catch(err) {
@@ -54,26 +57,22 @@ class GapiWrapper {
         }
     }
 
-    setGapi(gapi) {
+   async setGapi(gapi) {
         this.gapi = gapi;
     }
 
-    setGoogle(google) {
+    async setGoogle(google) {
         this.google = google;
     }
 
-    setApiKey(apiKey) {
-        if (this.apiKey != apiKey) {
-            this.apiKey = apiKey;
-            this.init();
-        }
+    async setApiKey(apiKey) {
+        console.log("GapiWrapper.setApiKey");
+        this.apiKey = apiKey;
     }
 
-    setClientId(clientId) {
-        if (this.clientId != clientId) {
-            this.clientId = clientId;
-            this.init();
-        }
+    async setClientId(clientId) {
+        console.log("GapiWrapper.setClientId");
+        this.clientId = clientId;
     }
 
     setApiInitCallback(callback) {
@@ -88,6 +87,10 @@ class GapiWrapper {
         }
     }
 
+    setTokenClient(tokenClient) {
+        this.tokenClient = tokenClient;
+    }
+
     setTokenClientCallback(callback) {
         if (callback && typeof callback === 'function' ) {
             this.tokenClientCallback = callback;
@@ -100,47 +103,56 @@ class GapiWrapper {
         }
     }
 
-    isReady() {
-        return this.gapi && this.gapi.client && this.gapi.client.getToken();
+    async isReady() {
+        return this.gapi && this.gapi.client && await this.gapi.client.getToken();
     }
 
-    isSignInReady() {
-        return this.gapi && this.gapi.client && !this.gapi.client.getToken();
+    async isSignInReady() {
+        return this.gapi && this.gapi.client && !await this.gapi.client.getToken();
     }
 
-    isSignOutReady() {
-        return this.gapi && this.gapi.client && this.gapi.client.getToken();
+    async isSignOutReady() {
+        return this.gapi && this.gapi.client && await this.gapi.client.getToken();
     }
 
-    isRefreshReady() {
-        return this.gapi && this.gapi.client && this.consentRequested && this.gapi.client.getToken();
+    async isRefreshReady() {
+        return this.gapi && this.gapi.client && this.consentRequested && await this.gapi.client.getToken();
     }
 
     async onGapiLoaded() {
+        console.debug("GapiWrapper.onGapiLoaded - Invoked");
         if (!this.gapi) {
             throw new Error("Gapi is not loaded");
         }
-        console.debug("onGapiLoaded");
         this.isApiReady = true;
 
         if (this.apiInitCallback) {
+            console.log("API callback invoked");
             this.apiInitCallback();
+        } else {
+            console.log("No Api Init callback to invoke");
         }
 
         await this.gapi.client.init({
             apiKey: this.apiKey,
             discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC, DOCS_DISCOVERY_DOC]
             });
-
+        console.debug("GapiWrapper.onGapiLoaded - gapi.client.init returned: ", this.gapi.client);
         if (this.clientInitCallback){
+            console.log("Client init invoked");
             this.clientInitCallback();
+        } else {
+            console.log("No client init callback to be invoked");
         }
 
         if (this.token) {
-            console.debug("Reusing token");
+            console.debug("GapiWrapper.onGapiLoaded - Found token, will reuse");
             this.gapi.client.setToken(this.token);
             if (this.authenticatedCallback) {
+                console.log("Authenticated callback invoked");
                 this.authenticatedCallback();
+            } else {
+                console.log("No authenticated callback to be invoked");
             }
         }
 
@@ -149,9 +161,10 @@ class GapiWrapper {
             scope: SCOPES,
             callback: '', // defined later
         });
-        console.debug("Done initializing tokenClient");
+        console.debug("GapiWrapper.onGapiLoaded - Done initializing tokenClient");
 
         this.tokenClient.callback = async (resp) => {
+            console.debug("GapiWrapper.onGapiLoaded - tokenClient callback");
             if (resp.error !== undefined) {
                 throw (resp);
             }
@@ -165,40 +178,49 @@ class GapiWrapper {
             this.token = await this.gapi.client.getToken();
 
             if (this.authenticatedCallback) {
+                console.log("Authenticated callback invoked");
                 this.authenticatedCallback();
+            } else {
+                console.log("No authenticated callback to be invoked");
             }
+
             if (this.tokenClientCallback) {
+                console.log("No token client callback invoked");
                 this.tokenClientCallback();
+            } else {
+                console.log("No token client callback to be invoked");
             }
         };
-
     }
 
-    init() {
-        console.debug("Initializing Google Drive Class");
+    async init() {
+        console.debug("GapiWrapper.init - Initializing Google Drive Class");
         if (!this.apiKey) {
-            console.warn("Missing API Key");
+            console.log("GapiWrapper.init - Skipping due to missing API Key");
             return;
         }
 
         if (!this.clientId) {
-            console.warn("Missing Client Id");
+            console.log("GapiWrapper.init - Skipping due to missing Client Id");
             return;
         }
-
         if (!this.gapi) {
+
             console.warn("Gapi is not initialized");
             return;
         }
 
-        this.gapi.load('client',  () => {this.onGapiLoaded()});
+        await this.gapi.load('client',  async () => {
+            console.log("GapiWrapper.init:gapi.load callback");
+            await this.onGapiLoaded();
+            });
     }
 
     async authorize() {
         console.debug("GapiWrapper.authorize - Authorizing Google Drive client");
 
         if (!this.isSignInReady() || !this.isRefreshReady()) {
-            throw new Error("Cannot authorize with uninitialized dependences");
+            throw new Error("Cannot authorize with uninitialized dependencies");
         }
 
         if (this.consentRequested) {
@@ -209,6 +231,8 @@ class GapiWrapper {
             this.tokenClient.requestAccessToken({prompt: 'consent'});
             this.consentRequested = true;
         }
+
+        this.token = this.gapi.client.getToken();
     }
 
     load(apiWrapper) {

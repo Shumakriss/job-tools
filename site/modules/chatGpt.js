@@ -11,8 +11,8 @@ class ChatGpt {
         this.apiKey = apiKey;
     }
 
-    isReady() {
-        return this.apiKey && this.healthCheck();
+    async isReady() {
+        return this.apiKey && await this.healthCheck();
     }
 
     async healthCheck() {
@@ -48,7 +48,7 @@ class ChatGpt {
     }
 
     async askChatGpt(prompt) {
-        console.log("Calling ChatGpt API");
+        console.log("Calling ChatGpt API with prompt: ", prompt);
 
         let headers = {
             "Content-Type": "application/json",
@@ -82,6 +82,7 @@ class ChatGpt {
             }
           } catch (error) {
             console.error(error.message);
+            throw new Error("Failed to make request to chatGpt");
           }
     }
 }

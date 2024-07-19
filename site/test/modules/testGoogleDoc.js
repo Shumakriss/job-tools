@@ -4,16 +4,16 @@ import GoogleDoc from "../../modules/gdocs.js";
 
 var testSuite = new TestSuite();
 
-testSuite.addTest("GoogleDoc.constructor", () => {
+testSuite.addTest("GoogleDoc.constructor", async () => {
     let gDoc = new GoogleDoc();
 });
 
-testSuite.addTest("GoogleDoc.getName", () => {
+testSuite.addTest("GoogleDoc.getName", async () => {
     let gDoc = new GoogleDoc();
     gDoc.getName();
 });
 
-testSuite.addTest("GoogleDoc.setName", () => {
+testSuite.addTest("GoogleDoc.setName", async () => {
     let gDoc = new GoogleDoc();
     gDoc.setName("foo");
 });

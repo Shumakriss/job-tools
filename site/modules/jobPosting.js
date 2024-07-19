@@ -27,7 +27,11 @@ class JobPosting {
 
             // Do the deep copy
             temp.setTitle(jsonObject.title);
-            temp.setDescription(jsonObject.description);
+            temp.description = jsonObject.description;
+            temp.minimumRequirements = jsonObject.minimumRequirements;
+            temp.preferredRequirements = jsonObject.preferredRequirements;
+            temp.jobDuties = jsonObject.jobDuties;
+            temp.companyInformation = jsonObject.companyInformation;
 
             return temp;
         } catch(err) {
@@ -42,6 +46,23 @@ class JobPosting {
     setDescription(description) {
         this.description = description;
     }
+    
+    setMinimumRequirements(minimumRequirements) {
+        this.minimumRequirements = minimumRequirements;
+    }
+
+    setPreferredRequirements(preferredRequirements) {
+        this.preferredRequirements = preferredRequirements;
+    }
+
+    setJobDuties(jobDuties) {
+        this.jobDuties = jobDuties;
+    }
+
+    setCompanyInformation(companyInformation) {
+        this.companyInformation = companyInformation;
+    }
+
 
     setTitle(title) {
         console.debug("JobPosting.setTitle() - " + title);

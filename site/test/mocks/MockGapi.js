@@ -76,4 +76,10 @@ class MockGoogle {
     }
 }
 
-export {MockGapi, MockGoogle};
+class MockTokenClient {
+    requestAccessToken() {
+        return true;
+    }
+}
+
+export {MockGapi, MockGoogle, MockTokenClient};

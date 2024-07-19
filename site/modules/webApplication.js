@@ -10,33 +10,78 @@ const STORAGE_KEY = "web-application-state";
 
 class WebApplication {
 
-    constructor(gapiWrapper) {
-        this.gapiWrapper = gapiWrapper;
+    constructor() {
+        this.gapiWrapper = new GapiWrapper();
         this.company = new Company();
         this.resumeTemplate = new Template();
+        this.resumeTemplate.setGapiWrapper(this.gapiWrapper);
         this.coverLetterTemplate = new Template();
+        this.coverLetterTemplate.setGapiWrapper(this.gapiWrapper);
         this.jobPosting = new JobPosting();
         this.resumeTailoredDocument = new TailoredDocument();
         this.coverLetterTailoredDocument = new TailoredDocument();
         this.extractor = new Extractor();
+        this.gapi;
+        this.google;
     }
 
     setStateChangeCallback(callback) {
         this.stateChangeCallback = callback;
         if (this.gapiWrapper) {
-            this.gapiWrapper.setApiInitCallback = callback;
-            this.gapiWrapper.setClientInitCallback = callback;
-            this.gapiWrapper.setAuthenticatedCallback = callback;
-            this.gapiWrapper.setTokenClientCallback = callback;
+            this.gapiWrapper.setApiInitCallback(callback);
+            this.gapiWrapper.setClientInitCallback(callback);
+            this.gapiWrapper.setAuthenticatedCallback(callback);
+            this.gapiWrapper.setTokenClientCallback(callback);
+            this.gapiWrapper.setTokenClientCallback(this.stateChangeCallback);
         }
     }
 
     setGapiWrapper(gapiWrapper) {
         this.gapiWrapper = gapiWrapper;
+        this.resumeTemplate.setGapiWrapper(gapiWrapper);
+        this.coverLetterTemplate.setGapiWrapper(gapiWrapper);
+    }
+
+    setGapi(gapi) {
+        this.gapi = gapi;
+        this.gapiWrapper.setGapi(gapi);
+    }
+
+    setGoogle(google) {
+        this.google = google;
+        this.gapiWrapper.setGoogle(google);
     }
 
     setCompany(company) {
         this.company = company;
+    }
+
+    setCompanyName(name) {
+        this.company.setName(name);
+    }
+
+    setJobTitle(title) {
+        this.jobPosting.setTitle(title);
+    }
+
+    setMinimumRequirements(minimumRequirements) {
+        this.jobPosting.setMinimumRequirements(minimumRequirements);
+    }
+
+    setPreferredRequirements(preferredRequirements) {
+        this.jobPosting.setPreferredRequirements(preferredRequirements);
+    }
+
+    setJobDuties(jobDuties) {
+        this.jobPosting.setJobDuties(jobDuties);
+    }
+
+    setCompanyInformation(companyInformation) {
+        this.jobPosting.setCompanyInformation(companyInformation);
+    }
+
+    setResumeSuggestions(resumeSuggestions) {
+        this.resumeSuggestions = resumeSuggestions;
     }
 
     setResumeTemplate(template) {
@@ -80,16 +125,16 @@ class WebApplication {
 //            app.jobscan.cookie = credentials.jobscan.cookie;
     }
 
-    isSignInReady() {
-        return this.gapiWrapper && this.gapiWrapper.isSignInReady();
+    async isSignInReady() {
+        return this.gapiWrapper && await this.gapiWrapper.isSignInReady();
     }
 
-    isRefreshReady() {
-        return this.gapiWrapper && this.gapiWrapper.isRefreshReady();
+    async isRefreshReady() {
+        return this.gapiWrapper && await this.gapiWrapper.isRefreshReady();
     }
 
-    isSignOutReady() {
-        return this.gapiWrapper && this.gapiWrapper.isSignOutReady();
+    async isSignOutReady() {
+        return this.gapiWrapper && await this.gapiWrapper.isSignOutReady();
     }
 
     getDate() {
@@ -116,22 +161,71 @@ class WebApplication {
         return this.jobPosting.description;
     }
 
+    getJobTitle() {
+        return this.jobPosting.title;
+    }
+
+    getMinimumRequirements() {
+        return this.jobPosting.minimumRequirements;
+    }
+
+    getPreferredRequirements() {
+        return this.jobPosting.preferredRequirements;
+    }
+
+    getJobDuties() {
+        return this.jobPosting.responsibilities;
+    }
+
+    getCompanyInformation() {
+        return this.company.about;
+    }
+
+    getCompanyNamePossessive() {
+        return this.company.possessive;
+    }
+
+    getCompanyAddress() {
+        return this.company.address;
+    }
+
+    getHiringManager() {
+        return this.jobPosting.hiringManager;
+    }
+
+    getCompleteJobTitle() {
+        return this.jobPosting.completeTitle;
+    }
+
+    getShortJobTitle() {
+        return this.jobPosting.shortTitle;
+    }
+
+    getCompanyValues() {
+        return this.company.values;
+    }
+
+    getRelevantExperience() {
+        return this.jobPosting.relevantExperience;
+    }
+
     copyTemplates() {
 
     }
 
-    isExtractReady() {
-        if (!this.jobPosting.description) {
-            console.warn("Cannot extract description without description");
-            return false;
-        }
+    async isExtractReady() {
 
         if (!this.jobPosting) {
             console.warn("Extract is not ready because jobPosting is null");
             return false;
         }
 
-        if (!this.extractor.isReady()) {
+        if (!this.jobPosting.description) {
+            console.log("Cannot extract description without description");
+            return false;
+        }
+
+        if (!await this.extractor.isReady()) {
             console.warn("Cannot extract because extractor is not ready");
             return false;
         }
@@ -139,13 +233,17 @@ class WebApplication {
         return true;
     }
 
+    async isCreateResumeReady() {
+        // TODO: Check for existing documents!
+        return this.jobPosting.minimumRequirements && await this.resumeTemplate.isReady() && await this.coverLetterTemplate.isReady();
+    }
+
     isScanReady() {
-        console.log("Checking if ready for scan");
         return false;
     }
 
-    isTailorReady() {
-        return this.gapiWrapper.isReady() && this.coverLetter.template.isReady() ;
+    async isTailorReady() {
+        return await this.gapiWrapper.isReady() && await this.coverLetter.template.isReady();
     }
 
     scan() {
@@ -159,10 +257,15 @@ class WebApplication {
         console.log("Cleared application state from storage");
     }
 
-    replacer(key, value)
-    {
+    replacer(key, value) {
         if (key=="tokenClient"){
             console.debug("Skipping serialization of tokenClient");
+            return undefined;
+        } else if (key == "gapi") {
+            console.debug("Skipping serialization of gapi");
+            return undefined;
+        } else if (key == "google") {
+            console.debug("Skipping serialization of google");
             return undefined;
         } else {
             return value;
@@ -175,11 +278,11 @@ class WebApplication {
         console.log("Saved application state to local storage");
     }
     
-    tryLoad() {
+    async tryLoad() {
         let storedState = localStorage.getItem(STORAGE_KEY);
         if (storedState) {
             console.log("Found application state in local storage.");
-            this.load(storedState);
+            await this.load(storedState);
             return true;
         } else {
             console.log("No application state found in local storage.");
@@ -187,12 +290,40 @@ class WebApplication {
         }
     }
 
-    extractJobDescriptionSections() {
-        console.log("Extracting job description sections is not yet implemented");
-//        this.extractor.extract
+    async extractJobDescriptionSections() {
+        console.log("Extracting job description sections");
+
+        let companyName = await this.extractor.extractCompanyName(this.jobPosting.description);
+        console.debug("Extracted companyName: " + companyName);
+        this.setCompanyName(companyName);
+
+        let jobTitle = await this.extractor.extractJobTitle(this.jobPosting.description);
+        console.debug("Extracted jobTitle: " + jobTitle);
+        this.setJobTitle(jobTitle);
+
+        let minimumRequirements = await this.extractor.extractMinimumRequirements(this.jobPosting.description);
+        console.debug("Extracted minimumRequirements: " + minimumRequirements);
+        this.setMinimumRequirements(minimumRequirements);
+
+        let preferredRequirements = await this.extractor.extractPreferredJobRequirements(this.jobPosting.description);
+        console.debug("Extracted preferredRequirements: " + preferredRequirements);
+        this.setPreferredRequirements(preferredRequirements);
+
+        let jobDuties = await this.extractor.extractJobDuties(this.jobPosting.description);
+        console.debug("Extracted jobDuties: " + jobDuties);
+        this.setJobDuties(jobDuties);
+
+        let companyInformation = await this.extractor.extractCompanyInformation(this.jobPosting.description);
+        console.debug("Extracted companyInformation: " + companyInformation);
+        this.setCompanyInformation(companyInformation);
+
     }
 
-    load(webApplicationJson) {
+    async createTailoredDocuments() {
+
+    }
+
+    async load(webApplicationJson) {
         if (!webApplicationJson) {
             throw new Error("Missing web application JSON input string");
         }
@@ -212,7 +343,7 @@ class WebApplication {
             this.company = new Company();
             console.log("Company not found, initialized new company");
         }
-        
+
         // Setup Google API Wrapper
         if (storedApp.gapiWrapper) {
             this.gapiWrapper = GapiWrapper.createFromObject(storedApp.gapiWrapper);
@@ -221,19 +352,33 @@ class WebApplication {
             this.gapiWrapper = new GapiWrapper();
             console.log("GapiWrapper not found, initialized new gapiWrapper");
         }
+        await this.gapiWrapper.setGapi(this.gapi);
+        await this.gapiWrapper.setGoogle(this.google);
+        console.debug("Assigning GapiWrapper callbacks");
+        this.gapiWrapper.setApiInitCallback(this.stateChangeCallback);
+        this.gapiWrapper.setClientInitCallback(this.stateChangeCallback);
+        this.gapiWrapper.setAuthenticatedCallback(this.stateChangeCallback);
+        this.gapiWrapper.setTokenClientCallback(this.stateChangeCallback);
+        this.gapiWrapper.setTokenClientCallback(this.stateChangeCallback);
+
+        await this.gapiWrapper.init();
 
         // Setup Resume Template
         if (storedApp.resumeTemplate) {
             this.resumeTemplate = Template.createFromObject(storedApp.resumeTemplate);
+            this.resumeTemplate.setGapiWrapper(this.gapiWrapper);
         } else {
             this.resumeTemplate = new Template();
+            this.resumeTemplate.setGapiWrapper(this.gapiWrapper);
         }
         
         // Setup Cover Letter Template
         if (storedApp.coverLetterTemplate) {
             this.coverLetterTemplate = Template.createFromObject(storedApp.coverLetterTemplate);
+            this.resumeTemplate.setGapiWrapper(this.gapiWrapper);
         } else {
             this.coverLetterTemplate = new Template();
+            this.coverLetterTemplate.setGapiWrapper(this.gapiWrapper);
         }
         
         // Setup Job Posting

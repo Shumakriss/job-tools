@@ -2,28 +2,24 @@
     All initialization functions can be found in this file, though they may refer
     to other functions outside this file.
 */
-import GapiWrapper from "./modules/gapiWrapper.js"
 import WebApplication from "./modules/webApplication.js"
 import {redraw} from "./modules/rendering.js"
 
-var gapiWrapper = new GapiWrapper();
-gapiWrapper.setGapi(gapi);
-gapiWrapper.setGoogle(google);
-
 var app = new WebApplication();
-app.setGapiWrapper(gapiWrapper);
+app.setGapi(gapi);
+app.setGoogle(google);
 initialize();
 
 async function initialize() {
     console.log("Initializing...");
 
-    app.setStateChangeCallback(() => {
+    app.setStateChangeCallback(async () => {
         console.debug("User callback for app state change");
-        app.save();
+        await app.save();
         redraw(app);
     });
 
-    app.tryLoad();
+    await app.tryLoad();
 
     addEventListeners();
     addHandlers();
@@ -51,13 +47,12 @@ async function addEventListeners() {
             console.log("Credential file changed");
             let credentials = JSON.parse(fr.result);
 
-            app.setCredentials(credentials);
-            app.setGapiWrapper(gapiWrapper);
-            app.save();
+            await app.setCredentials(credentials);
+            await app.save();
+            await redraw(app);
         }
 
-        fr.readAsText(this.files[0]);
-        redraw(app);
+        await fr.readAsText(this.files[0]);
     });
 
     document.getElementById("resume-template-name").addEventListener("change", debounce( (event) => {
@@ -140,9 +135,15 @@ async function addHandlers() {
         handleNavButtonClick('nav-button-scan');
     }
 
-    document.getElementById('extract-sections-button').onclick = () => {
-        app.extractJobDescriptionSections();
-        app.save();
+    document.getElementById('extract-sections-button').onclick = async () => {
+        await app.extractJobDescriptionSections();
+        await app.save();
+        redraw(app);
+    }
+
+    document.getElementById('create-resume-button').onclick = async () => {
+        await app.createTailoredDocuments();
+        await app.save();
         redraw(app);
     }
 
