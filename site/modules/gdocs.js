@@ -41,9 +41,11 @@ class GoogleDoc {
 
     async setName(name) {
         console.debug("Setting GoogleDoc name to: " + name);
-        if (!this.name){
+        if (name != this.name){
             this.name = name;
-            this.id = await this.lookupId();
+            if(this.gapiWrapper) {
+                this.id = await this.lookupId();
+            }
         } else {
             this.name = name;
         }
@@ -75,7 +77,7 @@ class GoogleDoc {
 
         if (!this.gapiWrapper) {
             console.log("GoogleDoc.lookupId - GapiWrapper is not set");
-            return;
+            throw new Error("GoogleDoc.lookupId - GapiWrapper is not set")
         }
 
         if (!await this.gDrive.isReady()) {

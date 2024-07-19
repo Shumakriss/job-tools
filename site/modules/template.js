@@ -17,13 +17,13 @@ class Template {
             let temp = new Template();
 
             // Do the deep copy
-            temp.setName(jsonObject.name);
-
             if (jsonObject.document){
                 this.document = GoogleDoc.createFromObject(jsonObject.document);
             } else {
-                this.document = new GoogleDoc();
+                // Defaulted in constructor
             }
+
+            temp.setName(jsonObject.name);
 
             return temp;
         } catch(err) {
@@ -47,7 +47,7 @@ class Template {
 
     async isReady() {
 //        debugger;
-        return this.name && this.document && await this.document.exists();
+        return this.name && this.document && await this.document.id;
     }
 
 
