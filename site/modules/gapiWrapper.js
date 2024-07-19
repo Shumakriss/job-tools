@@ -51,6 +51,7 @@ class GapiWrapper {
             temp.apiKey = jsonObject.apiKey;
             temp.clientId = jsonObject.clientId;
             temp.consentRequested = jsonObject.consentRequested;
+            temp.token = jsonObject.token;
 
             return temp;
         } catch(err) {
