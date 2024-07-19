@@ -263,13 +263,10 @@ class WebApplication {
 
     replacer(key, value) {
         if (key=="tokenClient"){
-            console.debug("Skipping serialization of tokenClient");
             return undefined;
         } else if (key == "gapi") {
-            console.debug("Skipping serialization of gapi");
             return undefined;
         } else if (key == "google") {
-            console.debug("Skipping serialization of google");
             return undefined;
         } else {
             return value;

@@ -15,7 +15,7 @@ class GoogleDoc {
         this.gDrive;
     }
 
-    static createFromObject(jsonObject) {
+    static async createFromObject(jsonObject) {
         if (!jsonObject) {
             throw new Error("Object to load was undefined");
         }
@@ -27,6 +27,7 @@ class GoogleDoc {
 
             // Do the deep copy
             temp.name = jsonObject.name;
+//            await temp.lookupId();
 
             return temp;
         } catch(err) {
@@ -38,9 +39,14 @@ class GoogleDoc {
         this.name = name;
     }
 
-    setName(name) {
+    async setName(name) {
         console.debug("Setting GoogleDoc name to: " + name);
-        this.name = name;
+        if (!this.name){
+            this.name = name;
+            this.id = await this.lookupId();
+        } else {
+            this.name = name;
+        }
     }
 
     setGapiWrapper(gapiWrapper) {

@@ -70,12 +70,13 @@ testSuite.addTest("GapiWrapper.init", async () => {
     await wrapper.init();
 });
 
-testSuite.addTest("GapiWrapper.authorize - Succeeds when token is valid", async () => {
+testSuite.addTest("GapiWrapper.authorize - Sign In ready", async () => {
     let gapi = new MockGapi();
-    gapi.client.whenGetTokenCalled(() => {return true;});
+    gapi.client.whenGetTokenCalled(() => {return false;});
     let google = new MockGoogle();
     let tokenClient = new MockTokenClient();
     let wrapper = new GapiWrapper();
+
     wrapper.setGapi(gapi);
     wrapper.setGoogle(google);
     wrapper.setTokenClient(tokenClient);
@@ -84,6 +85,21 @@ testSuite.addTest("GapiWrapper.authorize - Succeeds when token is valid", async 
     await wrapper.authorize();
 });
 
+testSuite.addTest("GapiWrapper.authorize - Refresh ready", async () => {
+    let gapi = new MockGapi();
+    gapi.client.whenGetTokenCalled(() => {return true;});
+    let google = new MockGoogle();
+    let tokenClient = new MockTokenClient();
+    let wrapper = new GapiWrapper();
+    wrapper.consentRequested = true;
+
+    wrapper.setGapi(gapi);
+    wrapper.setGoogle(google);
+    wrapper.setTokenClient(tokenClient);
+
+    await wrapper.init();
+    await wrapper.authorize();
+});
 
 testSuite.addTest("GapiWrapper.load - Throws without input", async () => {
     let gapi = new MockGapi();

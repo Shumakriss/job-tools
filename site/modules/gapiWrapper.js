@@ -220,8 +220,8 @@ class GapiWrapper {
 
     async authorize() {
         console.debug("GapiWrapper.authorize - Authorizing Google Drive client");
-//        debugger;
-        if (!await this.isSignInReady() && !await this.isRefreshReady()) {
+
+        if (!(await this.isSignInReady() || await this.isRefreshReady())) {
             throw new Error("Cannot authorize with uninitialized dependencies");
         }
 
