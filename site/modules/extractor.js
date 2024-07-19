@@ -25,6 +25,8 @@ class Extractor {
 
             // Do the deep copy
             temp.setApiKey(jsonObject.chatGpt.apiKey);
+            temp.chatGpt = new ChatGpt();
+            temp.chatGpt.setApiKey(jsonObject.chatGpt.apiKey);
 
             return temp;
         } catch(err) {

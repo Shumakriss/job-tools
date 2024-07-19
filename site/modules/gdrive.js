@@ -59,10 +59,10 @@ class GoogleDrive {
             'Files:\n');
     }
     
-    async getDocumentIdByName(gapi, name) {
-        console.info("Getting doc ID for name: " + name);
+    async getDocumentIdByName(name) {
+        console.info("Getting doc ID for name: ", name);
 
-        if (!gapi) {
+        if (!this.gapiWrapper) {
             throw new Error("Cannot getDocumentIdByName without Gapi client");
         }
         if (!name) return null;
@@ -71,7 +71,7 @@ class GoogleDrive {
     
         let response;
         try {
-            response = await gapi.client.drive.files.list({
+            response = await this.gapiWrapper.gapi.client.drive.files.list({
                 'q': 'name = \'' + name + '\'',
                 'pageSize': 5,
                 'fields': 'nextPageToken, files(id, name)',

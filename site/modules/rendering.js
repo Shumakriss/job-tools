@@ -14,7 +14,6 @@ export async function redraw(app) {
         console.debug("Google Sign In not ready");
     }
 
-
     if (await app.isRefreshReady()) {
         console.debug("Google Refresh ready");
         enableGoogleRefreshButton();

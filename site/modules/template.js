@@ -46,6 +46,7 @@ class Template {
     }
 
     async isReady() {
+//        debugger;
         return this.name && this.document && await this.document.exists();
     }
 

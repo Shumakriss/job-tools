@@ -50,6 +50,7 @@ class GapiWrapper {
             // Do the deep copy
             temp.apiKey = jsonObject.apiKey;
             temp.clientId = jsonObject.clientId;
+            temp.consentRequested = jsonObject.consentRequested;
 
             return temp;
         } catch(err) {
@@ -218,8 +219,8 @@ class GapiWrapper {
 
     async authorize() {
         console.debug("GapiWrapper.authorize - Authorizing Google Drive client");
-
-        if (!this.isSignInReady() || !this.isRefreshReady()) {
+//        debugger;
+        if (!await this.isSignInReady() && !await this.isRefreshReady()) {
             throw new Error("Cannot authorize with uninitialized dependencies");
         }
 
@@ -227,12 +228,12 @@ class GapiWrapper {
             console.debug("Consent to Google previously given, only refreshing");
             this.tokenClient.requestAccessToken({prompt: ''});
         } else {
-            console.debug("Consent to Google previously given, loading consent screen");
+            console.debug("Consent to Google not previously given, loading consent screen");
             this.tokenClient.requestAccessToken({prompt: 'consent'});
             this.consentRequested = true;
         }
 
-        this.token = this.gapi.client.getToken();
+        this.token = await this.gapi.client.getToken();
     }
 
     load(apiWrapper) {

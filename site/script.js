@@ -147,6 +147,12 @@ async function addHandlers() {
         redraw(app);
     }
 
+    document.getElementById('google-authorize-button').onclick = async () => {
+        await app.authorize();
+        await app.save();
+        redraw(app);
+    }
+
 }
 
 function handleNavButtonClick(buttonId) {

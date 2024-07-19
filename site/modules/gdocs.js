@@ -11,7 +11,6 @@ class GoogleDoc {
         this.gapiWrapper;
         this.name = "";
         this.id = null;
-        this.exists;
         this.pdfLink = null;
         this.gDrive;
     }
@@ -83,11 +82,11 @@ class GoogleDoc {
 
         if (id != null) {
             console.debug("GoogleDoc.lookupId - Found id: " + id + " for name: " + this.name);
-            this.exists = true;
+
             this.id = id;
         } else {
             console.debug("GoogleDoc.lookupId - ID not found for name: " + this.name);
-            this.exists = false;
+
             this.id = null;
         }
 

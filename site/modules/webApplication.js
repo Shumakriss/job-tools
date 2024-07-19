@@ -137,6 +137,10 @@ class WebApplication {
         return this.gapiWrapper && await this.gapiWrapper.isSignOutReady();
     }
 
+    async authorize() {
+        return await this.gapiWrapper.authorize();
+    }
+
     getDate() {
         return this.coverLetterTailoredDocument.date;
     }
@@ -243,7 +247,7 @@ class WebApplication {
     }
 
     async isTailorReady() {
-        return await this.gapiWrapper.isReady() && await this.coverLetter.template.isReady();
+        return await this.gapiWrapper.isReady() && await this.coverLetterTemplate.isReady();
     }
 
     scan() {
@@ -320,7 +324,7 @@ class WebApplication {
     }
 
     async createTailoredDocuments() {
-
+        console.warn("WebApplication.createTailoredDocuments - Not yet implemented");
     }
 
     async load(webApplicationJson) {
@@ -375,7 +379,7 @@ class WebApplication {
         // Setup Cover Letter Template
         if (storedApp.coverLetterTemplate) {
             this.coverLetterTemplate = Template.createFromObject(storedApp.coverLetterTemplate);
-            this.resumeTemplate.setGapiWrapper(this.gapiWrapper);
+            this.coverLetterTemplate.setGapiWrapper(this.gapiWrapper);
         } else {
             this.coverLetterTemplate = new Template();
             this.coverLetterTemplate.setGapiWrapper(this.gapiWrapper);
@@ -409,6 +413,7 @@ class WebApplication {
         } else {
             this.extractor = new Extractor();
         }
+
 
 //        // Third-party
 //        this.chatGpt.apiKey = app.chatGpt.apiKey;
