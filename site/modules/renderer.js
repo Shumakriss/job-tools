@@ -198,10 +198,16 @@ class Renderer {
         }
 
         document.getElementById("application-log-sheet-name").value = this.view.googleSheetName;
-        document.getElementById("application-log-sheet-link").href = this.view.googleSheetLink;
-        document.getElementById("application-log-sheet-link").innerHTML = this.view.googleSheetLinkText;
 
-        if (this.view.googleSheetLink && this.view.companyName) {
+        if (this.view.googleSheetName && this.view.googleSheetLink){
+            document.getElementById("application-log-sheet-link").href = this.view.googleSheetLink;
+            document.getElementById("application-log-sheet-link").innerHTML = "Open " + this.view.googleSheetName + " In Sheets";
+        } else {
+            document.getElementById("application-log-sheet-link").href = "";
+            document.getElementById("application-log-sheet-link").innerHTML = "Sheet Not Ready";
+        }
+
+        if (this.view.googleSheetName && this.view.googleSheetLink && this.view.companyName) {
             document.getElementById("log-application-button").disabled = false;
             document.getElementById("log-application-button").className = "button";
         } else {

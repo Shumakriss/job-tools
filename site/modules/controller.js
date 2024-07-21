@@ -141,8 +141,9 @@ class Controller {
         this.view.save();
     }
 
-    setGoogleSheetName(googleSheetName) {
+    async setGoogleSheetName(googleSheetName) {
         this.view.googleSheetName = googleSheetName;
+        await this.updateLogSheetLink();
         this.view.save();
     }
 
@@ -168,13 +169,14 @@ class Controller {
         this.view.resumePdfLink = await this.workspace.getPdfLink(this.view.resumeId);
         this.view.coverLetterPdfLink = await this.workspace.getPdfLink(this.view.coverLetterId);
         this.view.save();
+    }
 
-//        <a id="tailored-resume-link" href="" target="_blank"></a>
-//        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
-//        <br/><br/>
-//
-//        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
-//        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+    async updateLogSheetLink() {
+        let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
+        let sheetSuffix = "/edit";
+        let sheetId = await this.workspace.getDocumentIdByName(this.view.googleSheetName);
+        this.view.googleSheetLink = sheetsPrefix + sheetId + sheetSuffix;
+        this.view.save();
     }
 
     /* Complex functions
