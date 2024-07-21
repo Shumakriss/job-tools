@@ -35,7 +35,7 @@
         <h3>LinkedIn Queries</h3>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
         <br/>
-        <button class="clipboard-button">📋 Copy to clipboard</button>
+        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
 
         <h3>Templates</h3>
         <label>Resume Template:</label><br/>
@@ -221,16 +221,16 @@
         <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
 
         <h3>Profile Links</h3>
-        <input value="https://www.linkedin.com/in/christophershumaker/" size=40 disabled>
-        <button class="clipboard-button">📋</button>
+        <input id="profile-link-linkedin" size=40>
+        <button class="clipboard-button" id="clipboard-linkedin-profile">📋</button>
         <br/>
 
-        <input value="https://github.com/Shumakriss" size=40 disabled>
-        <button class="clipboard-button">📋</button>
+        <input id="profile-link-github" size=40>
+        <button class="clipboard-button" id="clipboard-github-profile">📋</button>
         <br/>
 
-        <input value="https://www.makerconsulting.llc/maker-consulting" size=40 disabled>
-        <button class="clipboard-button">📋</button>
+        <input id="profile-link-website" size=40>
+        <button class="clipboard-button" id="clipboard-website">📋</button>
         <br/><br/>
 
         <h3>Track Applications</h3>

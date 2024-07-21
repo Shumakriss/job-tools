@@ -95,12 +95,45 @@ class WebApp {
             await renderer.render();
         }, 200));
 
+        document.getElementById('preferred-requirements').addEventListener('keydown', debounce( async (event) => {
+            await controller.setPreferredRequirements(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 200));
+
+        document.getElementById('job-duties').addEventListener('keydown', debounce( async (event) => {
+            await controller.setJobDuties(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 200));
+
+        document.getElementById('company-information').addEventListener('keydown', debounce( async (event) => {
+            await controller.setCompanyInfo(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 200));
+
         document.getElementById("company-name-tailor").addEventListener("change", debounce( async (event) => {
             console.log("Invoked event listener for company-name");
             await controller.setCompanyName(event.target.value);
             await view.save();
             await renderer.render();
         }, 100));
+
+        document.getElementById('profile-link-linkedin').addEventListener('change', debounce( async (event) => {
+            await controller.setLinkedInProfileLink(event.target.value);
+            await renderer.render();
+        }, 200));
+
+        document.getElementById('profile-link-github').addEventListener('change', debounce( async (event) => {
+            await controller.setGithubProfileLink(event.target.value);
+            await renderer.render();
+        }, 200));
+
+        document.getElementById('profile-link-website').addEventListener('change', debounce( async (event) => {
+            await controller.setWebsiteProfileLink(event.target.value);
+            await renderer.render();
+        }, 200));
 
         console.debug("Registered listeners");
     }
@@ -155,6 +188,22 @@ class WebApp {
             await this.controller.scanResume();
             await this.view.save();
             await this.renderer.render();
+        }
+
+        document.getElementById('clipboard-linkedin-query').onclick = () => {
+            navigator.clipboard.writeText(this.view.linkedInQuery);
+        }
+
+        document.getElementById('clipboard-linkedin-profile').onclick = () => {
+            navigator.clipboard.writeText(this.view.linkedInProfileLink);
+        }
+
+        document.getElementById('clipboard-github-profile').onclick = () => {
+            navigator.clipboard.writeText(this.view.githubProfileLink);
+        }
+
+        document.getElementById('clipboard-website').onclick = () => {
+            navigator.clipboard.writeText(this.view.websiteProfileLink);
         }
 
         console.debug("Registered handlers");

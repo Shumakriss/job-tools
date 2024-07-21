@@ -111,6 +111,36 @@ class Controller {
         this.view.save();
     }
 
+    setPreferredRequirements(preferredRequirements) {
+        this.view.preferredRequirements = preferredRequirements;
+        this.view.save();
+    }
+
+    setJobDuties(jobDuties) {
+        this.view.jobDuties = jobDuties;
+        this.view.save();
+    }
+
+    setCompanyInfo(companyInfo) {
+        this.view.companyInfo = companyInfo;
+        this.view.save();
+    }
+
+    setLinkedInProfileLink(linkedInProfileLink) {
+        this.view.linkedInProfileLink = linkedInProfileLink;
+        this.view.save();
+    }
+
+    setGithubProfileLink(githubProfileLink) {
+        this.view.githubProfileLink = githubProfileLink;
+        this.view.save();
+    }
+
+    setWebsiteProfileLink(websiteProfileLink) {
+        this.view.websiteProfileLink = websiteProfileLink;
+        this.view.save();
+    }
+
     updateCreateResumeEnabled() {
 //        debugger;
         this.view.createResumeEnabled = Boolean(
@@ -130,6 +160,7 @@ class Controller {
     async googleAuthorize() {
         try {
             await this.workspace.init();
+            await this.workspace.authorize();
             this.view.googleSignInEnabled = false;
             this.view.googleRefreshEnabled = true;
             this.view.googleSignOutEnabled = true;
@@ -141,7 +172,6 @@ class Controller {
         }
 
         this.updateCreateResumeEnabled();
-
         this.view.save();
     }
 
@@ -162,16 +192,48 @@ class Controller {
             await this.workspace.createResumeAndCoverLetter();
             this.updateScanEnabled();
         } catch(err) {
-
+            console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
     }
+
     mergeTemplateFields() {}
 
     async scanResume() {
         console.warn("Scan button Handler not implemented");
-        this.view.resumeContent = await this.workspace.getPlaintextFileContents(this.view.resumeId);
-        let results = await this.jobscan.scan(this.view.resumeContent, this.view.minimumRequirements);
-        debugger;
+        if (!this.view.resumeContent || this.view.resumeContent == ""){
+            this.view.resumeContent = await this.workspace.getPlaintextFileContents(this.view.resumeId);
+            this.view.save();
+        }
+
+        let results;
+        let jobDescription = "";
+
+        jobDescription = jobDescription + this.view.minimumRequirements;
+        results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
+        this.view.minimumRequirementsScore = results['matchRate']['score'];
+        this.view.minimumRequirementsKeywords = results;
+
+        if (this.view.preferredRequirements) {
+            jobDescription = jobDescription + this.view.preferredRequirements;
+            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
+            this.view.preferredRequirementsScore = results['matchRate']['score'];
+            this.view.preferredRequirementsKeywords = results;
+        }
+
+        if (this.view.jobDuties) {
+            jobDescription = jobDescription + this.view.jobDuties;
+            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
+            this.view.jobDutiesScore = results['matchRate']['score'];
+            this.view.jobDutiesKeywords = results;
+        }
+
+        if (this.view.companyInfo) {
+            jobDescription = jobDescription + this.view.companyInfo;
+            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
+            this.view.companyInfoScore = results['matchRate']['score'];
+            this.view.companyInfoKeywords = results;
+        }
+
     }
 
     logApplication() {}

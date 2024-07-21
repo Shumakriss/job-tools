@@ -1,4 +1,7 @@
 const DEFAULT_LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
+const DEFAULT_LINKEDIN_PROFILE = "https://www.linkedin.com/in/christophershumaker/";
+const DEFAULT_GITHUB_PROFILE = "https://github.com/Shumakriss";
+const DEFAULT_WEBSITE = "https://www.makerconsulting.llc/maker-consulting";
 
 const MONTHS = {
     0: "January",
@@ -90,6 +93,10 @@ class View {
 
         this.navigationPage = "job-description";
 
+        this.linkedInProfileLink = DEFAULT_LINKEDIN_PROFILE;
+        this.githubProfileLink = DEFAULT_GITHUB_PROFILE;
+        this.websiteProfileLink = DEFAULT_WEBSITE;
+
         /* Other fields */
         this.jobDescription = "";
         this.companyName = "";
@@ -120,15 +127,11 @@ class View {
         this.jobDutiesScore = "";
         this.companyInfoScore = "";
         
-        this.minimumRequirementsKeywords = "";
-        this.preferredRequirementsKeywords = "";
-        this.jobDutiesKeywords = "";
-        this.companyInfoKeywords = "";
+        this.minimumRequirementsKeywords = "";  // This is current a raw json response payload from jobscan
+        this.preferredRequirementsKeywords = ""; // This is current a raw json response payload from jobscan
+        this.jobDutiesKeywords = ""; // This is current a raw json response payload from jobscan
+        this.companyInfoKeywords = ""; // This is current a raw json response payload from jobscan
 
-        /* Profile links fields */
-        this.linkedInProfileLink = "https://www.linkedin.com/in/christophershumaker/";
-        this.githubProfileLink = "https://github.com/Shumakriss";
-        this.websiteProfileLink = "https://www.makerconsulting.llc/maker-consulting";
     }
 
     /* Save-load */
@@ -137,6 +140,10 @@ class View {
         console.debug("Saving view", this);
 
         localStorage.setItem("googleToken", JSON.stringify(this.googleToken));
+        localStorage.setItem("minimumRequirementsKeywords", JSON.stringify(this.minimumRequirementsKeywords));
+        localStorage.setItem("preferredRequirementsKeywords", JSON.stringify(this.preferredRequirementsKeywords));
+        localStorage.setItem("jobDutiesKeywords", JSON.stringify(this.jobDutiesKeywords));
+        localStorage.setItem("companyInfoKeywords", JSON.stringify(this.companyInfoKeywords));
 
         localStorage.setItem("googleApiKey", this.googleApiKey);
         localStorage.setItem("googleClientId", this.googleClientId);
@@ -195,10 +202,6 @@ class View {
         localStorage.setItem("preferredRequirementsScore", this.preferredRequirementsScore);
         localStorage.setItem("jobDutiesScore", this.jobDutiesScore);
         localStorage.setItem("companyInfoScore", this.companyInfoScore);
-        localStorage.setItem("minimumRequirementsKeywords", this.minimumRequirementsKeywords);
-        localStorage.setItem("preferredRequirementsKeywords", this.preferredRequirementsKeywords);
-        localStorage.setItem("jobDutiesKeywords", this.jobDutiesKeywords);
-        localStorage.setItem("companyInfoKeywords", this.companyInfoKeywords);
         localStorage.setItem("linkedInProfileLink", this.linkedInProfileLink);
         localStorage.setItem("githubProfileLink", this.githubProfileLink);
         localStorage.setItem("websiteProfileLink", this.websiteProfileLink);
@@ -219,6 +222,18 @@ class View {
             console.warn("Google token in storage was not parseable");
         }
 
+        try {
+            this.minimumRequirementsKeywords = JSON.parse(getItemWithDefault("minimumRequirementsKeywords", this.minimumRequirementsKeywords));
+            this.preferredRequirementsKeywords = JSON.parse(getItemWithDefault("preferredRequirementsKeywords", this.preferredRequirementsKeywords));
+            this.jobDutiesKeywords = JSON.parse(getItemWithDefault("jobDutiesKeywords", this.jobDutiesKeywords));
+            this.companyInfoKeywords = JSON.parse(getItemWithDefault("companyInfoKeywords", this.companyInfoKeywords));
+        } catch(err) {
+            console.warn("Scan results were not parseable");
+        }
+
+        this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
+        this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
+        this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
         this.googleApiKey = getItemWithDefault("googleApiKey", this.googleApiKey);
         this.googleClientId = getItemWithDefault("googleClientId", this.googleClientId);
         this.googleConsentRequested = getItemWithDefault("googleConsentRequested", this.googleConsentRequested);
@@ -229,13 +244,11 @@ class View {
         this.resumeTemplateId = getItemWithDefault("resumeTemplateId", this.resumeTemplateId);
         this.coverLetterTemplateName = getItemWithDefault("coverLetterTemplateName", this.coverLetterTemplateName);
         this.coverLetterTemplateId = getItemWithDefault("coverLetterTemplateId", this.coverLetterTemplateId);
-
         this.resumeName = getItemWithDefault("resumeName", this.resumeName);
         this.resumeId = getItemWithDefault("resumeId", this.resumeId);
         this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
         this.coverLetterName = getItemWithDefault("coverLetterName", this.coverLetterName);
         this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
-
         this.tailoredResumeLink = getItemWithDefault("tailoredResumeLink", this.tailoredResumeLink);
         this.tailoredResumeLinkText = getItemWithDefault("tailoredResumeLinkText", this.tailoredResumeLinkText);
         this.tailoredResumeDlButtonEnabled = getItemWithDefault("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
@@ -265,10 +278,6 @@ class View {
         this.preferredRequirementsScore = getItemWithDefault("preferredRequirementsScore", this.preferredRequirementsScore);
         this.jobDutiesScore = getItemWithDefault("jobDutiesScore", this.jobDutiesScore);
         this.companyInfoScore = getItemWithDefault("companyInfoScore", this.companyInfoScore);
-        this.minimumRequirementsKeywords = getItemWithDefault("minimumRequirementsKeywords", this.minimumRequirementsKeywords);
-        this.preferredRequirementsKeywords = getItemWithDefault("preferredRequirementsKeywords", this.preferredRequirementsKeywords);
-        this.jobDutiesKeywords = getItemWithDefault("jobDutiesKeywords", this.jobDutiesKeywords);
-        this.companyInfoKeywords = getItemWithDefault("companyInfoKeywords", this.companyInfoKeywords);
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
         this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
@@ -277,11 +286,9 @@ class View {
         this.googleSignInEnabled = getBooleanItem("googleSignInEnabled", this.googleSignInEnabled);
         this.googleRefreshEnabled = getBooleanItem("googleRefreshEnabled", this.googleRefreshEnabled);
         this.googleSignOutEnabled = getBooleanItem("googleSignOutEnabled", this.googleSignOutEnabled);
-//        debugger;
         this.extractJobSectionsEnabled = getBooleanItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
         this.createResumeEnabled = getBooleanItem("createResumeEnabled", this.createResumeEnabled);
         this.scanEnabled = getBooleanItem("scanEnabled", this.scanEnabled);
-
         this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
         this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);

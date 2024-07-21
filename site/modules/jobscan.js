@@ -46,6 +46,7 @@ class Jobscan {
         this.headers["X-Xsrf-Token"] = this.xsrfToken;
     }
 
+    // TODO: Return a nice object
     async scan(resume, jobDescription) {
         console.log("Calling jobscan API");
 

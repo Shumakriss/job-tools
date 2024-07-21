@@ -1,21 +1,21 @@
-//
-//function formatResults(jobscanResults) {
-//    let ul = document.createElement('ul');
-//
-//    let highValueSkills = jobscanResults['highValueSkills'];
-//    for (let i=0; i<highValueSkills.length; i++){
-//        if (highValueSkills[i].cvCount == 0){
-//            let li = document.createElement("li");
-//            let text = highValueSkills[i]['skill'] + " (" + highValueSkills[i]['type'] + ")"
-//            li.appendChild(document.createTextNode(text));
-//            ul.appendChild(li);
-//        }
-//    }
-//
-//    return ul
-//}
-//
-//
+
+function formatScanResults(jobscanResults) {
+    let ul = document.createElement('ul');
+
+    let highValueSkills = jobscanResults['highValueSkills'];
+    for (let i=0; i< highValueSkills.length; i++){
+        if (highValueSkills[i].cvCount == 0){
+            let li = document.createElement("li");
+            let text = highValueSkills[i]['skill'] + " (" + highValueSkills[i]['type'] + ")"
+            li.appendChild(document.createTextNode(text));
+            ul.appendChild(li);
+        }
+    }
+
+    return ul
+}
+
+
 //function downloadLink(url) {
 //    const a = document.createElement('a')
 //    a.href = url
@@ -32,7 +32,6 @@ class Renderer {
     }
 
     selectNavigationPage(buttonId) {
-//        debugger;
         let button = document.getElementById(buttonId);
         let pages = document.getElementsByClassName("page");
         let pageName = buttonId.replace("nav-button-", "");
@@ -139,7 +138,39 @@ class Renderer {
             document.getElementById("scan-button").disabled = true;
             document.getElementById("scan-button").className = "big-button button disabled-button";
         }
-//    
+
+        document.getElementById("minimum-score").innerHTML = this.view.minimumRequirementsScore;
+        if (this.view.minimumRequirementsKeywords) {
+            let keywordsDiv = document.getElementById("minimum-requirements-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.view.minimumRequirementsKeywords);
+            keywordsDiv.appendChild(ul);
+        }
+
+        document.getElementById("preferred-score").innerHTML = this.view.preferredRequirementsScore;
+        if (this.view.preferredRequirementsKeywords) {
+            let keywordsDiv = document.getElementById("preferred-requirements-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.view.preferredRequirementsKeywords);
+            keywordsDiv.appendChild(ul);
+        }
+
+        document.getElementById("job-duties-score").innerHTML = this.view.jobDutiesScore;
+        if (this.view.jobDutiesKeywords) {
+            let keywordsDiv = document.getElementById("job-duties-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.view.jobDutiesKeywords);
+            keywordsDiv.appendChild(ul);
+        }
+
+        document.getElementById("company-information-score").innerHTML = this.view.companyInfoScore;
+        if (this.view.companyInfoKeywords) {
+            let keywordsDiv = document.getElementById("company-information-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.view.companyInfoKeywords);
+            keywordsDiv.appendChild(ul);
+        }
+
 //        if (this.view.isTailorReady()) {
 //            document.getElementById("tailor-documents-button").disabled = false;
 //            document.getElementById("tailor-documents-button").className = "big-button button";
@@ -148,14 +179,14 @@ class Renderer {
 //            document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
 //        }
     
-        // TODO: linkedin link
-        // TODO: github link
-        // TODO: site link
+        document.getElementById("profile-link-linkedin").value = this.view.linkedInProfileLink;
+        document.getElementById("profile-link-github").value = this.view.githubProfileLink;
+        document.getElementById("profile-link-website").value = this.view.websiteProfileLink;
     
         // TODO: sheet name
         // TODO: sheet link
         // TODO: log app button
-    //
+
     //    // resume link
     //    // TODO: Open the google doc, not the PDF link
     //    let docLink = this.view.getResumeDocLink();
