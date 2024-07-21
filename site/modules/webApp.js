@@ -10,6 +10,15 @@ function debounce(callback, wait) {
     };
 }
 
+function downloadLink(url) {
+    const a = document.createElement('a')
+    a.href = url
+    a.download = url.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
+
 class WebApp {
 
     constructor(gapi, google) {
@@ -204,6 +213,14 @@ class WebApp {
 
         document.getElementById('clipboard-website').onclick = () => {
             navigator.clipboard.writeText(this.view.websiteProfileLink);
+        }
+
+        document.getElementById('resume-download-button').onclick = () => {
+            downloadLink(this.view.resumePdfLink);
+        }
+
+        document.getElementById('cover-letter-download-button').onclick = () => {
+            downloadLink(this.view.coverLetterPdfLink);
         }
 
         console.debug("Registered handlers");

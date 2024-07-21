@@ -139,6 +139,7 @@ class GoogleDoc {
         }
     }
 
+
     /*
     * Based on https://developers.google.com/docs/api/how-tos/merge
     */

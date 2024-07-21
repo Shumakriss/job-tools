@@ -77,11 +77,11 @@ class View {
         this.coverLetterName = "";
         this.coverLetterId = null;
 
-        this.tailoredResumeLink = null;
+        this.tailoredResumeLink = "";
         this.tailoredResumeLinkText = "Tailored Resume Not Ready";
         this.tailoredResumeDlButtonEnabled = false;
         
-        this.tailoredCoverLetterLink = null;
+        this.tailoredCoverLetterLink = "";
         this.tailoredCoverLetterLinkText = "Tailored CoverLetter Not Ready";
         this.tailoredCoverLetterDlButtonEnabled = false;
         
@@ -132,10 +132,12 @@ class View {
         this.jobDutiesKeywords = ""; // This is current a raw json response payload from jobscan
         this.companyInfoKeywords = ""; // This is current a raw json response payload from jobscan
 
+        this.resumePdfLink = "";
+        this.coverLetterPdfLink = "";
+
     }
 
     /* Save-load */
-
     save() {
         console.debug("Saving view", this);
 
@@ -205,7 +207,10 @@ class View {
         localStorage.setItem("linkedInProfileLink", this.linkedInProfileLink);
         localStorage.setItem("githubProfileLink", this.githubProfileLink);
         localStorage.setItem("websiteProfileLink", this.websiteProfileLink);
-        
+
+        localStorage.setItem("resumePdfLink", this.resumePdfLink);
+        localStorage.setItem("coverLetterPdfLink", this.coverLetterPdfLink);
+
         console.debug("Saved application state to local storage");
     }
 
@@ -292,10 +297,13 @@ class View {
         this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
         this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
-        
+
+        this.resumePdfLink = getItemWithDefault("resumePdfLink", this.resumePdfLink);
+        this.coverLetterPdfLink = getItemWithDefault("coverLetterPdfLink", this.coverLetterPdfLink);
+
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");
-        
+
         console.debug("Loaded view: ", this);
     }
 

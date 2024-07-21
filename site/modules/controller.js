@@ -154,6 +154,25 @@ class Controller {
         this.view.scanEnabled = Boolean(this.view.resumeId && this.view.minimumRequirements);
     }
 
+    async updateDocLinks() {
+        let gdocPrefix = "https://docs.google.com/document/d/";
+        let gdocSuffix = "/edit";
+        this.view.tailoredResumeLink = gdocPrefix + this.view.resumeId + gdocSuffix;
+        this.view.tailoredCoverLetterLink = gdocPrefix + this.view.coverLetterId + gdocSuffix;
+        this.view.tailoredResumeDlButtonEnabled = true;
+        this.view.tailoredCoverLetterDlButtonEnabled = true;
+        this.view.resumePdfLink = await this.workspace.getPdfLink(this.view.resumeId);
+        this.view.coverLetterPdfLink = await this.workspace.getPdfLink(this.view.coverLetterId);
+        this.view.save();
+
+//        <a id="tailored-resume-link" href="" target="_blank"></a>
+//        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+//        <br/><br/>
+//
+//        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
+//        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+    }
+
     /* Complex functions
         - Handles
     */
@@ -175,7 +194,6 @@ class Controller {
         this.view.save();
     }
 
-    googleRefresh() {}
     googleSignOut() {}
 
     extractJobSections() {
@@ -190,7 +208,8 @@ class Controller {
 
         try {
             await this.workspace.createResumeAndCoverLetter();
-            this.updateScanEnabled();
+            await this.updateScanEnabled();
+            await this.updateDocLinks();
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
@@ -200,10 +219,8 @@ class Controller {
 
     async scanResume() {
         console.warn("Scan button Handler not implemented");
-        if (!this.view.resumeContent || this.view.resumeContent == ""){
-            this.view.resumeContent = await this.workspace.getPlaintextFileContents(this.view.resumeId);
-            this.view.save();
-        }
+
+        this.view.resumeContent = await this.workspace.getPlaintextFileContents(this.view.resumeId);
 
         let results;
         let jobDescription = "";
@@ -237,6 +254,7 @@ class Controller {
     }
 
     logApplication() {}
+
 }
 
 export default Controller;

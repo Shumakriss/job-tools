@@ -15,16 +15,6 @@ function formatScanResults(jobscanResults) {
     return ul
 }
 
-
-//function downloadLink(url) {
-//    const a = document.createElement('a')
-//    a.href = url
-//    a.download = url.split('/').pop()
-//    document.body.appendChild(a)
-//    a.click()
-//    document.body.removeChild(a)
-//}
-
 // TODO: Rename to View
 class Renderer {
     constructor(view) {
@@ -170,6 +160,43 @@ class Renderer {
             let ul = formatScanResults(this.view.companyInfoKeywords);
             keywordsDiv.appendChild(ul);
         }
+    
+        document.getElementById("profile-link-linkedin").value = this.view.linkedInProfileLink;
+        document.getElementById("profile-link-github").value = this.view.githubProfileLink;
+        document.getElementById("profile-link-website").value = this.view.websiteProfileLink;
+
+        if (this.view.tailoredResumeLink) {
+            document.getElementById('tailored-resume-link').innerHTML = this.view.resumeName;
+            document.getElementById('tailored-resume-link').href = this.view.tailoredResumeLink;
+        } else {
+            document.getElementById('tailored-resume-link').innerHTML = "Tailored Resume Not Ready";
+            document.getElementById('tailored-resume-link').href = "";
+        }
+
+        if (this.view.tailoredCoverLetterLink) {
+            document.getElementById('tailored-cover-letter-link').innerHTML = this.view.coverLetterName;
+            document.getElementById('tailored-cover-letter-link').href = this.view.tailoredCoverLetterLink;
+        } else {
+            document.getElementById('tailored-cover-letter-link').innerHTML = "Tailored Cover Letter Not Ready";
+            document.getElementById('tailored-cover-letter-link').href = "";
+        }
+
+        if (this.view.resumePdfLink) {
+            document.getElementById('resume-download-button').disabled = false;
+            document.getElementById('resume-download-button').className = "button fa fa-download";
+        } else {
+            document.getElementById('resume-download-button').disabled = true;
+            document.getElementById('resume-download-button').className = "disabled-button button fa fa-download";
+        }
+
+        if (this.view.coverLetterPdfLink) {
+            document.getElementById('cover-letter-download-button').disabled = false;
+            document.getElementById('cover-letter-download-button').className = "button fa fa-download";
+        } else {
+            document.getElementById('cover-letter-download-button').disabled = true;
+            document.getElementById('cover-letter-download-button').className = "disabled-button button fa fa-download";
+        }
+
 
 //        if (this.view.isTailorReady()) {
 //            document.getElementById("tailor-documents-button").disabled = false;
@@ -178,43 +205,10 @@ class Renderer {
 //            document.getElementById("tailor-documents-button").disabled = true;
 //            document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
 //        }
-    
-        document.getElementById("profile-link-linkedin").value = this.view.linkedInProfileLink;
-        document.getElementById("profile-link-github").value = this.view.githubProfileLink;
-        document.getElementById("profile-link-website").value = this.view.websiteProfileLink;
-    
+
         // TODO: sheet name
         // TODO: sheet link
         // TODO: log app button
-
-    //    // resume link
-    //    // TODO: Open the google doc, not the PDF link
-    //    let docLink = this.view.getResumeDocLink();
-    //    if (docLink) {
-    //        console.log("Updating pdf link: " + docLink);
-    //        document.getElementById('tailored-resume-link').innerHTML = this.view.getResumeName();
-    //        document.getElementById('tailored-resume-link').href = docLink;
-    //    } else {
-    //        console.log("Cannot update pdf link: " + pdfLink);
-    //        document.getElementById('tailored-resume-link').innerHTML = "Not ready";
-    //        document.getElementById('tailored-resume-link').href = "";
-    //    }
-    //
-    //    // cover letter link
-    //    // TODO: Open the google doc, not the PDF link
-    //    pdfLink = await this.view.coverLetter.getPdfLink();
-    //    if (pdfLink) {
-    //        console.log("Updating cover letter pdf link: " + pdfLink);
-    //        document.getElementById('tailored-cover-letter-link').innerHTML = this.view.coverLetter.getName();
-    //        document.getElementById('tailored-cover-letter-link').href = pdfLink;
-    //    } else {
-    //        console.log("Cannot update cover letter pdf link: " + pdfLink);
-    //        document.getElementById('tailored-cover-letter-link').innerHTML = "Not ready";
-    //        document.getElementById('tailored-cover-letter-link').href = "";
-    //    }
-    
-        // TODO: pdf button 1
-        // TODO: pdf button 2
     }
 
 }

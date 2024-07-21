@@ -286,6 +286,21 @@ class GoogleWorkspace {
         }
     }
 
+    async getPdfLink(fileId) {
+        try {
+            // This only works on Google Docs formatted files!
+            const response = await gapi.client.drive.files.get({
+                fileId: fileId,
+                fields: 'exportLinks'
+            });
+            let file = JSON.parse(response.body);
+            return file.exportLinks['application/pdf'];
+        } catch (err) {
+            console.error("Encountered error retrieving PDF link: " + err.message);
+            return "";
+        }
+    }
+
     // TODO: Move to controller?
     async createResume() {
         this.view.resumeName = this.view.companyName + " " + this.view.resumeTemplateName;
@@ -310,8 +325,8 @@ class GoogleWorkspace {
     }
 
     async createResumeAndCoverLetter() {
-        this.createResume();
-        this.createCoverLetter();
+        await this.createResume();
+        await this.createCoverLetter();
     }
 }
 
