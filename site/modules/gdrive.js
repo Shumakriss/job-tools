@@ -2,6 +2,7 @@
 * This file stores functions built on the Google Drive interaction
 */
 
+// TODO: Move into GoogleWorkspace
 class GoogleDrive {
 
     constructor(gapiWrapper) {

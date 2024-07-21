@@ -46,7 +46,7 @@ class Jobscan {
         this.headers["X-Xsrf-Token"] = this.xsrfToken;
     }
 
-    async jobscan(resume, jobDescription) {
+    async scan(resume, jobDescription) {
         console.log("Calling jobscan API");
 
         this.payload["cv"] = resume;
@@ -55,8 +55,8 @@ class Jobscan {
         try {
             const request = new Request(JOBSCAN_URL, {
                 method: "POST",
-                headers: headers,
-                body: JSON.stringify(payload),
+                headers: this.headers,
+                body: JSON.stringify(this.payload),
             });
 
             const response = await fetch(request);

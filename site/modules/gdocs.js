@@ -4,7 +4,7 @@ import GoogleDrive from "./gdrive.js"
 * This file stores functions built on the Google Docs interaction
 */
 
-
+// TODO: Move into GoogleWorkspace
 class GoogleDoc {
 
     constructor() {
