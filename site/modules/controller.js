@@ -141,8 +141,12 @@ class Controller {
         this.view.save();
     }
 
+    setGoogleSheetName(googleSheetName) {
+        this.view.googleSheetName = googleSheetName;
+        this.view.save();
+    }
+
     updateCreateResumeEnabled() {
-//        debugger;
         this.view.createResumeEnabled = Boolean(
             this.view.googleRefreshEnabled &&
             this.view.companyName &&

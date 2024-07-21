@@ -70,12 +70,6 @@ class WebApp {
             await renderer.render();
         }, 100));
 
-        document.getElementById('application-log-sheet-name').addEventListener('change', debounce( async (event) => {
-            console.log("Application log sheet name changed");
-            await controller.setApplicationLogName(event.target.value);
-            await renderer.render();
-        }, 100));
-
         // Job Description page inputs
         document.getElementById('job-description-textarea').addEventListener('keydown', debounce( async (event) => {
             await controller.setJobDescription(event.target.value);
@@ -131,16 +125,25 @@ class WebApp {
 
         document.getElementById('profile-link-linkedin').addEventListener('change', debounce( async (event) => {
             await controller.setLinkedInProfileLink(event.target.value);
+            await view.save();
             await renderer.render();
         }, 200));
 
         document.getElementById('profile-link-github').addEventListener('change', debounce( async (event) => {
             await controller.setGithubProfileLink(event.target.value);
+            await view.save();
             await renderer.render();
         }, 200));
 
         document.getElementById('profile-link-website').addEventListener('change', debounce( async (event) => {
             await controller.setWebsiteProfileLink(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 200));
+
+        document.getElementById('application-log-sheet-name').addEventListener('change', debounce( async (event) => {
+            await controller.setGoogleSheetName(event.target.value);
+            await view.save();
             await renderer.render();
         }, 200));
 

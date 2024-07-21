@@ -86,7 +86,7 @@ class View {
         this.tailoredCoverLetterDlButtonEnabled = false;
         
         this.googleSheetName = "";
-        this.googleSheetLink = null;
+        this.googleSheetLink = "";
         this.googleSheetLinkText = "Log Sheet Not Ready";
         this.logApplicationButtonText = "Log Application";
         this.logApplicationEnabled = false;

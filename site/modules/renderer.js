@@ -197,18 +197,18 @@ class Renderer {
             document.getElementById('cover-letter-download-button').className = "disabled-button button fa fa-download";
         }
 
+        document.getElementById("application-log-sheet-name").value = this.view.googleSheetName;
+        document.getElementById("application-log-sheet-link").href = this.view.googleSheetLink;
+        document.getElementById("application-log-sheet-link").innerHTML = this.view.googleSheetLinkText;
 
-//        if (this.view.isTailorReady()) {
-//            document.getElementById("tailor-documents-button").disabled = false;
-//            document.getElementById("tailor-documents-button").className = "big-button button";
-//        } else {
-//            document.getElementById("tailor-documents-button").disabled = true;
-//            document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
-//        }
+        if (this.view.googleSheetLink && this.view.companyName) {
+            document.getElementById("log-application-button").disabled = false;
+            document.getElementById("log-application-button").className = "button";
+        } else {
+            document.getElementById("log-application-button").disabled = true;
+            document.getElementById("log-application-button").className = "button disabled-button";
+        }
 
-        // TODO: sheet name
-        // TODO: sheet link
-        // TODO: log app button
     }
 
 }
