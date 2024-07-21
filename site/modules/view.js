@@ -114,7 +114,7 @@ class View {
         this.hiringManager = "Hiring Manager";
         this.completeJobTitle = "";
         this.shortJobTitle = "";
-        this.values = "";
+        this.companyValues = "";
         this.relevantExperience = "";
 
         /* Scan results fields */
@@ -194,7 +194,7 @@ class View {
         localStorage.setItem("hiringManager", this.hiringManager);
         localStorage.setItem("completeJobTitle", this.completeJobTitle);
         localStorage.setItem("shortJobTitle", this.shortJobTitle);
-        localStorage.setItem("values", this.values);
+        localStorage.setItem("companyValues", this.companyValues);
         localStorage.setItem("relevantExperience", this.relevantExperience);
         localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
         localStorage.setItem("includeJobDuties", this.includeJobDuties);
@@ -277,7 +277,7 @@ class View {
         this.hiringManager = getItemWithDefault("hiringManager", this.hiringManager);
         this.completeJobTitle = getItemWithDefault("completeJobTitle", this.completeJobTitle);
         this.shortJobTitle = getItemWithDefault("shortJobTitle", this.shortJobTitle);
-        this.values = getItemWithDefault("values", this.values);
+        this.companyValues = getItemWithDefault("companyValues", this.companyValues);
         this.relevantExperience = getItemWithDefault("relevantExperience", this.relevantExperience);
         this.minimumRequirementsScore = getItemWithDefault("minimumRequirementsScore", this.minimumRequirementsScore);
         this.preferredRequirementsScore = getItemWithDefault("preferredRequirementsScore", this.preferredRequirementsScore);

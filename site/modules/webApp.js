@@ -147,6 +147,39 @@ class WebApp {
             await renderer.render();
         }, 200));
 
+        document.getElementById('include-preferred-checkbox').addEventListener('change', debounce( async (event) => {
+            this.view.includePreferredRequirements = event.target.checked;
+            await view.save();
+        }, 200));
+
+        document.getElementById('include-job-duties-checkbox').addEventListener('change', debounce( async (event) => {
+            this.view.includeJobDuties = event.target.checked;
+            await view.save();
+        }, 200));
+
+        document.getElementById('include-company-information-checkbox').addEventListener('change', debounce( async (event) => {
+            this.view.includeCompanyInfo = event.target.checked;
+            await view.save();
+        }, 200));
+
+        document.getElementById("company-address").addEventListener("change", debounce( async (event) => {
+            await controller.setCompanyAddress(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 100));
+
+        document.getElementById("company-values").addEventListener("change", debounce( async (event) => {
+            await controller.setCompanyValues(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 100));
+
+        document.getElementById("relevant-experience").addEventListener("change", debounce( async (event) => {
+            await controller.setRelevantExperience(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 100));
+
         console.debug("Registered listeners");
     }
 
@@ -185,7 +218,6 @@ class WebApp {
 
         document.getElementById('extract-sections-button').onclick = async () => {
             await this.controller.extractJobSections();
-            await this.controller.setNavigationPage("extract");
             await this.view.save();
             await this.renderer.render();
         }
@@ -198,6 +230,12 @@ class WebApp {
 
         document.getElementById('scan-button').onclick = async () => {
             await this.controller.scanResume();
+            await this.view.save();
+            await this.renderer.render();
+        }
+
+        document.getElementById('log-application-button').onclick = async () => {
+            await this.controller.logApplication();
             await this.view.save();
             await this.renderer.render();
         }

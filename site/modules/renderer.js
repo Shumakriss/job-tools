@@ -36,6 +36,8 @@ class Renderer {
         for (let i = 0; i < activeButtons.length; i++) {
             activeButtons[i].className = "nav-inactive nav-button";
         }
+
+        document.getElementById("nav-button-" + pageName).className = "nav-active nav-button";
     }
 
     disableGoogleSignInButton() {
@@ -95,20 +97,18 @@ class Renderer {
         }
     
         document.getElementById("application-date").value = this.view.date;
-
         document.getElementById("job-title").value = this.view.jobTitle;
         document.getElementById("minimum-requirements").value = this.view.minimumRequirements;
         document.getElementById("preferred-requirements").value = this.view.preferredRequirements;
         document.getElementById("job-duties").value = this.view.jobDuties;
         document.getElementById("company-information").value = this.view.companyInfo;
-
         document.getElementById("company-name-tailor").value = this.view.companyName;
         document.getElementById("company-name-possessive").value = this.view.companyNamePossessive;
         document.getElementById("company-address").value = this.view.companyAddress;
         document.getElementById("hiring-manager-name").value = this.view.hiringManager;
         document.getElementById("complete-job-title").value = this.view.completeJobTitle;
         document.getElementById("short-job-title").value = this.view.shortJobTitle;
-        document.getElementById("company-values").value = this.view.values;
+        document.getElementById("company-values").value = this.view.companyValues;
         document.getElementById("relevant-experience").value = this.view.relevantExperience;
 
         if (this.view.createResumeEnabled) {

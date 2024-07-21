@@ -105,6 +105,18 @@ class Controller {
         this.view.shortJobTitle = jobTitle;
         this.view.save();
     }
+
+    setCompanyAddress(companyAddress) {
+        this.view.companyAddress = companyAddress;
+    }
+
+    setCompanyValues(companyValues) {
+        this.view.companyValues = companyValues;
+    }
+
+    setRelevantExperience(relevantExperience) {
+        this.view.relevantExperience = relevantExperience;
+    }
     
     setMinimumRequirements(minimumRequirements) {
         this.view.minimumRequirements = minimumRequirements;
@@ -236,21 +248,21 @@ class Controller {
         this.view.minimumRequirementsScore = results['matchRate']['score'];
         this.view.minimumRequirementsKeywords = results;
 
-        if (this.view.preferredRequirements) {
+        if (this.view.includePreferredRequirements && this.view.preferredRequirements) {
             jobDescription = jobDescription + this.view.preferredRequirements;
             results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
             this.view.preferredRequirementsScore = results['matchRate']['score'];
             this.view.preferredRequirementsKeywords = results;
         }
 
-        if (this.view.jobDuties) {
+        if (this.view.includeJobDuties && this.view.jobDuties) {
             jobDescription = jobDescription + this.view.jobDuties;
             results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
             this.view.jobDutiesScore = results['matchRate']['score'];
             this.view.jobDutiesKeywords = results;
         }
 
-        if (this.view.companyInfo) {
+        if (this.view.includeCompanyInfo && this.view.companyInfo) {
             jobDescription = jobDescription + this.view.companyInfo;
             results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
             this.view.companyInfoScore = results['matchRate']['score'];
@@ -259,7 +271,9 @@ class Controller {
 
     }
 
-    logApplication() {}
+    logApplication() {
+        console.warn("Log application is not yet implemented");
+    }
 
 }
 
