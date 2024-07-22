@@ -60,11 +60,11 @@ class ChatGpt {
             throw new Error("Cannot extract job description section without job description");
         }
         let prompt = sectionPrompt + "\n\nJob Description:\n\n"+ jobDescriptionText;
-//        console.debug("Issuing prompt to chatGpt: " , prompt);
+
         console.debug("Issued prompt to ChatGpt");
         let response = await this.ask(prompt);
         console.debug("ChatGpt replied");
-//        console.debug("Received response from chatGpt: ", response);
+
         if (response.toLowerCase().includes("no section found")) {
             console.warn("Chat GPT was unable to find an appropriate response");
             response = "";
