@@ -350,6 +350,19 @@ class GoogleWorkspace {
         await this.gapi.client.docs.documents.batchUpdate(requestPayload, errorHandler);
     }
 
+    async appendApplicationLog() {
+        let values = [[ this.view.companyName, "Applied", this.view.date ]];
+        let rowData = {
+                spreadsheetId: this.view.googleSheetId,
+                range: "Sheet1!A1:D1",
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: values,
+                },
+            }
+        await this.gapi.client.sheets.spreadsheets.values.append(rowData);
+    }
+
     // TODO: Move to controller?
     async createResume() {
         this.view.resumeTemplateId = await this.getDocumentIdByName(this.view.resumeTemplateName);

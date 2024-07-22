@@ -88,6 +88,7 @@ class View {
         this.googleSheetName = "";
         this.googleSheetLink = "";
         this.googleSheetLinkText = "Log Sheet Not Ready";
+        this.googleSheetId = null;
         this.logApplicationButtonText = "Log Application";
         this.logApplicationEnabled = false;
 
@@ -176,6 +177,7 @@ class View {
         localStorage.setItem("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
         localStorage.setItem("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         localStorage.setItem("googleSheetName", this.googleSheetName);
+        localStorage.setItem("googleSheetId", this.googleSheetId);
         localStorage.setItem("googleSheetLink", this.googleSheetLink);
         localStorage.setItem("googleSheetLinkText", this.googleSheetLinkText);
         localStorage.setItem("logApplicationButtonText", this.logApplicationButtonText);
@@ -264,6 +266,7 @@ class View {
         this.tailoredCoverLetterDlButtonEnabled = getItemWithDefault("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
         this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
+        this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
         this.googleSheetLinkText = getItemWithDefault("googleSheetLinkText", this.googleSheetLinkText);
         this.logApplicationButtonText = getItemWithDefault("logApplicationButtonText", this.logApplicationButtonText);
         this.logApplicationEnabled = getItemWithDefault("logApplicationEnabled", this.logApplicationEnabled);

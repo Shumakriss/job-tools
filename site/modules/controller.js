@@ -234,10 +234,10 @@ class Controller {
     async updateLogSheetLink() {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
-        let sheetId = await this.workspace.getDocumentIdByName(this.view.googleSheetName);
-        if (sheetId) {
+        this.view.googleSheetId = await this.workspace.getDocumentIdByName(this.view.googleSheetName);
+        if (this.view.googleSheetId) {
             this.view.logApplicationEnabled = true;
-            this.view.googleSheetLink = sheetsPrefix + sheetId + sheetSuffix;
+            this.view.googleSheetLink = sheetsPrefix + this.view.googleSheetId + sheetSuffix;
         } else {
             this.view.logApplicationEnabled = false;
             this.view.googleSheetLink = "";
@@ -352,8 +352,9 @@ class Controller {
         console.log("Document tailoring complete");
     }
 
-    logApplication() {
-        console.warn("Log application is not yet implemented");
+    async logApplication() {
+        console.debug("Logging job application to Google Sheets");
+        await this.workspace.appendApplicationLog();
         this.view.logApplicationEnabled = false;
         this.view.save();
     }
