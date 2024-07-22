@@ -39,7 +39,7 @@ function getBooleanItem(itemName, defaultValue) {
 }
 
 // TODO: Rename to "Model"
-class View {
+class Model {
 
     constructor() {
 
@@ -141,7 +141,7 @@ class View {
 
     /* Save-load */
     save() {
-        console.debug("Saving view", this);
+        console.debug("Saving model", this);
 
         localStorage.setItem("googleToken", JSON.stringify(this.googleToken));
         localStorage.setItem("minimumRequirementsKeywords", JSON.stringify(this.minimumRequirementsKeywords));
@@ -219,7 +219,7 @@ class View {
     }
 
     load() {
-        console.debug("Loading view");
+        console.debug("Loading model");
 
         this.linkedInQuery = getItemWithDefault("linkedInQuery", this.linkedInQuery);
         this.navigationPage = getItemWithDefault("navigationPage", this.navigationPage);
@@ -311,9 +311,9 @@ class View {
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");
 
-        console.debug("Loaded view: ", this);
+        console.debug("Loaded model: ", this);
     }
 
 }
 
-export default View;
+export default Model;

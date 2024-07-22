@@ -9,8 +9,8 @@ const COMPANY_INFORMATION_PROMPT = `Given a job description, determine if there 
 const RESUME_SUGGESTIONS_PROMPT = `Given a resume and a list of keywords to include, offer suggestions on how to integrate the keywords into the resume with as little modification necessary. Highlight text which is not in the original resume in bold. Only incorporate keywords if the candidate seems to have strongly related experience. Also, list the keywords which could not reasonably be integrated.`;
 
 class ChatGpt {
-    constructor(view) {
-        this.view = view
+    constructor(model) {
+        this.model = model
     }
 
     async ask(prompt) {
@@ -18,7 +18,7 @@ class ChatGpt {
 
         let headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + this.view.chatgptApiKey,
+            "Authorization": "Bearer " + this.model.chatgptApiKey,
         }
 
         let payload = {
@@ -77,13 +77,13 @@ class ChatGpt {
 
     // TODO: Move to controller?
     async extractJobSections() {
-        this.view.companyName = await this.extractSection(COMPANY_NAME_PROMPT, this.view.jobDescription);
-        this.view.jobTitle = await this.extractSection(JOB_TITLE_PROMPT, this.view.jobDescription);
-        this.view.minimumRequirements = await this.extractSection(MINIMUM_JOB_REQUIREMENTS_PROMPT, this.view.jobDescription);
-        this.view.preferredRequirements = await this.extractSection(PREFERRED_JOB_REQUIREMENTS_PROMPT, this.view.jobDescription);
-        this.view.jobDuties = await this.extractSection(JOB_DUTIES_PROMPT, this.view.jobDescription);
-        this.view.companyInfo = await this.extractSection(COMPANY_INFORMATION_PROMPT, this.view.jobDescription);
-        this.view.save();
+        this.model.companyName = await this.extractSection(COMPANY_NAME_PROMPT, this.model.jobDescription);
+        this.model.jobTitle = await this.extractSection(JOB_TITLE_PROMPT, this.model.jobDescription);
+        this.model.minimumRequirements = await this.extractSection(MINIMUM_JOB_REQUIREMENTS_PROMPT, this.model.jobDescription);
+        this.model.preferredRequirements = await this.extractSection(PREFERRED_JOB_REQUIREMENTS_PROMPT, this.model.jobDescription);
+        this.model.jobDuties = await this.extractSection(JOB_DUTIES_PROMPT, this.model.jobDescription);
+        this.model.companyInfo = await this.extractSection(COMPANY_INFORMATION_PROMPT, this.model.jobDescription);
+        this.model.save();
     }
 
 }

@@ -1,4 +1,4 @@
-import View from './view.js'
+import Model from './model.js'
 import ChatGpt from './chatgptExtractor.js'
 import Jobscan from './jobscan.js'
 import GoogleWorkspace from './googleWorkspace.js'
@@ -9,12 +9,12 @@ class Controller {
     /* Manages complexities of application initialization, state, and behavior
         - Delegates complexity to separate objects when necessary
     */
-    constructor(view, gapi, google) {
-        this.view = view;
-        this.view.load();
-        this.workspace = new GoogleWorkspace(view, gapi, google);
-        this.jobscan = new Jobscan(view);
-        this.chatgpt = new ChatGpt(view);
+    constructor(model, gapi, google) {
+        this.model = model;
+        this.model.load();
+        this.workspace = new GoogleWorkspace(model, gapi, google);
+        this.jobscan = new Jobscan(model);
+        this.chatgpt = new ChatGpt(model);
     }
 
     /* State Setters
@@ -24,244 +24,237 @@ class Controller {
 
     setNavigationPage(pageName) {
         console.log("Navigating to page " + pageName);
-        this.view.navigationPage = pageName;
-        this.view.save();
+        this.model.navigationPage = pageName;
+        this.model.save();
     }
 
     setExtractJobSectionsEnabled() {
-        this.view.extractJobSectionsEnabled = this.view.chatgptApiKey && this.jobDescription;
+        this.model.extractJobSectionsEnabled = this.model.chatgptApiKey && this.jobDescription;
     }
 
-    /* Field setters
-        - Setters should exist for every field.
-        - View should only use setters.
-        - Setters do not perform work like handlers.
-        - Setters may toggle or change viewable state like enabling/disabling buttons
-        - Setters run updateEnabledState by convention
-    */
     setCredentials(credentials) {
-        this.view.chatgptApiKey = credentials.chatGpt.apiKey;
-        this.view.googleApiKey = credentials.google.apiKey;
-        this.view.googleClientId = credentials.google.clientId;
-        this.view.jobscanCookie = credentials.jobscan.cookie;
-        this.view.jobscanXsrfToken = credentials.jobscan.xsrfToken;
+        this.model.chatgptApiKey = credentials.chatGpt.apiKey;
+        this.model.googleApiKey = credentials.google.apiKey;
+        this.model.googleClientId = credentials.google.clientId;
+        this.model.jobscanCookie = credentials.jobscan.cookie;
+        this.model.jobscanXsrfToken = credentials.jobscan.xsrfToken;
 
-        this.view.googleSignInEnabled = true;
-        this.view.googleRefreshEnabled = false;
-        this.view.googleSignOutEnabled = false;
-        this.view.save();
+        this.model.googleSignInEnabled = true;
+        this.model.googleRefreshEnabled = false;
+        this.model.googleSignOutEnabled = false;
+        this.model.save();
     }
 
     updateCompanyNamePossessive() {
-        let companyName = this.view.companyName;
+        let companyName = this.model.companyName;
         if (companyName == "") {
-            this.view.companyNamePossessive = "";
+            this.model.companyNamePossessive = "";
         } else if (companyName.endsWith("s")) {
-            this.view.companyNamePossessive = companyName + "'";
+            this.model.companyNamePossessive = companyName + "'";
         } else {
-            this.view.companyNamePossessive = companyName + "'s";
+            this.model.companyNamePossessive = companyName + "'s";
         }
     }
 
     async setCompanyName(companyName) {
-        this.view.companyName = companyName;
+        this.model.companyName = companyName;
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
         this.updateTailorEnabled();
         await this.updateDocLinks();
-        this.view.save();
+        this.model.save();
         // If changed, check for file
         // If file, disable button
         // If no file, enable button
     }
     
     setResumeTemplateName(resumeTemplateName) {
-        this.view.resumeTemplateName = resumeTemplateName;
+        this.model.resumeTemplateName = resumeTemplateName;
         this.updateDocLinks();
-        this.view.save();
+        this.model.save();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) { 
-        this.view.coverLetterTemplateName = coverLetterTemplateName;
+        this.model.coverLetterTemplateName = coverLetterTemplateName;
         this.updateDocLinks();
-        this.view.save();
+        this.model.save();
     }
     
     setApplicationLogName(applicationLogName) { 
-        this.view.applicationLogName = applicationLogName;
-        this.view.save();
+        this.model.applicationLogName = applicationLogName;
+        this.model.save();
     }
     
     setJobDescription(jobDescription) { 
-        this.view.jobDescription = jobDescription;
-        if (!this.view.jobDescription) {
-            this.view.extractJobSectionsEnabled = false;
+        this.model.jobDescription = jobDescription;
+        if (!this.model.jobDescription) {
+            this.model.extractJobSectionsEnabled = false;
         } else {
-            this.view.extractJobSectionsEnabled = true;
+            this.model.extractJobSectionsEnabled = true;
         }
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
     
     setJobTitle(jobTitle) {
-        this.view.jobTitle = jobTitle;
-        this.view.completeJobTitle = jobTitle;
-        this.view.shortJobTitle = jobTitle;
+        this.model.jobTitle = jobTitle;
+        this.model.completeJobTitle = jobTitle;
+        this.model.shortJobTitle = jobTitle;
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
 
     setCompanyAddress(companyAddress) {
-        this.view.companyAddress = companyAddress;
+        this.model.companyAddress = companyAddress;
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
 
     setValues(values) {
-        this.view.values = values;
+        this.model.values = values;
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
 
     setRelevantExperience(relevantExperience) {
-        this.view.relevantExperience = relevantExperience;
+        this.model.relevantExperience = relevantExperience;
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
     
     setMinimumRequirements(minimumRequirements) {
-        this.view.minimumRequirements = minimumRequirements;
-        this.view.save();
+        this.model.minimumRequirements = minimumRequirements;
+        this.model.save();
     }
 
     setPreferredRequirements(preferredRequirements) {
-        this.view.preferredRequirements = preferredRequirements;
-        this.view.save();
+        this.model.preferredRequirements = preferredRequirements;
+        this.model.save();
     }
 
     setJobDuties(jobDuties) {
-        this.view.jobDuties = jobDuties;
-        this.view.save();
+        this.model.jobDuties = jobDuties;
+        this.model.save();
     }
 
     setCompanyInfo(companyInfo) {
-        this.view.companyInfo = companyInfo;
-        this.view.save();
+        this.model.companyInfo = companyInfo;
+        this.model.save();
     }
 
     setLinkedInProfileLink(linkedInProfileLink) {
-        this.view.linkedInProfileLink = linkedInProfileLink;
-        this.view.save();
+        this.model.linkedInProfileLink = linkedInProfileLink;
+        this.model.save();
     }
 
     setGithubProfileLink(githubProfileLink) {
-        this.view.githubProfileLink = githubProfileLink;
-        this.view.save();
+        this.model.githubProfileLink = githubProfileLink;
+        this.model.save();
     }
 
     setWebsiteProfileLink(websiteProfileLink) {
-        this.view.websiteProfileLink = websiteProfileLink;
-        this.view.save();
+        this.model.websiteProfileLink = websiteProfileLink;
+        this.model.save();
     }
 
     setHiringManager(hiringManager) {
-        this.view.hiringManager = hiringManager;
+        this.model.hiringManager = hiringManager;
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
     }
 
     async setGoogleSheetName(googleSheetName) {
-        this.view.googleSheetName = googleSheetName;
+        this.model.googleSheetName = googleSheetName;
         await this.updateLogSheetLink();
-        this.view.save();
+        this.model.save();
     }
 
     updateCreateResumeEnabled() {
-        this.view.createResumeEnabled = Boolean(
-            this.view.googleRefreshEnabled &&
-            this.view.companyName &&
-            this.view.companyName != "");
-        this.view.save();
+        this.model.createResumeEnabled = Boolean(
+            this.model.googleRefreshEnabled &&
+            this.model.companyName &&
+            this.model.companyName != "");
+        this.model.save();
     }
 
     updateScanEnabled() {
-        this.view.scanEnabled = Boolean(this.view.resumeId && this.view.minimumRequirements);
+        this.model.scanEnabled = Boolean(this.model.resumeId && this.model.minimumRequirements);
     }
 
     updateTailorEnabled() {
-        this.view.tailorEnabled = Boolean(this.view.resumeId &&
-                                          this.view.coverLetterId &&
-                                          this.view.date &&
-                                          this.view.companyName &&
-                                          this.view.companyNamePossessive &&
-                                          this.view.companyAddress &&
-                                          this.view.hiringManager &&
-                                          this.view.jobTitle &&
-                                          this.view.completeJobTitle &&
-                                          this.view.shortJobTitle &&
-                                          this.view.companyValues &&
-                                          this.view.relevantExperience
+        this.model.tailorEnabled = Boolean(this.model.resumeId &&
+                                          this.model.coverLetterId &&
+                                          this.model.date &&
+                                          this.model.companyName &&
+                                          this.model.companyNamePossessive &&
+                                          this.model.companyAddress &&
+                                          this.model.hiringManager &&
+                                          this.model.jobTitle &&
+                                          this.model.completeJobTitle &&
+                                          this.model.shortJobTitle &&
+                                          this.model.companyValues &&
+                                          this.model.relevantExperience
                                           )
     }
 
     async updateDocLinks() {
         const gdocPrefix = "https://docs.google.com/document/d/";
         const gdocSuffix = "/edit";
-        if (this.view.companyName && this.view.resumeId) {
-            this.view.tailoredResumeLink = gdocPrefix + this.view.resumeId + gdocSuffix;
-            this.view.tailoredResumeDlButtonEnabled = true;
-            this.view.resumePdfLink = await this.workspace.getPdfLink(this.view.resumeId);
+        if (this.model.companyName && this.model.resumeId) {
+            this.model.tailoredResumeLink = gdocPrefix + this.model.resumeId + gdocSuffix;
+            this.model.tailoredResumeDlButtonEnabled = true;
+            this.model.resumePdfLink = await this.workspace.getPdfLink(this.model.resumeId);
         } else {
-            this.view.tailoredResumeLink = "";
-            this.view.tailoredResumeDlButtonEnabled = false;
-            this.view.resumePdfLink = null;
+            this.model.tailoredResumeLink = "";
+            this.model.tailoredResumeDlButtonEnabled = false;
+            this.model.resumePdfLink = null;
         }
 
-        if (this.view.companyName && this.view.coverLetterId) {
-            this.view.tailoredCoverLetterLink = gdocPrefix + this.view.coverLetterId + gdocSuffix;
-            this.view.tailoredCoverLetterDlButtonEnabled = true;
-            this.view.coverLetterPdfLink = await this.workspace.getPdfLink(this.view.coverLetterId);
+        if (this.model.companyName && this.model.coverLetterId) {
+            this.model.tailoredCoverLetterLink = gdocPrefix + this.model.coverLetterId + gdocSuffix;
+            this.model.tailoredCoverLetterDlButtonEnabled = true;
+            this.model.coverLetterPdfLink = await this.workspace.getPdfLink(this.model.coverLetterId);
         } else {
-            this.view.tailoredCoverLetterLink = "";
-            this.view.tailoredCoverLetterDlButtonEnabled = false;
-            this.view.coverLetterPdfLink = null;
+            this.model.tailoredCoverLetterLink = "";
+            this.model.tailoredCoverLetterDlButtonEnabled = false;
+            this.model.coverLetterPdfLink = null;
         }
 
-        this.view.save();
+        this.model.save();
     }
 
     async updateLogSheetLink() {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
-        this.view.googleSheetId = await this.workspace.getDocumentIdByName(this.view.googleSheetName);
-        if (this.view.googleSheetId) {
-            this.view.logApplicationEnabled = true;
-            this.view.googleSheetLink = sheetsPrefix + this.view.googleSheetId + sheetSuffix;
+        this.model.googleSheetId = await this.workspace.getDocumentIdByName(this.model.googleSheetName);
+        if (this.model.googleSheetId) {
+            this.model.logApplicationEnabled = true;
+            this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
         } else {
-            this.view.logApplicationEnabled = false;
-            this.view.googleSheetLink = "";
+            this.model.logApplicationEnabled = false;
+            this.model.googleSheetLink = "";
         }
 
-        this.view.save();
+        this.model.save();
     }
 
     updateDocumentNames() {
-        if (this.view.companyName && this.view.resumeTemplateName) {
-            this.view.resumeName = this.view.companyName + " " + this.view.resumeTemplateName;
+        if (this.model.companyName && this.model.resumeTemplateName) {
+            this.model.resumeName = this.model.companyName + " " + this.model.resumeTemplateName;
         } else {
-            this.view.resumeName = "";
+            this.model.resumeName = "";
         }
-        this.view.resumeName = this.view.resumeName.replace(" Template", "");
+        this.model.resumeName = this.model.resumeName.replace(" Template", "");
 
-        if (this.view.companyName && this.view.coverLetterTemplateName) {
-            this.view.coverLetterName = this.view.companyName + " " + this.view.coverLetterTemplateName;
+        if (this.model.companyName && this.model.coverLetterTemplateName) {
+            this.model.coverLetterName = this.model.companyName + " " + this.model.coverLetterTemplateName;
         } else {
-            this.view.coverLetterName = "";
+            this.model.coverLetterName = "";
         }
-        this.view.coverLetterName = this.view.coverLetterName.replace(" Template", "");
+        this.model.coverLetterName = this.model.coverLetterName.replace(" Template", "");
 
-        this.view.save();
+        this.model.save();
     }
 
     /* Complex functions
@@ -271,19 +264,19 @@ class Controller {
         try {
             await this.workspace.init();
             await this.workspace.authorize();
-            this.view.googleSignInEnabled = false;
-            this.view.googleRefreshEnabled = true;
-            this.view.googleSignOutEnabled = true;
+            this.model.googleSignInEnabled = false;
+            this.model.googleRefreshEnabled = true;
+            this.model.googleSignOutEnabled = true;
         } catch(err) {
             console.error("Failed to authorize Google: " + err.message);
-            this.view.googleSignInEnabled = false;
-            this.view.googleRefreshEnabled = false;
-            this.view.googleSignOutEnabled = false;
+            this.model.googleSignInEnabled = false;
+            this.model.googleRefreshEnabled = false;
+            this.model.googleSignOutEnabled = false;
         }
 
         this.updateCreateResumeEnabled();
         this.updateLogSheetLink();
-        this.view.save();
+        this.model.save();
     }
 
     googleSignOut() {}
@@ -291,12 +284,12 @@ class Controller {
     extractJobSections() {
         this.chatgpt.extractJobSections();
         this.updateCompanyNamePossessive();
-        this.view.save();
+        this.model.save();
     }
 
     async createResumeAndCoverLetter() {
-        this.view.createResumeEnabled = false;
-        this.view.save();
+        this.model.createResumeEnabled = false;
+        this.model.save();
 
         try {
             await this.workspace.createResumeAndCoverLetter();
@@ -310,53 +303,53 @@ class Controller {
     async scanResume() {
         console.warn("Scan button Handler not implemented");
 
-        this.view.resumeContent = await this.workspace.getPlaintextFileContents(this.view.resumeId);
+        this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
 
         let results;
         let jobDescription = "";
 
-        jobDescription = jobDescription + this.view.minimumRequirements;
-        results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
-        this.view.minimumRequirementsScore = results['matchRate']['score'];
-        this.view.minimumRequirementsKeywords = results;
+        jobDescription = jobDescription + this.model.minimumRequirements;
+        results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
+        this.model.minimumRequirementsScore = results['matchRate']['score'];
+        this.model.minimumRequirementsKeywords = results;
 
-        if (this.view.includePreferredRequirements && this.view.preferredRequirements) {
-            jobDescription = jobDescription + this.view.preferredRequirements;
-            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
-            this.view.preferredRequirementsScore = results['matchRate']['score'];
-            this.view.preferredRequirementsKeywords = results;
+        if (this.model.includePreferredRequirements && this.model.preferredRequirements) {
+            jobDescription = jobDescription + this.model.preferredRequirements;
+            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
+            this.model.preferredRequirementsScore = results['matchRate']['score'];
+            this.model.preferredRequirementsKeywords = results;
         }
 
-        if (this.view.includeJobDuties && this.view.jobDuties) {
-            jobDescription = jobDescription + this.view.jobDuties;
-            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
-            this.view.jobDutiesScore = results['matchRate']['score'];
-            this.view.jobDutiesKeywords = results;
+        if (this.model.includeJobDuties && this.model.jobDuties) {
+            jobDescription = jobDescription + this.model.jobDuties;
+            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
+            this.model.jobDutiesScore = results['matchRate']['score'];
+            this.model.jobDutiesKeywords = results;
         }
 
-        if (this.view.includeCompanyInfo && this.view.companyInfo) {
-            jobDescription = jobDescription + this.view.companyInfo;
-            results = await this.jobscan.scan(this.view.resumeContent, jobDescription);
-            this.view.companyInfoScore = results['matchRate']['score'];
-            this.view.companyInfoKeywords = results;
+        if (this.model.includeCompanyInfo && this.model.companyInfo) {
+            jobDescription = jobDescription + this.model.companyInfo;
+            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
+            this.model.companyInfoScore = results['matchRate']['score'];
+            this.model.companyInfoKeywords = results;
         }
 
     }
 
     async tailorDocuments() {
         console.log("Tailoring documents");
-        await this.workspace.mergeTextInTemplate(this.view.resumeId);
-        await this.workspace.mergeTextInTemplate(this.view.coverLetterId);
+        await this.workspace.mergeTextInTemplate(this.model.resumeId);
+        await this.workspace.mergeTextInTemplate(this.model.coverLetterId);
         this.updateTailorEnabled();
-        this.view.save();
+        this.model.save();
         console.log("Document tailoring complete");
     }
 
     async logApplication() {
         console.debug("Logging job application to Google Sheets");
         await this.workspace.appendApplicationLog();
-        this.view.logApplicationEnabled = false;
-        this.view.save();
+        this.model.logApplicationEnabled = false;
+        this.model.save();
     }
 
 }

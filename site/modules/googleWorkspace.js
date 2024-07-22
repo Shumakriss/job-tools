@@ -15,9 +15,9 @@ const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com
 
 class GoogleWorkspace {
 
-    constructor (view, gapi, google) {
+    constructor (model, gapi, google) {
         console.debug("GoogleWorkspace.constructor");
-        this.view = view;   // TODO: Eliminate view
+        this.model = model;   // TODO: Eliminate model
         this.gapi = gapi;
         this.google = google;
 
@@ -28,7 +28,7 @@ class GoogleWorkspace {
         this.tokenClientCallback;
         this.authenticatedCallback;
 
-        if (this.view.googleToken) {    // TODO: Can be passed
+        if (this.model.googleToken) {    // TODO: Can be passed
             this.init();
         }
     }
@@ -76,7 +76,7 @@ class GoogleWorkspace {
         }
 
         await this.gapi.client.init({
-            apiKey: this.view.googleApiKey,
+            apiKey: this.model.googleApiKey,
             discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC, DOCS_DISCOVERY_DOC]
             });
         console.debug("GoogleWorkspace.onGapiLoaded - gapi.client.init returned: ", this.gapi.client);
@@ -87,9 +87,9 @@ class GoogleWorkspace {
             console.log("No client init callback to be invoked");
         }
 
-        if (this.view.googleToken) {
+        if (this.model.googleToken) {
             console.debug("GoogleWorkspace.onGapiLoaded - Found token, will reuse");
-            this.gapi.client.setToken(this.view.googleToken);
+            this.gapi.client.setToken(this.model.googleToken);
             if (this.authenticatedCallback) {
                 console.log("Authenticated callback invoked");
                 this.authenticatedCallback();
@@ -99,7 +99,7 @@ class GoogleWorkspace {
         }
 
         this.tokenClient = await this.google.accounts.oauth2.initTokenClient({
-            client_id: this.view.googleClientId,
+            client_id: this.model.googleClientId,
             scope: SCOPES,
             callback: '', // defined later
         });
@@ -118,8 +118,8 @@ class GoogleWorkspace {
                 this.tokenClient.requestAccessToken({prompt: 'consent'});
             }
 
-            this.view.googleToken = await this.gapi.client.getToken();
-            this.view.save();
+            this.model.googleToken = await this.gapi.client.getToken();
+            this.model.save();
 
             if (this.authenticatedCallback) {
                 console.log("Authenticated callback invoked");
@@ -139,12 +139,12 @@ class GoogleWorkspace {
 
     async init() {
         console.debug("GoogleWorkspace.init - Initializing Google Drive Class");
-        if (!this.view.googleApiKey) {
+        if (!this.model.googleApiKey) {
             console.log("GoogleWorkspace.init - Skipping due to missing API Key");
             return;
         }
 
-        if (!this.view.googleClientId) {
+        if (!this.model.googleClientId) {
             console.log("GoogleWorkspace.init - Skipping due to missing Client Id");
             return;
         }
@@ -163,17 +163,17 @@ class GoogleWorkspace {
     async authorize() {
         console.debug("GoogleWorkspace.authorize - Authorizing Google Drive client");
 
-        if (this.view.googleConsentRequested) {
+        if (this.model.googleConsentRequested) {
             console.debug("Consent to Google previously given, only refreshing");
             this.tokenClient.requestAccessToken({prompt: ''});
         } else {
             console.debug("Consent to Google not previously given, loading consent screen");
             this.tokenClient.requestAccessToken({prompt: 'consent'});
-            this.view.googleConsentRequested = true;
+            this.model.googleConsentRequested = true;
         }
 
-        this.view.googleToken = await this.gapi.client.getToken();
-        this.view.save();
+        this.model.googleToken = await this.gapi.client.getToken();
+        this.model.save();
     }
 
 
@@ -183,8 +183,8 @@ class GoogleWorkspace {
         }
 
         console.debug("Set token invoked");
-        this.view.googleToken = token;
-        this.view.save();
+        this.model.googleToken = token;
+        this.model.save();
         if (this.authenticatedCallback) {
             this.authenticatedCallback();
         }
@@ -196,7 +196,7 @@ class GoogleWorkspace {
         }
         this.google.accounts.oauth2.revoke(this.gapi.client.getToken().access_token);
         this.gapi.client.setToken('');
-        this.view.googleConsentRequested = false;
+        this.model.googleConsentRequested = false;
     }
 
     async getDocumentIdByName(name) {
@@ -305,17 +305,17 @@ class GoogleWorkspace {
         let requests = [];
 
         const templateUpdate = new Map();
-        templateUpdate.set("{{job-title}}", this.view.jobTitle);
+        templateUpdate.set("{{job-title}}", this.model.jobTitle);
 
-            templateUpdate.set("{{date}}", this.view.date);
-            templateUpdate.set("{{company-name}}", this.view.companyName);
-            templateUpdate.set("{{company-name-possessive}}", this.view.companyNamePossessive);
-            templateUpdate.set("{{company-address}}", this.view.companyAddress);
-            templateUpdate.set("{{hiring-manager-name}}", this.view.hiringManager);
-            templateUpdate.set("{{complete-job-title}}", this.view.completeJobTitle);
-            templateUpdate.set("{{short-job-title}}", this.view.shortJobTitle);
-            templateUpdate.set("{{values}}", this.view.values);
-            templateUpdate.set("{{experiences}}", this.view.relevantExperience);
+            templateUpdate.set("{{date}}", this.model.date);
+            templateUpdate.set("{{company-name}}", this.model.companyName);
+            templateUpdate.set("{{company-name-possessive}}", this.model.companyNamePossessive);
+            templateUpdate.set("{{company-address}}", this.model.companyAddress);
+            templateUpdate.set("{{hiring-manager-name}}", this.model.hiringManager);
+            templateUpdate.set("{{complete-job-title}}", this.model.completeJobTitle);
+            templateUpdate.set("{{short-job-title}}", this.model.shortJobTitle);
+            templateUpdate.set("{{values}}", this.model.values);
+            templateUpdate.set("{{experiences}}", this.model.relevantExperience);
 
         [...templateUpdate.keys()].forEach(placeholder => {
             let request = {
@@ -351,9 +351,9 @@ class GoogleWorkspace {
     }
 
     async appendApplicationLog() {
-        let values = [[ this.view.companyName, "Applied", this.view.date ]];
+        let values = [[ this.model.companyName, "Applied", this.model.date ]];
         let rowData = {
-                spreadsheetId: this.view.googleSheetId,
+                spreadsheetId: this.model.googleSheetId,
                 range: "Sheet1!A1:D1",
                 valueInputOption: "USER_ENTERED",
                 resource: {
@@ -365,23 +365,23 @@ class GoogleWorkspace {
 
     // TODO: Move to controller?
     async createResume() {
-        this.view.resumeTemplateId = await this.getDocumentIdByName(this.view.resumeTemplateName);
-        this.view.resumeId = await this.getDocumentIdByName(this.view.resumeName);
+        this.model.resumeTemplateId = await this.getDocumentIdByName(this.model.resumeTemplateName);
+        this.model.resumeId = await this.getDocumentIdByName(this.model.resumeName);
 
-        if (this.view.resumeTemplateId && !this.view.resumeId) {
-            this.view.resumeId = await this.copyFile(this.view.resumeTemplateId, this.view.resumeName);
+        if (this.model.resumeTemplateId && !this.model.resumeId) {
+            this.model.resumeId = await this.copyFile(this.model.resumeTemplateId, this.model.resumeName);
         }
-        this.view.save();
+        this.model.save();
     }
 
     async createCoverLetter() {
-        this.view.coverLetterTemplateId = await this.getDocumentIdByName(this.view.coverLetterTemplateName);
-        this.view.coverLetterId = await this.getDocumentIdByName(this.view.coverLetterName);
+        this.model.coverLetterTemplateId = await this.getDocumentIdByName(this.model.coverLetterTemplateName);
+        this.model.coverLetterId = await this.getDocumentIdByName(this.model.coverLetterName);
 
-        if (this.view.coverLetterTemplateId && !this.view.coverLetterId) {
-            this.view.coverLetterId = await this.copyFile(this.view.coverLetterTemplateId, this.view.coverLetterName);
+        if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
+            this.model.coverLetterId = await this.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
         }
-        this.view.save();
+        this.model.save();
     }
 
     async createResumeAndCoverLetter() {
