@@ -1,317 +1,229 @@
-const DEFAULT_LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR principal OR staff OR L4 OR L5) AND (engineer OR architect)";
-const DEFAULT_LINKEDIN_PROFILE = "https://www.linkedin.com/in/christophershumaker/";
-const DEFAULT_GITHUB_PROFILE = "https://github.com/Shumakriss";
-const DEFAULT_WEBSITE = "https://www.makerconsulting.llc/maker-consulting";
 
-const MONTHS = {
-    0: "January",
-    1: "February",
-    2: "March",
-    3: "April",
-    4: "May",
-    5: "June",
-    6: "July",
-    7: "August",
-    8: "September",
-    9: "October",
-    10: "November",
-    11: "December"
-}
+function formatScanResults(jobscanResults) {
+    let ul = document.createElement('ul');
 
-function getItemWithDefault(itemName, defaultValue) {
-    let item = localStorage.getItem(itemName);
-    if (!item || item == "null") {
-        return defaultValue;
-    } else {
-        return item;
+    let highValueSkills = jobscanResults['highValueSkills'];
+    for (let i=0; i< highValueSkills.length; i++){
+        if (highValueSkills[i].cvCount == 0){
+            let li = document.createElement("li");
+            let text = highValueSkills[i]['skill'] + " (" + highValueSkills[i]['type'] + ")"
+            li.appendChild(document.createTextNode(text));
+            ul.appendChild(li);
+        }
     }
+
+    return ul
 }
 
-function getBooleanItem(itemName, defaultValue) {
-    let item = localStorage.getItem(itemName);
-    if (item == "true") {
-        return true;
-    } else if (item == "false") {
-        return false;
-    } else {
-        return defaultValue;
-    }
-}
-
-// TODO: Rename to "Model"
+// TODO: Rename to Model
 class View {
-
-    constructor() {
-
-        /* Third Party configuration
-            - Provided to other tools
-            - Managed in save/load
-        */
-        this.googleApiKey = null;
-        this.googleClientId = null;
-        this.googleToken = null;
-        this.googleConsentRequested = false;
-        this.jobscanCookie = null;
-        this.jobscanXsrfToken = null;
-        this.chatgptApiKey = null;
-
-        /* Button states */
-        this.googleSignInEnabled = true;
-        this.googleRefreshEnabled = false;
-        this.googleSignOutEnabled = false
-        this.extractJobSectionsEnabled = false;
-        this.createResumeEnabled = false;
-        // ....
-
-        /* Globally visible Fields */
-        this.linkedInQuery = DEFAULT_LINKEDIN_QUERY;
-        this.resumeTemplateName = "";
-        this.resumeTemplateId = null;
-        this.coverLetterTemplateName = "";
-        this.coverLetterTemplateId = null;
-
-        this.resumeName = "";
-        this.resumeId = null;
-        this.resumeContent = "";
-
-        this.coverLetterName = "";
-        this.coverLetterId = null;
-
-        this.tailoredResumeLink = "";
-        this.tailoredResumeLinkText = "Tailored Resume Not Ready";
-        this.tailoredResumeDlButtonEnabled = false;
-        
-        this.tailoredCoverLetterLink = "";
-        this.tailoredCoverLetterLinkText = "Tailored CoverLetter Not Ready";
-        this.tailoredCoverLetterDlButtonEnabled = false;
-        
-        this.googleSheetName = "";
-        this.googleSheetLink = "";
-        this.googleSheetLinkText = "Log Sheet Not Ready";
-        this.googleSheetId = null;
-        this.logApplicationButtonText = "Log Application";
-        this.logApplicationEnabled = false;
-
-        this.navigationPage = "job-description";
-
-        this.linkedInProfileLink = DEFAULT_LINKEDIN_PROFILE;
-        this.githubProfileLink = DEFAULT_GITHUB_PROFILE;
-        this.websiteProfileLink = DEFAULT_WEBSITE;
-
-        /* Other fields */
-        this.jobDescription = "";
-        this.companyName = "";
-        this.jobTitle = "";
-        this.minimumRequirements = "";
-        this.preferredRequirements = "";
-        this.jobDuties = "";
-        this.companyInfo = "";
-
-        /* Template merge fields */
-        const date = new Date();  // Today
-        this.date = MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
-        this.companyNamePossessive = "";
-        this.companyAddress = "";
-        this.hiringManager = "Hiring Manager";
-        this.completeJobTitle = "";
-        this.shortJobTitle = "";
-        this.companyValues = "";
-        this.relevantExperience = "";
-
-        /* Scan results fields */
-        this.includePreferredRequirements = true;
-        this.includeJobDuties = true;
-        this.includeCompanyInfo = true;
-        this.scanEnabled = false;
-        this.tailorEnabled = false;
-        this.minimumRequirementsScore = "";
-        this.preferredRequirementsScore = "";
-        this.jobDutiesScore = "";
-        this.companyInfoScore = "";
-        
-        this.minimumRequirementsKeywords = "";  // This is current a raw json response payload from jobscan
-        this.preferredRequirementsKeywords = ""; // This is current a raw json response payload from jobscan
-        this.jobDutiesKeywords = ""; // This is current a raw json response payload from jobscan
-        this.companyInfoKeywords = ""; // This is current a raw json response payload from jobscan
-
-        this.resumePdfLink = "";
-        this.coverLetterPdfLink = "";
-
+    constructor(model) {
+        this.model = model;
     }
 
-    /* Save-load */
-    save() {
-        console.debug("Saving view", this);
+    selectNavigationPage(buttonId) {
+        let button = document.getElementById(buttonId);
+        let pages = document.getElementsByClassName("page");
+        let pageName = buttonId.replace("nav-button-", "");
 
-        localStorage.setItem("googleToken", JSON.stringify(this.googleToken));
-        localStorage.setItem("minimumRequirementsKeywords", JSON.stringify(this.minimumRequirementsKeywords));
-        localStorage.setItem("preferredRequirementsKeywords", JSON.stringify(this.preferredRequirementsKeywords));
-        localStorage.setItem("jobDutiesKeywords", JSON.stringify(this.jobDutiesKeywords));
-        localStorage.setItem("companyInfoKeywords", JSON.stringify(this.companyInfoKeywords));
+        for (let i = 0; i < pages.length; i++) {
+            pages[i].hidden = true;
+        }
 
-        localStorage.setItem("googleApiKey", this.googleApiKey);
-        localStorage.setItem("googleClientId", this.googleClientId);
-        localStorage.setItem("googleConsentRequested", this.googleConsentRequested);
-        localStorage.setItem("jobscanCookie", this.jobscanCookie);
-        localStorage.setItem("jobscanXsrfToken", this.jobscanXsrfToken);
-        localStorage.setItem("chatgptApiKey", this.chatgptApiKey);
-        localStorage.setItem("googleSignInEnabled", this.googleSignInEnabled);
-        localStorage.setItem("googleRefreshEnabled", this.googleRefreshEnabled);
-        localStorage.setItem("googleSignOutEnabled", this.googleSignOutEnabled);
-        localStorage.setItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
-        localStorage.setItem("createResumeEnabled", this.createResumeEnabled);
-        localStorage.setItem("linkedInQuery", this.linkedInQuery);
-        localStorage.setItem("resumeTemplateName", this.resumeTemplateName);
-        localStorage.setItem("resumeTemplateId", this.resumeTemplateId);
-        localStorage.setItem("coverLetterTemplateName", this.coverLetterTemplateName);
-        localStorage.setItem("coverLetterTemplateId", this.coverLetterTemplateId);
-        localStorage.setItem("resumeName", this.resumeName);
-        localStorage.setItem("coverLetterName", this.coverLetterName);
-        localStorage.setItem("resumeId", this.resumeId);
-        localStorage.setItem("resumeContent", this.resumeContent);
-        localStorage.setItem("coverLetterId", this.coverLetterId);
-        localStorage.setItem("tailoredResumeLink", this.tailoredResumeLink);
-        localStorage.setItem("tailoredResumeLinkText", this.tailoredResumeLinkText);
-        localStorage.setItem("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        localStorage.setItem("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
-        localStorage.setItem("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
-        localStorage.setItem("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
-        localStorage.setItem("googleSheetName", this.googleSheetName);
-        localStorage.setItem("googleSheetId", this.googleSheetId);
-        localStorage.setItem("googleSheetLink", this.googleSheetLink);
-        localStorage.setItem("googleSheetLinkText", this.googleSheetLinkText);
-        localStorage.setItem("logApplicationButtonText", this.logApplicationButtonText);
-        localStorage.setItem("logApplicationEnabled", this.logApplicationEnabled);
-        localStorage.setItem("navigationPage", this.navigationPage);
-        localStorage.setItem("jobDescription", this.jobDescription);
-        localStorage.setItem("companyName", this.companyName);
-        localStorage.setItem("jobTitle", this.jobTitle);
-        localStorage.setItem("minimumRequirements", this.minimumRequirements);
-        localStorage.setItem("preferredRequirements", this.preferredRequirements);
-        localStorage.setItem("jobDuties", this.jobDuties);
-        localStorage.setItem("companyInfo", this.companyInfo);
-        // Excluded date so that it's always current
-//        localStorage.setItem("date", this.date);
-        localStorage.setItem("companyNamePossessive", this.companyNamePossessive);
-        localStorage.setItem("companyAddress", this.companyAddress);
-        localStorage.setItem("hiringManager", this.hiringManager);
-        localStorage.setItem("completeJobTitle", this.completeJobTitle);
-        localStorage.setItem("shortJobTitle", this.shortJobTitle);
-        localStorage.setItem("companyValues", this.companyValues);
-        localStorage.setItem("relevantExperience", this.relevantExperience);
-        localStorage.setItem("tailorEnabled", this.tailorEnabled);
-        localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
-        localStorage.setItem("includeJobDuties", this.includeJobDuties);
-        localStorage.setItem("includeCompanyInfo", this.includeCompanyInfo);
-        localStorage.setItem("scanEnabled", this.scanEnabled);
-        localStorage.setItem("minimumRequirementsScore", this.minimumRequirementsScore);
-        localStorage.setItem("preferredRequirementsScore", this.preferredRequirementsScore);
-        localStorage.setItem("jobDutiesScore", this.jobDutiesScore);
-        localStorage.setItem("companyInfoScore", this.companyInfoScore);
-        localStorage.setItem("linkedInProfileLink", this.linkedInProfileLink);
-        localStorage.setItem("githubProfileLink", this.githubProfileLink);
-        localStorage.setItem("websiteProfileLink", this.websiteProfileLink);
+        document.getElementById(pageName).hidden = false;
 
-        localStorage.setItem("resumePdfLink", this.resumePdfLink);
-        localStorage.setItem("coverLetterPdfLink", this.coverLetterPdfLink);
+        let activeButtons = document.getElementsByClassName("nav-active");
+        for (let i = 0; i < activeButtons.length; i++) {
+            activeButtons[i].className = "nav-inactive nav-button";
+        }
 
-        console.debug("Saved application state to local storage");
+        document.getElementById("nav-button-" + pageName).className = "nav-active nav-button";
     }
 
-    load() {
-        console.debug("Loading view");
+    disableGoogleSignInButton() {
+        document.getElementById("google-authorize-button").innerText = "Google Sign In";
+        document.getElementById("google-authorize-button").className = "disabled-button button"
+        document.getElementById("google-authorize-button").disabled = true;
+    }
 
-        this.linkedInQuery = getItemWithDefault("linkedInQuery", this.linkedInQuery);
-        this.navigationPage = getItemWithDefault("navigationPage", this.navigationPage);
+    enableGoogleSignInButton() {
+        document.getElementById("google-authorize-button").innerText = "Google Sign In";
+        document.getElementById("google-authorize-button").className = "button"
+        document.getElementById("google-authorize-button").disabled = false;
+    }
 
-        try {
-            let loadedToken = localStorage.getItem("googleToken");
-            this.googleToken = JSON.parse(loadedToken);
-        } catch(err) {
-            console.warn("Google token in storage was not parseable");
+    enableGoogleRefreshButton() {
+        document.getElementById("google-authorize-button").innerText = "Google Refresh";
+        document.getElementById("google-authorize-button").className = "button"
+        document.getElementById("google-authorize-button").disabled = false;
+    }
+
+    enableGoogleSignOutButton() {
+        document.getElementById("google-signout-button").innerText = "Google Sign Out";
+        document.getElementById("google-signout-button").className = "button"
+        document.getElementById("google-signout-button").disabled = false;
+    }
+
+    render() {
+        console.debug("Rendering");
+
+        this.selectNavigationPage(this.model.navigationPage);
+
+        document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
+        document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
+        document.getElementById("linkedin-query").value = this.model.linkedInQuery;
+        document.getElementById("company-name").value = this.model.companyName;
+        document.getElementById("job-description-textarea").value = this.model.jobDescription;
+
+        if (this.model.googleSignInEnabled) {
+            this.enableGoogleSignInButton();
+        }
+    
+        if (this.model.googleRefreshEnabled) {
+            this.enableGoogleRefreshButton();
+        }
+    
+        if (this.model.googleSignOutEnabled) {
+            this.enableGoogleSignOutButton();
         }
 
-        try {
-            this.minimumRequirementsKeywords = JSON.parse(getItemWithDefault("minimumRequirementsKeywords", this.minimumRequirementsKeywords));
-            this.preferredRequirementsKeywords = JSON.parse(getItemWithDefault("preferredRequirementsKeywords", this.preferredRequirementsKeywords));
-            this.jobDutiesKeywords = JSON.parse(getItemWithDefault("jobDutiesKeywords", this.jobDutiesKeywords));
-            this.companyInfoKeywords = JSON.parse(getItemWithDefault("companyInfoKeywords", this.companyInfoKeywords));
-        } catch(err) {
-            console.warn("Scan results were not parseable");
+        let extractButton = document.getElementById("extract-sections-button");
+        if (this.model.extractJobSectionsEnabled) {
+            extractButton.className = "big-button button";
+            extractButton.disabled = false;
+        } else {
+            extractButton.className = "big-button button disabled-button";
+            extractButton.disabled = true;
+        }
+    
+        document.getElementById("application-date").value = this.model.date;
+        document.getElementById("job-title").value = this.model.jobTitle;
+        document.getElementById("minimum-requirements").value = this.model.minimumRequirements;
+        document.getElementById("preferred-requirements").value = this.model.preferredRequirements;
+        document.getElementById("job-duties").value = this.model.jobDuties;
+        document.getElementById("company-information").value = this.model.companyInfo;
+        document.getElementById("company-name-tailor").value = this.model.companyName;
+        document.getElementById("company-name-possessive").value = this.model.companyNamePossessive;
+        document.getElementById("company-address").value = this.model.companyAddress;
+        document.getElementById("hiring-manager-name").value = this.model.hiringManager;
+        document.getElementById("complete-job-title").value = this.model.completeJobTitle;
+        document.getElementById("short-job-title").value = this.model.shortJobTitle;
+        document.getElementById("company-values").value = this.model.values;
+        document.getElementById("relevant-experience").value = this.model.relevantExperience;
+
+        if (this.model.createResumeEnabled) {
+            document.getElementById("create-resume-button").disabled = false;
+            document.getElementById("create-resume-button").className = "big-button button";
+            console.log("Create resume button is ready");
+        } else {
+            console.log("Create resume button is not ready");
+            document.getElementById("create-resume-button").disabled = true;
+            document.getElementById("create-resume-button").className = "big-button disabled-button button";
         }
 
-        this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
-        this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
-        this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
-        this.googleApiKey = getItemWithDefault("googleApiKey", this.googleApiKey);
-        this.googleClientId = getItemWithDefault("googleClientId", this.googleClientId);
-        this.googleConsentRequested = getItemWithDefault("googleConsentRequested", this.googleConsentRequested);
-        this.jobscanCookie = getItemWithDefault("jobscanCookie", this.jobscanCookie);
-        this.jobscanXsrfToken = getItemWithDefault("jobscanXsrfToken", this.jobscanXsrfToken);
-        this.chatgptApiKey = getItemWithDefault("chatgptApiKey", this.chatgptApiKey);
-        this.resumeTemplateName = getItemWithDefault("resumeTemplateName", this.resumeTemplateName);
-        this.resumeTemplateId = getItemWithDefault("resumeTemplateId", this.resumeTemplateId);
-        this.coverLetterTemplateName = getItemWithDefault("coverLetterTemplateName", this.coverLetterTemplateName);
-        this.coverLetterTemplateId = getItemWithDefault("coverLetterTemplateId", this.coverLetterTemplateId);
-        this.resumeName = getItemWithDefault("resumeName", this.resumeName);
-        this.resumeId = getItemWithDefault("resumeId", this.resumeId);
-        this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
-        this.coverLetterName = getItemWithDefault("coverLetterName", this.coverLetterName);
-        this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
-        this.tailoredResumeLink = getItemWithDefault("tailoredResumeLink", this.tailoredResumeLink);
-        this.tailoredResumeLinkText = getItemWithDefault("tailoredResumeLinkText", this.tailoredResumeLinkText);
-        this.tailoredResumeDlButtonEnabled = getItemWithDefault("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        this.tailoredCoverLetterLink = getItemWithDefault("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
-        this.tailoredCoverLetterLinkText = getItemWithDefault("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
-        this.tailoredCoverLetterDlButtonEnabled = getItemWithDefault("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
-        this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
-        this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
-        this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
-        this.googleSheetLinkText = getItemWithDefault("googleSheetLinkText", this.googleSheetLinkText);
-        this.logApplicationButtonText = getItemWithDefault("logApplicationButtonText", this.logApplicationButtonText);
-        this.logApplicationEnabled = getItemWithDefault("logApplicationEnabled", this.logApplicationEnabled);
-        this.jobDescription = getItemWithDefault("jobDescription", this.jobDescription);
-        this.companyName = getItemWithDefault("companyName", this.companyName);
-        this.jobTitle = getItemWithDefault("jobTitle", this.jobTitle);
-        this.minimumRequirements = getItemWithDefault("minimumRequirements", this.minimumRequirements);
-        this.preferredRequirements = getItemWithDefault("preferredRequirements", this.preferredRequirements);
-        this.jobDuties = getItemWithDefault("jobDuties", this.jobDuties);
-        this.companyInfo = getItemWithDefault("companyInfo", this.companyInfo);
-        this.companyNamePossessive = getItemWithDefault("companyNamePossessive", this.companyNamePossessive);
-        this.companyAddress = getItemWithDefault("companyAddress", this.companyAddress);
-        this.hiringManager = getItemWithDefault("hiringManager", this.hiringManager);
-        this.completeJobTitle = getItemWithDefault("completeJobTitle", this.completeJobTitle);
-        this.shortJobTitle = getItemWithDefault("shortJobTitle", this.shortJobTitle);
-        this.companyValues = getItemWithDefault("companyValues", this.companyValues);
-        this.relevantExperience = getItemWithDefault("relevantExperience", this.relevantExperience);
-        this.minimumRequirementsScore = getItemWithDefault("minimumRequirementsScore", this.minimumRequirementsScore);
-        this.preferredRequirementsScore = getItemWithDefault("preferredRequirementsScore", this.preferredRequirementsScore);
-        this.jobDutiesScore = getItemWithDefault("jobDutiesScore", this.jobDutiesScore);
-        this.companyInfoScore = getItemWithDefault("companyInfoScore", this.companyInfoScore);
-        this.resumePdfLink = getItemWithDefault("resumePdfLink", this.resumePdfLink);
-        this.coverLetterPdfLink = getItemWithDefault("coverLetterPdfLink", this.coverLetterPdfLink);
-        this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
-        this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
-        this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
+        if (this.model.scanEnabled) {
+            document.getElementById("scan-button").disabled = false;
+            document.getElementById("scan-button").className = "big-button button";
+        } else {
+            document.getElementById("scan-button").disabled = true;
+            document.getElementById("scan-button").className = "big-button button disabled-button";
+        }
 
-        /* Boolean fields */
-        this.googleSignInEnabled = getBooleanItem("googleSignInEnabled", this.googleSignInEnabled);
-        this.googleRefreshEnabled = getBooleanItem("googleRefreshEnabled", this.googleRefreshEnabled);
-        this.googleSignOutEnabled = getBooleanItem("googleSignOutEnabled", this.googleSignOutEnabled);
-        this.extractJobSectionsEnabled = getBooleanItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
-        this.createResumeEnabled = getBooleanItem("createResumeEnabled", this.createResumeEnabled);
-        this.scanEnabled = getBooleanItem("scanEnabled", this.scanEnabled);
-        this.tailorEnabled = getBooleanItem("tailorEnabled", this.tailorEnabled);
+        document.getElementById("minimum-score").innerHTML = this.model.minimumRequirementsScore;
+        if (this.model.minimumRequirementsKeywords) {
+            let keywordsDiv = document.getElementById("minimum-requirements-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.model.minimumRequirementsKeywords);
+            keywordsDiv.appendChild(ul);
+        }
 
-        this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
-        this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
-        this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
+        document.getElementById("preferred-score").innerHTML = this.model.preferredRequirementsScore;
+        if (this.model.preferredRequirementsKeywords) {
+            let keywordsDiv = document.getElementById("preferred-requirements-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.model.preferredRequirementsKeywords);
+            keywordsDiv.appendChild(ul);
+        }
 
+        document.getElementById("job-duties-score").innerHTML = this.model.jobDutiesScore;
+        if (this.model.jobDutiesKeywords) {
+            let keywordsDiv = document.getElementById("job-duties-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.model.jobDutiesKeywords);
+            keywordsDiv.appendChild(ul);
+        }
 
-        // Excluded date so that it's always current
-//        this.date = localStorage.getItem("date");
+        document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
+        if (this.model.companyInfoKeywords) {
+            let keywordsDiv = document.getElementById("company-information-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.model.companyInfoKeywords);
+            keywordsDiv.appendChild(ul);
+        }
+    
+        document.getElementById("profile-link-linkedin").value = this.model.linkedInProfileLink;
+        document.getElementById("profile-link-github").value = this.model.githubProfileLink;
+        document.getElementById("profile-link-website").value = this.model.websiteProfileLink;
 
-        console.debug("Loaded view: ", this);
+        if (this.model.tailoredResumeLink) {
+            document.getElementById('tailored-resume-link').innerHTML = this.model.resumeName;
+            document.getElementById('tailored-resume-link').href = this.model.tailoredResumeLink;
+        } else {
+            document.getElementById('tailored-resume-link').innerHTML = "Tailored Resume Not Ready";
+            document.getElementById('tailored-resume-link').href = "";
+        }
+
+        if (this.model.tailoredCoverLetterLink) {
+            document.getElementById('tailored-cover-letter-link').innerHTML = this.model.coverLetterName;
+            document.getElementById('tailored-cover-letter-link').href = this.model.tailoredCoverLetterLink;
+        } else {
+            document.getElementById('tailored-cover-letter-link').innerHTML = "Tailored Cover Letter Not Ready";
+            document.getElementById('tailored-cover-letter-link').href = "";
+        }
+
+//        debugger;
+        if (this.model.resumePdfLink) {
+            document.getElementById('resume-download-button').disabled = false;
+            document.getElementById('resume-download-button').className = "button fa fa-download";
+        } else {
+            document.getElementById('resume-download-button').disabled = true;
+            document.getElementById('resume-download-button').className = "disabled-button button fa fa-download";
+        }
+
+        if (this.model.coverLetterPdfLink) {
+            document.getElementById('cover-letter-download-button').disabled = false;
+            document.getElementById('cover-letter-download-button').className = "button fa fa-download";
+        } else {
+            document.getElementById('cover-letter-download-button').disabled = true;
+            document.getElementById('cover-letter-download-button').className = "disabled-button button fa fa-download";
+        }
+
+        document.getElementById("application-log-sheet-name").value = this.model.googleSheetName;
+
+        if (this.model.googleSheetLink){
+            document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink;
+            document.getElementById("application-log-sheet-link").innerHTML = "Open " + this.model.googleSheetName + " In Sheets";
+        } else {
+            document.getElementById("application-log-sheet-link").href = "";
+            document.getElementById("application-log-sheet-link").innerHTML = "Sheet Not Ready";
+        }
+
+        if (this.model.logApplicationEnabled) {
+            document.getElementById("log-application-button").disabled = false;
+            document.getElementById("log-application-button").className = "button";
+        } else {
+            document.getElementById("log-application-button").disabled = true;
+            document.getElementById("log-application-button").className = "button disabled-button";
+        }
+
+        if (this.model.tailorEnabled) {
+            document.getElementById("tailor-documents-button").disabled = false;
+            document.getElementById("tailor-documents-button").className = "big-button button button";
+        } else {
+            document.getElementById("tailor-documents-button").disabled = true;
+            document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
+        }
+
     }
 
 }
