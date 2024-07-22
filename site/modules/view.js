@@ -122,6 +122,7 @@ class View {
         this.includeJobDuties = true;
         this.includeCompanyInfo = true;
         this.scanEnabled = false;
+        this.tailorEnabled = false;
         this.minimumRequirementsScore = "";
         this.preferredRequirementsScore = "";
         this.jobDutiesScore = "";
@@ -196,6 +197,7 @@ class View {
         localStorage.setItem("shortJobTitle", this.shortJobTitle);
         localStorage.setItem("companyValues", this.companyValues);
         localStorage.setItem("relevantExperience", this.relevantExperience);
+        localStorage.setItem("tailorEnabled", this.tailorEnabled);
         localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
         localStorage.setItem("includeJobDuties", this.includeJobDuties);
         localStorage.setItem("includeCompanyInfo", this.includeCompanyInfo);
@@ -283,6 +285,8 @@ class View {
         this.preferredRequirementsScore = getItemWithDefault("preferredRequirementsScore", this.preferredRequirementsScore);
         this.jobDutiesScore = getItemWithDefault("jobDutiesScore", this.jobDutiesScore);
         this.companyInfoScore = getItemWithDefault("companyInfoScore", this.companyInfoScore);
+        this.resumePdfLink = getItemWithDefault("resumePdfLink", this.resumePdfLink);
+        this.coverLetterPdfLink = getItemWithDefault("coverLetterPdfLink", this.coverLetterPdfLink);
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
         this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
@@ -294,12 +298,12 @@ class View {
         this.extractJobSectionsEnabled = getBooleanItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
         this.createResumeEnabled = getBooleanItem("createResumeEnabled", this.createResumeEnabled);
         this.scanEnabled = getBooleanItem("scanEnabled", this.scanEnabled);
+        this.tailorEnabled = getBooleanItem("tailorEnabled", this.tailorEnabled);
+
         this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
         this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
 
-        this.resumePdfLink = getItemWithDefault("resumePdfLink", this.resumePdfLink);
-        this.coverLetterPdfLink = getItemWithDefault("coverLetterPdfLink", this.coverLetterPdfLink);
 
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");

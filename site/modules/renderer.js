@@ -199,7 +199,7 @@ class Renderer {
 
         document.getElementById("application-log-sheet-name").value = this.view.googleSheetName;
 
-        if (this.view.googleSheetName && this.view.googleSheetLink){
+        if (this.view.googleSheetLink){
             document.getElementById("application-log-sheet-link").href = this.view.googleSheetLink;
             document.getElementById("application-log-sheet-link").innerHTML = "Open " + this.view.googleSheetName + " In Sheets";
         } else {
@@ -207,12 +207,20 @@ class Renderer {
             document.getElementById("application-log-sheet-link").innerHTML = "Sheet Not Ready";
         }
 
-        if (this.view.googleSheetName && this.view.googleSheetLink && this.view.companyName) {
+        if (this.view.logApplicationEnabled) {
             document.getElementById("log-application-button").disabled = false;
             document.getElementById("log-application-button").className = "button";
         } else {
             document.getElementById("log-application-button").disabled = true;
             document.getElementById("log-application-button").className = "button disabled-button";
+        }
+
+        if (this.view.tailorEnabled) {
+            document.getElementById("tailor-documents-button").disabled = false;
+            document.getElementById("tailor-documents-button").className = "big-button button button";
+        } else {
+            document.getElementById("tailor-documents-button").disabled = true;
+            document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
         }
 
     }

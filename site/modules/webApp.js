@@ -162,6 +162,12 @@ class WebApp {
             await view.save();
         }, 200));
 
+        document.getElementById("hiring-manager-name").addEventListener("change", debounce( async (event) => {
+            await controller.setHiringManager(event.target.value);
+            await view.save();
+            await renderer.render();
+        }, 100));
+
         document.getElementById("company-address").addEventListener("change", debounce( async (event) => {
             await controller.setCompanyAddress(event.target.value);
             await view.save();
@@ -230,6 +236,12 @@ class WebApp {
 
         document.getElementById('scan-button').onclick = async () => {
             await this.controller.scanResume();
+            await this.view.save();
+            await this.renderer.render();
+        }
+
+        document.getElementById('tailor-documents-button').onclick = async () => {
+            await this.controller.tailorDocuments();
             await this.view.save();
             await this.renderer.render();
         }

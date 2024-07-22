@@ -67,6 +67,7 @@ class Controller {
         this.view.companyName = companyName;
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
+        this.updateTailorEnabled();
         this.view.save();
         // If changed, check for file
         // If file, disable button
@@ -95,7 +96,7 @@ class Controller {
         } else {
             this.view.extractJobSectionsEnabled = true;
         }
-
+        this.updateTailorEnabled();
         this.view.save();
     }
     
@@ -103,19 +104,26 @@ class Controller {
         this.view.jobTitle = jobTitle;
         this.view.completeJobTitle = jobTitle;
         this.view.shortJobTitle = jobTitle;
+        this.updateTailorEnabled();
         this.view.save();
     }
 
     setCompanyAddress(companyAddress) {
         this.view.companyAddress = companyAddress;
+        this.updateTailorEnabled();
+        this.view.save();
     }
 
     setCompanyValues(companyValues) {
         this.view.companyValues = companyValues;
+        this.updateTailorEnabled();
+        this.view.save();
     }
 
     setRelevantExperience(relevantExperience) {
         this.view.relevantExperience = relevantExperience;
+        this.updateTailorEnabled();
+        this.view.save();
     }
     
     setMinimumRequirements(minimumRequirements) {
@@ -153,6 +161,12 @@ class Controller {
         this.view.save();
     }
 
+    setHiringManager(hiringManager) {
+        this.view.hiringManager = hiringManager;
+        this.updateTailorEnabled();
+        this.view.save();
+    }
+
     async setGoogleSheetName(googleSheetName) {
         this.view.googleSheetName = googleSheetName;
         await this.updateLogSheetLink();
@@ -171,6 +185,22 @@ class Controller {
         this.view.scanEnabled = Boolean(this.view.resumeId && this.view.minimumRequirements);
     }
 
+    updateTailorEnabled() {
+        this.view.tailorEnabled = Boolean(this.view.resumeId &&
+                                          this.view.coverLetterId &&
+                                          this.view.date &&
+                                          this.view.companyName &&
+                                          this.view.companyNamePossessive &&
+                                          this.view.companyAddress &&
+                                          this.view.hiringManager &&
+                                          this.view.jobTitle &&
+                                          this.view.completeJobTitle &&
+                                          this.view.shortJobTitle &&
+                                          this.view.companyValues &&
+                                          this.view.relevantExperience
+                                          )
+    }
+
     async updateDocLinks() {
         let gdocPrefix = "https://docs.google.com/document/d/";
         let gdocSuffix = "/edit";
@@ -187,7 +217,14 @@ class Controller {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
         let sheetId = await this.workspace.getDocumentIdByName(this.view.googleSheetName);
-        this.view.googleSheetLink = sheetsPrefix + sheetId + sheetSuffix;
+        if (sheetId) {
+            this.view.logApplicationEnabled = true;
+            this.view.googleSheetLink = sheetsPrefix + sheetId + sheetSuffix;
+        } else {
+            this.view.logApplicationEnabled = false;
+            this.view.googleSheetLink = "";
+        }
+
         this.view.save();
     }
 
@@ -209,6 +246,7 @@ class Controller {
         }
 
         this.updateCreateResumeEnabled();
+        this.updateLogSheetLink();
         this.view.save();
     }
 
@@ -232,8 +270,6 @@ class Controller {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
     }
-
-    mergeTemplateFields() {}
 
     async scanResume() {
         console.warn("Scan button Handler not implemented");
@@ -271,8 +307,17 @@ class Controller {
 
     }
 
+    tailorDocuments() {
+        
+
+        this.updateTailorEnabled();
+        this.view.save();
+    }
+
     logApplication() {
         console.warn("Log application is not yet implemented");
+        this.view.logApplicationEnabled = false;
+        this.view.save();
     }
 
 }
