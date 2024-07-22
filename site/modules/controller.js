@@ -61,7 +61,7 @@ class Controller {
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         await this.updateDocLinks();
         this.model.save();
         // If changed, check for file
@@ -69,15 +69,17 @@ class Controller {
         // If no file, enable button
     }
     
-    setResumeTemplateName(resumeTemplateName) {
+    async setResumeTemplateName(resumeTemplateName) {
         this.model.resumeTemplateName = resumeTemplateName;
-        this.updateDocLinks();
+        await this.updateDocLinks();
+        await this.updateTailorEnabled();
         this.model.save();
     }
     
-    setCoverLetterTemplateName(coverLetterTemplateName) { 
+    async setCoverLetterTemplateName(coverLetterTemplateName) {
         this.model.coverLetterTemplateName = coverLetterTemplateName;
-        this.updateDocLinks();
+        await this.updateDocLinks();
+        await this.updateTailorEnabled();
         this.model.save();
     }
     
@@ -86,40 +88,40 @@ class Controller {
         this.model.save();
     }
     
-    setJobDescription(jobDescription) { 
+    async setJobDescription(jobDescription) {
         this.model.jobDescription = jobDescription;
         if (!this.model.jobDescription) {
             this.model.extractJobSectionsEnabled = false;
         } else {
             this.model.extractJobSectionsEnabled = true;
         }
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         this.model.save();
     }
     
-    setJobTitle(jobTitle) {
+    async setJobTitle(jobTitle) {
         this.model.jobTitle = jobTitle;
         this.model.completeJobTitle = jobTitle;
         this.model.shortJobTitle = jobTitle;
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         this.model.save();
     }
 
-    setCompanyAddress(companyAddress) {
+    async setCompanyAddress(companyAddress) {
         this.model.companyAddress = companyAddress;
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         this.model.save();
     }
 
-    setValues(values) {
-        this.model.values = values;
-        this.updateTailorEnabled();
-        this.model.save();
+    async setCompanyValues(companyValues) {
+        this.model.companyValues = companyValues;
+        await this.updateTailorEnabled();
+        await this.model.save();
     }
 
-    setRelevantExperience(relevantExperience) {
+    async setRelevantExperience(relevantExperience) {
         this.model.relevantExperience = relevantExperience;
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         this.model.save();
     }
     
@@ -281,9 +283,10 @@ class Controller {
 
     googleSignOut() {}
 
-    extractJobSections() {
+    async extractJobSections() {
         this.chatgpt.extractJobSections();
         this.updateCompanyNamePossessive();
+        await this.updateTailorEnabled();
         this.model.save();
     }
 
@@ -294,10 +297,13 @@ class Controller {
         try {
             await this.workspace.createResumeAndCoverLetter();
             await this.updateScanEnabled();
+            await this.updateTailorEnabled();
             await this.updateDocLinks();
+            this.model.save();
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
+
     }
 
     async scanResume() {
@@ -340,7 +346,7 @@ class Controller {
         console.log("Tailoring documents");
         await this.workspace.mergeTextInTemplate(this.model.resumeId);
         await this.workspace.mergeTextInTemplate(this.model.coverLetterId);
-        this.updateTailorEnabled();
+        await this.updateTailorEnabled();
         this.model.save();
         console.log("Document tailoring complete");
     }

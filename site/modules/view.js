@@ -108,7 +108,7 @@ class View {
         document.getElementById("hiring-manager-name").value = this.model.hiringManager;
         document.getElementById("complete-job-title").value = this.model.completeJobTitle;
         document.getElementById("short-job-title").value = this.model.shortJobTitle;
-        document.getElementById("company-values").value = this.model.values;
+        document.getElementById("company-values").value = this.model.companyValues;
         document.getElementById("relevant-experience").value = this.model.relevantExperience;
 
         if (this.model.createResumeEnabled) {

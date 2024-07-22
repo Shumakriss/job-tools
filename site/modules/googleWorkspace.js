@@ -314,7 +314,7 @@ class GoogleWorkspace {
             templateUpdate.set("{{hiring-manager-name}}", this.model.hiringManager);
             templateUpdate.set("{{complete-job-title}}", this.model.completeJobTitle);
             templateUpdate.set("{{short-job-title}}", this.model.shortJobTitle);
-            templateUpdate.set("{{values}}", this.model.values);
+            templateUpdate.set("{{values}}", this.model.companyValues);
             templateUpdate.set("{{experiences}}", this.model.relevantExperience);
 
         [...templateUpdate.keys()].forEach(placeholder => {

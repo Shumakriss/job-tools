@@ -1,6 +1,6 @@
 const CHATGPT_URL = "https://api.openai.com/v1/chat/completions";
 
-const JOB_TITLE_PROMPT = `Given a job description, respond with the job title or just say "staff software engineer" if it is not provided. Do not include words that are not in the job title.`;
+const JOB_TITLE_PROMPT = `Given a job description, respond with the job title or just say "not found" if it is not provided. Do not include words that are not in the job title.`;
 const COMPANY_NAME_PROMPT = `Given a job description, respond with the most likely name of the company. Do not include words that are not in the company name.`;
 const MINIMUM_JOB_REQUIREMENTS_PROMPT = `Given a job description, find the section intended to convey the minimum or basic requirements for the applicant and provide them in your response. Do not provide any other words in the response besides the list.`;
 const PREFERRED_JOB_REQUIREMENTS_PROMPT = `Given a job description, determine if there is a section intended to convey the preferred, additional, or bonus requirements to the job. If so, provide the contents verbatim. If not, just say "no section found". Do not include any additional wording aside from the contents of the section.`;
