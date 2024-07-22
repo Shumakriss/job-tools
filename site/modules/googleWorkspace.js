@@ -301,11 +301,59 @@ class GoogleWorkspace {
         }
     }
 
+    createTemplateRequests() {
+        let requests = [];
+
+        const templateUpdate = new Map();
+        templateUpdate.set("{{job-title}}", this.view.jobTitle);
+
+            templateUpdate.set("{{date}}", this.view.date);
+            templateUpdate.set("{{company-name}}", this.view.companyName);
+            templateUpdate.set("{{company-name-possessive}}", this.view.companyNamePossessive);
+            templateUpdate.set("{{company-address}}", this.view.companyAddress);
+            templateUpdate.set("{{hiring-manager-name}}", this.view.hiringManager);
+            templateUpdate.set("{{complete-job-title}}", this.view.completeJobTitle);
+            templateUpdate.set("{{short-job-title}}", this.view.shortJobTitle);
+            templateUpdate.set("{{values}}", this.view.values);
+            templateUpdate.set("{{experiences}}", this.view.relevantExperience);
+
+        [...templateUpdate.keys()].forEach(placeholder => {
+            let request = {
+                replaceAllText: {
+                    containsText: {
+                        text: placeholder,
+                        matchCase: true,
+                    },
+                    replaceText: templateUpdate.get(placeholder),
+                }
+            }
+            requests.push(request);
+        })
+
+        return requests;
+    }
+
+    async mergeTextInTemplate(docId) {
+        let requests = this.createTemplateRequests();
+        let requestPayload = {
+            documentId: docId,
+            resource: {
+                requests
+            }
+        };
+
+        let errorHandler = (err, {data}) => {
+            console.error("Error in mergeTextInTemplate: " + err.message);
+            console.error(data);
+        }
+
+        await this.gapi.client.docs.documents.batchUpdate(requestPayload, errorHandler);
+    }
+
     // TODO: Move to controller?
     async createResume() {
-        this.view.resumeName = this.view.companyName + " " + this.view.resumeTemplateName;
         this.view.resumeTemplateId = await this.getDocumentIdByName(this.view.resumeTemplateName);
-        this.view.resumeId = await this.getDocumentIdByName(this.view.tailoredName);
+        this.view.resumeId = await this.getDocumentIdByName(this.view.resumeName);
 
         if (this.view.resumeTemplateId && !this.view.resumeId) {
             this.view.resumeId = await this.copyFile(this.view.resumeTemplateId, this.view.resumeName);
@@ -314,9 +362,8 @@ class GoogleWorkspace {
     }
 
     async createCoverLetter() {
-        this.view.coverLetterName = this.view.companyName + " " + this.view.coverLetterTemplateName;
         this.view.coverLetterTemplateId = await this.getDocumentIdByName(this.view.coverLetterTemplateName);
-        this.view.coverLetterId = await this.getDocumentIdByName(this.view.tailoredName);
+        this.view.coverLetterId = await this.getDocumentIdByName(this.view.coverLetterName);
 
         if (this.view.coverLetterTemplateId && !this.view.coverLetterId) {
             this.view.coverLetterId = await this.copyFile(this.view.coverLetterTemplateId, this.view.coverLetterName);

@@ -175,7 +175,7 @@ class WebApp {
         }, 100));
 
         document.getElementById("company-values").addEventListener("change", debounce( async (event) => {
-            await controller.setCompanyValues(event.target.value);
+            await controller.setValues(event.target.value);
             await view.save();
             await renderer.render();
         }, 100));

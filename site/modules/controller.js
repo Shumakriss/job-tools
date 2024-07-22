@@ -63,11 +63,13 @@ class Controller {
         }
     }
 
-    setCompanyName(companyName) {
+    async setCompanyName(companyName) {
         this.view.companyName = companyName;
+        this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
         this.updateTailorEnabled();
+        await this.updateDocLinks();
         this.view.save();
         // If changed, check for file
         // If file, disable button
@@ -76,11 +78,13 @@ class Controller {
     
     setResumeTemplateName(resumeTemplateName) {
         this.view.resumeTemplateName = resumeTemplateName;
+        this.updateDocLinks();
         this.view.save();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) { 
         this.view.coverLetterTemplateName = coverLetterTemplateName;
+        this.updateDocLinks();
         this.view.save();
     }
     
@@ -114,8 +118,8 @@ class Controller {
         this.view.save();
     }
 
-    setCompanyValues(companyValues) {
-        this.view.companyValues = companyValues;
+    setValues(values) {
+        this.view.values = values;
         this.updateTailorEnabled();
         this.view.save();
     }
@@ -202,14 +206,28 @@ class Controller {
     }
 
     async updateDocLinks() {
-        let gdocPrefix = "https://docs.google.com/document/d/";
-        let gdocSuffix = "/edit";
-        this.view.tailoredResumeLink = gdocPrefix + this.view.resumeId + gdocSuffix;
-        this.view.tailoredCoverLetterLink = gdocPrefix + this.view.coverLetterId + gdocSuffix;
-        this.view.tailoredResumeDlButtonEnabled = true;
-        this.view.tailoredCoverLetterDlButtonEnabled = true;
-        this.view.resumePdfLink = await this.workspace.getPdfLink(this.view.resumeId);
-        this.view.coverLetterPdfLink = await this.workspace.getPdfLink(this.view.coverLetterId);
+        const gdocPrefix = "https://docs.google.com/document/d/";
+        const gdocSuffix = "/edit";
+        if (this.view.companyName && this.view.resumeId) {
+            this.view.tailoredResumeLink = gdocPrefix + this.view.resumeId + gdocSuffix;
+            this.view.tailoredResumeDlButtonEnabled = true;
+            this.view.resumePdfLink = await this.workspace.getPdfLink(this.view.resumeId);
+        } else {
+            this.view.tailoredResumeLink = "";
+            this.view.tailoredResumeDlButtonEnabled = false;
+            this.view.resumePdfLink = null;
+        }
+
+        if (this.view.companyName && this.view.coverLetterId) {
+            this.view.tailoredCoverLetterLink = gdocPrefix + this.view.coverLetterId + gdocSuffix;
+            this.view.tailoredCoverLetterDlButtonEnabled = true;
+            this.view.coverLetterPdfLink = await this.workspace.getPdfLink(this.view.coverLetterId);
+        } else {
+            this.view.tailoredCoverLetterLink = "";
+            this.view.tailoredCoverLetterDlButtonEnabled = false;
+            this.view.coverLetterPdfLink = null;
+        }
+
         this.view.save();
     }
 
@@ -224,6 +242,24 @@ class Controller {
             this.view.logApplicationEnabled = false;
             this.view.googleSheetLink = "";
         }
+
+        this.view.save();
+    }
+
+    updateDocumentNames() {
+        if (this.view.companyName && this.view.resumeTemplateName) {
+            this.view.resumeName = this.view.companyName + " " + this.view.resumeTemplateName;
+        } else {
+            this.view.resumeName = "";
+        }
+        this.view.resumeName = this.view.resumeName.replace(" Template", "");
+
+        if (this.view.companyName && this.view.coverLetterTemplateName) {
+            this.view.coverLetterName = this.view.companyName + " " + this.view.coverLetterTemplateName;
+        } else {
+            this.view.coverLetterName = "";
+        }
+        this.view.coverLetterName = this.view.coverLetterName.replace(" Template", "");
 
         this.view.save();
     }
@@ -307,11 +343,13 @@ class Controller {
 
     }
 
-    tailorDocuments() {
-        
-
+    async tailorDocuments() {
+        console.log("Tailoring documents");
+        await this.workspace.mergeTextInTemplate(this.view.resumeId);
+        await this.workspace.mergeTextInTemplate(this.view.coverLetterId);
         this.updateTailorEnabled();
         this.view.save();
+        console.log("Document tailoring complete");
     }
 
     logApplication() {

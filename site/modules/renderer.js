@@ -108,7 +108,7 @@ class Renderer {
         document.getElementById("hiring-manager-name").value = this.view.hiringManager;
         document.getElementById("complete-job-title").value = this.view.completeJobTitle;
         document.getElementById("short-job-title").value = this.view.shortJobTitle;
-        document.getElementById("company-values").value = this.view.companyValues;
+        document.getElementById("company-values").value = this.view.values;
         document.getElementById("relevant-experience").value = this.view.relevantExperience;
 
         if (this.view.createResumeEnabled) {
@@ -181,6 +181,7 @@ class Renderer {
             document.getElementById('tailored-cover-letter-link').href = "";
         }
 
+//        debugger;
         if (this.view.resumePdfLink) {
             document.getElementById('resume-download-button').disabled = false;
             document.getElementById('resume-download-button').className = "button fa fa-download";
