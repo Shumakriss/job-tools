@@ -412,7 +412,7 @@ class Controller {
                 this.createResume(),
                 this.createCoverLetter()
             ]).then( () => {
-                this.model.statusMessage = "Documents are ready";
+                this.model.statusMessage = "Documents ready to scan and tailor";
                 this.view.render();
                 this.updateScanEnabled();
                 this.updateTailorEnabled();
@@ -498,11 +498,19 @@ class Controller {
 
     async tailorDocuments() {
         console.log("Tailoring documents");
-        await this.workspace.mergeTextInTemplate(this.model.resumeId);
-        await this.workspace.mergeTextInTemplate(this.model.coverLetterId);
-        this.updateTailorEnabled();
-        this.model.save();
+        this.model.statusMessage = "Tailoring documents...";
         this.view.render();
+
+        Promise.all([
+            this.workspace.mergeTextInTemplate(this.model.resumeId),
+            this.workspace.mergeTextInTemplate(this.model.coverLetterId)
+        ]).then( () => {
+            this.updateTailorEnabled();
+            this.model.statusMessage = "Finished tailoring documents";
+            this.model.save();
+            this.view.render();
+        });
+
         console.log("Document tailoring complete");
     }
 
