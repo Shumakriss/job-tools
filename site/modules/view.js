@@ -134,6 +134,8 @@ class View {
             keywordsDiv.innerHTML = '';
             let ul = formatScanResults(this.model.minimumRequirementsKeywords);
             keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("minimum-requirements-keywords").innerHTML = '';
         }
 
         document.getElementById("preferred-score").innerHTML = this.model.preferredRequirementsScore;
@@ -142,6 +144,8 @@ class View {
             keywordsDiv.innerHTML = '';
             let ul = formatScanResults(this.model.preferredRequirementsKeywords);
             keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("preferred-requirements-keywords").innerHTML = '';
         }
 
         document.getElementById("job-duties-score").innerHTML = this.model.jobDutiesScore;
@@ -150,6 +154,8 @@ class View {
             keywordsDiv.innerHTML = '';
             let ul = formatScanResults(this.model.jobDutiesKeywords);
             keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("job-duties-keywords").innerHTML = '';
         }
 
         document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
@@ -158,6 +164,8 @@ class View {
             keywordsDiv.innerHTML = '';
             let ul = formatScanResults(this.model.companyInfoKeywords);
             keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("company-information-keywords").innerHTML = '';
         }
     
         document.getElementById("profile-link-linkedin").value = this.model.linkedInProfileLink;
