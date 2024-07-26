@@ -23,8 +23,8 @@ class WebApp {
 
     constructor(gapi, google) {
         this.model = new Model();
-        this.controller = new Controller(this.model, gapi, google);
         this.view = new View(this.model);
+        this.controller = new Controller(this.model, this.view, gapi, google);
     }
 
     start() {
@@ -48,7 +48,6 @@ class WebApp {
                     console.log("Credential file changed");
                     let credentials = JSON.parse(fr.result);
                     controller.setCredentials(credentials);
-                    view.render();
                 }
 
                 await fr.readAsText(this.files[0]);
@@ -58,78 +57,64 @@ class WebApp {
         document.getElementById("resume-template-name").addEventListener("change", debounce( async (event) => {
             console.debug("Invoked event listener for resume-template-name");
             controller.setResumeTemplateName(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById("cover-letter-template-name").addEventListener("change", debounce( async (event) => {
             console.debug("Invoked event listener for cover-letter-template-name");
             controller.setCoverLetterTemplateName(event.target.value);
-            view.render();
         }, 100));
 
         // Job Description page inputs
         document.getElementById('job-description-textarea').addEventListener('keydown', debounce( async (event) => {
             controller.setJobDescription(event.target.value);
-            view.render();
         }, 200));
 
         // Extract page inputs
         document.getElementById("company-name").addEventListener("change", debounce( async (event) => {
             console.log("Invoked event listener for company-name");
-            await controller.setCompanyName(event.target.value);
-            view.render();
+            controller.setCompanyName(event.target.value);
         }, 100));
 
         document.getElementById("job-title").addEventListener("change", debounce( async (event) => {
             console.log("Invoked event listener for job-title");
             controller.setJobTitle(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById('minimum-requirements').addEventListener('keydown', debounce( async (event) => {
             controller.setMinimumRequirements(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('preferred-requirements').addEventListener('keydown', debounce( async (event) => {
             controller.setPreferredRequirements(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('job-duties').addEventListener('keydown', debounce( async (event) => {
             controller.setJobDuties(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('company-information').addEventListener('keydown', debounce( async (event) => {
             controller.setCompanyInfo(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById("company-name-tailor").addEventListener("change", debounce( async (event) => {
             console.log("Invoked event listener for company-name");
             controller.setCompanyName(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById('profile-link-linkedin').addEventListener('change', debounce( async (event) => {
             controller.setLinkedInProfileLink(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('profile-link-github').addEventListener('change', debounce( async (event) => {
             controller.setGithubProfileLink(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('profile-link-website').addEventListener('change', debounce( async (event) => {
             controller.setWebsiteProfileLink(event.target.value);
-            view.render();
         }, 200));
 
         document.getElementById('application-log-sheet-name').addEventListener('change', debounce( async (event) => {
-            await controller.setGoogleSheetName(event.target.value);
-            view.render();
+            controller.setGoogleSheetName(event.target.value);
         }, 200));
 
         document.getElementById('include-preferred-checkbox').addEventListener('change', debounce( async (event) => {
@@ -149,22 +134,18 @@ class WebApp {
 
         document.getElementById("hiring-manager-name").addEventListener("change", debounce( async (event) => {
             controller.setHiringManager(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById("company-address").addEventListener("change", debounce( async (event) => {
             controller.setCompanyAddress(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById("company-values").addEventListener("change", debounce( async (event) => {
             controller.setCompanyValues(event.target.value);
-            view.render();
         }, 100));
 
         document.getElementById("relevant-experience").addEventListener("change", debounce( async (event) => {
             controller.setRelevantExperience(event.target.value);
-            view.render();
         }, 100));
 
         console.debug("Registered listeners");
@@ -174,59 +155,48 @@ class WebApp {
 
         document.getElementById('google-authorize-button').onclick = async () => {
             console.warn("Google Authorize Handler not implemented");
-            await this.controller.googleAuthorize();
-            this.view.render();
+            this.controller.googleAuthorize();
         }
 
         document.getElementById('nav-button-job-description').onclick = async () => {
             this.controller.setNavigationPage("job-description");
-            this.view.render();
         }
 
         document.getElementById('nav-button-extract').onclick = async () => {
             this.controller.setNavigationPage("extract");
-            this.view.render();
         }
 
         document.getElementById('nav-button-tailor').onclick = async () => {
             this.controller.setNavigationPage("tailor");
-            this.view.render();
         }
 
         document.getElementById('nav-button-scan').onclick = async () => {
             this.controller.setNavigationPage("scan");
-            this.view.render();
         }
 
         document.getElementById('extract-sections-button').onclick = async () => {
-            await this.controller.extractJobSections();
-            this.view.render();
+            this.controller.extractJobSections();
         }
     
         document.getElementById('create-resume-button').onclick = async () => {
-            await this.controller.createResumeAndCoverLetter();
-            this.view.render();
+            this.controller.createResumeAndCoverLetter();
         }
 
         document.getElementById('scan-button').onclick = async () => {
-            await this.controller.scanResume();
-            this.view.render();
+            this.controller.scanResume();
         }
 
         document.getElementById('tailor-documents-button').onclick = async () => {
-            await this.controller.tailorDocuments();
-            this.view.render();
+            this.controller.tailorDocuments();
         }
 
         document.getElementById('log-application-button').onclick = async () => {
-            await this.controller.logApplication();
-            this.view.render();
+            this.controller.logApplication();
         }
 
         document.getElementById('reset-button').onclick = async () => {
             console.debug("Reset button click");
             this.controller.reset();
-            this.view.render();
         }
 
         document.getElementById('clipboard-linkedin-query').onclick = () => {

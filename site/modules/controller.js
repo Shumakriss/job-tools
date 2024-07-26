@@ -9,8 +9,9 @@ class Controller {
     /* Manages complexities of application initialization, state, and behavior
         - Delegates complexity to separate objects when necessary
     */
-    constructor(model, gapi, google) {
+    constructor(model, view, gapi, google) {
         this.model = model;
+        this.view = view;
         this.model.load();
         this.workspace = new GoogleWorkspace(model, gapi, google);
         this.jobscan = new Jobscan(model);
@@ -26,6 +27,7 @@ class Controller {
         console.log("Navigating to page " + pageName);
         this.model.navigationPage = pageName;
         this.model.save();
+        this.view.render();
     }
 
     setExtractJobSectionsEnabled() {
@@ -43,6 +45,7 @@ class Controller {
         this.model.googleRefreshEnabled = false;
         this.model.googleSignOutEnabled = false;
         this.model.save();
+        this.view.render();
     }
 
     updateCompanyNamePossessive() {
@@ -65,13 +68,14 @@ class Controller {
             this.model.coverLetterLink = "";
             this.model.coverLetterId = null;
         }
-        
+
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
         this.updateTailorEnabled();
         await this.updateDocLinks();
         this.model.save();
+        this.view.render();
     }
     
     setResumeTemplateName(resumeTemplateName) {
@@ -79,6 +83,7 @@ class Controller {
         this.updateDocLinks();
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
@@ -86,6 +91,7 @@ class Controller {
         this.updateDocLinks();
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
     
     setApplicationLogName(applicationLogName) { 
@@ -102,6 +108,7 @@ class Controller {
         }
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
     
     setJobTitle(jobTitle) {
@@ -110,24 +117,28 @@ class Controller {
         this.model.shortJobTitle = jobTitle;
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
 
     setCompanyAddress(companyAddress) {
         this.model.companyAddress = companyAddress;
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
 
     setCompanyValues(companyValues) {
         this.model.companyValues = companyValues;
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
 
     setRelevantExperience(relevantExperience) {
         this.model.relevantExperience = relevantExperience;
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
     
     setMinimumRequirements(minimumRequirements) {
@@ -169,6 +180,7 @@ class Controller {
         this.model.hiringManager = hiringManager;
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
     }
 
     async setGoogleSheetName(googleSheetName) {
@@ -289,6 +301,7 @@ class Controller {
         this.updateCreateResumeEnabled();
         this.updateLogSheetLink();
         this.model.save();
+        this.view.render();
     }
 
     googleSignOut() {}
@@ -322,6 +335,7 @@ class Controller {
         this.updateTailorEnabled();
 
         this.model.save();
+        this.view.render();
     }
 
     async createResumeAndCoverLetter() {
@@ -334,6 +348,7 @@ class Controller {
             this.updateTailorEnabled();
             await this.updateDocLinks();
             this.model.save();
+            this.view.render();
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
@@ -375,6 +390,7 @@ class Controller {
         }
 
         this.model.save();
+        this.view.render();
     }
 
     async tailorDocuments() {
@@ -383,6 +399,7 @@ class Controller {
         await this.workspace.mergeTextInTemplate(this.model.coverLetterId);
         this.updateTailorEnabled();
         this.model.save();
+        this.view.render();
         console.log("Document tailoring complete");
     }
 
@@ -391,6 +408,7 @@ class Controller {
         await this.workspace.appendApplicationLog();
         this.model.logApplicationEnabled = false;
         this.model.save();
+        this.view.render();
     }
 
     reset() {
@@ -430,6 +448,7 @@ class Controller {
         this.model.logApplicationEnabled = true;
 
         this.model.save();
+        this.view.render();
     }
 
 }
