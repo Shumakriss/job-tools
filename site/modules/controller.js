@@ -284,17 +284,17 @@ class Controller {
     googleSignOut() {}
 
     async extractJobSections() {
-//
-//        Promise.all([
-//            this.chatgpt.extractCompanyName(this.model.jobDescription),
-//            this.chatgpt.extractJobTitle(this.model.jobDescription),
-//            this.chatgpt.extractMinimumRequirements(this.model.jobDescription),
-//            this.chatgpt.extractPreferredRequirements(this.model.jobDescription),
-//            this.chatgpt.extractJobDuties(this.model.jobDescription),
-//            this.chatgpt.extractCompanyInfo(this.model.jobDescription)
-//        ]).then( values => console.log(values));
 
-        let companyName = await this.chatgpt.extractCompanyName(this.model.jobDescription);
+        let jobSections = await Promise.all([
+            this.chatgpt.extractCompanyName(this.model.jobDescription),
+            this.chatgpt.extractJobTitle(this.model.jobDescription),
+            this.chatgpt.extractMinimumRequirements(this.model.jobDescription),
+            this.chatgpt.extractPreferredRequirements(this.model.jobDescription),
+            this.chatgpt.extractJobDuties(this.model.jobDescription),
+            this.chatgpt.extractCompanyInfo(this.model.jobDescription)
+        ]);
+
+        let companyName = jobSections[0];
 
         if (this.model.companyName != companyName) {
             this.model.companyName = companyName;
@@ -304,20 +304,20 @@ class Controller {
             this.model.coverLetterId = null;
         }
 
-        await this.updateCompanyNamePossessive();
-        await this.updateCreateResumeEnabled();
-        await this.updateDocLinks();
+        this.updateCompanyNamePossessive();
+        this.updateCreateResumeEnabled();
+        this.updateDocLinks();
 
-        this.model.jobTitle = await this.chatgpt.extractJobTitle(this.model.jobDescription);
-        this.model.completeJobTitle = this.model.jobTitle;
-        this.model.shortJobTitle = this.model.jobTitle;
+        this.model.jobTitle = jobSections[1];
+        this.model.completeJobTitle = jobSections[1];
+        this.model.shortJobTitle = jobSections[1];
 
-        this.model.minimumRequirements = await this.chatgpt.extractMinimumRequirements(this.model.jobDescription);
-        this.model.preferredRequirements = await this.chatgpt.extractPreferredRequirements(this.model.jobDescription);
-        this.model.jobDuties = await this.chatgpt.extractJobDuties(this.model.jobDescription);
-        this.model.companyInfo = await this.chatgpt.extractCompanyInfo(this.model.jobDescription);
+        this.model.minimumRequirements = jobSections[2];
+        this.model.preferredRequirements = jobSections[3];
+        this.model.jobDuties = jobSections[4];
+        this.model.companyInfo = jobSections[5];
 
-        await this.updateTailorEnabled();
+        this.updateTailorEnabled();
 
         this.model.save();
     }
