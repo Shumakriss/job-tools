@@ -385,6 +385,10 @@ class Controller {
         this.model.preferredRequirementsScore = "";
         this.model.jobDutiesScore = "";
         this.model.companyInfoScore = "";
+        this.minimumRequirementsKeywords = "";
+        this.preferredRequirementsKeywords = "";
+        this.jobDutiesKeywords = "";
+        this.companyInfoKeywords = "";
 
         this.model.extractJobSectionsEnabled = false;
         this.model.createResumeEnabled = false;
