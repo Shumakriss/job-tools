@@ -389,6 +389,8 @@ class Controller {
         this.preferredRequirementsKeywords = "";
         this.jobDutiesKeywords = "";
         this.companyInfoKeywords = "";
+        this.model.resumePdfLink = "";
+        this.model.coverLetterPdfLink = "";
 
         this.model.extractJobSectionsEnabled = false;
         this.model.createResumeEnabled = false;
