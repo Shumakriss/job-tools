@@ -201,6 +201,7 @@ class Controller {
     }
 
     async updateDocLinks() {
+//        debugger;
         const gdocPrefix = "https://docs.google.com/document/d/";
         const gdocSuffix = "/edit";
         if (this.model.companyName && this.model.resumeId) {
@@ -284,9 +285,11 @@ class Controller {
     googleSignOut() {}
 
     async extractJobSections() {
-        this.chatgpt.extractJobSections();
-        this.updateCompanyNamePossessive();
+        await this.chatgpt.extractJobSections();
+        await this.updateCompanyNamePossessive();
+        await this.updateCreateResumeEnabled();
         await this.updateTailorEnabled();
+        await this.updateDocLinks();
         this.model.save();
     }
 
