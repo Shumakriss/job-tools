@@ -381,10 +381,10 @@ class Controller {
         this.model.shortJobTitle = "";
         this.model.companyValues = "";
         this.model.relevantExperience = "";
-        this.model.MinimumRequirementsScore = "";
-        this.model.PreferredRequirementsScore = "";
-        this.model.JobDutiesScore = "";
-        this.model.CompanyInfoScore = "";
+        this.model.minimumRequirementsScore = "";
+        this.model.preferredRequirementsScore = "";
+        this.model.jobDutiesScore = "";
+        this.model.companyInfoScore = "";
 
         this.model.extractJobSectionsEnabled = false;
         this.model.createResumeEnabled = false;
