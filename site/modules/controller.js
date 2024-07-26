@@ -373,7 +373,7 @@ class Controller {
                 this.model.statusMessage = "Job description sections extracted";
                 this.model.save();
                 this.view.render();
-        })
+        });
 
     }
 
@@ -395,15 +395,19 @@ class Controller {
     }
 
     async scanResume() {
-        console.warn("Scan button Handler not implemented");
+        this.model.statusMessage = "Scanning resume...";
+        this.view.render();
 
         this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
 
         let jobDescription = "";
+        let promises = [];
 
         jobDescription = jobDescription + this.model.minimumRequirements;
 
-        this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+        let minimumScanPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+        promises.push(minimumScanPromise);
+        minimumScanPromise.then( results => {
             this.model.minimumRequirementsScore = results['matchRate']['score'];
             this.model.minimumRequirementsKeywords = results;
             this.model.save();
@@ -413,7 +417,9 @@ class Controller {
         if (this.model.includePreferredRequirements && this.model.preferredRequirements) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
-            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+            let preferredRequirementsPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+            promises.push(preferredRequirementsPromise);
+            preferredRequirementsPromise.then( results => {
                 this.model.preferredRequirementsScore = results['matchRate']['score'];
                 this.model.preferredRequirementsKeywords = results;
                 this.model.save();
@@ -424,7 +430,9 @@ class Controller {
         if (this.model.includeJobDuties && this.model.jobDuties) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
-            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+            let jobDutiesPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+            promises.push(jobDutiesPromise);
+            jobDutiesPromise.then( results => {
                 this.model.jobDutiesScore = results['matchRate']['score'];
                 this.model.jobDutiesKeywords = results;
                 this.model.save();
@@ -435,13 +443,21 @@ class Controller {
         if (this.model.includeCompanyInfo && this.model.companyInfo) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
-            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+            let companyInfoPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+            promises.push(companyInfoPromise);
+            companyInfoPromise.then( results => {
                 this.model.companyInfoScore = results['matchRate']['score'];
                 this.model.companyInfoKeywords = results;
                 this.model.save();
                 this.view.render();
             });
         }
+
+        Promise.all(promises).then( results =>{
+            this.model.statusMessage = "All resume scans complete";
+            this.model.save();
+            this.view.render();
+        });
 
     }
 
