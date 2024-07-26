@@ -385,10 +385,10 @@ class Controller {
         this.model.preferredRequirementsScore = "";
         this.model.jobDutiesScore = "";
         this.model.companyInfoScore = "";
-        this.minimumRequirementsKeywords = "";
-        this.preferredRequirementsKeywords = "";
-        this.jobDutiesKeywords = "";
-        this.companyInfoKeywords = "";
+        this.model.minimumRequirementsKeywords = "";
+        this.model.preferredRequirementsKeywords = "";
+        this.model.jobDutiesKeywords = "";
+        this.model.companyInfoKeywords = "";
         this.model.resumePdfLink = "";
         this.model.coverLetterPdfLink = "";
 
