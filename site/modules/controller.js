@@ -201,7 +201,6 @@ class Controller {
     }
 
     async updateDocLinks() {
-//        debugger;
         const gdocPrefix = "https://docs.google.com/document/d/";
         const gdocSuffix = "/edit";
         if (this.model.companyName && this.model.resumeId) {
@@ -389,6 +388,7 @@ class Controller {
         this.model.createResumeEnabled = false;
         this.model.scanEnabled = false;
         this.model.tailorEnabled = false;
+        this.model.logApplicationEnabled = true;
         await this.model.save();
     }
 
