@@ -254,7 +254,7 @@ class WebApp {
 
         document.getElementById('reset-button').onclick = async () => {
             let confirmText = "All application data will be lost. Are you sure you want to reset the application?";
-            if(confirm(confirmText) == true) {
+            if(window.confirm(confirmText) == true) {
                 await this.controller.reset();
                 await this.model.save();
                 await this.view.render();
