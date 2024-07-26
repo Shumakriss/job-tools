@@ -231,6 +231,7 @@ class View {
             document.getElementById("tailor-documents-button").className = "big-button button disabled-button";
         }
 
+        document.getElementById("status-message").innerHTML = this.model.statusMessage;
     }
 
 }

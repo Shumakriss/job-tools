@@ -137,6 +137,7 @@ class Model {
         this.resumePdfLink = "";
         this.coverLetterPdfLink = "";
 
+        this.statusMessage = "Start your application!";
     }
 
     /* Save-load */
@@ -214,6 +215,8 @@ class Model {
 
         localStorage.setItem("resumePdfLink", this.resumePdfLink);
         localStorage.setItem("coverLetterPdfLink", this.coverLetterPdfLink);
+
+        localStorage.setItem("statusMessage", this.statusMessage);
 
         console.debug("Saved application state to local storage");
     }
@@ -307,6 +310,7 @@ class Model {
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
         this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
 
+        this.statusMessage = getItemWithDefault("statusMessage", this.statusMessage);
 
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");

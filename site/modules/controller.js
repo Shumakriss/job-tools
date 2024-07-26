@@ -309,7 +309,11 @@ class Controller {
 
     async extractJobSections() {
 
-        this.chatgpt.extractCompanyName(this.model.jobDescription).then( companyName => {
+        this.model.statusMessage = "Asking ChatGPT to split up job description...";
+        this.view.render();
+
+        let companyNamePromise = this.chatgpt.extractCompanyName(this.model.jobDescription);
+        companyNamePromise.then( companyName => {
             this.setCompanyName(companyName);
             this.updateCompanyNamePossessive();
             this.updateCreateResumeEnabled();
@@ -319,7 +323,8 @@ class Controller {
             this.updateDocLinks();
         });
         
-        this.chatgpt.extractJobTitle(this.model.jobDescription).then( jobTitle => {
+        let jobTitlePromise = this.chatgpt.extractJobTitle(this.model.jobDescription);
+        jobTitlePromise.then( jobTitle => {
             this.model.jobTitle = jobTitle;
             this.model.completeJobTitle = jobTitle;
             this.model.shortJobTitle = jobTitle;
@@ -328,30 +333,47 @@ class Controller {
             this.view.render();
         });
 
-        this.chatgpt.extractMinimumRequirements(this.model.jobDescription).then( minimumRequirements => {
+        let minimumRequirementsPromise = this.chatgpt.extractMinimumRequirements(this.model.jobDescription);
+        minimumRequirementsPromise.then( minimumRequirements => {
             this.model.minimumRequirements = minimumRequirements;
             this.model.save();
             this.view.render();
         });
 
-        this.chatgpt.extractPreferredRequirements(this.model.jobDescription).then( preferredRequirements => {
+        let preferredRequirementsPromise = this.chatgpt.extractPreferredRequirements(this.model.jobDescription);
+        preferredRequirementsPromise.then( preferredRequirements => {
             this.model.preferredRequirements = preferredRequirements;
             this.model.save();
             this.view.render();
         });
 
-        this.chatgpt.extractJobDuties(this.model.jobDescription).then( jobDuties => {
+        let jobDutiesPromise = this.chatgpt.extractJobDuties(this.model.jobDescription);
+        jobDutiesPromise.then( jobDuties => {
             this.model.jobDuties = jobDuties;
             this.model.save();
             this.view.render();
         });
 
-        this.chatgpt.extractCompanyInfo(this.model.jobDescription).then( companyInfo => {
+        let companyInfoPromise = this.chatgpt.extractCompanyInfo(this.model.jobDescription);
+        companyInfoPromise.then( companyInfo => {
             this.model.companyInfo = companyInfo;
             this.updateTailorEnabled();
             this.model.save();
             this.view.render();
         });
+
+        Promise.all([
+                companyNamePromise,
+                jobTitlePromise,
+                minimumRequirementsPromise,
+                preferredRequirementsPromise,
+                jobDutiesPromise,
+                companyInfoPromise
+            ]).then( results =>{
+                this.model.statusMessage = "Job description sections extracted";
+                this.model.save();
+                this.view.render();
+        })
 
     }
 
