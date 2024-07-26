@@ -7,6 +7,9 @@ const PREFERRED_JOB_REQUIREMENTS_PROMPT = `Given a job description, determine if
 const JOB_DUTIES_PROMPT = `Given a job description, find the section intended to convey the job's duties or responsibilities and provide them in your response. Sections with titles like "About the role", "Job Duties", "Responsibilities", "In your first week you will", or "The Opportunity" and other similar titles should be included in the response. Do not include sections about the company, basic requirements, or preferred requirements. List the contents of the role and responsibilities sections verbatim.`;
 const COMPANY_INFORMATION_PROMPT = `Given a job description, determine if there is a section intended to describe the company or team. If so, provide the contents verbatim. If not, just say "no section found". Do not include any additional wording aside from the contents of the job description. Do not include information from other sections about the role or its requirements or responsibilities.`;
 const RESUME_SUGGESTIONS_PROMPT = `Given a resume and a list of keywords to include, offer suggestions on how to integrate the keywords into the resume with as little modification necessary. Highlight text which is not in the original resume in bold. Only incorporate keywords if the candidate seems to have strongly related experience. Also, list the keywords which could not reasonably be integrated.`;
+const COMPANY_ADDRESS_PROMPT = `Given a company's name, print the street address, city, state, and zip code without including the company's name. Print only the address and no other text: `;
+const COMPANY_VALUES = `Given a company's name, provide a short, comma-separated list of its values: `;
+const JOB_EXPERIENCE = `Given a job description, concisely finish the sentence " I am eager to leverage my skills and experience to support your team's objectives, especially in ...". Do not include the beginning of the sentence, only provide the end of the sentence and no other text. Job Description: `;
 
 class ChatGpt {
     constructor(model) {
@@ -97,6 +100,20 @@ class ChatGpt {
 
     async extractCompanyInfo(jobDescriptionText) {
         return await this.extractSection(COMPANY_INFORMATION_PROMPT, jobDescriptionText);
+    }
+
+    async extractCompanyAddress(companyName) {
+        let prompt = COMPANY_ADDRESS_PROMPT + companyName;
+        return await this.ask(prompt);
+    }
+
+    async extractCompanyValues(companyName) {
+        let prompt = COMPANY_VALUES + companyName;
+        return await this.ask(prompt);
+    }
+
+    async extractRelevantExperience(jobDescriptionText) {
+        return await this.extractSection(JOB_EXPERIENCE, jobDescriptionText);
     }
 
 }

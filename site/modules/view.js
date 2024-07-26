@@ -1,8 +1,14 @@
 
 function formatScanResults(jobscanResults) {
+
     let ul = document.createElement('ul');
 
+    if (!jobscanResults || typeof jobscanResults != 'object' || !('highValueSkills' in jobscanResults)) {
+       return ul;
+    }
+
     let highValueSkills = jobscanResults['highValueSkills'];
+
     for (let i=0; i< highValueSkills.length; i++){
         if (highValueSkills[i].cvCount == 0){
             let li = document.createElement("li");
@@ -65,8 +71,6 @@ class View {
 
     render() {
         console.debug("Rendering");
-
-//        this.selectNavigationPage(this.model.navigationPage);
 
         document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
         document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
@@ -226,6 +230,10 @@ class View {
         }
 
         document.getElementById("status-message").innerHTML = this.model.statusMessage;
+
+        if (this.model.companyAddressSearchLink) {
+            document.getElementById("company-address-google-link").href = this.model.companyAddressSearchLink;
+        }
     }
 
 }

@@ -59,6 +59,16 @@ class Controller {
         }
     }
 
+    updateCompanyAddressSearchLink() {
+        let querySuffix = " headquarters address";
+        let escapedQuery = encodeURIComponent(this.model.companyName + querySuffix);
+        let linkPrefix = "https://www.google.com/search?q=";
+
+        this.model.companyAddressSearchLink = linkPrefix + escapedQuery;
+        this.model.save();
+        this.view.render();
+    }
+
     async setCompanyName(companyName) {
 
         if (this.model.companyName != companyName) {
@@ -76,6 +86,7 @@ class Controller {
         this.model.save();
         this.view.render();
         this.updateDocLinks();
+        this.updateCompanyAddressSearchLink();
     }
     
     setResumeTemplateName(resumeTemplateName) {
@@ -109,6 +120,9 @@ class Controller {
         this.updateTailorEnabled();
         this.model.save();
         this.view.render();
+        if (jobDescription && jobDescription != "" && this.model.resumeTemplateName) {
+            this.scanResumeTemplate();
+        }
     }
     
     setJobTitle(jobTitle) {
@@ -365,13 +379,40 @@ class Controller {
             this.view.render();
         });
 
+        let companyAddressPromise = this.chatgpt.extractCompanyAddress(this.model.companyName);
+        companyAddressPromise.then( companyAddress => {
+            this.model.companyAddress = companyAddress;
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+        });
+
+        let companyValuesPromise = this.chatgpt.extractCompanyValues(this.model.companyName);
+        companyValuesPromise.then( companyValues => {
+            this.model.companyValues = companyValues;
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+        });
+
+        let relevantExperiencePromise = this.chatgpt.extractRelevantExperience(this.model.jobDescription);
+        relevantExperiencePromise.then( relevantExperience => {
+            this.model.relevantExperience = relevantExperience;
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+        });
+
         Promise.all([
                 companyNamePromise,
                 jobTitlePromise,
                 minimumRequirementsPromise,
                 preferredRequirementsPromise,
                 jobDutiesPromise,
-                companyInfoPromise
+                companyInfoPromise,
+                companyAddressPromise,
+                companyValuesPromise,
+                relevantExperiencePromise
             ]).then( results =>{
                 this.model.statusMessage = "Job description sections extracted";
                 this.model.save();
@@ -429,7 +470,49 @@ class Controller {
 
     }
 
+    async scanResumeTemplate() {
+        this.model.statusMessage = "Scanning resume template...";
+        this.view.render();
+
+        if (this.model.resumeTemplateName && !this.model.resumeTemplateId) {
+            this.model.statusMessage = "Looking for resume template...";
+            this.view.render();
+            this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
+        }
+
+        this.model.statusMessage = "Template found, fetching contents...";
+        this.view.render();
+
+        this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
+
+        this.model.statusMessage = "Template contents acquired, scanning against job description";
+        this.view.render();
+
+        let results = await this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
+
+        this.model.statusMessage = "Resume template scan complete";
+
+        this.model.minimumRequirementsScore = results['matchRate']['score'];
+        this.model.minimumRequirementsKeywords = results;
+        this.model.preferredRequirementsScore = "";
+        this.model.preferredRequirementsKeywords = "";
+        this.model.jobDutiesScore = "";
+        this.model.jobDutiesKeywords = "";
+        this.model.companyInfoScore = "";
+        this.model.companyInfoKeywords = "";
+
+        this.model.save();
+        this.view.render();
+    }
+
     async scanResume() {
+
+        if (!this.model.resumeId) {
+            this.model.statusMessage = "Resume scan missing required fields or documents";
+            this.view.render();
+            return;
+        }
+
         this.model.statusMessage = "Scanning resume...";
         this.view.render();
 

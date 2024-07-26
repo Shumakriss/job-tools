@@ -106,6 +106,7 @@ class Model {
         this.preferredRequirements = "";
         this.jobDuties = "";
         this.companyInfo = "";
+        this.companyAddressSearchLink = "https://www.google.com";
 
         /* Template merge fields */
         const date = new Date();  // Today
@@ -218,6 +219,8 @@ class Model {
 
         localStorage.setItem("statusMessage", this.statusMessage);
 
+        localStorage.setItem("companyAddressSearchLink", this.companyAddressSearchLink);
+
         console.debug("Saved application state to local storage");
     }
 
@@ -296,6 +299,7 @@ class Model {
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
         this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
+        this.companyAddressSearchLink = getItemWithDefault("companyAddressSearchLink", this.companyAddressSearchLink);
 
         /* Boolean fields */
         this.googleSignInEnabled = getBooleanItem("googleSignInEnabled", this.googleSignInEnabled);
