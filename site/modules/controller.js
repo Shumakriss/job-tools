@@ -286,6 +286,8 @@ class Controller {
     async extractJobSections() {
         await this.chatgpt.extractJobSections();
         await this.updateCompanyNamePossessive();
+        this.model.completeJobTitle = this.model.jobTitle;
+        this.model.shortJobTitle = this.model.jobTitle;
         await this.updateCreateResumeEnabled();
         await this.updateTailorEnabled();
         await this.updateDocLinks();
@@ -374,11 +376,11 @@ class Controller {
         this.model.coverLetterId = null;
         this.model.companyNamePossessive = "";
         this.model.companyAddress = "";
-        this.model.hiringManager = "";
+        this.model.hiringManager = "Hiring Manager";
         this.model.completeJobTitle = "";
         this.model.shortJobTitle = "";
         this.model.companyValues = "";
-        this.model.RelevantExperience = "";
+        this.model.relevantExperience = "";
         this.model.MinimumRequirementsScore = "";
         this.model.PreferredRequirementsScore = "";
         this.model.JobDutiesScore = "";
