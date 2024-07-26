@@ -360,37 +360,50 @@ class Controller {
 
         this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
 
-        let results;
         let jobDescription = "";
 
         jobDescription = jobDescription + this.model.minimumRequirements;
-        results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
-        this.model.minimumRequirementsScore = results['matchRate']['score'];
-        this.model.minimumRequirementsKeywords = results;
+
+        this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+            this.model.minimumRequirementsScore = results['matchRate']['score'];
+            this.model.minimumRequirementsKeywords = results;
+            this.model.save();
+            this.view.render();
+        });
 
         if (this.model.includePreferredRequirements && this.model.preferredRequirements) {
             jobDescription = jobDescription + this.model.preferredRequirements;
-            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
-            this.model.preferredRequirementsScore = results['matchRate']['score'];
-            this.model.preferredRequirementsKeywords = results;
+
+            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+                this.model.preferredRequirementsScore = results['matchRate']['score'];
+                this.model.preferredRequirementsKeywords = results;
+                this.model.save();
+                this.view.render();
+            });
         }
 
         if (this.model.includeJobDuties && this.model.jobDuties) {
-            jobDescription = jobDescription + this.model.jobDuties;
-            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
-            this.model.jobDutiesScore = results['matchRate']['score'];
-            this.model.jobDutiesKeywords = results;
+            jobDescription = jobDescription + this.model.preferredRequirements;
+
+            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+                this.model.jobDutiesScore = results['matchRate']['score'];
+                this.model.jobDutiesKeywords = results;
+                this.model.save();
+                this.view.render();
+            });
         }
 
         if (this.model.includeCompanyInfo && this.model.companyInfo) {
-            jobDescription = jobDescription + this.model.companyInfo;
-            results = await this.jobscan.scan(this.model.resumeContent, jobDescription);
-            this.model.companyInfoScore = results['matchRate']['score'];
-            this.model.companyInfoKeywords = results;
+            jobDescription = jobDescription + this.model.preferredRequirements;
+
+            this.jobscan.scan(this.model.resumeContent, jobDescription).then( results => {
+                this.model.companyInfoScore = results['matchRate']['score'];
+                this.model.companyInfoKeywords = results;
+                this.model.save();
+                this.view.render();
+            });
         }
 
-        this.model.save();
-        this.view.render();
     }
 
     async tailorDocuments() {
