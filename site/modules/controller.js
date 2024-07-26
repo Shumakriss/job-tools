@@ -558,6 +558,7 @@ class Controller {
         this.model.tailorEnabled = false;
         this.model.logApplicationEnabled = true;
 
+        this.model.statusMessage = "Start your application!";
         this.model.save();
         this.view.render();
     }
