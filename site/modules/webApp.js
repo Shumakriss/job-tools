@@ -254,12 +254,9 @@ class WebApp {
 
         document.getElementById('reset-button').onclick = async () => {
             console.debug("Reset button click");
-            let confirmText = "All application data will be lost. Are you sure you want to reset the application?";
-            if(window.confirm(confirmText) == true) {
-                await this.controller.reset();
-                await this.model.save();
-                await this.view.render();
-            }
+            await this.controller.reset();
+            await this.model.save();
+            await this.view.render();
         }
 
         document.getElementById('clipboard-linkedin-query').onclick = () => {
