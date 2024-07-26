@@ -363,6 +363,29 @@ class GoogleWorkspace {
         await this.gapi.client.sheets.spreadsheets.values.append(rowData);
     }
 
+    async getCompanyCorrespondence(companyName) {
+        let request = {
+            spreadsheetId: this.model.googleSheetId,
+            range: "Sheet1!A:D"
+        }
+
+        let response = await this.gapi.client.sheets.spreadsheets.values.get(request);
+        debugger;
+        let rows = response['result']['values'];
+
+        let filteredCells = [];
+
+        for (let i=0; i< rows.length; i++) {
+            let cells = rows[i];
+            for (let j=0; j<cells.length; j++) {
+                if (cells[j] == companyName) {
+                    filteredCells.push(cells);
+                }
+            }
+        }
+        return filteredCells;
+    }
+
 }
 
 export default GoogleWorkspace;

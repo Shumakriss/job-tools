@@ -150,6 +150,7 @@ class Model {
         localStorage.setItem("preferredRequirementsKeywords", JSON.stringify(this.preferredRequirementsKeywords));
         localStorage.setItem("jobDutiesKeywords", JSON.stringify(this.jobDutiesKeywords));
         localStorage.setItem("companyInfoKeywords", JSON.stringify(this.companyInfoKeywords));
+        localStorage.setItem("companyCorrespondence", JSON.stringify(this.companyCorrespondence));
 
         localStorage.setItem("googleApiKey", this.googleApiKey);
         localStorage.setItem("googleClientId", this.googleClientId);
@@ -244,6 +245,12 @@ class Model {
             this.companyInfoKeywords = JSON.parse(getItemWithDefault("companyInfoKeywords", this.companyInfoKeywords));
         } catch(err) {
             console.warn("Scan results were not parseable");
+        }
+
+        try {
+            this.companyCorrespondence = JSON.parse(getItemWithDefault("companyCorrespondence", this.companyCorrespondence));
+        } catch(err) {
+            console.warn("Company correspondence were not parseable");
         }
 
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);

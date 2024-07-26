@@ -158,22 +158,6 @@ class WebApp {
             this.controller.googleAuthorize();
         }
 
-//        document.getElementById('nav-button-job-description').onclick = async () => {
-//            this.controller.setNavigationPage("job-description");
-//        }
-//
-//        document.getElementById('nav-button-extract').onclick = async () => {
-//            this.controller.setNavigationPage("extract");
-//        }
-//
-//        document.getElementById('nav-button-tailor').onclick = async () => {
-//            this.controller.setNavigationPage("tailor");
-//        }
-//
-//        document.getElementById('nav-button-scan').onclick = async () => {
-//            this.controller.setNavigationPage("scan");
-//        }
-
         document.getElementById('extract-sections-button').onclick = async () => {
             this.controller.extractJobSections();
         }

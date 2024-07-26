@@ -21,6 +21,23 @@ function formatScanResults(jobscanResults) {
     return ul
 }
 
+function formatCorrespondence(companyCorrespondence) {
+
+    let ul = document.createElement('ul');
+
+    for (let i=0; i< companyCorrespondence.length; i++){
+        let correspondence = companyCorrespondence[i];
+        let category = correspondence[1];
+        let date = correspondence[2];
+        let li = document.createElement("li");
+        let text = category + ": " + date
+        li.appendChild(document.createTextNode(text));
+        ul.appendChild(li);
+    }
+
+    return ul
+}
+
 class View {
     constructor(model) {
         this.model = model;
@@ -233,6 +250,15 @@ class View {
 
         if (this.model.companyAddressSearchLink) {
             document.getElementById("company-address-google-link").href = this.model.companyAddressSearchLink;
+        }
+
+        if (this.model.companyCorrespondence) {
+            let keywordsDiv = document.getElementById("company-correspondence");
+            keywordsDiv.innerHTML = '';
+            let ul = formatCorrespondence(this.model.companyCorrespondence);
+            keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("company-correspondence").innerHTML = '';
         }
     }
 

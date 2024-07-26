@@ -69,6 +69,17 @@ class Controller {
         this.view.render();
     }
 
+    async updateCompanyCorrespondence() {
+        if (!this.model.companyName || !this.model.googleSheetId){
+            this.model.companyCorrespondence = "";
+        } else {
+            this.model.companyCorrespondence = await this.workspace.getCompanyCorrespondence(this.model.companyName);
+        }
+
+        this.model.save();
+        this.view.render();
+    }
+
     async setCompanyName(companyName) {
 
         if (this.model.companyName != companyName) {
@@ -87,6 +98,7 @@ class Controller {
         this.view.render();
         this.updateDocLinks();
         this.updateCompanyAddressSearchLink();
+        this.updateCompanyCorrespondence();
     }
     
     setResumeTemplateName(resumeTemplateName) {
@@ -198,10 +210,15 @@ class Controller {
     }
 
     async setGoogleSheetName(googleSheetName) {
-        this.model.googleSheetName = googleSheetName;
-        await this.updateLogSheetLink();
-        this.model.save();
-        this.view.render();
+        if (googleSheetName && googleSheetName != "" && this.googleSheetName != googleSheetName) {
+            this.model.googleSheetName = googleSheetName;
+            await this.updateLogSheetLink();
+            this.model.save();
+            this.view.render();
+        } else {
+            console.debug("Invalid google sheet name");
+        }
+
     }
 
     updateCreateResumeEnabled() {
@@ -325,7 +342,6 @@ class Controller {
     googleSignOut() {}
 
     async extractJobSections() {
-
         this.model.statusMessage = "Asking ChatGPT to split up job description...";
         this.view.render();
 
@@ -634,6 +650,7 @@ class Controller {
         this.model.companyInfoKeywords = "";
         this.model.resumePdfLink = "";
         this.model.coverLetterPdfLink = "";
+        this.model.companyCorrespondence = "";
 
         this.model.extractJobSectionsEnabled = false;
         this.model.createResumeEnabled = false;
