@@ -210,15 +210,11 @@ class Controller {
     }
 
     async setGoogleSheetName(googleSheetName) {
-        if (googleSheetName && googleSheetName != "" && this.googleSheetName != googleSheetName) {
-            this.model.googleSheetName = googleSheetName;
-            await this.updateLogSheetLink();
-            this.model.save();
-            this.view.render();
-        } else {
-            console.debug("Invalid google sheet name");
-        }
-
+        this.model.googleSheetName = googleSheetName;
+        this.model.save();
+        this.view.render();
+        await this.updateLogSheetLink();
+        this.updateCompanyCorrespondence();
     }
 
     updateCreateResumeEnabled() {
@@ -284,7 +280,14 @@ class Controller {
     async updateLogSheetLink() {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
+        this.model.logApplicationEnabled = false;
+        this.model.googleSheetLink = "";
+        this.model.googleSheetLinkText = "Log Sheet Not Ready";
+        this.model.save();
+        this.view.render();
+
         this.model.googleSheetId = await this.workspace.getDocumentIdByName(this.model.googleSheetName);
+
         if (this.model.googleSheetId) {
             this.model.logApplicationEnabled = true;
             this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
@@ -296,6 +299,7 @@ class Controller {
         }
 
         this.model.save();
+        this.view.render();
     }
 
     updateDocumentNames() {
@@ -337,6 +341,7 @@ class Controller {
         await this.updateLogSheetLink();
         this.model.save();
         this.view.render();
+        this.updateCompanyCorrespondence();
     }
 
     googleSignOut() {}
