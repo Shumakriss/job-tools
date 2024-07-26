@@ -358,6 +358,37 @@ class Controller {
         this.model.save();
     }
 
+    async reset() {
+        this.model.jobDescription = "";
+        this.model.companyName = "";
+        this.model.jobTitle = "";
+        this.model.minimumRequirements = "";
+        this.model.preferredRequirements = "";
+        this.model.jobDuties = "";
+        this.model.companyInfo = "";
+        this.model.resumeName = "";
+        this.model.resumeId = null;
+        this.model.coverLetterName = "";
+        this.model.coverLetterId = null;
+        this.model.companyNamePossessive = "";
+        this.model.companyAddress = "";
+        this.model.hiringManager = "";
+        this.model.completeJobTitle = "";
+        this.model.shortJobTitle = "";
+        this.model.companyValues = "";
+        this.model.RelevantExperience = "";
+        this.model.MinimumRequirementsScore = "";
+        this.model.PreferredRequirementsScore = "";
+        this.model.JobDutiesScore = "";
+        this.model.CompanyInfoScore = "";
+
+        this.model.extractJobSectionsEnabled = false;
+        this.model.createResumeEnabled = false;
+        this.model.scanEnabled = false;
+        this.model.tailorEnabled = false;
+        await this.model.save();
+    }
+
 }
 
 export default Controller;
