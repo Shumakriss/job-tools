@@ -15,7 +15,6 @@ function formatScanResults(jobscanResults) {
     return ul
 }
 
-// TODO: Rename to Model
 class View {
     constructor(model) {
         this.model = model;

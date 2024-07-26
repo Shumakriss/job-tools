@@ -75,22 +75,28 @@ class ChatGpt {
         return response;
     }
 
-    // TODO: Move to controller?
-    async extractJobSections() {
-        let companyName = await this.extractSection(COMPANY_NAME_PROMPT, this.model.jobDescription);
-        if (this.model.companyName != companyName) {
-            this.model.companyName = companyName;
-            this.model.resumeLink = "";
-            this.model.resumeId = null;
-            this.model.coverLetterLink = "";
-            this.model.coverLetterId = null;
-        }
-        this.model.jobTitle = await this.extractSection(JOB_TITLE_PROMPT, this.model.jobDescription);
-        this.model.minimumRequirements = await this.extractSection(MINIMUM_JOB_REQUIREMENTS_PROMPT, this.model.jobDescription);
-        this.model.preferredRequirements = await this.extractSection(PREFERRED_JOB_REQUIREMENTS_PROMPT, this.model.jobDescription);
-        this.model.jobDuties = await this.extractSection(JOB_DUTIES_PROMPT, this.model.jobDescription);
-        this.model.companyInfo = await this.extractSection(COMPANY_INFORMATION_PROMPT, this.model.jobDescription);
-        this.model.save();
+    async extractCompanyName(jobDescriptionText) {
+        return await this.extractSection(COMPANY_NAME_PROMPT, jobDescriptionText);
+    }
+
+    async extractJobTitle(jobDescriptionText) {
+        return await this.extractSection(JOB_TITLE_PROMPT, jobDescriptionText);
+    }
+
+    async extractMinimumRequirements(jobDescriptionText) {
+        return await this.extractSection(MINIMUM_JOB_REQUIREMENTS_PROMPT, jobDescriptionText);
+    }
+
+    async extractPreferredRequirements(jobDescriptionText) {
+        return await this.extractSection(PREFERRED_JOB_REQUIREMENTS_PROMPT, jobDescriptionText);
+    }
+
+    async extractJobDuties(jobDescriptionText) {
+        return await this.extractSection(JOB_DUTIES_PROMPT, jobDescriptionText);
+    }
+
+    async extractCompanyInfo(jobDescriptionText) {
+        return await this.extractSection(COMPANY_INFORMATION_PROMPT, jobDescriptionText);
     }
 
 }

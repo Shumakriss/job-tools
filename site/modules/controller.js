@@ -284,13 +284,41 @@ class Controller {
     googleSignOut() {}
 
     async extractJobSections() {
-        await this.chatgpt.extractJobSections();
+//
+//        Promise.all([
+//            this.chatgpt.extractCompanyName(this.model.jobDescription),
+//            this.chatgpt.extractJobTitle(this.model.jobDescription),
+//            this.chatgpt.extractMinimumRequirements(this.model.jobDescription),
+//            this.chatgpt.extractPreferredRequirements(this.model.jobDescription),
+//            this.chatgpt.extractJobDuties(this.model.jobDescription),
+//            this.chatgpt.extractCompanyInfo(this.model.jobDescription)
+//        ]).then( values => console.log(values));
+
+        let companyName = await this.chatgpt.extractCompanyName(this.model.jobDescription);
+
+        if (this.model.companyName != companyName) {
+            this.model.companyName = companyName;
+            this.model.resumeLink = "";
+            this.model.resumeId = null;
+            this.model.coverLetterLink = "";
+            this.model.coverLetterId = null;
+        }
+
         await this.updateCompanyNamePossessive();
+        await this.updateCreateResumeEnabled();
+        await this.updateDocLinks();
+
+        this.model.jobTitle = await this.chatgpt.extractJobTitle(this.model.jobDescription);
         this.model.completeJobTitle = this.model.jobTitle;
         this.model.shortJobTitle = this.model.jobTitle;
-        await this.updateCreateResumeEnabled();
+
+        this.model.minimumRequirements = await this.chatgpt.extractMinimumRequirements(this.model.jobDescription);
+        this.model.preferredRequirements = await this.chatgpt.extractPreferredRequirements(this.model.jobDescription);
+        this.model.jobDuties = await this.chatgpt.extractJobDuties(this.model.jobDescription);
+        this.model.companyInfo = await this.chatgpt.extractCompanyInfo(this.model.jobDescription);
+
         await this.updateTailorEnabled();
-        await this.updateDocLinks();
+
         this.model.save();
     }
 
