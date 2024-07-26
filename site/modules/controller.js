@@ -73,25 +73,25 @@ class Controller {
         this.updateCompanyNamePossessive();
         this.updateCreateResumeEnabled();
         this.updateTailorEnabled();
-        await this.updateDocLinks();
         this.model.save();
         this.view.render();
+        this.updateDocLinks();
     }
     
     setResumeTemplateName(resumeTemplateName) {
         this.model.resumeTemplateName = resumeTemplateName;
-        this.updateDocLinks();
         this.updateTailorEnabled();
         this.model.save();
         this.view.render();
+        this.updateDocLinks();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
         this.model.coverLetterTemplateName = coverLetterTemplateName;
-        this.updateDocLinks();
         this.updateTailorEnabled();
         this.model.save();
         this.view.render();
+        this.updateDocLinks();
     }
     
     setApplicationLogName(applicationLogName) { 
@@ -246,6 +246,7 @@ class Controller {
         }
 
         this.model.save();
+        this.view.render();
     }
 
     async updateLogSheetLink() {
@@ -308,34 +309,50 @@ class Controller {
 
     async extractJobSections() {
 
-        let jobSections = await Promise.all([
-            this.chatgpt.extractCompanyName(this.model.jobDescription),
-            this.chatgpt.extractJobTitle(this.model.jobDescription),
-            this.chatgpt.extractMinimumRequirements(this.model.jobDescription),
-            this.chatgpt.extractPreferredRequirements(this.model.jobDescription),
-            this.chatgpt.extractJobDuties(this.model.jobDescription),
-            this.chatgpt.extractCompanyInfo(this.model.jobDescription)
-        ]);
+        this.chatgpt.extractCompanyName(this.model.jobDescription).then( companyName => {
+            this.setCompanyName(companyName);
+            this.updateCompanyNamePossessive();
+            this.updateCreateResumeEnabled();
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+            this.updateDocLinks();
+        });
+        
+        this.chatgpt.extractJobTitle(this.model.jobDescription).then( jobTitle => {
+            this.model.jobTitle = jobTitle;
+            this.model.completeJobTitle = jobTitle;
+            this.model.shortJobTitle = jobTitle;
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+        });
 
-        this.setCompanyName(jobSections[0]);
+        this.chatgpt.extractMinimumRequirements(this.model.jobDescription).then( minimumRequirements => {
+            this.model.minimumRequirements = minimumRequirements;
+            this.model.save();
+            this.view.render();
+        });
 
-        this.updateCompanyNamePossessive();
-        this.updateCreateResumeEnabled();
-        await this.updateDocLinks();
+        this.chatgpt.extractPreferredRequirements(this.model.jobDescription).then( preferredRequirements => {
+            this.model.preferredRequirements = preferredRequirements;
+            this.model.save();
+            this.view.render();
+        });
 
-        this.model.jobTitle = jobSections[1];
-        this.model.completeJobTitle = jobSections[1];
-        this.model.shortJobTitle = jobSections[1];
+        this.chatgpt.extractJobDuties(this.model.jobDescription).then( jobDuties => {
+            this.model.jobDuties = jobDuties;
+            this.model.save();
+            this.view.render();
+        });
 
-        this.model.minimumRequirements = jobSections[2];
-        this.model.preferredRequirements = jobSections[3];
-        this.model.jobDuties = jobSections[4];
-        this.model.companyInfo = jobSections[5];
+        this.chatgpt.extractCompanyInfo(this.model.jobDescription).then( companyInfo => {
+            this.model.companyInfo = companyInfo;
+            this.updateTailorEnabled();
+            this.model.save();
+            this.view.render();
+        });
 
-        this.updateTailorEnabled();
-
-        this.model.save();
-        this.view.render();
     }
 
     async createResumeAndCoverLetter() {
@@ -346,9 +363,9 @@ class Controller {
             await this.workspace.createResumeAndCoverLetter();
             await this.updateScanEnabled();
             this.updateTailorEnabled();
-            await this.updateDocLinks();
             this.model.save();
             this.view.render();
+            this.updateDocLinks();
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
         }
