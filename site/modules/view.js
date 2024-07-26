@@ -206,14 +206,8 @@ class View {
         }
 
         document.getElementById("application-log-sheet-name").value = this.model.googleSheetName;
-
-        if (this.model.googleSheetLink){
-            document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink;
-            document.getElementById("application-log-sheet-link").innerHTML = "Open " + this.model.googleSheetName + " In Sheets";
-        } else {
-            document.getElementById("application-log-sheet-link").href = "";
-            document.getElementById("application-log-sheet-link").innerHTML = "Sheet Not Ready";
-        }
+        document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink;
+        document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText;
 
         if (this.model.logApplicationEnabled) {
             document.getElementById("log-application-button").disabled = false;

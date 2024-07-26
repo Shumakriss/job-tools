@@ -187,6 +187,7 @@ class Controller {
         this.model.googleSheetName = googleSheetName;
         await this.updateLogSheetLink();
         this.model.save();
+        this.view.render();
     }
 
     updateCreateResumeEnabled() {
@@ -256,9 +257,11 @@ class Controller {
         if (this.model.googleSheetId) {
             this.model.logApplicationEnabled = true;
             this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
+            this.model.googleSheetLinkText = this.model.googleSheetName;
         } else {
             this.model.logApplicationEnabled = false;
             this.model.googleSheetLink = "";
+            this.model.googleSheetLinkText = "Log Sheet Not Ready";
         }
 
         this.model.save();
@@ -300,7 +303,7 @@ class Controller {
         }
 
         this.updateCreateResumeEnabled();
-        this.updateLogSheetLink();
+        await this.updateLogSheetLink();
         this.model.save();
         this.view.render();
     }
@@ -377,19 +380,51 @@ class Controller {
 
     }
 
+    async createResume() {
+        this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
+        this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName);
+
+        if (this.model.resumeTemplateId && !this.model.resumeId) {
+            this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName);
+        }
+        this.model.save();
+    }
+
+    async createCoverLetter() {
+        this.model.coverLetterTemplateId = await this.workspace.getDocumentIdByName(this.model.coverLetterTemplateName);
+        this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName);
+
+        if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
+            this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
+        }
+        this.model.save();
+    }
+
     async createResumeAndCoverLetter() {
         this.model.createResumeEnabled = false;
         this.model.save();
 
+        this.model.statusMessage = "Checking for resume...";
+        this.view.render();
+
         try {
-            await this.workspace.createResumeAndCoverLetter();
-            await this.updateScanEnabled();
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
-            this.updateDocLinks();
+            Promise.all([
+                this.createResume(),
+                this.createCoverLetter()
+            ]).then( () => {
+                this.model.statusMessage = "Documents are ready";
+                this.view.render();
+                this.updateScanEnabled();
+                this.updateTailorEnabled();
+                this.model.save();
+                this.view.render();
+                this.updateDocLinks();
+            });
+
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
+            this.model.statusMessage = "Problem finding/creating documents";
+            this.view.render();
         }
 
     }

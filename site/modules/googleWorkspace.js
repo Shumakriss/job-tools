@@ -363,31 +363,6 @@ class GoogleWorkspace {
         await this.gapi.client.sheets.spreadsheets.values.append(rowData);
     }
 
-    // TODO: Move to controller?
-    async createResume() {
-        this.model.resumeTemplateId = await this.getDocumentIdByName(this.model.resumeTemplateName);
-        this.model.resumeId = await this.getDocumentIdByName(this.model.resumeName);
-
-        if (this.model.resumeTemplateId && !this.model.resumeId) {
-            this.model.resumeId = await this.copyFile(this.model.resumeTemplateId, this.model.resumeName);
-        }
-        this.model.save();
-    }
-
-    async createCoverLetter() {
-        this.model.coverLetterTemplateId = await this.getDocumentIdByName(this.model.coverLetterTemplateName);
-        this.model.coverLetterId = await this.getDocumentIdByName(this.model.coverLetterName);
-
-        if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
-            this.model.coverLetterId = await this.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
-        }
-        this.model.save();
-    }
-
-    async createResumeAndCoverLetter() {
-        await this.createResume();
-        await this.createCoverLetter();
-    }
 }
 
 export default GoogleWorkspace;
