@@ -12,17 +12,10 @@
 <h1>Maker Consulting</h1>
 <hr>
 <div class="container">
-    <div class="container-nav">
-        <div class="nav-bar">
-            <button id="nav-button-job-description" class="nav-active nav-button">Job Description</button>
-            <button id="nav-button-extract" class="nav-inactive nav-button">Extract</button>
-            <button id="nav-button-tailor" class="nav-inactive nav-button">Tailor</button>
-            <button id="nav-button-scan" class="nav-inactive nav-button">Scan</button>
-        </div>
-    </div>
-    <div class="container-sidebar-left">
 
-        <h3>Favorites</h3>
+    <div class="container-sidebar-left">
+        <h2>Configuration</h2>
+        <strong>Quick Links</strong>
         <ul>
             <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
             <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
@@ -31,18 +24,41 @@
             <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
         </ul>
 
-        <h3>LinkedIn Queries</h3>
+        <strong>LinkedIn Query</strong>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
         <br/>
         <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
+        <br/>
+        <br/>
 
-        <h3>Templates</h3>
-        <label>Resume Template:</label><br/>
-        <input id="resume-template-name" type="text" size=30 value="Chris Shumaker"/><br/><br/>
+        <strong>Date: </strong><br/>
+        <input id="application-date" size="20" />
+        <br/><br/>
 
-        <label>Cover Letter Template:</label><br/>
-        <input id="cover-letter-template-name" type="text" size=30 value="Chris Shumaker Cover Letter"/> <br/><br/>
+        <strong>Google Sheet Name:</strong>
+        <br/>
+        <input id="application-log-sheet-name">
+        <br/><br/>
 
+        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
+        <br/><br/>
+
+        <strong>Resume Template:</strong><br/>
+        <input id="resume-template-name" type="text" size=35 value="Chris Shumaker"/><br/><br/>
+
+        <strong>Cover Letter Template:</strong><br/>
+        <input id="cover-letter-template-name" type="text" size=35 value="Chris Shumaker Cover Letter"/>
+
+        <h3>Placeholders</h3>
+        <input value="{{date}}" size="30" disabled /><br/>
+        <input value="{{company-name}}" size="30" disabled /><br/>
+        <input value="{{company-name-possessive}}" size="30" disabled /><br/>
+        <input value="{{company-address}}" size="30" disabled /><br/>
+        <input value="{{hiring-manager-name}}" size="30" disabled /><br/>
+        <input value="{{complete-job-title}}" size="30" disabled /><br/>
+        <input value="{{short-job-title}}" size="30" disabled /><br/>
+        <input value="{{values}}" size="30" disabled /><br/>
+        <input value="{{experiences}}" size="30" disabled /><br/>
 
         <h3>Credentials</h3>
 
@@ -53,33 +69,36 @@
 
         <h3>Google:</h3>
         <button id="google-authorize-button" class="disabled-button button" disabled>Google Sign In</button>
-        <br/>
         <button id="google-signout-button" class="disabled-button button" disabled>Google Sign Out</button>
         <pre id="content" style="white-space: pre-wrap;"></pre>
 
     </div>
     <div class="container-page">
+        <h2>Job Details</h2>
+
 
         <div id="job-description" class="page">
-            <Strong>Job Description:</Strong>
-            <textarea id="job-description-textarea" rows="50" class="job-section-text"></textarea>
+
+            <strong>Job Description</strong>
             <br/>
-            <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections With ChatGPT</button>
+            <textarea id="job-description-textarea" rows="60" class="job-section-text"></textarea>
             <br/>
+
         </div>
 
-        <div id="extract" hidden="hidden" class="page">
+        <div id="extract" class="page">
+            <h2>Job Description Breakdown</h2>
+
             <Strong>Company Name: </Strong><br/>
-            <input type="text" size=60 id="company-name" value="Example" />
+            <input type="text" size=40 id="company-name" value="Example" />
             <br/><br/>
 
             <Strong>Job Title: </Strong><br/>
-            <input type="text" size=60 id="job-title" value="Staff Software Engineer" />
+            <input type="text" size=40 id="job-title" value="Staff Software Engineer" />
             <br/><br/>
 
-            <br/>
             <Strong>Minimum Requirements (</Strong><label class="required-field-flag" >Required</label><label>):</label><br/>
-            <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
+            <textarea id="minimum-requirements" rows="15" class="job-section-text"></textarea>
             <br/>
             <br/>
 
@@ -89,68 +108,56 @@
             <br/>
 
             <Strong>Job Duties:</Strong><br/>
-            <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
-            <br/>
+            <textarea id="job-duties" rows="40" class="job-section-text"></textarea>
+            <br/><br/>
 
             <Strong>Company Information:</Strong><br/>
             <textarea id="company-information" rows="10" class="job-section-text"></textarea>
             <br/><br/>
 
-            <button id="create-resume-button" class="big-button disabled-button button" disabled>Create/Attach Resume For This Job</button>
-
         </div>
 
-        <div id="tailor" hidden="hidden" class="page">
-            <strong>Date: </strong><br/>
-            <input value="{{date}}" size="30" disabled /><br/>
-            <input id="application-date" size="40" />
-            <br/><br/>
+        <div id="tailor" class="page">
 
-            <strong>Company Name: </strong><br/>
-            </label>
-            <input value="{{company-name}}" size="30" disabled /><br/>
+            <h2>Tailoring Details</h2>
+
+            <strong>Company Name (Tailoring Only): </strong><br/>
             <input id="company-name-tailor" size="40" />
             <br/><br/>
 
             <strong>Company Name (possessive): </strong><br/>
-            <input value="{{company-name-possessive}}" size="30" disabled /><br/>
             <input id="company-name-possessive" size="40" />
             <br/><br/>
 
             <strong>Company Address: </strong><br/>
-            <input value="{{company-address}}" size="30" disabled /><br/>
             <textarea id="company-address" rows="5" cols="40" class="textarea"></textarea>
             <br/><br/>
 
             <strong>Hiring Manager Name: </strong><br/>
-            <input value="{{hiring-manager-name}}" size="30" disabled /><br/>
             <input id="hiring-manager-name" size="40" />
             <br/><br/>
 
             <strong>Complete Job Title:</strong><br/>
-            <input value="{{complete-job-title}}" size="30" disabled /><br/>
             <input id="complete-job-title" size="40" />
             <br/><br/>
 
             <strong>Short Job Title:</strong><br/>
-            <input value="{{short-job-title}}" size="30" disabled /><br/>
             <input id="short-job-title" size="40" />
             <br/><br/>
 
             <strong>Values:</strong><br/>
-            <input value="{{values}}" size="30" disabled /><br/>
             <input id="company-values" size="40" />
             <br/><br/>
 
             <strong>Relevant Experience:</strong><br/>
-            <input value="{{experiences}}" size="30" disabled /><br/>
             <input id="relevant-experience" size="40" />
             <br/><br/>
 
-            <button class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
         </div>
 
-        <div id="scan" hidden="hidden" class="page">
+        <div id="scan" class="page">
+
+            <h2>Scan Details</h2>
 
             <input type="checkbox" checked disabled />
             <label>Include Minimum Requirements</label>
@@ -167,85 +174,71 @@
             <input type="checkbox" checked id="include-company-information-checkbox" />
             <label>Include Company Info</label><br/>
 
-            <p>Copy or load resumes in the Tailoring screen to enable scanning.</p>
-            <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
-            <br/>
+            <h3>Missing Keywords</h3>
+            <strong>Minimum Requirements</strong>
+            <div id="minimum-requirements-keywords"></div>
 
-            <h2>Results</h2>
-            <div class="scan-result">
-                <h3>Minimum Requirements</h3>
-                <p id="minimum-requirements-display"></p>
-                <strong>Score: </strong>
-                <Strong id="minimum-score" class="scan-result-score"></Strong><br/>
-                <Strong>Keywords:</Strong><br/>
-                <div id="minimum-requirements-keywords"></div>
-            </div>
+            <strong>Preferred Requirements</strong>
+            <div id="preferred-requirements-keywords"></div>
 
-            <div class="scan-result">
-                <h3>Preferred Requirements</h3>
-                <strong>Score: </strong>
-                <Strong id="preferred-score" class="scan-result-score"></Strong><br/>
-                <Strong>Keywords:</Strong><br/>
-                <div id="preferred-requirements-keywords"></div>
-            </div>
+            <strong>Job Duties</strong>
+            <div id="job-duties-keywords"></div>
 
-            <div class="scan-result">
-                <h3>Job Duties</h3>
-                <strong>Score: </strong>
-                <Strong id="job-duties-score" class="scan-result-score"></Strong><br/>
-                <Strong>Keywords:</Strong><br/>
-                <div id="job-duties-keywords"></div>
-            </div>
+            <strong>Company Information</strong>
+            <div id="company-information-keywords"></div>
 
-            <div class="scan-result">
-                <h3>Company Information</h3>
-                <strong>Score: </strong>
-                <Strong id="company-information-score" class="scan-result-score"></Strong><br/>
-                <Strong>Keywords:</Strong><br/>
-                <div id="company-information-keywords"></div>
-            </div>
         </div>
 
     </div>
     <div class="container-sidebar-right">
 
-        <h3>Application Status</h3>
+        <h2>Scores</h2>
+        <Strong id="minimum-score" class="scan-result-score"></Strong>
+        <Strong id="preferred-score" class="scan-result-score"></Strong>
+        <Strong id="job-duties-score" class="scan-result-score"></Strong>
+        <Strong id="company-information-score" class="scan-result-score"></Strong>
+        <br/><br/>
+
+        <h3>Actions</h3>
+
+        <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections</button>
+        <br/>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create/Attach Resume</button>
+        <br/>
+        <button class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
+        <br/>
+        <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
+        <br/>
+
+        <h3>Messages</h3>
         <p id="status-message"></p>
 
         <h3>Documents</h3>
-        <p>Provide templates and company name to model.</p>
-
-        <a id="tailored-resume-link" href="" target="_blank"></a>
-        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
-        <br/><br/>
-
-        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
-        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>PDF</button>
+        <a id="tailored-resume-link" href="" target="_blank"></a> <br/>
+        <a id="tailored-cover-letter-link" href="" target="_blank"></a> <br/>
+        <br/>
+        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>Resume PDF</button>
+        <br/>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>Cover Letter PDF</button>
+        <br/>
 
         <h3>Profile Links</h3>
-        <input id="profile-link-linkedin" size=40>
+        <input id="profile-link-linkedin" size=30>
         <button class="clipboard-button" id="clipboard-linkedin-profile">📋</button>
         <br/>
 
-        <input id="profile-link-github" size=40>
+        <input id="profile-link-github" size=30>
         <button class="clipboard-button" id="clipboard-github-profile">📋</button>
         <br/>
 
-        <input id="profile-link-website" size=40>
+        <input id="profile-link-website" size=30>
         <button class="clipboard-button" id="clipboard-website">📋</button>
-        <br/><br/>
+        <br/>
 
-        <h3>Track Applications</h3>
-        <label>Google Sheet Name:</label>
-        <input id="application-log-sheet-name"></br></br>
-
-        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a><br/></br>
+        <h3>Finish Up</h3>
         <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
-
-        <h3>Reset Application</h3>
-        <button class="button" id="reset-button">Reset</button>
-        <br/><br/>
-
+        <br/>
+        <button class="button" id="reset-button">Reset Application</button>
     </div>
 </div>
 

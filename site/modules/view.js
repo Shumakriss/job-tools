@@ -66,7 +66,7 @@ class View {
     render() {
         console.debug("Rendering");
 
-        this.selectNavigationPage(this.model.navigationPage);
+//        this.selectNavigationPage(this.model.navigationPage);
 
         document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
         document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
