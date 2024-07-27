@@ -30,6 +30,7 @@ class Controller {
         this.model.jobscanCookie = credentials.jobscan.cookie;
         this.model.jobscanXsrfToken = credentials.jobscan.xsrfToken;
         this.save();
+        this.render();
     }
 
     updateCompanyNamePossessive() {
@@ -41,16 +42,6 @@ class Controller {
         } else {
             this.model.companyNamePossessive = companyName + "'s";
         }
-        this.save();
-        this.render();
-    }
-
-    updateCompanyAddressSearchLink() {
-        let querySuffix = " headquarters address";
-        let escapedQuery = encodeURIComponent(this.model.companyName + querySuffix);
-        let linkPrefix = "https://www.google.com/search?q=";
-
-        this.model.companyAddressSearchLink = linkPrefix + escapedQuery;
         this.save();
         this.render();
     }
@@ -69,29 +60,32 @@ class Controller {
     async setCompanyName(companyName) {
         this.model.companyName = companyName;
         this.save();
+        this.render();
 
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateDocLinks();
-        this.updateCompanyAddressSearchLink();
         this.updateCompanyCorrespondence();
     }
     
     setResumeTemplateName(resumeTemplateName) {
         this.model.resumeTemplateName = resumeTemplateName;
         this.save();
+        this.render();
         this.updateDocLinks();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
         this.model.coverLetterTemplateName = coverLetterTemplateName;
         this.save();
+        this.render();
         this.updateDocLinks();
     }
     
     setApplicationLogName(applicationLogName) { 
         this.model.applicationLogName = applicationLogName;
         this.save();
+        this.render();
     }
     
     setJobDescription(jobDescription) {
@@ -100,6 +94,8 @@ class Controller {
         if (jobDescription && jobDescription != "" && this.model.resumeTemplateName) {
             this.scanResumeTemplate();
         }
+        this.save();
+        this.render();
     }
     
     setJobTitle(jobTitle) {
@@ -107,41 +103,43 @@ class Controller {
         this.model.completeJobTitle = jobTitle;
         this.model.shortJobTitle = jobTitle;
         this.save();
-    }
-
-    setCompanyAddress(companyAddress) {
-        this.model.companyAddress = companyAddress;
-        this.save();
+        this.render();
     }
 
     setCompanyValues(companyValues) {
         this.model.companyValues = companyValues;
         this.save();
+        this.render();
     }
 
     setRelevantExperience(relevantExperience) {
         this.model.relevantExperience = relevantExperience;
         this.save();
+        this.render();
     }
     
     setMinimumRequirements(minimumRequirements) {
         this.model.minimumRequirements = minimumRequirements;
         this.save();
+        this.render();
     }
 
     setPreferredRequirements(preferredRequirements) {
         this.model.preferredRequirements = preferredRequirements;
         this.save();
+        this.render();
     }
 
     setJobDuties(jobDuties) {
         this.model.jobDuties = jobDuties;
         this.save();
+        this.render();
     }
 
     setCompanyInfo(companyInfo) {
         this.model.companyInfo = companyInfo;
         this.save();
+        this.render();
     }
 
     setLinkedInProfileLink(linkedInProfileLink) {
@@ -162,13 +160,14 @@ class Controller {
     setHiringManager(hiringManager) {
         this.model.hiringManager = hiringManager;
         this.save();
+        this.render();
     }
 
     async setGoogleSheetName(googleSheetName) {
         this.model.googleSheetName = googleSheetName;
         this.save();
-        await this.updateLogSheetLink();
-        this.updateCompanyCorrespondence();
+        this.render();
+        this.updateLogSheetLink();
     }
 
     async updateDocLinks() {
@@ -221,6 +220,8 @@ class Controller {
             this.model.googleSheetLinkText = "Log Sheet Not Ready";
         }
 
+        this.updateCompanyCorrespondence();
+
         this.save();
         this.render();
     }
@@ -259,7 +260,6 @@ class Controller {
         await this.updateLogSheetLink();
         this.save();
         this.render();
-        this.updateCompanyCorrespondence();
     }
 
     googleSignOut() {}
@@ -315,13 +315,6 @@ class Controller {
             this.render();
         });
 
-        let companyAddressPromise = this.chatgpt.extractCompanyAddress(this.model.companyName);
-        companyAddressPromise.then( companyAddress => {
-            this.model.companyAddress = companyAddress;
-            this.save();
-            this.render();
-        });
-
         let companyValuesPromise = this.chatgpt.extractCompanyValues(this.model.companyName);
         companyValuesPromise.then( companyValues => {
             this.model.companyValues = companyValues;
@@ -343,7 +336,6 @@ class Controller {
                 preferredRequirementsPromise,
                 jobDutiesPromise,
                 companyInfoPromise,
-                companyAddressPromise,
                 companyValuesPromise,
                 relevantExperiencePromise
             ]).then( results =>{
@@ -362,6 +354,7 @@ class Controller {
             this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName);
         }
         this.save();
+        this.render();
     }
 
     async createCoverLetter() {
@@ -372,10 +365,10 @@ class Controller {
             this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
         }
         this.save();
+        this.render();
     }
 
     async createResumeAndCoverLetter() {
-        this.model.createResumeEnabled = false;
         this.save();
 
         this.model.statusMessage = "Checking for resume...";
@@ -548,7 +541,6 @@ class Controller {
         this.model.coverLetterName = "";
         this.model.coverLetterId = null;
         this.model.companyNamePossessive = "";
-        this.model.companyAddress = "";
         this.model.hiringManager = "Hiring Manager";
         this.model.completeJobTitle = "";
         this.model.shortJobTitle = "";

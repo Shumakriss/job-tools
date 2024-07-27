@@ -136,10 +136,6 @@ class WebApp {
             controller.setHiringManager(event.target.value);
         }, 100));
 
-        document.getElementById("company-address").addEventListener("change", debounce( async (event) => {
-            controller.setCompanyAddress(event.target.value);
-        }, 100));
-
         document.getElementById("company-values").addEventListener("change", debounce( async (event) => {
             controller.setCompanyValues(event.target.value);
         }, 100));

@@ -97,13 +97,11 @@ class Model {
         this.preferredRequirements = "";
         this.jobDuties = "";
         this.companyInfo = "";
-        this.companyAddressSearchLink = "https://www.google.com";
 
         /* Template merge fields */
         const date = new Date();  // Today
         this.date = MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
         this.companyNamePossessive = "";
-        this.companyAddress = "";
         this.hiringManager = "Hiring Manager";
         this.completeJobTitle = "";
         this.shortJobTitle = "";
@@ -179,7 +177,6 @@ class Model {
         // Excluded date so that it's always current
 //        localStorage.setItem("date", this.date);
         localStorage.setItem("companyNamePossessive", this.companyNamePossessive);
-        localStorage.setItem("companyAddress", this.companyAddress);
         localStorage.setItem("hiringManager", this.hiringManager);
         localStorage.setItem("completeJobTitle", this.completeJobTitle);
         localStorage.setItem("shortJobTitle", this.shortJobTitle);
@@ -200,8 +197,6 @@ class Model {
         localStorage.setItem("coverLetterPdfLink", this.coverLetterPdfLink);
 
         localStorage.setItem("statusMessage", this.statusMessage);
-
-        localStorage.setItem("companyAddressSearchLink", this.companyAddressSearchLink);
 
         console.debug("Saved application state to local storage");
     }
@@ -271,7 +266,6 @@ class Model {
         this.jobDuties = getItemWithDefault("jobDuties", this.jobDuties);
         this.companyInfo = getItemWithDefault("companyInfo", this.companyInfo);
         this.companyNamePossessive = getItemWithDefault("companyNamePossessive", this.companyNamePossessive);
-        this.companyAddress = getItemWithDefault("companyAddress", this.companyAddress);
         this.hiringManager = getItemWithDefault("hiringManager", this.hiringManager);
         this.completeJobTitle = getItemWithDefault("completeJobTitle", this.completeJobTitle);
         this.shortJobTitle = getItemWithDefault("shortJobTitle", this.shortJobTitle);
@@ -286,7 +280,6 @@ class Model {
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
         this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
-        this.companyAddressSearchLink = getItemWithDefault("companyAddressSearchLink", this.companyAddressSearchLink);
 
         this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
@@ -341,10 +334,11 @@ class Model {
             this.coverLetterId &&
             this.date &&
             this.companyName &&
+            this.companyName != "not found" &&
             this.companyNamePossessive &&
-            this.companyAddress &&
             this.hiringManager &&
             this.jobTitle &&
+            this.jobTitle != "not found" &&
             this.completeJobTitle &&
             this.shortJobTitle &&
             this.companyValues &&

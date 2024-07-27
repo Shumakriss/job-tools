@@ -124,7 +124,6 @@ class View {
         document.getElementById("company-information").value = this.model.companyInfo;
         document.getElementById("company-name-tailor").value = this.model.companyName;
         document.getElementById("company-name-possessive").value = this.model.companyNamePossessive;
-        document.getElementById("company-address").value = this.model.companyAddress;
         document.getElementById("hiring-manager-name").value = this.model.hiringManager;
         document.getElementById("complete-job-title").value = this.model.completeJobTitle;
         document.getElementById("short-job-title").value = this.model.shortJobTitle;
@@ -246,10 +245,6 @@ class View {
         }
 
         document.getElementById("status-message").innerHTML = this.model.statusMessage;
-
-        if (this.model.companyAddressSearchLink) {
-            document.getElementById("company-address-google-link").href = this.model.companyAddressSearchLink;
-        }
 
         if (this.model.companyCorrespondence) {
             let keywordsDiv = document.getElementById("company-correspondence");
