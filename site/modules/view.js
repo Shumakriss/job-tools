@@ -95,20 +95,20 @@ class View {
         document.getElementById("company-name").value = this.model.companyName;
         document.getElementById("job-description-textarea").value = this.model.jobDescription;
 
-        if (this.model.googleSignInEnabled) {
+        if (this.model.isGoogleSignInEnabled()) {
             this.enableGoogleSignInButton();
         }
     
-        if (this.model.googleRefreshEnabled) {
+        if (this.model.isGoogleRefreshEnabled()) {
             this.enableGoogleRefreshButton();
         }
     
-        if (this.model.googleSignOutEnabled) {
+        if (this.model.isGoogleSignOutEnabled()) {
             this.enableGoogleSignOutButton();
         }
 
         let extractButton = document.getElementById("extract-sections-button");
-        if (this.model.extractJobSectionsEnabled) {
+        if (this.model.isExtractJobSectionsEnabled()) {
             extractButton.className = "big-button button";
             extractButton.disabled = false;
         } else {
@@ -131,7 +131,7 @@ class View {
         document.getElementById("company-values").value = this.model.companyValues;
         document.getElementById("relevant-experience").value = this.model.relevantExperience;
 
-        if (this.model.createResumeEnabled) {
+        if (this.model.isCreateResumeEnabled()) {
             document.getElementById("create-resume-button").disabled = false;
             document.getElementById("create-resume-button").className = "big-button button";
             console.log("Create resume button is ready");
@@ -141,7 +141,7 @@ class View {
             document.getElementById("create-resume-button").className = "big-button disabled-button button";
         }
 
-        if (this.model.scanEnabled) {
+        if (this.model.isScanEnabled()) {
             document.getElementById("scan-button").disabled = false;
             document.getElementById("scan-button").className = "big-button button";
         } else {
@@ -209,7 +209,6 @@ class View {
             document.getElementById('tailored-cover-letter-link').href = "";
         }
 
-//        debugger;
         if (this.model.resumePdfLink) {
             document.getElementById('resume-download-button').disabled = false;
             document.getElementById('resume-download-button').className = "button fa fa-download";
@@ -230,7 +229,7 @@ class View {
         document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink;
         document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText;
 
-        if (this.model.logApplicationEnabled) {
+        if (this.model.isLogApplicationEnabled()) {
             document.getElementById("log-application-button").disabled = false;
             document.getElementById("log-application-button").className = "button";
         } else {
@@ -238,7 +237,7 @@ class View {
             document.getElementById("log-application-button").className = "button disabled-button";
         }
 
-        if (this.model.tailorEnabled) {
+        if (this.model.isTailorEnabled()) {
             document.getElementById("tailor-documents-button").disabled = false;
             document.getElementById("tailor-documents-button").className = "big-button button button";
         } else {

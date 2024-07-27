@@ -55,14 +55,6 @@ class Model {
         this.jobscanXsrfToken = null;
         this.chatgptApiKey = null;
 
-        /* Button states */
-        this.googleSignInEnabled = true;
-        this.googleRefreshEnabled = false;
-        this.googleSignOutEnabled = false
-        this.extractJobSectionsEnabled = false;
-        this.createResumeEnabled = false;
-        // ....
-
         /* Globally visible Fields */
         this.linkedInQuery = DEFAULT_LINKEDIN_QUERY;
         this.resumeTemplateName = "";
@@ -90,7 +82,6 @@ class Model {
         this.googleSheetLinkText = "Log Sheet Not Ready";
         this.googleSheetId = null;
         this.logApplicationButtonText = "Log Application";
-        this.logApplicationEnabled = false;
 
         this.navigationPage = "job-description";
 
@@ -123,8 +114,6 @@ class Model {
         this.includePreferredRequirements = true;
         this.includeJobDuties = true;
         this.includeCompanyInfo = true;
-        this.scanEnabled = false;
-        this.tailorEnabled = false;
         this.minimumRequirementsScore = "";
         this.preferredRequirementsScore = "";
         this.jobDutiesScore = "";
@@ -158,11 +147,6 @@ class Model {
         localStorage.setItem("jobscanCookie", this.jobscanCookie);
         localStorage.setItem("jobscanXsrfToken", this.jobscanXsrfToken);
         localStorage.setItem("chatgptApiKey", this.chatgptApiKey);
-        localStorage.setItem("googleSignInEnabled", this.googleSignInEnabled);
-        localStorage.setItem("googleRefreshEnabled", this.googleRefreshEnabled);
-        localStorage.setItem("googleSignOutEnabled", this.googleSignOutEnabled);
-        localStorage.setItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
-        localStorage.setItem("createResumeEnabled", this.createResumeEnabled);
         localStorage.setItem("linkedInQuery", this.linkedInQuery);
         localStorage.setItem("resumeTemplateName", this.resumeTemplateName);
         localStorage.setItem("resumeTemplateId", this.resumeTemplateId);
@@ -184,7 +168,6 @@ class Model {
         localStorage.setItem("googleSheetLink", this.googleSheetLink);
         localStorage.setItem("googleSheetLinkText", this.googleSheetLinkText);
         localStorage.setItem("logApplicationButtonText", this.logApplicationButtonText);
-        localStorage.setItem("logApplicationEnabled", this.logApplicationEnabled);
         localStorage.setItem("navigationPage", this.navigationPage);
         localStorage.setItem("jobDescription", this.jobDescription);
         localStorage.setItem("companyName", this.companyName);
@@ -202,11 +185,9 @@ class Model {
         localStorage.setItem("shortJobTitle", this.shortJobTitle);
         localStorage.setItem("companyValues", this.companyValues);
         localStorage.setItem("relevantExperience", this.relevantExperience);
-        localStorage.setItem("tailorEnabled", this.tailorEnabled);
         localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
         localStorage.setItem("includeJobDuties", this.includeJobDuties);
         localStorage.setItem("includeCompanyInfo", this.includeCompanyInfo);
-        localStorage.setItem("scanEnabled", this.scanEnabled);
         localStorage.setItem("minimumRequirementsScore", this.minimumRequirementsScore);
         localStorage.setItem("preferredRequirementsScore", this.preferredRequirementsScore);
         localStorage.setItem("jobDutiesScore", this.jobDutiesScore);
@@ -282,7 +263,6 @@ class Model {
         this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
         this.googleSheetLinkText = getItemWithDefault("googleSheetLinkText", this.googleSheetLinkText);
         this.logApplicationButtonText = getItemWithDefault("logApplicationButtonText", this.logApplicationButtonText);
-        this.logApplicationEnabled = getItemWithDefault("logApplicationEnabled", this.logApplicationEnabled);
         this.jobDescription = getItemWithDefault("jobDescription", this.jobDescription);
         this.companyName = getItemWithDefault("companyName", this.companyName);
         this.jobTitle = getItemWithDefault("jobTitle", this.jobTitle);
@@ -308,15 +288,6 @@ class Model {
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
         this.companyAddressSearchLink = getItemWithDefault("companyAddressSearchLink", this.companyAddressSearchLink);
 
-        /* Boolean fields */
-        this.googleSignInEnabled = getBooleanItem("googleSignInEnabled", this.googleSignInEnabled);
-        this.googleRefreshEnabled = getBooleanItem("googleRefreshEnabled", this.googleRefreshEnabled);
-        this.googleSignOutEnabled = getBooleanItem("googleSignOutEnabled", this.googleSignOutEnabled);
-        this.extractJobSectionsEnabled = getBooleanItem("extractJobSectionsEnabled", this.extractJobSectionsEnabled);
-        this.createResumeEnabled = getBooleanItem("createResumeEnabled", this.createResumeEnabled);
-        this.scanEnabled = getBooleanItem("scanEnabled", this.scanEnabled);
-        this.tailorEnabled = getBooleanItem("tailorEnabled", this.tailorEnabled);
-
         this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
         this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
         this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
@@ -327,6 +298,111 @@ class Model {
 //        this.date = localStorage.getItem("date");
 
         console.debug("Loaded model: ", this);
+    }
+
+    isGoogleSignInEnabled() {
+        if (this.googleApiKey && this.googleClientId &&
+            !this.googleConsentRequested && !this.model.googleToken) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isGoogleRefreshEnabled() {
+        if (this.googleApiKey && this.googleClientId &&
+            this.googleConsentRequested && this.googleToken) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isGoogleSignOutEnabled() {
+        if (this.googleApiKey && this.googleClientId &&
+            this.googleConsentRequested && this.googleToken) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isExtractJobSectionsEnabled() {
+        if (this.chatgptApiKey && this.jobDescription) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isTailorEnabled() {
+        return this.isGoogleRefreshEnabled() &&
+            this.resumeId &&
+            this.coverLetterId &&
+            this.date &&
+            this.companyName &&
+            this.companyNamePossessive &&
+            this.companyAddress &&
+            this.hiringManager &&
+            this.jobTitle &&
+            this.completeJobTitle &&
+            this.shortJobTitle &&
+            this.companyValues &&
+            this.relevantExperience;
+    }
+
+    isCreateResumeEnabled() {
+        return this.isGoogleRefreshEnabled() &&
+            this.resumeTemplateName &&
+            this.coverLetterTemplateName &&
+            this.companyName &&
+            this.companyName != "" &&
+            !this.resumeId &&
+            !this.coverLetterId;
+    }
+
+    isScanEnabled() {
+        return this.isGoogleRefreshEnabled() &&
+            this.resumeId &&
+            this.minimumRequirements;
+    }
+
+    isApplicationLoggedToday() {
+
+        if (this.companyCorrespondence) {
+            for (let i=0; i<this.companyCorrespondence.length; i++) {
+                let companyName = this.companyCorrespondence[i][0];
+                let status = this.companyCorrespondence[i][1];
+                let date = this.companyCorrespondence[i][2];
+                let month;
+                let day;
+
+                try{
+                    month = date.split("/")[0];
+                    day = date.split("/")[1];
+                } catch(err) {
+                    continue;
+                }
+
+                let today = new Date();
+                let thisDay = String(today.getDate());
+                let thisMonth = String(today.getMonth() + 1);
+
+                if (companyName == this.companyName &&
+                    status == "Applied" &&
+                    month == thisMonth &&
+                    day == thisDay
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    isLogApplicationEnabled() {
+        return !this.isApplicationLoggedToday() && this.isGoogleRefreshEnabled() && this.googleSheetId;
     }
 
 }

@@ -6,9 +6,6 @@ import GoogleWorkspace from './googleWorkspace.js'
 
 class Controller {
 
-    /* Manages complexities of application initialization, state, and behavior
-        - Delegates complexity to separate objects when necessary
-    */
     constructor(model, view, gapi, google) {
         this.model = model;
         this.view = view;
@@ -17,21 +14,13 @@ class Controller {
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
     }
-
-    /* State Setters
-        - Each stateful "thing" (i.e. button, etc.) has a setter
-        - Update runs through all of them
-    */
-
-    setNavigationPage(pageName) {
-        console.log("Navigating to page " + pageName);
-        this.model.navigationPage = pageName;
+    
+    save() {
         this.model.save();
-        this.view.render();
     }
-
-    setExtractJobSectionsEnabled() {
-        this.model.extractJobSectionsEnabled = this.model.chatgptApiKey && this.jobDescription;
+    
+    render() {
+        this.view.render();
     }
 
     setCredentials(credentials) {
@@ -40,12 +29,7 @@ class Controller {
         this.model.googleClientId = credentials.google.clientId;
         this.model.jobscanCookie = credentials.jobscan.cookie;
         this.model.jobscanXsrfToken = credentials.jobscan.xsrfToken;
-
-        this.model.googleSignInEnabled = true;
-        this.model.googleRefreshEnabled = false;
-        this.model.googleSignOutEnabled = false;
-        this.model.save();
-        this.view.render();
+        this.save();
     }
 
     updateCompanyNamePossessive() {
@@ -57,6 +41,8 @@ class Controller {
         } else {
             this.model.companyNamePossessive = companyName + "'s";
         }
+        this.save();
+        this.render();
     }
 
     updateCompanyAddressSearchLink() {
@@ -65,8 +51,8 @@ class Controller {
         let linkPrefix = "https://www.google.com/search?q=";
 
         this.model.companyAddressSearchLink = linkPrefix + escapedQuery;
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
     async updateCompanyCorrespondence() {
@@ -76,26 +62,16 @@ class Controller {
             this.model.companyCorrespondence = await this.workspace.getCompanyCorrespondence(this.model.companyName);
         }
 
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
     async setCompanyName(companyName) {
-
-        if (this.model.companyName != companyName) {
-            this.model.companyName = companyName;
-            this.model.resumeLink = "";
-            this.model.resumeId = null;
-            this.model.coverLetterLink = "";
-            this.model.coverLetterId = null;
-        }
+        this.model.companyName = companyName;
+        this.save();
 
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
-        this.updateCreateResumeEnabled();
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
         this.updateDocLinks();
         this.updateCompanyAddressSearchLink();
         this.updateCompanyCorrespondence();
@@ -103,35 +79,24 @@ class Controller {
     
     setResumeTemplateName(resumeTemplateName) {
         this.model.resumeTemplateName = resumeTemplateName;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
         this.updateDocLinks();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
         this.model.coverLetterTemplateName = coverLetterTemplateName;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
         this.updateDocLinks();
     }
     
     setApplicationLogName(applicationLogName) { 
         this.model.applicationLogName = applicationLogName;
-        this.model.save();
+        this.save();
     }
     
     setJobDescription(jobDescription) {
         this.model.jobDescription = jobDescription;
-        if (!this.model.jobDescription) {
-            this.model.extractJobSectionsEnabled = false;
-        } else {
-            this.model.extractJobSectionsEnabled = true;
-        }
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
         if (jobDescription && jobDescription != "" && this.model.resumeTemplateName) {
             this.scanResumeTemplate();
         }
@@ -141,108 +106,69 @@ class Controller {
         this.model.jobTitle = jobTitle;
         this.model.completeJobTitle = jobTitle;
         this.model.shortJobTitle = jobTitle;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
     }
 
     setCompanyAddress(companyAddress) {
         this.model.companyAddress = companyAddress;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
     }
 
     setCompanyValues(companyValues) {
         this.model.companyValues = companyValues;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
     }
 
     setRelevantExperience(relevantExperience) {
         this.model.relevantExperience = relevantExperience;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
     }
     
     setMinimumRequirements(minimumRequirements) {
         this.model.minimumRequirements = minimumRequirements;
-        this.model.save();
+        this.save();
     }
 
     setPreferredRequirements(preferredRequirements) {
         this.model.preferredRequirements = preferredRequirements;
-        this.model.save();
+        this.save();
     }
 
     setJobDuties(jobDuties) {
         this.model.jobDuties = jobDuties;
-        this.model.save();
+        this.save();
     }
 
     setCompanyInfo(companyInfo) {
         this.model.companyInfo = companyInfo;
-        this.model.save();
+        this.save();
     }
 
     setLinkedInProfileLink(linkedInProfileLink) {
         this.model.linkedInProfileLink = linkedInProfileLink;
-        this.model.save();
+        this.save();
     }
 
     setGithubProfileLink(githubProfileLink) {
         this.model.githubProfileLink = githubProfileLink;
-        this.model.save();
+        this.save();
     }
 
     setWebsiteProfileLink(websiteProfileLink) {
         this.model.websiteProfileLink = websiteProfileLink;
-        this.model.save();
+        this.save();
     }
 
     setHiringManager(hiringManager) {
         this.model.hiringManager = hiringManager;
-        this.updateTailorEnabled();
-        this.model.save();
-        this.view.render();
+        this.save();
     }
 
     async setGoogleSheetName(googleSheetName) {
         this.model.googleSheetName = googleSheetName;
-        this.model.save();
-        this.view.render();
+        this.save();
         await this.updateLogSheetLink();
         this.updateCompanyCorrespondence();
-    }
-
-    updateCreateResumeEnabled() {
-        this.model.createResumeEnabled = Boolean(
-            this.model.googleRefreshEnabled &&
-            this.model.companyName &&
-            this.model.companyName != "");
-        this.model.save();
-    }
-
-    updateScanEnabled() {
-        this.model.scanEnabled = Boolean(this.model.resumeId && this.model.minimumRequirements);
-    }
-
-    updateTailorEnabled() {
-        this.model.tailorEnabled = Boolean(this.model.resumeId &&
-                                          this.model.coverLetterId &&
-                                          this.model.date &&
-                                          this.model.companyName &&
-                                          this.model.companyNamePossessive &&
-                                          this.model.companyAddress &&
-                                          this.model.hiringManager &&
-                                          this.model.jobTitle &&
-                                          this.model.completeJobTitle &&
-                                          this.model.shortJobTitle &&
-                                          this.model.companyValues &&
-                                          this.model.relevantExperience
-                                          )
     }
 
     async updateDocLinks() {
@@ -273,33 +199,30 @@ class Controller {
             this.model.tailoredCoverLetterLinkText = "Tailored Cover Letter Not Ready";
         }
 
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
     async updateLogSheetLink() {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
-        this.model.logApplicationEnabled = false;
         this.model.googleSheetLink = "";
         this.model.googleSheetLinkText = "Log Sheet Not Ready";
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
 
         this.model.googleSheetId = await this.workspace.getDocumentIdByName(this.model.googleSheetName);
 
         if (this.model.googleSheetId) {
-            this.model.logApplicationEnabled = true;
             this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
             this.model.googleSheetLinkText = this.model.googleSheetName;
         } else {
-            this.model.logApplicationEnabled = false;
             this.model.googleSheetLink = "";
             this.model.googleSheetLinkText = "Log Sheet Not Ready";
         }
 
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
     updateDocumentNames() {
@@ -317,7 +240,8 @@ class Controller {
         }
         this.model.coverLetterName = this.model.coverLetterName.replace(" Template", "");
 
-        this.model.save();
+        this.save();
+        this.render();
     }
 
     /* Complex functions
@@ -327,20 +251,14 @@ class Controller {
         try {
             await this.workspace.init();
             await this.workspace.authorize();
-            this.model.googleSignInEnabled = false;
-            this.model.googleRefreshEnabled = true;
-            this.model.googleSignOutEnabled = true;
         } catch(err) {
             console.error("Failed to authorize Google: " + err.message);
-            this.model.googleSignInEnabled = false;
-            this.model.googleRefreshEnabled = false;
-            this.model.googleSignOutEnabled = false;
         }
 
-        this.updateCreateResumeEnabled();
+        
         await this.updateLogSheetLink();
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
         this.updateCompanyCorrespondence();
     }
 
@@ -348,16 +266,15 @@ class Controller {
 
     async extractJobSections() {
         this.model.statusMessage = "Asking ChatGPT to split up job description...";
-        this.view.render();
+        this.render();
 
         let companyNamePromise = this.chatgpt.extractCompanyName(this.model.jobDescription);
         companyNamePromise.then( companyName => {
             this.setCompanyName(companyName);
             this.updateCompanyNamePossessive();
-            this.updateCreateResumeEnabled();
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            
+            this.save();
+            this.render();
             this.updateDocLinks();
         });
         
@@ -366,62 +283,57 @@ class Controller {
             this.model.jobTitle = jobTitle;
             this.model.completeJobTitle = jobTitle;
             this.model.shortJobTitle = jobTitle;
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let minimumRequirementsPromise = this.chatgpt.extractMinimumRequirements(this.model.jobDescription);
         minimumRequirementsPromise.then( minimumRequirements => {
             this.model.minimumRequirements = minimumRequirements;
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let preferredRequirementsPromise = this.chatgpt.extractPreferredRequirements(this.model.jobDescription);
         preferredRequirementsPromise.then( preferredRequirements => {
             this.model.preferredRequirements = preferredRequirements;
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let jobDutiesPromise = this.chatgpt.extractJobDuties(this.model.jobDescription);
         jobDutiesPromise.then( jobDuties => {
             this.model.jobDuties = jobDuties;
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let companyInfoPromise = this.chatgpt.extractCompanyInfo(this.model.jobDescription);
         companyInfoPromise.then( companyInfo => {
             this.model.companyInfo = companyInfo;
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let companyAddressPromise = this.chatgpt.extractCompanyAddress(this.model.companyName);
         companyAddressPromise.then( companyAddress => {
             this.model.companyAddress = companyAddress;
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let companyValuesPromise = this.chatgpt.extractCompanyValues(this.model.companyName);
         companyValuesPromise.then( companyValues => {
             this.model.companyValues = companyValues;
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         let relevantExperiencePromise = this.chatgpt.extractRelevantExperience(this.model.jobDescription);
         relevantExperiencePromise.then( relevantExperience => {
             this.model.relevantExperience = relevantExperience;
-            this.updateTailorEnabled();
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         Promise.all([
@@ -436,8 +348,8 @@ class Controller {
                 relevantExperiencePromise
             ]).then( results =>{
                 this.model.statusMessage = "Job description sections extracted";
-                this.model.save();
-                this.view.render();
+                this.save();
+                this.render();
         });
 
     }
@@ -449,7 +361,7 @@ class Controller {
         if (this.model.resumeTemplateId && !this.model.resumeId) {
             this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName);
         }
-        this.model.save();
+        this.save();
     }
 
     async createCoverLetter() {
@@ -459,15 +371,15 @@ class Controller {
         if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
             this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
         }
-        this.model.save();
+        this.save();
     }
 
     async createResumeAndCoverLetter() {
         this.model.createResumeEnabled = false;
-        this.model.save();
+        this.save();
 
         this.model.statusMessage = "Checking for resume...";
-        this.view.render();
+        this.render();
 
         try {
             Promise.all([
@@ -475,39 +387,37 @@ class Controller {
                 this.createCoverLetter()
             ]).then( () => {
                 this.model.statusMessage = "Documents ready to scan and tailor";
-                this.view.render();
-                this.updateScanEnabled();
-                this.updateTailorEnabled();
-                this.model.save();
-                this.view.render();
+                this.render();
+                this.save();
+                this.render();
                 this.updateDocLinks();
             });
 
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
             this.model.statusMessage = "Problem finding/creating documents";
-            this.view.render();
+            this.render();
         }
 
     }
 
     async scanResumeTemplate() {
         this.model.statusMessage = "Scanning resume template...";
-        this.view.render();
+        this.render();
 
         if (this.model.resumeTemplateName && !this.model.resumeTemplateId) {
             this.model.statusMessage = "Looking for resume template...";
-            this.view.render();
+            this.render();
             this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
         }
 
         this.model.statusMessage = "Template found, fetching contents...";
-        this.view.render();
+        this.render();
 
         this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
 
         this.model.statusMessage = "Template contents acquired, scanning against job description";
-        this.view.render();
+        this.render();
 
         let results = await this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
 
@@ -522,20 +432,20 @@ class Controller {
         this.model.companyInfoScore = "";
         this.model.companyInfoKeywords = "";
 
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
     async scanResume() {
 
         if (!this.model.resumeId) {
             this.model.statusMessage = "Resume scan missing required fields or documents";
-            this.view.render();
+            this.render();
             return;
         }
 
         this.model.statusMessage = "Scanning resume...";
-        this.view.render();
+        this.render();
 
         this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
 
@@ -549,8 +459,8 @@ class Controller {
         minimumScanPromise.then( results => {
             this.model.minimumRequirementsScore = results['matchRate']['score'];
             this.model.minimumRequirementsKeywords = results;
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         if (this.model.includePreferredRequirements && this.model.preferredRequirements) {
@@ -561,8 +471,8 @@ class Controller {
             preferredRequirementsPromise.then( results => {
                 this.model.preferredRequirementsScore = results['matchRate']['score'];
                 this.model.preferredRequirementsKeywords = results;
-                this.model.save();
-                this.view.render();
+                this.save();
+                this.render();
             });
         }
 
@@ -574,8 +484,8 @@ class Controller {
             jobDutiesPromise.then( results => {
                 this.model.jobDutiesScore = results['matchRate']['score'];
                 this.model.jobDutiesKeywords = results;
-                this.model.save();
-                this.view.render();
+                this.save();
+                this.render();
             });
         }
 
@@ -587,15 +497,15 @@ class Controller {
             companyInfoPromise.then( results => {
                 this.model.companyInfoScore = results['matchRate']['score'];
                 this.model.companyInfoKeywords = results;
-                this.model.save();
-                this.view.render();
+                this.save();
+                this.render();
             });
         }
 
         Promise.all(promises).then( results =>{
             this.model.statusMessage = "All resume scans complete";
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
     }
@@ -603,16 +513,15 @@ class Controller {
     async tailorDocuments() {
         console.log("Tailoring documents");
         this.model.statusMessage = "Tailoring documents...";
-        this.view.render();
+        this.render();
 
         Promise.all([
             this.workspace.mergeTextInTemplate(this.model.resumeId),
             this.workspace.mergeTextInTemplate(this.model.coverLetterId)
         ]).then( () => {
-            this.updateTailorEnabled();
             this.model.statusMessage = "Finished tailoring documents";
-            this.model.save();
-            this.view.render();
+            this.save();
+            this.render();
         });
 
         console.log("Document tailoring complete");
@@ -621,9 +530,9 @@ class Controller {
     async logApplication() {
         console.debug("Logging job application to Google Sheets");
         await this.workspace.appendApplicationLog();
-        this.model.logApplicationEnabled = false;
-        this.model.save();
-        this.view.render();
+        this.updateCompanyCorrespondence();
+        this.save();
+        this.render();
     }
 
     reset() {
@@ -657,15 +566,9 @@ class Controller {
         this.model.coverLetterPdfLink = "";
         this.model.companyCorrespondence = "";
 
-        this.model.extractJobSectionsEnabled = false;
-        this.model.createResumeEnabled = false;
-        this.model.scanEnabled = false;
-        this.model.tailorEnabled = false;
-        this.model.logApplicationEnabled = true;
-
         this.model.statusMessage = "Start your application!";
-        this.model.save();
-        this.view.render();
+        this.save();
+        this.render();
     }
 
 }

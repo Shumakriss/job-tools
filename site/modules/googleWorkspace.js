@@ -370,7 +370,7 @@ class GoogleWorkspace {
         }
 
         let response = await this.gapi.client.sheets.spreadsheets.values.get(request);
-        debugger;
+
         let rows = response['result']['values'];
 
         let filteredCells = [];
