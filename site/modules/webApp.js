@@ -180,19 +180,19 @@ class WebApp {
         }
 
         document.getElementById('clipboard-linkedin-query').onclick = () => {
-            navigator.clipboard.writeText(this.model.linkedInQuery);
+            this.controller.copyLinkedInQueryToClipboard();
         }
 
         document.getElementById('clipboard-linkedin-profile').onclick = () => {
-            navigator.clipboard.writeText(this.model.linkedInProfileLink);
+            this.controller.copyLinkedInProfileLinkToClipboard();
         }
 
         document.getElementById('clipboard-github-profile').onclick = () => {
-            navigator.clipboard.writeText(this.model.githubProfileLink);
+            this.controller.copyGithubProfileLinkToClipboard();
         }
 
         document.getElementById('clipboard-website').onclick = () => {
-            navigator.clipboard.writeText(this.model.websiteProfileLink);
+            this.controller.copyWebsiteProfileLinkToClipboard();
         }
 
         document.getElementById('resume-download-button').onclick = () => {

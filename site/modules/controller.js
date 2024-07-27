@@ -23,6 +23,10 @@ class Controller {
         this.view.render();
     }
 
+    setStatus() {
+
+    }
+
     setCredentials(credentials) {
         this.model.chatgptApiKey = credentials.chatGpt.apiKey;
         this.model.googleApiKey = credentials.google.apiKey;
@@ -563,6 +567,33 @@ class Controller {
         this.render();
     }
 
+    copyLinkedInQueryToClipboard(){
+        this.model.statusMessage = "Query copied to clipboard";
+        navigator.clipboard.writeText(this.model.linkedInQuery);
+        this.save();
+        this.render();
+    }
+
+    copyLinkedInProfileLinkToClipboard() {
+        this.model.statusMessage = "LinkedIn profile copied to clipboard";
+        navigator.clipboard.writeText(this.model.linkedInProfileLink);
+        this.save();
+        this.render();
+    }
+
+    copyGithubProfileLinkToClipboard() {
+        this.model.statusMessage = "Github profile copied to clipboard";
+        navigator.clipboard.writeText(this.model.githubProfileLink);
+        this.save();
+        this.render();
+    }
+
+    copyWebsiteProfileLinkToClipboard() {
+        this.model.statusMessage = "Website link copied to clipboard";
+        navigator.clipboard.writeText(this.model.websiteProfileLink);
+        this.save();
+        this.render();
+    }
 }
 
 export default Controller;
