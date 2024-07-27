@@ -402,7 +402,10 @@ class Model {
     }
 
     isLogApplicationEnabled() {
-        return !this.isApplicationLoggedToday() && this.isGoogleRefreshEnabled() && this.googleSheetId;
+        return !this.isApplicationLoggedToday() &&
+            this.isGoogleRefreshEnabled() &&
+            this.googleSheetId &&
+            this.companyName;
     }
 
 }
