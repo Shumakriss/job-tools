@@ -75,7 +75,6 @@ class Controller {
         this.save();
         this.render();
 
-        this.updateDocumentNames();
         this.updateCompanyNamePossessive();
         this.updateResumeId();
         this.updateDocLinks();
@@ -88,7 +87,6 @@ class Controller {
         this.render();
         this.updateResumeTemplateId();
         this.updateResumeId();
-        this.updateDocumentNames();
         this.updateDocLinks();
     }
     
@@ -97,7 +95,6 @@ class Controller {
         this.save();
         this.render();
         this.updateCoverLetterTemplateId();
-        this.updateDocumentNames();
         this.updateDocLinks();
     }
     
@@ -193,7 +190,7 @@ class Controller {
         const gdocPrefix = "https://docs.google.com/document/d/";
         const gdocSuffix = "/edit";
 
-        if (this.model.companyName && this.model.resumeId) {
+        if (this.model.resumeId && this.model.coverLetterId != 'undefined') {
             this.model.tailoredResumeDlButtonEnabled = true;
             this.model.resumePdfLink = await this.workspace.getPdfLink(this.model.resumeId);
         } else {
@@ -201,16 +198,12 @@ class Controller {
             this.model.resumePdfLink = null;
         }
 
-        if (this.model.companyName && this.model.coverLetterId) {
-            this.model.tailoredCoverLetterLink = gdocPrefix + this.model.coverLetterId + gdocSuffix;
+        if (this.model.coverLetterId && this.model.coverLetterId != 'undefined') {
             this.model.tailoredCoverLetterDlButtonEnabled = true;
             this.model.coverLetterPdfLink = await this.workspace.getPdfLink(this.model.coverLetterId);
-            this.model.tailoredCoverLetterLinkText = this.model.coverLetterName;
         } else {
-            this.model.tailoredCoverLetterLink = "";
             this.model.tailoredCoverLetterDlButtonEnabled = false;
             this.model.coverLetterPdfLink = null;
-            this.model.tailoredCoverLetterLinkText = "Tailored Cover Letter Not Ready";
         }
 
         this.save();
@@ -236,18 +229,6 @@ class Controller {
         }
 
         this.updateCompanyCorrespondence();
-
-        this.save();
-        this.render();
-    }
-
-    updateDocumentNames() {
-        if (this.model.companyName && this.model.coverLetterTemplateName) {
-            this.model.coverLetterName = this.model.companyName + " " + this.model.coverLetterTemplateName;
-        } else {
-            this.model.coverLetterName = "";
-        }
-        this.model.coverLetterName = this.model.coverLetterName.replace(" Template", "");
 
         this.save();
         this.render();
@@ -358,6 +339,9 @@ class Controller {
         this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
         this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName());
 
+        this.model.statusMessage = "Document not found, creating...";
+        this.render();
+
         if (this.model.resumeTemplateId && !this.model.resumeId) {
             this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName());
         }
@@ -367,10 +351,13 @@ class Controller {
 
     async createCoverLetter() {
         this.model.coverLetterTemplateId = await this.workspace.getDocumentIdByName(this.model.coverLetterTemplateName);
-        this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName);
+        this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName());
+
+        this.model.statusMessage = "Document not found, creating...";
+        this.render();
 
         if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
-            this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName);
+            this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName());
         }
         this.save();
         this.render();
@@ -558,7 +545,6 @@ class Controller {
         this.model.jobDuties = "";
         this.model.companyInfo = "";
         this.model.resumeId = null;
-        this.model.coverLetterName = "";
         this.model.coverLetterId = null;
         this.model.companyNamePossessive = "";
         this.model.hiringManager = "Hiring Manager";

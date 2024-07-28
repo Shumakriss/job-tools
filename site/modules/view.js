@@ -195,13 +195,8 @@ class View {
         document.getElementById('tailored-resume-link').innerHTML = this.model.tailoredResumeLinkText();
         document.getElementById('tailored-resume-link').href = this.model.tailoredResumeLink();
 
-        if (this.model.tailoredCoverLetterLink) {
-            document.getElementById('tailored-cover-letter-link').innerHTML = this.model.coverLetterName;
-            document.getElementById('tailored-cover-letter-link').href = this.model.tailoredCoverLetterLink;
-        } else {
-            document.getElementById('tailored-cover-letter-link').innerHTML = "Tailored Cover Letter Not Ready";
-            document.getElementById('tailored-cover-letter-link').href = "";
-        }
+        document.getElementById('tailored-cover-letter-link').innerHTML = this.model.tailoredCoverLetterLinkText();
+        document.getElementById('tailored-cover-letter-link').href = this.model.tailoredCoverLetterLink();
 
         if (this.model.resumePdfLink) {
             document.getElementById('resume-download-button').disabled = false;

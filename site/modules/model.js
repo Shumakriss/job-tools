@@ -67,13 +67,9 @@ class Model {
         this.resumeId = null;
         this.resumeContent = "";
 
-        this.coverLetterName = "";
         this.coverLetterId = null;
 
         this.tailoredResumeDlButtonEnabled = false;
-        
-        this.tailoredCoverLetterLink = "";
-        this.tailoredCoverLetterLinkText = "Tailored CoverLetter Not Ready";
         this.tailoredCoverLetterDlButtonEnabled = false;
         
         this.googleSheetName = "";
@@ -149,13 +145,10 @@ class Model {
         localStorage.setItem("resumeTemplateId", this.resumeTemplateId);
         localStorage.setItem("coverLetterTemplateName", this.coverLetterTemplateName);
         localStorage.setItem("coverLetterTemplateId", this.coverLetterTemplateId);
-        localStorage.setItem("coverLetterName", this.coverLetterName);
         localStorage.setItem("resumeId", this.resumeId);
         localStorage.setItem("resumeContent", this.resumeContent);
         localStorage.setItem("coverLetterId", this.coverLetterId);
         localStorage.setItem("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        localStorage.setItem("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
-        localStorage.setItem("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
         localStorage.setItem("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         localStorage.setItem("googleSheetName", this.googleSheetName);
         localStorage.setItem("googleSheetId", this.googleSheetId);
@@ -240,11 +233,8 @@ class Model {
         this.coverLetterTemplateId = getItemWithDefault("coverLetterTemplateId", this.coverLetterTemplateId);
         this.resumeId = getItemWithDefault("resumeId", this.resumeId);
         this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
-        this.coverLetterName = getItemWithDefault("coverLetterName", this.coverLetterName);
         this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
         this.tailoredResumeDlButtonEnabled = getItemWithDefault("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        this.tailoredCoverLetterLink = getItemWithDefault("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
-        this.tailoredCoverLetterLinkText = getItemWithDefault("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
         this.tailoredCoverLetterDlButtonEnabled = getItemWithDefault("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
         this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
@@ -294,6 +284,14 @@ class Model {
         }
     }
 
+    coverLetterName() {
+        if (this.companyName && this.coverLetterTemplateName) {
+            return this.companyName + " " + this.coverLetterTemplateName.replace(" Template", "");
+        } else {
+            return "";
+        }
+    }
+
     tailoredResumeLink() {
         if (this.resumeId) {
             return GDOC_PREFIX + this.resumeId + GDOC_SUFFIX;
@@ -310,7 +308,29 @@ class Model {
         } else if (!this.companyName && this.resumeTemplateName) {
             return "Missing company name";
         } else if (this.companyName && !this.resumeTemplateName) {
-            return "Missing template name";
+            return "Missing resume template name";
+        } else {
+            return "";
+        }
+    }
+
+    tailoredCoverLetterLink() {
+        if (this.coverLetterId) {
+            return GDOC_PREFIX + this.coverLetterId + GDOC_SUFFIX;
+        } else {
+            return "";
+        }
+    }
+    
+    tailoredCoverLetterLinkText() {
+        if(this.companyName && this.coverLetterTemplateName && this.coverLetterId && this.coverLetterId != 'undefined') {
+            return "Cover Letter";
+        } else if (this.companyName && this.coverLetterTemplateName && (!this.coverLetterId || this.coverLetterId == 'undefined')) {
+            return "Cover Letter not found"
+        } else if (!this.companyName && this.coverLetterTemplateName) {
+            return "Missing company name";
+        } else if (this.companyName && !this.coverLetterTemplateName) {
+            return "Missing cover letter template name";
         } else {
             return "";
         }
