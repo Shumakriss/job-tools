@@ -198,7 +198,7 @@ class View {
         document.getElementById('tailored-cover-letter-link').innerHTML = this.model.tailoredCoverLetterLinkText();
         document.getElementById('tailored-cover-letter-link').href = this.model.tailoredCoverLetterLink();
 
-        if (this.model.resumePdfLink) {
+        if (this.model.tailoredResumeDlButtonEnabled()) {
             document.getElementById('resume-download-button').disabled = false;
             document.getElementById('resume-download-button').className = "button fa fa-download";
         } else {
@@ -206,7 +206,7 @@ class View {
             document.getElementById('resume-download-button').className = "disabled-button button fa fa-download";
         }
 
-        if (this.model.coverLetterPdfLink) {
+        if (this.model.tailoredCoverLetterDlButtonEnabled()) {
             document.getElementById('cover-letter-download-button').disabled = false;
             document.getElementById('cover-letter-download-button').className = "button fa fa-download";
         } else {

@@ -3,6 +3,8 @@ import ChatGpt from './chatgptExtractor.js'
 import Jobscan from './jobscan.js'
 import GoogleWorkspace from './googleWorkspace.js'
 
+const GDOC_PREFIX = "https://docs.google.com/document/d/";
+const GDOC_SUFFIX = "/edit";
 
 class Controller {
 
@@ -67,17 +69,25 @@ class Controller {
         this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName());
         this.save();
         this.render();
-        this.updateDocLinks();
+        this.updateResumePdfLink();
+    }
+
+    async updateCoverLetterId() {
+        this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName());
+        this.save();
+        this.render();
+        this.updateCoverLetterPdfLink();
     }
 
     async setCompanyName(companyName) {
         this.model.companyName = companyName;
+
         this.save();
         this.render();
 
         this.updateCompanyNamePossessive();
         this.updateResumeId();
-        this.updateDocLinks();
+        this.updateCoverLetterId();
         this.updateCompanyCorrespondence();
     }
     
@@ -87,7 +97,6 @@ class Controller {
         this.render();
         this.updateResumeTemplateId();
         this.updateResumeId();
-        this.updateDocLinks();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
@@ -95,7 +104,7 @@ class Controller {
         this.save();
         this.render();
         this.updateCoverLetterTemplateId();
-        this.updateDocLinks();
+        this.updateCoverLetterId();
     }
     
     setApplicationLogName(applicationLogName) { 
@@ -186,26 +195,22 @@ class Controller {
         this.updateLogSheetLink();
     }
 
-    async updateDocLinks() {
-        const gdocPrefix = "https://docs.google.com/document/d/";
-        const gdocSuffix = "/edit";
-
-        if (this.model.resumeId && this.model.coverLetterId != 'undefined') {
-            this.model.tailoredResumeDlButtonEnabled = true;
+    async updateResumePdfLink() {
+        if (this.model.resumeId && this.model.resumeId != 'undefined') {
             this.model.resumePdfLink = await this.workspace.getPdfLink(this.model.resumeId);
         } else {
-            this.model.tailoredResumeDlButtonEnabled = false;
             this.model.resumePdfLink = null;
         }
+        this.save();
+        this.render();
+    }
 
+    async updateCoverLetterPdfLink() {
         if (this.model.coverLetterId && this.model.coverLetterId != 'undefined') {
-            this.model.tailoredCoverLetterDlButtonEnabled = true;
             this.model.coverLetterPdfLink = await this.workspace.getPdfLink(this.model.coverLetterId);
         } else {
-            this.model.tailoredCoverLetterDlButtonEnabled = false;
             this.model.coverLetterPdfLink = null;
         }
-
         this.save();
         this.render();
     }
@@ -258,10 +263,8 @@ class Controller {
         companyNamePromise.then( companyName => {
             this.setCompanyName(companyName);
             this.updateCompanyNamePossessive();
-            
             this.save();
             this.render();
-            this.updateDocLinks();
         });
         
         let jobTitlePromise = this.chatgpt.extractJobTitle(this.model.jobDescription);
@@ -375,7 +378,6 @@ class Controller {
                 this.render();
                 this.save();
                 this.render();
-                this.updateDocLinks();
             });
 
         } catch(err) {
@@ -390,7 +392,6 @@ class Controller {
         this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
         this.save();
         this.render();
-        this.updateDocLinks();
     }
 
     async updateCoverLetterTemplateId() {

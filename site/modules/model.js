@@ -65,13 +65,10 @@ class Model {
         this.coverLetterTemplateId = null;
 
         this.resumeId = null;
-        this.resumeContent = "";
-
         this.coverLetterId = null;
 
-        this.tailoredResumeDlButtonEnabled = false;
-        this.tailoredCoverLetterDlButtonEnabled = false;
-        
+        this.resumeContent = "";
+
         this.googleSheetName = "";
         this.googleSheetLink = "";
         this.googleSheetId = null;
@@ -147,8 +144,6 @@ class Model {
         localStorage.setItem("resumeId", this.resumeId);
         localStorage.setItem("resumeContent", this.resumeContent);
         localStorage.setItem("coverLetterId", this.coverLetterId);
-        localStorage.setItem("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        localStorage.setItem("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         localStorage.setItem("googleSheetName", this.googleSheetName);
         localStorage.setItem("googleSheetId", this.googleSheetId);
         localStorage.setItem("googleSheetLink", this.googleSheetLink);
@@ -232,8 +227,6 @@ class Model {
         this.resumeId = getItemWithDefault("resumeId", this.resumeId);
         this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
         this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
-        this.tailoredResumeDlButtonEnabled = getItemWithDefault("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
-        this.tailoredCoverLetterDlButtonEnabled = getItemWithDefault("tailoredCoverLetterDlButtonEnabled", this.tailoredCoverLetterDlButtonEnabled);
         this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
         this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
         this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
@@ -340,6 +333,22 @@ class Model {
             return "Missing cover letter template name";
         } else {
             return "";
+        }
+    }
+
+    tailoredResumeDlButtonEnabled() {
+        if(this.tailoredResumeLink() && this.tailoredResumeLink() != 'undefined') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    tailoredCoverLetterDlButtonEnabled() {
+        if(this.tailoredCoverLetterLink() && this.tailoredCoverLetterLink() != 'undefined') {
+            return true;
+        } else {
+            return false;
         }
     }
 
