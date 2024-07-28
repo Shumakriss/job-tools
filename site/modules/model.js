@@ -74,7 +74,6 @@ class Model {
         
         this.googleSheetName = "";
         this.googleSheetLink = "";
-        this.googleSheetLinkText = "Log Sheet Not Ready";
         this.googleSheetId = null;
         this.logApplicationButtonText = "Log Application";
 
@@ -153,7 +152,6 @@ class Model {
         localStorage.setItem("googleSheetName", this.googleSheetName);
         localStorage.setItem("googleSheetId", this.googleSheetId);
         localStorage.setItem("googleSheetLink", this.googleSheetLink);
-        localStorage.setItem("googleSheetLinkText", this.googleSheetLinkText);
         localStorage.setItem("logApplicationButtonText", this.logApplicationButtonText);
         localStorage.setItem("navigationPage", this.navigationPage);
         localStorage.setItem("jobDescription", this.jobDescription);
@@ -239,7 +237,6 @@ class Model {
         this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
         this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
         this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
-        this.googleSheetLinkText = getItemWithDefault("googleSheetLinkText", this.googleSheetLinkText);
         this.logApplicationButtonText = getItemWithDefault("logApplicationButtonText", this.logApplicationButtonText);
         this.jobDescription = getItemWithDefault("jobDescription", this.jobDescription);
         this.companyName = getItemWithDefault("companyName", this.companyName);
@@ -297,6 +294,16 @@ class Model {
             return GDOC_PREFIX + this.resumeId + GDOC_SUFFIX;
         } else {
             return "";
+        }
+    }
+
+    googleSheetLinkText() {
+        if (this.googleSheetName && this.googleSheetId && this.googleSheetId != "undefined") {
+            return "Application Log";
+        } else if (this.googleSheetName) {
+            return "Application log not found";
+        } else {
+            return "Missing application log name";
         }
     }
 

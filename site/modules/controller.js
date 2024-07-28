@@ -214,7 +214,6 @@ class Controller {
         let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
         let sheetSuffix = "/edit";
         this.model.googleSheetLink = "";
-        this.model.googleSheetLinkText = "Log Sheet Not Ready";
         this.save();
         this.render();
 
@@ -222,10 +221,8 @@ class Controller {
 
         if (this.model.googleSheetId) {
             this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
-            this.model.googleSheetLinkText = this.model.googleSheetName;
         } else {
             this.model.googleSheetLink = "";
-            this.model.googleSheetLinkText = "Log Sheet Not Ready";
         }
 
         this.updateCompanyCorrespondence();

@@ -216,7 +216,7 @@ class View {
 
         document.getElementById("application-log-sheet-name").value = this.model.googleSheetName;
         document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink;
-        document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText;
+        document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText();
 
         if (this.model.isLogApplicationEnabled()) {
             document.getElementById("log-application-button").disabled = false;
