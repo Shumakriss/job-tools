@@ -192,13 +192,8 @@ class View {
         document.getElementById("profile-link-github").value = this.model.githubProfileLink;
         document.getElementById("profile-link-website").value = this.model.websiteProfileLink;
 
-        if (this.model.tailoredResumeLink) {
-            document.getElementById('tailored-resume-link').innerHTML = this.model.resumeName;
-            document.getElementById('tailored-resume-link').href = this.model.tailoredResumeLink;
-        } else {
-            document.getElementById('tailored-resume-link').innerHTML = "Tailored Resume Not Ready";
-            document.getElementById('tailored-resume-link').href = "";
-        }
+        document.getElementById('tailored-resume-link').innerHTML = this.model.tailoredResumeLinkText();
+        document.getElementById('tailored-resume-link').href = this.model.tailoredResumeLink();
 
         if (this.model.tailoredCoverLetterLink) {
             document.getElementById('tailored-cover-letter-link').innerHTML = this.model.coverLetterName;

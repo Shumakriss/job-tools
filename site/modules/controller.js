@@ -14,6 +14,12 @@ class Controller {
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
     }
+
+    handleSave() {
+        this.model.statusMessage = "Application saved to local storage";
+        this.save();
+        this.render();
+    }
     
     save() {
         this.model.save();
@@ -21,10 +27,6 @@ class Controller {
     
     render() {
         this.view.render();
-    }
-
-    setStatus() {
-
     }
 
     setCredentials(credentials) {
@@ -61,6 +63,13 @@ class Controller {
         this.render();
     }
 
+    async updateResumeId() {
+        this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName());
+        this.save();
+        this.render();
+        this.updateDocLinks();
+    }
+
     async setCompanyName(companyName) {
         this.model.companyName = companyName;
         this.save();
@@ -68,6 +77,7 @@ class Controller {
 
         this.updateDocumentNames();
         this.updateCompanyNamePossessive();
+        this.updateResumeId();
         this.updateDocLinks();
         this.updateCompanyCorrespondence();
     }
@@ -76,6 +86,9 @@ class Controller {
         this.model.resumeTemplateName = resumeTemplateName;
         this.save();
         this.render();
+        this.updateResumeTemplateId();
+        this.updateResumeId();
+        this.updateDocumentNames();
         this.updateDocLinks();
     }
     
@@ -83,6 +96,8 @@ class Controller {
         this.model.coverLetterTemplateName = coverLetterTemplateName;
         this.save();
         this.render();
+        this.updateCoverLetterTemplateId();
+        this.updateDocumentNames();
         this.updateDocLinks();
     }
     
@@ -179,15 +194,11 @@ class Controller {
         const gdocSuffix = "/edit";
 
         if (this.model.companyName && this.model.resumeId) {
-            this.model.tailoredResumeLink = gdocPrefix + this.model.resumeId + gdocSuffix;
             this.model.tailoredResumeDlButtonEnabled = true;
             this.model.resumePdfLink = await this.workspace.getPdfLink(this.model.resumeId);
-            this.model.tailoredResumeLinkText = this.model.resumeName;
         } else {
-            this.model.tailoredResumeLink = "";
             this.model.tailoredResumeDlButtonEnabled = false;
             this.model.resumePdfLink = null;
-            this.model.tailoredResumeLinkText = "Tailored Resume Not Ready";
         }
 
         if (this.model.companyName && this.model.coverLetterId) {
@@ -231,13 +242,6 @@ class Controller {
     }
 
     updateDocumentNames() {
-        if (this.model.companyName && this.model.resumeTemplateName) {
-            this.model.resumeName = this.model.companyName + " " + this.model.resumeTemplateName;
-        } else {
-            this.model.resumeName = "";
-        }
-        this.model.resumeName = this.model.resumeName.replace(" Template", "");
-
         if (this.model.companyName && this.model.coverLetterTemplateName) {
             this.model.coverLetterName = this.model.companyName + " " + this.model.coverLetterTemplateName;
         } else {
@@ -352,10 +356,10 @@ class Controller {
 
     async createResume() {
         this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
-        this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName);
+        this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName());
 
         if (this.model.resumeTemplateId && !this.model.resumeId) {
-            this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName);
+            this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName());
         }
         this.save();
         this.render();
@@ -396,6 +400,19 @@ class Controller {
             this.render();
         }
 
+    }
+
+    async updateResumeTemplateId() {
+        this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
+        this.save();
+        this.render();
+        this.updateDocLinks();
+    }
+
+    async updateCoverLetterTemplateId() {
+        this.model.coverLetterTemplateId = await this.workspace.getDocumentIdByName(this.model.coverLetterTemplateName);
+        this.save();
+        this.render();
     }
 
     async scanResumeTemplate() {
@@ -540,7 +557,6 @@ class Controller {
         this.model.preferredRequirements = "";
         this.model.jobDuties = "";
         this.model.companyInfo = "";
-        this.model.resumeName = "";
         this.model.resumeId = null;
         this.model.coverLetterName = "";
         this.model.coverLetterId = null;

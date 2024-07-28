@@ -144,6 +144,17 @@ class WebApp {
             controller.setRelevantExperience(event.target.value);
         }, 100));
 
+        document.addEventListener('keydown', e => {
+            if (e.metaKey && e.key === 's') {
+                // Prevent the Save dialog to open
+                e.preventDefault();
+
+                this.controller.handleSave();
+            } else if (e.key === 'Escape') {
+                document.getElementById("settings-modal").style.display = "none";
+            }
+        });
+
         console.debug("Registered listeners");
     }
 
@@ -201,6 +212,20 @@ class WebApp {
 
         document.getElementById('cover-letter-download-button').onclick = () => {
             downloadLink(this.model.coverLetterPdfLink);
+        }
+
+        document.getElementById('configure-button').onclick = () => {
+            document.getElementById("settings-modal").style.display = "block";
+        }
+
+        document.getElementById('close-button').onclick = function() {
+            document.getElementById("settings-modal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("settings-modal")) {
+               document.getElementById("settings-modal").style.display = "none";
+            }
         }
 
         console.debug("Registered handlers");

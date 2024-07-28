@@ -2,6 +2,8 @@ const DEFAULT_LINKEDIN_QUERY = "(software OR data) AND (founding OR senior OR pr
 const DEFAULT_LINKEDIN_PROFILE = "https://www.linkedin.com/in/christophershumaker/";
 const DEFAULT_GITHUB_PROFILE = "https://github.com/Shumakriss";
 const DEFAULT_WEBSITE = "https://www.makerconsulting.llc/maker-consulting";
+const GDOC_PREFIX = "https://docs.google.com/document/d/";
+const GDOC_SUFFIX = "/edit";
 
 const MONTHS = {
     0: "January",
@@ -62,15 +64,12 @@ class Model {
         this.coverLetterTemplateName = "";
         this.coverLetterTemplateId = null;
 
-        this.resumeName = "";
         this.resumeId = null;
         this.resumeContent = "";
 
         this.coverLetterName = "";
         this.coverLetterId = null;
 
-        this.tailoredResumeLink = "";
-        this.tailoredResumeLinkText = "Tailored Resume Not Ready";
         this.tailoredResumeDlButtonEnabled = false;
         
         this.tailoredCoverLetterLink = "";
@@ -150,13 +149,10 @@ class Model {
         localStorage.setItem("resumeTemplateId", this.resumeTemplateId);
         localStorage.setItem("coverLetterTemplateName", this.coverLetterTemplateName);
         localStorage.setItem("coverLetterTemplateId", this.coverLetterTemplateId);
-        localStorage.setItem("resumeName", this.resumeName);
         localStorage.setItem("coverLetterName", this.coverLetterName);
         localStorage.setItem("resumeId", this.resumeId);
         localStorage.setItem("resumeContent", this.resumeContent);
         localStorage.setItem("coverLetterId", this.coverLetterId);
-        localStorage.setItem("tailoredResumeLink", this.tailoredResumeLink);
-        localStorage.setItem("tailoredResumeLinkText", this.tailoredResumeLinkText);
         localStorage.setItem("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
         localStorage.setItem("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
         localStorage.setItem("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
@@ -242,13 +238,10 @@ class Model {
         this.resumeTemplateId = getItemWithDefault("resumeTemplateId", this.resumeTemplateId);
         this.coverLetterTemplateName = getItemWithDefault("coverLetterTemplateName", this.coverLetterTemplateName);
         this.coverLetterTemplateId = getItemWithDefault("coverLetterTemplateId", this.coverLetterTemplateId);
-        this.resumeName = getItemWithDefault("resumeName", this.resumeName);
         this.resumeId = getItemWithDefault("resumeId", this.resumeId);
         this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
         this.coverLetterName = getItemWithDefault("coverLetterName", this.coverLetterName);
         this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
-        this.tailoredResumeLink = getItemWithDefault("tailoredResumeLink", this.tailoredResumeLink);
-        this.tailoredResumeLinkText = getItemWithDefault("tailoredResumeLinkText", this.tailoredResumeLinkText);
         this.tailoredResumeDlButtonEnabled = getItemWithDefault("tailoredResumeDlButtonEnabled", this.tailoredResumeDlButtonEnabled);
         this.tailoredCoverLetterLink = getItemWithDefault("tailoredCoverLetterLink", this.tailoredCoverLetterLink);
         this.tailoredCoverLetterLinkText = getItemWithDefault("tailoredCoverLetterLinkText", this.tailoredCoverLetterLinkText);
@@ -291,6 +284,36 @@ class Model {
 //        this.date = localStorage.getItem("date");
 
         console.debug("Loaded model: ", this);
+    }
+
+    resumeName() {
+        if (this.companyName && this.resumeTemplateName) {
+            return this.companyName + " " + this.resumeTemplateName.replace(" Template", "");
+        } else {
+            return "";
+        }
+    }
+
+    tailoredResumeLink() {
+        if (this.resumeId) {
+            return GDOC_PREFIX + this.resumeId + GDOC_SUFFIX;
+        } else {
+            return "";
+        }
+    }
+
+    tailoredResumeLinkText() {
+        if(this.companyName && this.resumeTemplateName && this.resumeId && this.resumeId != 'undefined') {
+            return "Resume";
+        } else if (this.companyName && this.resumeTemplateName && (!this.resumeId || this.resumeId == 'undefined')) {
+            return "Resume not found"
+        } else if (!this.companyName && this.resumeTemplateName) {
+            return "Missing company name";
+        } else if (this.companyName && !this.resumeTemplateName) {
+            return "Missing template name";
+        } else {
+            return "";
+        }
     }
 
     isGoogleSignInEnabled() {

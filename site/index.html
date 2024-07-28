@@ -9,36 +9,14 @@
 
 <body>
 
-<div class="container">
-
-    <div class="container-sidebar-left">
-        <strong>Quick Links</strong>
-        <ul>
-            <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
-            <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
-            <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
-            <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
-            <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
-            <li><a href="https://drive.google.com/drive/home">Google Drive</a></li>
-        </ul>
-
-        <strong>LinkedIn Query</strong><br/>
-        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
+<div id="settings-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-button">&times;</span>
         <br/>
-        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
-        <br/>
-        <br/>
-
-        <strong>Date: </strong><br/>
-        <input id="application-date" size="20" />
-        <br/><br/>
 
         <strong>Google Sheet Name:</strong>
         <br/>
         <input id="application-log-sheet-name">
-        <br/><br/>
-
-        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
         <br/><br/>
 
         <strong>Resume Template:</strong><br/>
@@ -68,8 +46,52 @@
         <h3>Google:</h3>
         <button id="google-authorize-button" class="disabled-button button" disabled>Google Sign In</button>
         <button id="google-signout-button" class="disabled-button button" disabled>Google Sign Out</button>
-        <pre id="content" style="white-space: pre-wrap;"></pre>
 
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="container-sidebar-left">
+
+        <strong>Date: </strong><br/>
+        <input id="application-date" size="20" />
+        <br/><br/>
+
+        <strong>Quick Links</strong>
+        <ul>
+            <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
+            <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
+            <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
+            <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
+            <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
+            <li><a href="https://drive.google.com/drive/home">Google Drive</a></li>
+        </ul>
+
+        <strong>LinkedIn Query</strong><br/>
+        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
+        <br/>
+        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
+        <br/>
+        <br/>
+
+        <strong>Documents</strong><br/>
+        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
+        <br/>
+        <a id="tailored-resume-link" href="" target="_blank"></a>
+        <br/>
+        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
+        <br/><br/>
+
+
+        <strong>Correspondence</strong>
+        <div id="company-correspondence"></div>
+
+        <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
+        <br/><br/>
+        <button class="button" id="reset-button">Reset Application</button>
+        <br/><br/>
+        <button id="configure-button" class="button">Configure</button><br/>
     </div>
     <div class="container-page">
 
@@ -84,14 +106,6 @@
 
         <div id="extract" class="page">
             <h2>Job Description Breakdown</h2>
-
-            <Strong>Company Name: </Strong><br/>
-            <input type="text" size=40 id="company-name" value="Example" />
-            <br/><br/>
-
-            <Strong>Job Title: </Strong><br/>
-            <input type="text" size=40 id="job-title" value="Staff Software Engineer" />
-            <br/><br/>
 
             <Strong>Minimum Requirements (</Strong><label class="required-field-flag" >Required</label><label>):</label><br/>
             <textarea id="minimum-requirements" rows="15" class="job-section-text"></textarea>
@@ -184,48 +198,53 @@
     </div>
     <div class="container-sidebar-right">
 
+        <Strong>Company Name: </Strong><br/>
+        <input type="text" size=40 id="company-name" value="Example" />
+        <br/><br/>
+
+        <Strong>Job Title: </Strong><br/>
+        <input type="text" size=40 id="job-title" value="Staff Software Engineer" />
+        <br/><br/>
+
+
         <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections</button>
         <button id="create-resume-button" class="big-button disabled-button button" disabled>Create/Attach Resume</button>
         <br/>
         <button class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
         <br/><br/>
-        <a id="tailored-resume-link" href="" target="_blank"></a><br/>
-        <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/>
-        <br/>
-        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>Resume PDF</button>
-        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>Cover Letter PDF</button>
-        <br/><br/>
 
-        <strong>Scores</strong>
+        <strong>Scores</strong><br/><br/>
         <Strong id="minimum-score" class="scan-result-score"></Strong>
         <Strong id="preferred-score" class="scan-result-score"></Strong>
         <Strong id="job-duties-score" class="scan-result-score"></Strong>
         <Strong id="company-information-score" class="scan-result-score"></Strong>
         <br/><br/>
 
+
+        <strong>Downloads</strong><br/>
+        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>Resume PDF</button>
+        <br/>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>Cover Letter PDF</button>
+        <br/><br/>
+
         <strong>Messages</strong>
         <p id="status-message"></p>
 
         <strong>Profile Links</strong><br/>
-        <input id="profile-link-linkedin" size=50>
+        <input id="profile-link-linkedin" size=30>
         <button class="clipboard-button" id="clipboard-linkedin-profile">📋</button>
         <br/>
 
-        <input id="profile-link-github" size=50>
+        <input id="profile-link-github" size=30>
         <button class="clipboard-button" id="clipboard-github-profile">📋</button>
         <br/>
 
-        <input id="profile-link-website" size=50>
+        <input id="profile-link-website" size=30>
         <button class="clipboard-button" id="clipboard-website">📋</button>
         <br/>
         <br/>
 
-        <strong>Correspondence</strong>
-        <div id="company-correspondence"></div>
-
-        <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
-        <button class="button" id="reset-button">Reset Application</button>
     </div>
 </div>
 
