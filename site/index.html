@@ -140,72 +140,58 @@
     </div>
     <div class="container-page">
 
-        <div id="job-description" class="page">
+        <strong>Job Description</strong>
+        <br/>
+        <div id="fake_textarea" contenteditable></div>
 
-            <strong>Job Description</strong>
-            <br/>
-            <textarea id="job-description-textarea" rows="80" class="job-section-text"></textarea>
-            <br/>
+        <textarea id="job-description-textarea" rows="80" class="job-section-text"></textarea>
+        <br/>
+        <br/>
+        <strong>Missing Keywords: </strong>
+        <div id="regular-keywords"></div>
+        <br/>
 
-        </div>
+        <Strong>Minimum Requirements </Strong>:<br/>
+        <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
+        <br/>
 
-        <div id="extract" class="page">
-            <h2>Job Description Breakdown</h2>
+        <strong>Missing Keywords:</strong>
+        <div id="minimum-requirements-keywords"></div>
+        <br/>
 
-            <Strong>Minimum Requirements </Strong>:<br/>
-            <textarea id="minimum-requirements" rows="15" class="job-section-text"></textarea>
-            <br/>
-            <br/>
 
-            <Strong>Preferred Requirements:</Strong><br/>
-            <textarea id="preferred-requirements" rows="10" class="job-section-text"></textarea>
-            <br/>
-            <br/>
+        <Strong>Preferred Requirements:</Strong><br/>
+        <textarea id="preferred-requirements" rows="10" class="job-section-text"></textarea>
+        <br/><br/>
+        <strong>Section Score:</strong>
+        <br/><br/>
+        <Strong id="preferred-score" class="scan-result-score"></Strong>
+        <br/><br/>
+        <strong>Missing Keywords:</strong>
+        <div id="preferred-requirements-keywords"></div>
+        <br/>
 
-            <Strong>Job Duties:</Strong><br/>
-            <textarea id="job-duties" rows="40" class="job-section-text"></textarea>
-            <br/><br/>
+        <Strong>Job Duties:</Strong><br/>
+        <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
+        <br/><br/>
+        <strong>Section Score:</strong>
+        <br/><br/>
+        <Strong id="job-duties-score" class="scan-result-score"></Strong>
+        <br/><br/>
+        <strong>Missing Keywords:</strong>
+        <div id="job-duties-keywords"></div>
+        <br/>
 
-            <Strong>Company Information:</Strong><br/>
-            <textarea id="company-information" rows="10" class="job-section-text"></textarea>
-            <br/><br/>
-
-        </div>
-
-        <div id="scan" class="page">
-
-            <h2>Scan Details</h2>
-
-            <h3>Missing Keywords</h3>
-
-            <strong>Full Job Description</strong>
-            <div id="regular-keywords"></div>
-            <br/>
-
-            <strong>Minimum Requirements</strong>
-            <div id="minimum-requirements-keywords"></div>
-            <br/>
-
-            <strong>Preferred Requirements</strong>
-            <br/><br/>
-            <Strong id="preferred-score" class="scan-result-score"></Strong>
-            <div id="preferred-requirements-keywords"></div>
-            <br/>
-
-            <strong>Job Duties</strong>
-            <br/><br/>
-            <Strong id="job-duties-score" class="scan-result-score"></Strong>
-            <div id="job-duties-keywords"></div>
-            <br/>
-
-            <strong>Company Information</strong>
-            <br/><br/>
-            <Strong id="company-information-score" class="scan-result-score"></Strong>
-            <div id="company-information-keywords"></div>
-            <br/>
-
-        </div>
-
+        <Strong>Company Information:</Strong><br/>
+        <textarea id="company-information" rows="10" class="job-section-text"></textarea>
+        <br/><br/>
+        <strong>Section Score:</strong>
+        <br/><br/>
+        <Strong id="company-information-score" class="scan-result-score"></Strong>
+        <br/><br/>
+        <strong>Missing Keywords:</strong>
+        <div id="company-information-keywords"></div>
+        <br/>
     </div>
     <div class="container-sidebar-right">
 
@@ -219,7 +205,7 @@
 
 
         <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections</button>
-        <button id="create-resume-button" class="big-button disabled-button button" disabled>Attach Docs</button>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Docs</button>
         <br/>
         <button id="configure-tailoring-button" class="big-button button">Tailor</button><br/>
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
