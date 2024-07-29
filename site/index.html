@@ -11,8 +11,6 @@
 
 <div id="settings-modal" class="modal">
     <div class="modal-content-settings">
-<!--        <span id="close-settings-modal-button">&times;</span>-->
-<!--        <br/>-->
 
         <strong>LinkedIn Query</strong><br/>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
@@ -30,21 +28,21 @@
         <input id="cover-letter-template-name" type="text" size=35 value="Chris Shumaker Cover Letter"/>
 
         <h3>Placeholders</h3>
-        <input value="{{date}}" size="30" disabled /><br/>
-        <input value="{{company-name}}" size="30" disabled /><br/>
-        <input value="{{company-name-possessive}}" size="30" disabled /><br/>
-        <input value="{{company-address}}" size="30" disabled /><br/>
-        <input value="{{hiring-manager-name}}" size="30" disabled /><br/>
-        <input value="{{complete-job-title}}" size="30" disabled /><br/>
-        <input value="{{short-job-title}}" size="30" disabled /><br/>
-        <input value="{{values}}" size="30" disabled /><br/>
-        <input value="{{experiences}}" size="30" disabled /><br/>
+        <input value="{{date}}" size="30" disabled/><br/>
+        <input value="{{company-name}}" size="30" disabled/><br/>
+        <input value="{{company-name-possessive}}" size="30" disabled/><br/>
+        <input value="{{company-address}}" size="30" disabled/><br/>
+        <input value="{{hiring-manager-name}}" size="30" disabled/><br/>
+        <input value="{{complete-job-title}}" size="30" disabled/><br/>
+        <input value="{{short-job-title}}" size="30" disabled/><br/>
+        <input value="{{values}}" size="30" disabled/><br/>
+        <input value="{{experiences}}" size="30" disabled/><br/>
 
         <h3>Credentials</h3>
 
         <label>Credential File:</label>
         <br/>
-        <input id="credential-file" type="file" />
+        <input id="credential-file" type="file"/>
         <br/>
 
         <h3>Google:</h3>
@@ -56,27 +54,26 @@
     </div>
 </div>
 
-
 <div id="tailoring-modal" class="modal">
     <div class="modal-content-tailoring">
         <strong>Company Name (Tailoring Only): </strong><br/>
-        <input id="company-name-tailor" size="40" />
+        <input id="company-name-tailor" size="40"/>
         <br/><br/>
 
         <strong>Company Name (possessive): </strong><br/>
-        <input id="company-name-possessive" size="40" />
+        <input id="company-name-possessive" size="40"/>
         <br/><br/>
 
         <strong>Hiring Manager Name: </strong><br/>
-        <input id="hiring-manager-name" size="40" />
+        <input id="hiring-manager-name" size="40"/>
         <br/><br/>
 
         <strong>Complete Job Title:</strong><br/>
-        <input id="complete-job-title" size="40" />
+        <input id="complete-job-title" size="40"/>
         <br/><br/>
 
         <strong>Short Job Title:</strong><br/>
-        <input id="short-job-title" size="40" />
+        <input id="short-job-title" size="40"/>
         <br/><br/>
 
         <strong>Values:</strong><br/>
@@ -93,12 +90,38 @@
     </div>
 </div>
 
+
+<div id="job-sections-modal" class="modal">
+    <div class="modal-content-sections">
+
+        <Strong>Minimum Requirements </Strong>:<br/>
+        <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
+        <br/>
+
+        <Strong>Preferred Requirements:</Strong><br/>
+        <textarea id="preferred-requirements" rows="10" class="job-section-text"></textarea>
+        <br/>
+
+        <Strong>Job Duties:</Strong><br/>
+        <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
+        <br/><br/>
+
+        <Strong>Company Information:</Strong><br/>
+        <textarea id="company-information" rows="10" class="job-section-text"></textarea>
+        <br/><br/>
+
+        <button class="big-button button disabled-button" disabled id="extract-sections-button">Auto Extract</button>
+        <button id="close-job-sections-modal-button" class="big-button button">Close</button>
+    </div>
+</div>
+
+
 <div class="container">
 
     <div class="container-sidebar-left">
 
         <strong>Date: </strong><br/>
-        <input id="application-date" size="20" />
+        <input id="application-date" size="20"/>
         <br/><br/>
 
         <strong>Quick Links</strong>
@@ -106,11 +129,12 @@
             <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
             <li><a href="https://www.idealist.org/en" target="_blank">Idealist.org</a></li>
             <li><a href="https://www.jobscan.co/" target="_blank">Jobscan</a></li>
-            <li><a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer" target="_blank">Glassdoor</a></li>
+            <li>
+                <a href="https://www.glassdoor.com/Reviews/index.htm?overall_rating_low=3.5&page=1&locId=1154532&locType=C&occ=Principal%20Data%20Engineer"
+                   target="_blank">Glassdoor</a></li>
             <li><a href="https://levels.fyi/" target="_blank">level.fyi</a></li>
             <li><a href="https://drive.google.com/drive/home">Google Drive</a></li>
         </ul>
-
 
         <strong>LinkedIn Query</strong>
         <br/>
@@ -124,7 +148,6 @@
         <a id="tailored-cover-letter-link" href="" target="_blank"></a>
         <br/><br/>
 
-
         <strong>Correspondence</strong>
         <br/>
         <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
@@ -136,93 +159,70 @@
         <br/><br/>
         <button class="button" id="reset-button">Reset Application</button>
         <br/><br/>
-        <button id="configure-button" class="button">Configure</button><br/>
+        <button id="configure-button" class="button">Configure</button>
+        <br/>
     </div>
     <div class="container-page">
 
-        <strong>Job Description</strong>
-        <br/>
-        <div id="fake_textarea" contenteditable></div>
+        <strong>Scores</strong><br/>
+        <div class="scan-result-container">
 
-        <textarea id="job-description-textarea" rows="80" class="job-section-text"></textarea>
-        <br/>
-        <br/>
-        <strong>Missing Keywords: </strong>
-        <div id="regular-keywords"></div>
-        <br/>
+            <div class="scan-result-score-container">
+                <label class="scan-result-label">Full Job Description</label>
+                <strong id="regular-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container">
+                <label class="scan-result-label">Minimum Requirements</label>
+                <strong id="minimum-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container">
+                <label class="scan-result-label">Preferred Requirements+</label>
+                <strong id="preferred-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container">
+                <label class="scan-result-label">Job Duties+</label>
+                <strong id="job-duties-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container">
+                <label class="scan-result-label">Company Info+</label>
+                <strong id="company-information-score" class="scan-result-score"></strong>
+            </div>
+        </div>
 
-        <Strong>Minimum Requirements </Strong>:<br/>
-        <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
-        <br/>
+        <strong>Scan Results:</strong>
+        <div id="scanned-job-description" class="scanned-job-description"></div>
 
-        <strong>Missing Keywords:</strong>
-        <div id="minimum-requirements-keywords"></div>
+        <strong>Enter Job Description:</strong>
         <br/>
+        <textarea id="job-description-textarea" rows="25" class="job-section-text"></textarea>
+        <br/><br/>
 
-
-        <Strong>Preferred Requirements:</Strong><br/>
-        <textarea id="preferred-requirements" rows="10" class="job-section-text"></textarea>
-        <br/><br/>
-        <strong>Section Score:</strong>
-        <br/><br/>
-        <Strong id="preferred-score" class="scan-result-score"></Strong>
-        <br/><br/>
-        <strong>Missing Keywords:</strong>
-        <div id="preferred-requirements-keywords"></div>
-        <br/>
-
-        <Strong>Job Duties:</Strong><br/>
-        <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
-        <br/><br/>
-        <strong>Section Score:</strong>
-        <br/><br/>
-        <Strong id="job-duties-score" class="scan-result-score"></Strong>
-        <br/><br/>
-        <strong>Missing Keywords:</strong>
-        <div id="job-duties-keywords"></div>
-        <br/>
-
-        <Strong>Company Information:</Strong><br/>
-        <textarea id="company-information" rows="10" class="job-section-text"></textarea>
-        <br/><br/>
-        <strong>Section Score:</strong>
-        <br/><br/>
-        <Strong id="company-information-score" class="scan-result-score"></Strong>
-        <br/><br/>
-        <strong>Missing Keywords:</strong>
-        <div id="company-information-keywords"></div>
-        <br/>
     </div>
     <div class="container-sidebar-right">
 
         <Strong>Company Name: </Strong><br/>
-        <input type="text" size=30 id="company-name" value="Example" />
+        <input type="text" size=30 id="company-name" value="Example"/>
         <br/><br/>
 
         <Strong>Job Title: </Strong><br/>
-        <input type="text" size=30 id="job-title" value="Staff Software Engineer" />
+        <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
         <br/><br/>
 
 
-        <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections</button>
+        <button class="big-button button" id="view-sections-button">View Sections</button>
         <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Docs</button>
         <br/>
-        <button id="configure-tailoring-button" class="big-button button">Tailor</button><br/>
+        <button id="configure-tailoring-button" class="big-button button">View Tailoring Options</button>
+        <br/>
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
-        <br/><br/>
-
-        <strong>Scores</strong><br/>
-        <label>Full | Min</label>
-        <br/><br/>
-        <Strong id="regular-score" class="scan-result-score"></Strong>
-        <Strong id="minimum-score" class="scan-result-score"></Strong>
-
         <br/><br/>
 
         <strong>Downloads</strong><br/>
         <button id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume PDF</button>
         <br/>
-        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter PDF</button>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter
+            PDF
+        </button>
         <br/><br/>
 
         <strong>Messages</strong>
@@ -241,7 +241,6 @@
         <button class="clipboard-button" id="clipboard-website">📋</button>
         <br/>
         <br/>
-
     </div>
 </div>
 

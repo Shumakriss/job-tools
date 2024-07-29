@@ -38,6 +38,7 @@ function formatCorrespondence(companyCorrespondence) {
     return ul
 }
 
+
 class View {
     constructor(model) {
         this.model = model;
@@ -149,55 +150,11 @@ class View {
         }
 
         document.getElementById("regular-score").innerHTML = this.model.regularScore;
-        if (this.model.regularKeywords) {
-            let keywordsDiv = document.getElementById("regular-keywords");
-            keywordsDiv.innerHTML = '';
-            let ul = formatScanResults(this.model.regularKeywords);
-            keywordsDiv.appendChild(ul);
-        } else {
-            document.getElementById("regular-keywords").innerHTML = '';
-        }
-
         document.getElementById("minimum-score").innerHTML = this.model.minimumRequirementsScore;
-        if (this.model.minimumRequirementsKeywords) {
-            let keywordsDiv = document.getElementById("minimum-requirements-keywords");
-            keywordsDiv.innerHTML = '';
-            let ul = formatScanResults(this.model.minimumRequirementsKeywords);
-            keywordsDiv.appendChild(ul);
-        } else {
-            document.getElementById("minimum-requirements-keywords").innerHTML = '';
-        }
-
         document.getElementById("preferred-score").innerHTML = this.model.preferredRequirementsScore;
-        if (this.model.preferredRequirementsKeywords) {
-            let keywordsDiv = document.getElementById("preferred-requirements-keywords");
-            keywordsDiv.innerHTML = '';
-            let ul = formatScanResults(this.model.preferredRequirementsKeywords);
-            keywordsDiv.appendChild(ul);
-        } else {
-            document.getElementById("preferred-requirements-keywords").innerHTML = '';
-        }
-
         document.getElementById("job-duties-score").innerHTML = this.model.jobDutiesScore;
-        if (this.model.jobDutiesKeywords) {
-            let keywordsDiv = document.getElementById("job-duties-keywords");
-            keywordsDiv.innerHTML = '';
-            let ul = formatScanResults(this.model.jobDutiesKeywords);
-            keywordsDiv.appendChild(ul);
-        } else {
-            document.getElementById("job-duties-keywords").innerHTML = '';
-        }
-
         document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
-        if (this.model.companyInfoKeywords) {
-            let keywordsDiv = document.getElementById("company-information-keywords");
-            keywordsDiv.innerHTML = '';
-            let ul = formatScanResults(this.model.companyInfoKeywords);
-            keywordsDiv.appendChild(ul);
-        } else {
-            document.getElementById("company-information-keywords").innerHTML = '';
-        }
-    
+
         document.getElementById("profile-link-linkedin").value = this.model.linkedInProfileLink;
         document.getElementById("profile-link-github").value = this.model.githubProfileLink;
         document.getElementById("profile-link-website").value = this.model.websiteProfileLink;
@@ -254,8 +211,68 @@ class View {
         } else {
             document.getElementById("company-correspondence").innerHTML = '';
         }
+
+        document.getElementById("scanned-job-description").innerHTML = "";
+        document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription();
+
     }
 
+    markupJobDescription() {
+        console.debug("Marking up job description");
+        let markedupJobDescription = this.model.jobDescription;
+        let alreadyMarked = [];
+
+        if (this.model.minimumRequirementsKeywords) {
+            for (let i=0; i< this.model.minimumRequirementsKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.minimumRequirementsKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword)) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-required">${keyword}</span>`)
+                }
+            }
+        }
+
+        if (this.model.preferredRequirementsKeywords) {
+            for (let i=0; i<this.model.preferredRequirementsKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.preferredRequirementsKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword)) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-high">${keyword}</span>`)
+                }
+            }
+        }
+
+        if (this.model.jobDutiesKeywords) {
+            for (let i=0; i<this.model.jobDutiesKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.jobDutiesKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword)) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-medium">${keyword}</span>`)
+                }
+            }
+        }
+
+        if (this.model.jobDutiesKeywords) {
+            for (let i=0; i<this.model.companyInfoKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.companyInfoKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword)) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-low">${keyword}</span>`)
+                }
+            }
+        }
+
+
+        return markedupJobDescription;
+    }
 }
 
 export default View;

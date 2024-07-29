@@ -127,6 +127,10 @@ class Controller {
         }
         this.save();
         this.render();
+
+        if (!this.model.minimumRequirements && !this.model.preferredRequirements && !this.model.companyName && !this.model.jobDuties && !this.model.companyName){
+            this.extractJobSections();
+        }
     }
     
     setJobTitle(jobTitle) {
@@ -398,13 +402,14 @@ class Controller {
         this.model.statusMessage = "Fetching updated resume contents";
         this.render();
 
-        if (this.model.resumeId) {
+        if (this.model.resumeId && this.model.resumeId != "" && this.model.resumeId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
-        } else if (this.model.resumeTemplateId) {
+            this.model.statusMessage = "Resume content updated based on company copy";
+        } else if (this.model.resumeTemplateId && this.model.resumeTemplateId != "" && this.model.resumeTemplateId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
+            this.model.statusMessage = "Resume content updated based on template";
         }
 
-        this.model.statusMessage = "Resume content updated";
         this.render();
 
         this.save();
