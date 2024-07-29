@@ -117,21 +117,6 @@ class WebApp {
             controller.setGoogleSheetName(event.target.value);
         }, 200));
 
-        document.getElementById('include-preferred-checkbox').addEventListener('change', debounce( async (event) => {
-            this.model.includePreferredRequirements = event.target.checked;
-            model.save();
-        }, 200));
-
-        document.getElementById('include-job-duties-checkbox').addEventListener('change', debounce( async (event) => {
-            this.model.includeJobDuties = event.target.checked;
-            model.save();
-        }, 200));
-
-        document.getElementById('include-company-information-checkbox').addEventListener('change', debounce( async (event) => {
-            this.model.includeCompanyInfo = event.target.checked;
-            model.save();
-        }, 200));
-
         document.getElementById("hiring-manager-name").addEventListener("change", debounce( async (event) => {
             controller.setHiringManager(event.target.value);
         }, 100));

@@ -421,10 +421,7 @@ class Controller {
         this.model.statusMessage = "Scanning resume...";
         this.render();
 
-        let jobDescription = "";
         let promises = [];
-
-        jobDescription = jobDescription + this.model.minimumRequirements;
 
         let regularScanPromise = this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
         promises.push(regularScanPromise);
@@ -438,20 +435,26 @@ class Controller {
             this.render();
         });
 
-        // TODO: Change required field to job description
-        let minimumScanPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
-        promises.push(minimumScanPromise);
-        minimumScanPromise.then( results => {
-            if (!results) {
-                return;
-            }
-            this.model.minimumRequirementsScore = results['matchRate']['score'];
-            this.model.minimumRequirementsKeywords = results;
-            this.save();
-            this.render();
-        });
+        // This allows us to accumulate more content to help the user anticipate unknown ATS behavior
+        let jobDescription = "";
+        jobDescription = jobDescription + this.model.minimumRequirements;
 
-        if (this.model.includePreferredRequirements && this.model.preferredRequirements) {
+        if (this.model.minimumRequirements) {
+            let minimumScanPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+            promises.push(minimumScanPromise);
+            minimumScanPromise.then( results => {
+                if (!results) {
+                    return;
+                }
+                this.model.minimumRequirementsScore = results['matchRate']['score'];
+                this.model.minimumRequirementsKeywords = results;
+                this.save();
+                this.render();
+            });
+        }
+
+
+        if (this.model.preferredRequirements) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
             let preferredRequirementsPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
@@ -467,7 +470,7 @@ class Controller {
             });
         }
 
-        if (this.model.includeJobDuties && this.model.jobDuties) {
+        if (this.model.jobDuties) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
             let jobDutiesPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
@@ -483,7 +486,7 @@ class Controller {
             });
         }
 
-        if (this.model.includeCompanyInfo && this.model.companyInfo) {
+        if (this.model.companyInfo) {
             jobDescription = jobDescription + this.model.preferredRequirements;
 
             let companyInfoPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);

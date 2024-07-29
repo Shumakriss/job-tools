@@ -100,9 +100,6 @@ class Model {
         this.relevantExperience = "";
 
         /* Scan results fields */
-        this.includePreferredRequirements = true;
-        this.includeJobDuties = true;
-        this.includeCompanyInfo = true;
         this.regularScore = "";
         this.minimumRequirementsScore = "";
         this.preferredRequirementsScore = "";
@@ -166,9 +163,6 @@ class Model {
         localStorage.setItem("shortJobTitle", this.shortJobTitle);
         localStorage.setItem("companyValues", this.companyValues);
         localStorage.setItem("relevantExperience", this.relevantExperience);
-        localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
-        localStorage.setItem("includeJobDuties", this.includeJobDuties);
-        localStorage.setItem("includeCompanyInfo", this.includeCompanyInfo);
         localStorage.setItem("regularScore", this.regularScore);
         localStorage.setItem("minimumRequirementsScore", this.minimumRequirementsScore);
         localStorage.setItem("preferredRequirementsScore", this.preferredRequirementsScore);
@@ -257,10 +251,6 @@ class Model {
         this.linkedInProfileLink = getItemWithDefault("linkedInProfileLink", this.linkedInProfileLink);
         this.githubProfileLink = getItemWithDefault("githubProfileLink", this.githubProfileLink);
         this.websiteProfileLink = getItemWithDefault("websiteProfileLink", this.websiteProfileLink);
-
-        this.includePreferredRequirements = getBooleanItem("includePreferredRequirements", this.includePreferredRequirements );
-        this.includeJobDuties = getBooleanItem("includeJobDuties", this.includeJobDuties);
-        this.includeCompanyInfo = getBooleanItem("includeCompanyInfo", this.includeCompanyInfo);
 
         this.statusMessage = getItemWithDefault("statusMessage", this.statusMessage);
 
