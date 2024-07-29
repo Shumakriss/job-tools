@@ -118,7 +118,6 @@ class Controller {
         if (this.model.jobDescription == jobDescription) {
             return;
         }
-        this.reset();
 
         this.model.jobDescription = jobDescription;
         this.save();
