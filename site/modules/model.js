@@ -4,6 +4,8 @@ const DEFAULT_GITHUB_PROFILE = "https://github.com/Shumakriss";
 const DEFAULT_WEBSITE = "https://www.makerconsulting.llc/maker-consulting";
 const GDOC_PREFIX = "https://docs.google.com/document/d/";
 const GDOC_SUFFIX = "/edit";
+const GSHEET_PREFIX = "https://docs.google.com/spreadsheets/d/";
+const GSHEET_SUFFIX = "/edit";
 
 const MONTHS = {
     0: "January",
@@ -69,7 +71,6 @@ class Model {
         this.resumeContent = "";
 
         this.googleSheetName = "";
-        this.googleSheetLink = "";
         this.googleSheetId = null;
         this.logApplicationButtonText = "Log Application";
 
@@ -148,7 +149,6 @@ class Model {
         localStorage.setItem("coverLetterId", this.coverLetterId);
         localStorage.setItem("googleSheetName", this.googleSheetName);
         localStorage.setItem("googleSheetId", this.googleSheetId);
-        localStorage.setItem("googleSheetLink", this.googleSheetLink);
         localStorage.setItem("logApplicationButtonText", this.logApplicationButtonText);
         localStorage.setItem("navigationPage", this.navigationPage);
         localStorage.setItem("jobDescription", this.jobDescription);
@@ -232,7 +232,6 @@ class Model {
         this.resumeContent = getItemWithDefault("resumeContent", this.resumeContent);
         this.coverLetterId = getItemWithDefault("coverLetterId", this.coverLetterId);
         this.googleSheetName = getItemWithDefault("googleSheetName", this.googleSheetName);
-        this.googleSheetLink = getItemWithDefault("googleSheetLink", this.googleSheetLink);
         this.googleSheetId = getItemWithDefault("googleSheetId", this.googleSheetId);
         this.logApplicationButtonText = getItemWithDefault("logApplicationButtonText", this.logApplicationButtonText);
         this.jobDescription = getItemWithDefault("jobDescription", this.jobDescription);
@@ -290,6 +289,14 @@ class Model {
     tailoredResumeLink() {
         if (this.resumeId) {
             return GDOC_PREFIX + this.resumeId + GDOC_SUFFIX;
+        } else {
+            return "";
+        }
+    }
+
+    googleSheetLink() {
+        if (this.googleSheetName && this.googleSheetId && this.googleSheetId != "undefined") {
+            return GSHEET_PREFIX + this.googleSheetId + GSHEET_SUFFIX;
         } else {
             return "";
         }

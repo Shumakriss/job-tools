@@ -198,7 +198,7 @@ class Controller {
         this.model.googleSheetName = googleSheetName;
         this.save();
         this.render();
-        this.updateLogSheetLink();
+        this.updateGoogleSheetId();
     }
 
     async updateResumePdfLink() {
@@ -221,25 +221,14 @@ class Controller {
         this.render();
     }
 
-    async updateLogSheetLink() {
-        let sheetsPrefix = "https://docs.google.com/spreadsheets/d/";
-        let sheetSuffix = "/edit";
-        this.model.googleSheetLink = "";
+    async updateGoogleSheetId() {
+        if (this.model.googleSheetName && this.model.googleSheetName != "undefined" && this.model.googleSheetName != "") {
+            this.model.googleSheetId = await this.workspace.getDocumentIdByName(this.model.googleSheetName);
+        }
         this.save();
         this.render();
-
-        this.model.googleSheetId = await this.workspace.getDocumentIdByName(this.model.googleSheetName);
-
-        if (this.model.googleSheetId) {
-            this.model.googleSheetLink = sheetsPrefix + this.model.googleSheetId + sheetSuffix;
-        } else {
-            this.model.googleSheetLink = "";
-        }
 
         this.updateCompanyCorrespondence();
-
-        this.save();
-        this.render();
     }
 
     /* Complex functions
@@ -253,8 +242,8 @@ class Controller {
             console.error("Failed to authorize Google: " + err.message);
         }
 
-        
-        await this.updateLogSheetLink();
+
+        await this.updateGoogleSheetId();
         this.save();
         this.render();
     }
