@@ -174,7 +174,7 @@ class WebApp {
         }
 
         document.getElementById('scan-button').onclick = async () => {
-            this.controller.scan();
+            this.controller.scanButton();
         }
 
         document.getElementById('tailor-documents-button').onclick = async () => {

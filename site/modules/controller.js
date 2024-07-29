@@ -407,19 +407,29 @@ class Controller {
     }
 
     async updateResumeContent() {
+        this.model.statusMessage = "Fetching updated resume contents";
+        this.render();
+
         if (this.model.resumeId) {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
         } else if (this.model.resumeTemplateId) {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
         }
 
+        this.model.statusMessage = "Resume content updated";
+        this.render();
+
         this.save();
         this.render();
         this.scan();
     }
 
-    async scan() {
+    async scanButton() {
+        await this.updateResumeContent();
+        this.scan();
+    }
 
+    async scan() {
         this.model.statusMessage = "Scanning resume...";
         this.render();
 
