@@ -42,7 +42,7 @@
     display: grid;
     height: 1080px;
     overflow: hidden;
-    grid-template-columns: [first] 300px [line2] 50px [line3] auto [col4-start] 50px [five] 300px [end];
+    grid-template-columns: [first] 275px [line2] 50px [line3] auto [col4-start] 50px [five] 300px [end];
 }
 
 .container-sidebar-left {

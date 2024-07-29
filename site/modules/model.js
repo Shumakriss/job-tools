@@ -40,7 +40,6 @@ function getBooleanItem(itemName, defaultValue) {
     }
 }
 
-// TODO: Rename to "Model"
 class Model {
 
     constructor() {
@@ -103,15 +102,17 @@ class Model {
         this.includePreferredRequirements = true;
         this.includeJobDuties = true;
         this.includeCompanyInfo = true;
+        this.regularScore = "";
         this.minimumRequirementsScore = "";
         this.preferredRequirementsScore = "";
         this.jobDutiesScore = "";
         this.companyInfoScore = "";
         
-        this.minimumRequirementsKeywords = "";  // This is current a raw json response payload from jobscan
-        this.preferredRequirementsKeywords = ""; // This is current a raw json response payload from jobscan
-        this.jobDutiesKeywords = ""; // This is current a raw json response payload from jobscan
-        this.companyInfoKeywords = ""; // This is current a raw json response payload from jobscan
+        this.regularKeywords = "";  // This is currently a raw json response payload from jobscan
+        this.minimumRequirementsKeywords = "";  // This is currently a raw json response payload from jobscan
+        this.preferredRequirementsKeywords = ""; // This is currently a raw json response payload from jobscan
+        this.jobDutiesKeywords = ""; // This is currently a raw json response payload from jobscan
+        this.companyInfoKeywords = ""; // This is currently a raw json response payload from jobscan
 
         this.resumePdfLink = "";
         this.coverLetterPdfLink = "";
@@ -124,6 +125,7 @@ class Model {
         console.debug("Saving model", this);
 
         localStorage.setItem("googleToken", JSON.stringify(this.googleToken));
+        localStorage.setItem("regularKeywords", JSON.stringify(this.regularKeywords));
         localStorage.setItem("minimumRequirementsKeywords", JSON.stringify(this.minimumRequirementsKeywords));
         localStorage.setItem("preferredRequirementsKeywords", JSON.stringify(this.preferredRequirementsKeywords));
         localStorage.setItem("jobDutiesKeywords", JSON.stringify(this.jobDutiesKeywords));
@@ -167,6 +169,7 @@ class Model {
         localStorage.setItem("includePreferredRequirements", this.includePreferredRequirements);
         localStorage.setItem("includeJobDuties", this.includeJobDuties);
         localStorage.setItem("includeCompanyInfo", this.includeCompanyInfo);
+        localStorage.setItem("regularScore", this.regularScore);
         localStorage.setItem("minimumRequirementsScore", this.minimumRequirementsScore);
         localStorage.setItem("preferredRequirementsScore", this.preferredRequirementsScore);
         localStorage.setItem("jobDutiesScore", this.jobDutiesScore);
@@ -197,6 +200,7 @@ class Model {
         }
 
         try {
+            this.regularKeywords = JSON.parse(getItemWithDefault("regularKeywords", this.regularKeywords));
             this.minimumRequirementsKeywords = JSON.parse(getItemWithDefault("minimumRequirementsKeywords", this.minimumRequirementsKeywords));
             this.preferredRequirementsKeywords = JSON.parse(getItemWithDefault("preferredRequirementsKeywords", this.preferredRequirementsKeywords));
             this.jobDutiesKeywords = JSON.parse(getItemWithDefault("jobDutiesKeywords", this.jobDutiesKeywords));
@@ -244,6 +248,7 @@ class Model {
         this.shortJobTitle = getItemWithDefault("shortJobTitle", this.shortJobTitle);
         this.companyValues = getItemWithDefault("companyValues", this.companyValues);
         this.relevantExperience = getItemWithDefault("relevantExperience", this.relevantExperience);
+        this.regularScore = getItemWithDefault("regularScore", this.regularScore);
         this.minimumRequirementsScore = getItemWithDefault("minimumRequirementsScore", this.minimumRequirementsScore);
         this.preferredRequirementsScore = getItemWithDefault("preferredRequirementsScore", this.preferredRequirementsScore);
         this.jobDutiesScore = getItemWithDefault("jobDutiesScore", this.jobDutiesScore);
@@ -416,7 +421,7 @@ class Model {
 
     isScanEnabled() {
         return this.isGoogleRefreshEnabled() &&
-            this.resumeId &&
+            this.resumeContent &&
             this.minimumRequirements;
     }
 

@@ -148,6 +148,16 @@ class View {
             document.getElementById("scan-button").className = "big-button button disabled-button";
         }
 
+        document.getElementById("regular-score").innerHTML = this.model.regularScore;
+        if (this.model.regularKeywords) {
+            let keywordsDiv = document.getElementById("regular-keywords");
+            keywordsDiv.innerHTML = '';
+            let ul = formatScanResults(this.model.regularKeywords);
+            keywordsDiv.appendChild(ul);
+        } else {
+            document.getElementById("regular-keywords").innerHTML = '';
+        }
+
         document.getElementById("minimum-score").innerHTML = this.model.minimumRequirementsScore;
         if (this.model.minimumRequirementsKeywords) {
             let keywordsDiv = document.getElementById("minimum-requirements-keywords");

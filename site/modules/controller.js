@@ -70,6 +70,7 @@ class Controller {
         this.save();
         this.render();
         this.updateResumePdfLink();
+        this.updateResumeContent();
     }
 
     async updateCoverLetterId() {
@@ -113,11 +114,17 @@ class Controller {
         this.render();
     }
     
-    setJobDescription(jobDescription) {
+    async setJobDescription(jobDescription) {
+        if (this.model.jobDescription == jobDescription) {
+            return;
+        }
+        this.reset();
+
         this.model.jobDescription = jobDescription;
         this.save();
-        if (jobDescription && jobDescription != "" && this.model.resumeTemplateName) {
-            this.scanResumeTemplate();
+
+        if (this.model.jobDescription && this.model.jobDescription != "" && this.model.resumeContent && this.model.resumeContent != "") {
+            this.scan();
         }
         this.save();
         this.render();
@@ -331,6 +338,7 @@ class Controller {
                 this.model.statusMessage = "Job description sections extracted";
                 this.save();
                 this.render();
+                this.scan();
         });
 
     }
@@ -376,8 +384,6 @@ class Controller {
             ]).then( () => {
                 this.model.statusMessage = "Documents ready to scan and tailor";
                 this.render();
-                this.save();
-                this.render();
             });
 
         } catch(err) {
@@ -400,62 +406,47 @@ class Controller {
         this.render();
     }
 
-    async scanResumeTemplate() {
-        this.model.statusMessage = "Scanning resume template...";
-        this.render();
-
-        if (this.model.resumeTemplateName && !this.model.resumeTemplateId) {
-            this.model.statusMessage = "Looking for resume template...";
-            this.render();
-            this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
+    async updateResumeContent() {
+        if (this.model.resumeId) {
+            this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
+        } else if (this.model.resumeTemplateId) {
+            this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
         }
-
-        this.model.statusMessage = "Template found, fetching contents...";
-        this.render();
-
-        this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
-
-        this.model.statusMessage = "Template contents acquired, scanning against job description";
-        this.render();
-
-        let results = await this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
-
-        this.model.statusMessage = "Resume template scan complete";
-
-        this.model.minimumRequirementsScore = results['matchRate']['score'];
-        this.model.minimumRequirementsKeywords = results;
-        this.model.preferredRequirementsScore = "";
-        this.model.preferredRequirementsKeywords = "";
-        this.model.jobDutiesScore = "";
-        this.model.jobDutiesKeywords = "";
-        this.model.companyInfoScore = "";
-        this.model.companyInfoKeywords = "";
 
         this.save();
         this.render();
+        this.scan();
     }
 
-    async scanResume() {
-
-        if (!this.model.resumeId) {
-            this.model.statusMessage = "Resume scan missing required fields or documents";
-            this.render();
-            return;
-        }
+    async scan() {
 
         this.model.statusMessage = "Scanning resume...";
         this.render();
-
-        this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
 
         let jobDescription = "";
         let promises = [];
 
         jobDescription = jobDescription + this.model.minimumRequirements;
 
+        let regularScanPromise = this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
+        promises.push(regularScanPromise);
+        regularScanPromise.then( results => {
+            if (!results) {
+                return;
+            }
+            this.model.regularScore = results['matchRate']['score'];
+            this.model.regularKeywords = results;
+            this.save();
+            this.render();
+        });
+
+        // TODO: Change required field to job description
         let minimumScanPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
         promises.push(minimumScanPromise);
         minimumScanPromise.then( results => {
+            if (!results) {
+                return;
+            }
             this.model.minimumRequirementsScore = results['matchRate']['score'];
             this.model.minimumRequirementsKeywords = results;
             this.save();
@@ -468,6 +459,9 @@ class Controller {
             let preferredRequirementsPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
             promises.push(preferredRequirementsPromise);
             preferredRequirementsPromise.then( results => {
+                if (!results) {
+                    return;
+                }
                 this.model.preferredRequirementsScore = results['matchRate']['score'];
                 this.model.preferredRequirementsKeywords = results;
                 this.save();
@@ -481,6 +475,9 @@ class Controller {
             let jobDutiesPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
             promises.push(jobDutiesPromise);
             jobDutiesPromise.then( results => {
+                if (!results) {
+                    return;
+                }
                 this.model.jobDutiesScore = results['matchRate']['score'];
                 this.model.jobDutiesKeywords = results;
                 this.save();
@@ -494,6 +491,9 @@ class Controller {
             let companyInfoPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
             promises.push(companyInfoPromise);
             companyInfoPromise.then( results => {
+                if (!results) {
+                    return;
+                }
                 this.model.companyInfoScore = results['matchRate']['score'];
                 this.model.companyInfoKeywords = results;
                 this.save();
@@ -550,10 +550,12 @@ class Controller {
         this.model.shortJobTitle = "";
         this.model.companyValues = "";
         this.model.relevantExperience = "";
+        this.model.regularScore = "";
         this.model.minimumRequirementsScore = "";
         this.model.preferredRequirementsScore = "";
         this.model.jobDutiesScore = "";
         this.model.companyInfoScore = "";
+        this.model.regularKeywords = "";
         this.model.minimumRequirementsKeywords = "";
         this.model.preferredRequirementsKeywords = "";
         this.model.jobDutiesKeywords = "";

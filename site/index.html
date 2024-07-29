@@ -87,6 +87,7 @@
         <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
         <br/>
         <div id="company-correspondence"></div>
+        <br/>
 
         <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
         <br/><br/>
@@ -182,17 +183,32 @@
             <label>Include Company Info</label><br/>
 
             <h3>Missing Keywords</h3>
+
+            <strong>Full Job Description</strong>
+            <div id="regular-keywords"></div>
+            <br/>
+
             <strong>Minimum Requirements</strong>
             <div id="minimum-requirements-keywords"></div>
+            <br/>
 
             <strong>Preferred Requirements</strong>
+            <br/><br/>
+            <Strong id="preferred-score" class="scan-result-score"></Strong>
             <div id="preferred-requirements-keywords"></div>
+            <br/>
 
             <strong>Job Duties</strong>
+            <br/><br/>
+            <Strong id="job-duties-score" class="scan-result-score"></Strong>
             <div id="job-duties-keywords"></div>
+            <br/>
 
             <strong>Company Information</strong>
+            <br/><br/>
+            <Strong id="company-information-score" class="scan-result-score"></Strong>
             <div id="company-information-keywords"></div>
+            <br/>
 
         </div>
 
@@ -215,18 +231,18 @@
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
         <br/><br/>
 
-        <strong>Scores</strong><br/><br/>
+        <strong>Scores</strong><br/>
+        <label>Full | Min</label>
+        <br/><br/>
+        <Strong id="regular-score" class="scan-result-score"></Strong>
         <Strong id="minimum-score" class="scan-result-score"></Strong>
-        <Strong id="preferred-score" class="scan-result-score"></Strong>
-        <Strong id="job-duties-score" class="scan-result-score"></Strong>
-        <Strong id="company-information-score" class="scan-result-score"></Strong>
+
         <br/><br/>
 
-
         <strong>Downloads</strong><br/>
-        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled>Resume PDF</button>
+        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume PDF</button>
         <br/>
-        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled>Cover Letter PDF</button>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter PDF</button>
         <br/><br/>
 
         <strong>Messages</strong>
