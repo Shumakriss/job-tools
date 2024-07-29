@@ -73,6 +73,12 @@ class ChatGpt {
         } else if (response.toLowerCase().includes("unknown")) {
             console.warn("Chat GPT was unable to find an appropriate response");
             response = "";
+        } else if (response.toLowerCase().includes("not found")) {
+            console.warn("Chat GPT was unable to find an appropriate response");
+            response = "";
+        } else if (response.toLowerCase().includes("unable")) {
+            console.warn("Chat GPT was unable to find an appropriate response");
+            response = "";
         }
         return response;
     }

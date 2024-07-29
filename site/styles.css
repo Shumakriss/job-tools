@@ -25,7 +25,7 @@
 
 .big-button {
     padding: 15px 10px;
-    width: 70%;
+    width: 80%;
 }
 
 .clipboard-button {
@@ -42,7 +42,7 @@
     display: grid;
     height: 1080px;
     overflow: hidden;
-    grid-template-columns: [first] 275px [line2] 50px [line3] auto [col4-start] 50px [five] 300px [end];
+    grid-template-columns: [first] 200px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
 }
 
 .container-sidebar-left {
@@ -124,6 +124,22 @@ textarea {
   padding: 20px;
   border: 1px solid #888;
   width: 20%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content-settings {
+    background-color: #fefefe;
+    margin: 3% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content-tailoring {
+    background-color: #fefefe;
+    margin: 3% auto; /* 15% from the top and centered */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */

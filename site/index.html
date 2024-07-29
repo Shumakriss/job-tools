@@ -10,9 +10,13 @@
 <body>
 
 <div id="settings-modal" class="modal">
-    <div class="modal-content">
-        <span id="close-button">&times;</span>
-        <br/>
+    <div class="modal-content-settings">
+<!--        <span id="close-settings-modal-button">&times;</span>-->
+<!--        <br/>-->
+
+        <strong>LinkedIn Query</strong><br/>
+        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
+        <br/><br/>
 
         <strong>Google Sheet Name:</strong>
         <br/>
@@ -46,7 +50,46 @@
         <h3>Google:</h3>
         <button id="google-authorize-button" class="disabled-button button" disabled>Google Sign In</button>
         <button id="google-signout-button" class="disabled-button button" disabled>Google Sign Out</button>
+        <br/><br/>
 
+        <button id="close-settings-modal-button" class="big-button button">Close</button>
+    </div>
+</div>
+
+
+<div id="tailoring-modal" class="modal">
+    <div class="modal-content-tailoring">
+        <strong>Company Name (Tailoring Only): </strong><br/>
+        <input id="company-name-tailor" size="40" />
+        <br/><br/>
+
+        <strong>Company Name (possessive): </strong><br/>
+        <input id="company-name-possessive" size="40" />
+        <br/><br/>
+
+        <strong>Hiring Manager Name: </strong><br/>
+        <input id="hiring-manager-name" size="40" />
+        <br/><br/>
+
+        <strong>Complete Job Title:</strong><br/>
+        <input id="complete-job-title" size="40" />
+        <br/><br/>
+
+        <strong>Short Job Title:</strong><br/>
+        <input id="short-job-title" size="40" />
+        <br/><br/>
+
+        <strong>Values:</strong><br/>
+        <textarea rows="5" cols="50" id="company-values" class="textarea"></textarea>
+        <br/><br/>
+
+        <strong>Relevant Experience:</strong><br/>
+        <textarea rows="5" cols="50" id="relevant-experience" class="textarea"></textarea>
+        <br/><br/>
+
+        <button class="big-button button disabled-button" disabled id="tailor-documents-button">Apply</button>
+        <br/>
+        <button id="close-tailoring-modal-button" class="big-button button">Close</button>
     </div>
 </div>
 
@@ -68,8 +111,8 @@
             <li><a href="https://drive.google.com/drive/home">Google Drive</a></li>
         </ul>
 
-        <strong>LinkedIn Query</strong><br/>
-        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
+
+        <strong>LinkedIn Query</strong>
         <br/>
         <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
         <br/>
@@ -101,7 +144,7 @@
 
             <strong>Job Description</strong>
             <br/>
-            <textarea id="job-description-textarea" rows="60" class="job-section-text"></textarea>
+            <textarea id="job-description-textarea" rows="80" class="job-section-text"></textarea>
             <br/>
 
         </div>
@@ -109,7 +152,7 @@
         <div id="extract" class="page">
             <h2>Job Description Breakdown</h2>
 
-            <Strong>Minimum Requirements (</Strong><label class="required-field-flag" >Required</label><label>):</label><br/>
+            <Strong>Minimum Requirements </Strong>:<br/>
             <textarea id="minimum-requirements" rows="15" class="job-section-text"></textarea>
             <br/>
             <br/>
@@ -125,40 +168,6 @@
 
             <Strong>Company Information:</Strong><br/>
             <textarea id="company-information" rows="10" class="job-section-text"></textarea>
-            <br/><br/>
-
-        </div>
-
-        <div id="tailor" class="page">
-
-            <h2>Tailoring Details</h2>
-
-            <strong>Company Name (Tailoring Only): </strong><br/>
-            <input id="company-name-tailor" size="40" />
-            <br/><br/>
-
-            <strong>Company Name (possessive): </strong><br/>
-            <input id="company-name-possessive" size="40" />
-            <br/><br/>
-
-            <strong>Hiring Manager Name: </strong><br/>
-            <input id="hiring-manager-name" size="40" />
-            <br/><br/>
-
-            <strong>Complete Job Title:</strong><br/>
-            <input id="complete-job-title" size="40" />
-            <br/><br/>
-
-            <strong>Short Job Title:</strong><br/>
-            <input id="short-job-title" size="40" />
-            <br/><br/>
-
-            <strong>Values:</strong><br/>
-            <input id="company-values" size="80" />
-            <br/><br/>
-
-            <strong>Relevant Experience:</strong><br/>
-            <input id="relevant-experience" size="120" />
             <br/><br/>
 
         </div>
@@ -201,18 +210,18 @@
     <div class="container-sidebar-right">
 
         <Strong>Company Name: </Strong><br/>
-        <input type="text" size=40 id="company-name" value="Example" />
+        <input type="text" size=30 id="company-name" value="Example" />
         <br/><br/>
 
         <Strong>Job Title: </Strong><br/>
-        <input type="text" size=40 id="job-title" value="Staff Software Engineer" />
+        <input type="text" size=30 id="job-title" value="Staff Software Engineer" />
         <br/><br/>
 
 
         <button class="big-button button disabled-button" disabled id="extract-sections-button">Extract Sections</button>
-        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create/Attach Resume</button>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Attach Docs</button>
         <br/>
-        <button class="big-button button disabled-button" disabled id="tailor-documents-button">Tailor Documents</button>
+        <button id="configure-tailoring-button" class="big-button button">Tailor</button><br/>
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
         <br/><br/>
 

@@ -137,6 +137,7 @@ class WebApp {
                 this.controller.handleSave();
             } else if (e.key === 'Escape') {
                 document.getElementById("settings-modal").style.display = "none";
+                document.getElementById("tailoring-modal").style.display = "none";
             }
         });
 
@@ -203,14 +204,24 @@ class WebApp {
             document.getElementById("settings-modal").style.display = "block";
         }
 
-        document.getElementById('close-button').onclick = function() {
+        document.getElementById('close-settings-modal-button').onclick = function() {
             document.getElementById("settings-modal").style.display = "none";
         }
 
         window.onclick = function(event) {
             if (event.target == document.getElementById("settings-modal")) {
                document.getElementById("settings-modal").style.display = "none";
+            } else if (event.target == document.getElementById("tailoring-modal")) {
+                document.getElementById("tailoring-modal").style.display = "none";
             }
+        }
+
+        document.getElementById('configure-tailoring-button').onclick = () => {
+            document.getElementById("tailoring-modal").style.display = "block";
+        }
+
+        document.getElementById('close-tailoring-modal-button').onclick = function() {
+            document.getElementById("tailoring-modal").style.display = "none";
         }
 
         console.debug("Registered handlers");

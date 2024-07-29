@@ -236,7 +236,7 @@ class View {
             document.getElementById("log-application-button").className = "button disabled-button";
         }
 
-        if (this.model.isTailorEnabled()) {
+        if (this.model.isTailorApplyEnabled()) {
             document.getElementById("tailor-documents-button").disabled = false;
             document.getElementById("tailor-documents-button").className = "big-button button button";
         } else {

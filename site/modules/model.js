@@ -46,6 +46,8 @@ class Model {
 
     constructor() {
 
+        this.lastSave = null;
+
         /* Third Party configuration
             - Provided to other tools
             - Managed in save/load
@@ -122,6 +124,8 @@ class Model {
     save() {
         console.debug("Saving model", this);
 
+        localStorage.setItem("lastSave", JSON.stringify(Date.now()));
+
         localStorage.setItem("googleToken", JSON.stringify(this.googleToken));
         localStorage.setItem("regularKeywords", JSON.stringify(this.regularKeywords));
         localStorage.setItem("minimumRequirementsKeywords", JSON.stringify(this.minimumRequirementsKeywords));
@@ -182,6 +186,8 @@ class Model {
 
     load() {
         console.debug("Loading model");
+
+        this.lastSave = localStorage.getItem("lastSave");
 
         this.linkedInQuery = getItemWithDefault("linkedInQuery", this.linkedInQuery);
         this.navigationPage = getItemWithDefault("navigationPage", this.navigationPage);
@@ -389,10 +395,14 @@ class Model {
         }
     }
 
-    isTailorEnabled() {
+    isTailorApplyEnabled() {
         return this.isGoogleRefreshEnabled() &&
             this.resumeId &&
+            this.resumeId != "" &&
+            this.resumeId != "undefined" &&
             this.coverLetterId &&
+            this.coverLetterId != "" &&
+            this.coverLetterId != "undefined" &&
             this.date &&
             this.companyName &&
             this.companyName != "not found" &&
@@ -410,10 +420,16 @@ class Model {
         return this.isGoogleRefreshEnabled() &&
             this.resumeTemplateName &&
             this.coverLetterTemplateName &&
+            this.resumeTemplateId &&
+            this.coverLetterTemplateId &&
             this.companyName &&
             this.companyName != "" &&
-            !this.resumeId &&
-            !this.coverLetterId;
+            (!this.resumeId ||
+            this.resumeId == "" ||
+            this.resumeId == "undefined") &&
+            (!this.coverLetterId ||
+            this.coverLetterId == "" ||
+            this.coverLetterId == "undefined")
     }
 
     isScanEnabled() {
