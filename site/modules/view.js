@@ -150,10 +150,49 @@ class View {
         }
 
         document.getElementById("regular-score").innerHTML = this.model.regularScore;
+        if(this.model.regularScore > 70) {
+            document.getElementById("regular-score-container").className = "scan-result-score-container score-good"
+        } else if(this.model.regularScore < 50) {
+            document.getElementById("regular-score-container").className = "scan-result-score-container score-bad"
+        } else {
+            document.getElementById("regular-score-container").className = "scan-result-score-container score-neutral"
+        }
+
         document.getElementById("minimum-score").innerHTML = this.model.minimumRequirementsScore;
+        if(this.model.minimumRequirementsScore > 70) {
+            document.getElementById("minimum-score-container").className = "scan-result-score-container score-good"
+        } else if(this.model.minimumRequirementsScore < 50) {
+            document.getElementById("minimum-score-container").className = "scan-result-score-container score-bad"
+        } else {
+            document.getElementById("minimum-score-container").className = "scan-result-score-container score-neutral"
+        }
+
         document.getElementById("preferred-score").innerHTML = this.model.preferredRequirementsScore;
+        if(this.model.preferredRequirementsScore > 70) {
+            document.getElementById("preferred-score-container").className = "scan-result-score-container score-good"
+        } else if(this.model.preferredRequirementsScore < 50) {
+            document.getElementById("preferred-score-container").className = "scan-result-score-container score-bad"
+        } else {
+            document.getElementById("preferred-score-container").className = "scan-result-score-container score-neutral"
+        }
+
         document.getElementById("job-duties-score").innerHTML = this.model.jobDutiesScore;
+        if(this.model.jobDutiesScore > 70) {
+            document.getElementById("job-duties-score-container").className = "scan-result-score-container score-good"
+        } else if(this.model.jobDutiesScore < 50) {
+            document.getElementById("job-duties-score-container").className = "scan-result-score-container score-bad"
+        } else {
+            document.getElementById("job-duties-score-container").className = "scan-result-score-container score-neutral"
+        }
+
         document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
+        if(this.model.companyInfoScore > 70) {
+            document.getElementById("company-information-score-container").className = "scan-result-score-container score-good"
+        } else if(this.model.jobDutiesScore < 50) {
+            document.getElementById("company-information-score-container").className = "scan-result-score-container score-bad"
+        } else {
+            document.getElementById("company-information-score-container").className = "scan-result-score-container score-neutral"
+        }
 
         document.getElementById("profile-link-linkedin").value = this.model.linkedInProfileLink;
         document.getElementById("profile-link-github").value = this.model.githubProfileLink;
@@ -214,7 +253,6 @@ class View {
 
         document.getElementById("scanned-job-description").innerHTML = "";
         document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription();
-
     }
 
     markupJobDescription() {
@@ -225,11 +263,13 @@ class View {
         if (this.model.minimumRequirementsKeywords) {
             for (let i=0; i< this.model.minimumRequirementsKeywords['highValueSkills'].length; i++) {
                 let keyword = this.model.minimumRequirementsKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword)) {
+                if (alreadyMarked.includes(keyword) || this.model.minimumRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
                     continue;
                 } else {
                     alreadyMarked.push(keyword);
-                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-required">${keyword}</span>`)
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-minimum">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
                 }
             }
         }
@@ -237,11 +277,13 @@ class View {
         if (this.model.preferredRequirementsKeywords) {
             for (let i=0; i<this.model.preferredRequirementsKeywords['highValueSkills'].length; i++) {
                 let keyword = this.model.preferredRequirementsKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword)) {
+                if (alreadyMarked.includes(keyword) || this.model.preferredRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
                     continue;
                 } else {
                     alreadyMarked.push(keyword);
-                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-high">${keyword}</span>`)
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-preferred">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
                 }
             }
         }
@@ -249,23 +291,41 @@ class View {
         if (this.model.jobDutiesKeywords) {
             for (let i=0; i<this.model.jobDutiesKeywords['highValueSkills'].length; i++) {
                 let keyword = this.model.jobDutiesKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword)) {
+                if (alreadyMarked.includes(keyword) || this.model.jobDutiesKeywords['highValueSkills'][i].cvCount > 0) {
                     continue;
                 } else {
                     alreadyMarked.push(keyword);
-                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-medium">${keyword}</span>`)
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-duties">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
                 }
             }
         }
 
-        if (this.model.jobDutiesKeywords) {
+        if (this.model.companyInfoKeywords) {
             for (let i=0; i<this.model.companyInfoKeywords['highValueSkills'].length; i++) {
                 let keyword = this.model.companyInfoKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword)) {
+                if (alreadyMarked.includes(keyword) || this.model.companyInfoKeywords['highValueSkills'][i].cvCount > 0) {
                     continue;
                 } else {
                     alreadyMarked.push(keyword);
-                    markedupJobDescription = markedupJobDescription.replaceAll(keyword, `<span class="missing-keyword-low">${keyword}</span>`)
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-company">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+        if (this.model.regularKeywords) {
+            for (let i=0; i<this.model.regularKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.regularKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.regularKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-regular">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
                 }
             }
         }

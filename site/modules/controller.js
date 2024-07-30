@@ -431,6 +431,7 @@ class Controller {
         let regularScanPromise = this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
         promises.push(regularScanPromise);
         regularScanPromise.then( results => {
+        debugger;
             if (!results) {
                 return;
             }
