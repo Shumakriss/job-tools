@@ -246,10 +246,14 @@ class Controller {
             console.error("Failed to authorize Google: " + err.message);
         }
 
-
-        await this.updateGoogleSheetId();
         this.save();
         this.render();
+
+        this.updateGoogleSheetId();
+        this.updateResumeTemplateId();
+        this.updateResumeId();
+        this.updateCoverLetterTemplateId();
+        this.updateCoverLetterId();
     }
 
     googleSignOut() {}
@@ -431,7 +435,6 @@ class Controller {
         let regularScanPromise = this.jobscan.scan(this.model.resumeContent, this.model.jobDescription);
         promises.push(regularScanPromise);
         regularScanPromise.then( results => {
-        debugger;
             if (!results) {
                 return;
             }
