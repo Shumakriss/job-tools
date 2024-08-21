@@ -290,6 +290,22 @@ class Model {
         }
     }
 
+    glassdoorSearchLink() {
+        if (this.companyName) {
+            return "https://www.glassdoor.com/Search/results.htm?keyword=" + this.companyName;
+        } else {
+            return "https://www.glassdoor.com/Reviews/index.htm";
+        }
+    }
+
+    levelsFyiLink() {
+        if (this.companyName) {
+            return "https://www.levels.fyi/?compare=iRobot,HubSpot," + this.companyName + "&track=Software%20Engineer";
+        } else {
+            return "https://www.levels.fyi/?compare=iRobot,HubSpot,Wayfair&track=Software%20Engineer";
+        }
+    }
+
     googleSheetLink() {
         if (this.googleSheetName && this.googleSheetId && this.googleSheetId != "undefined") {
             return GSHEET_PREFIX + this.googleSheetId + GSHEET_SUFFIX;

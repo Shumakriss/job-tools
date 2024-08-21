@@ -148,7 +148,6 @@ class WebApp {
     async addHandlers() {
 
         document.getElementById('google-authorize-button').onclick = async () => {
-            console.warn("Google Authorize Handler not implemented");
             this.controller.googleAuthorize();
         }
 

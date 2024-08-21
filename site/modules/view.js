@@ -96,6 +96,9 @@ class View {
         document.getElementById("company-name").value = this.model.companyName;
         document.getElementById("job-description-textarea").value = this.model.jobDescription;
 
+        document.getElementById("glassdoor-search-link").href = this.model.glassdoorSearchLink();
+        document.getElementById("levels-fyi-link").href = this.model.levelsFyiLink();
+
         if (this.model.isGoogleSignInEnabled()) {
             this.enableGoogleSignInButton();
         }
