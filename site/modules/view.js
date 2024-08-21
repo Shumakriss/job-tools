@@ -155,7 +155,7 @@ class View {
         document.getElementById("regular-score").innerHTML = this.model.regularScore;
         if(this.model.regularScore > 70) {
             document.getElementById("regular-score-container").className = "scan-result-score-container score-good"
-        } else if(this.model.regularScore < 50) {
+        } else if(this.model.regularScore > 0 && this.model.regularScore < 50) {
             document.getElementById("regular-score-container").className = "scan-result-score-container score-bad"
         } else {
             document.getElementById("regular-score-container").className = "scan-result-score-container score-neutral"
@@ -164,7 +164,7 @@ class View {
         document.getElementById("minimum-score").innerHTML = this.model.minimumRequirementsScore;
         if(this.model.minimumRequirementsScore > 70) {
             document.getElementById("minimum-score-container").className = "scan-result-score-container score-good"
-        } else if(this.model.minimumRequirementsScore < 50) {
+        } else if(this.model.minimumRequirementsScore > 0 && this.model.minimumRequirementsScore < 50) {
             document.getElementById("minimum-score-container").className = "scan-result-score-container score-bad"
         } else {
             document.getElementById("minimum-score-container").className = "scan-result-score-container score-neutral"
@@ -173,7 +173,7 @@ class View {
         document.getElementById("preferred-score").innerHTML = this.model.preferredRequirementsScore;
         if(this.model.preferredRequirementsScore > 70) {
             document.getElementById("preferred-score-container").className = "scan-result-score-container score-good"
-        } else if(this.model.preferredRequirementsScore < 50) {
+        } else if(this.model.preferredRequirementsScore > 0 && this.model.preferredRequirementsScore < 50) {
             document.getElementById("preferred-score-container").className = "scan-result-score-container score-bad"
         } else {
             document.getElementById("preferred-score-container").className = "scan-result-score-container score-neutral"
@@ -182,7 +182,7 @@ class View {
         document.getElementById("job-duties-score").innerHTML = this.model.jobDutiesScore;
         if(this.model.jobDutiesScore > 70) {
             document.getElementById("job-duties-score-container").className = "scan-result-score-container score-good"
-        } else if(this.model.jobDutiesScore < 50) {
+        } else if(this.model.jobDutiesScore > 0 && this.model.jobDutiesScore < 50) {
             document.getElementById("job-duties-score-container").className = "scan-result-score-container score-bad"
         } else {
             document.getElementById("job-duties-score-container").className = "scan-result-score-container score-neutral"
@@ -191,7 +191,7 @@ class View {
         document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
         if(this.model.companyInfoScore > 70) {
             document.getElementById("company-information-score-container").className = "scan-result-score-container score-good"
-        } else if(this.model.jobDutiesScore < 50) {
+        } else if(this.model.jobDutiesScore > 0 && this.model.jobDutiesScore < 50) {
             document.getElementById("company-information-score-container").className = "scan-result-score-container score-bad"
         } else {
             document.getElementById("company-information-score-container").className = "scan-result-score-container score-neutral"
