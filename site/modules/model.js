@@ -118,6 +118,8 @@ class Model {
         this.coverLetterPdfLink = "";
 
         this.statusMessage = "Start your application!";
+
+        this.searchTerms = "";
     }
 
     /* Save-load */
@@ -180,6 +182,8 @@ class Model {
         localStorage.setItem("coverLetterPdfLink", this.coverLetterPdfLink);
 
         localStorage.setItem("statusMessage", this.statusMessage);
+
+        localStorage.setItem("searchTerms", this.searchTerms);
 
         console.debug("Saved application state to local storage");
     }
@@ -260,10 +264,36 @@ class Model {
 
         this.statusMessage = getItemWithDefault("statusMessage", this.statusMessage);
 
+        this.searchTerms = getItemWithDefault("searchTerms", this.searchTerms);
+
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");
 
         console.debug("Loaded model: ", this);
+    }
+
+    searchLinkIdealist() {
+        let url = "https://www.idealist.org/en/jobs?q="
+        url += encodeURIComponent(this.searchTerms);
+        return url
+    }
+
+    searchLinkUsaJobs() {
+        let url = "https://www.usajobs.gov/search/results/?k="
+        url += encodeURIComponent(this.searchTerms);
+        return url
+    }
+
+    searchLinkOuterjoin() {
+        let url = "https://outerjoin.us/?q="
+        url += encodeURIComponent(this.searchTerms);
+        return url
+    }
+
+    searchLinkLinkedIn() {
+        let url = "https://www.linkedin.com/jobs/search/?currentJobId=3981860422&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true&keywords="
+        url += encodeURIComponent(this.searchTerms);
+        return url
     }
 
     resumeName() {

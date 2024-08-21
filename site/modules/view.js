@@ -256,6 +256,8 @@ class View {
 
         document.getElementById("scanned-job-description").innerHTML = "";
         document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription();
+
+        document.getElementById("search-terms").value = this.model.searchTerms;
     }
 
     markupJobDescription() {

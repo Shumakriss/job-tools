@@ -613,6 +613,11 @@ class Controller {
         this.save();
         this.render();
     }
+
+    setSearchTerms(searchTerms) {
+        this.model.searchTerms = searchTerms;
+        this.save();
+    }
 }
 
 export default Controller;

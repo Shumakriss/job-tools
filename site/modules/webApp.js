@@ -19,6 +19,17 @@ function downloadLink(url) {
     document.body.removeChild(a)
 }
 
+
+function openLinkInNewTab(url) {
+    const a = document.createElement('a')
+    a.href = url
+    a.target = "_blank"
+    a.download = url.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
+
 class WebApp {
 
     constructor(gapi, google) {
@@ -129,6 +140,10 @@ class WebApp {
             controller.setRelevantExperience(event.target.value);
         }, 100));
 
+        document.getElementById("search-terms").addEventListener("change", debounce( async (event) => {
+            controller.setSearchTerms(event.target.value);
+        }, 100));
+
         document.addEventListener('keydown', e => {
             if (e.metaKey && e.key === 's') {
                 // Prevent the Save dialog to open
@@ -146,6 +161,29 @@ class WebApp {
     }
 
     async addHandlers() {
+
+        document.getElementById('idealist-search-button').onclick = async () => {
+            openLinkInNewTab(this.model.searchLinkIdealist());
+        }
+
+        document.getElementById('usajobs-search-button').onclick = async () => {
+            openLinkInNewTab(this.model.searchLinkUsaJobs());
+        }
+
+        document.getElementById('outerjoin-search-button').onclick = async () => {
+            openLinkInNewTab(this.model.searchLinkOuterjoin());
+        }
+
+        document.getElementById('linkedin-search-button').onclick = async () => {
+            openLinkInNewTab(this.model.searchLinkLinkedIn());
+        }
+
+        document.getElementById('search-all-button').onclick = async () => {
+            openLinkInNewTab(this.model.searchLinkIdealist());
+            openLinkInNewTab(this.model.searchLinkUsaJobs());
+            openLinkInNewTab(this.model.searchLinkOuterjoin());
+            openLinkInNewTab(this.model.searchLinkLinkedIn());
+        }
 
         document.getElementById('google-authorize-button').onclick = async () => {
             this.controller.googleAuthorize();
