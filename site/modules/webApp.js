@@ -154,6 +154,7 @@ class WebApp {
                 document.getElementById("settings-modal").style.display = "none";
                 document.getElementById("tailoring-modal").style.display = "none";
                 document.getElementById("job-sections-modal").style.display = "none";
+                document.getElementById("apply-modal").style.display = "none";
             }
         });
 
@@ -242,18 +243,13 @@ class WebApp {
             document.getElementById("settings-modal").style.display = "block";
         }
 
-        document.getElementById('close-settings-modal-button').onclick = function() {
-            document.getElementById("settings-modal").style.display = "none";
-        }
-
         document.getElementById('view-sections-button').onclick = () => {
             document.getElementById("job-sections-modal").style.display = "block";
         }
 
-        document.getElementById('close-job-sections-modal-button').onclick = function() {
-            document.getElementById("job-sections-modal").style.display = "none";
+        document.getElementById('apply-button').onclick = async () => {
+            document.getElementById("apply-modal").style.display = "block";
         }
-
 
         window.onclick = function(event) {
             if (event.target == document.getElementById("settings-modal")) {
@@ -262,15 +258,13 @@ class WebApp {
                 document.getElementById("tailoring-modal").style.display = "none";
             } else if (event.target == document.getElementById("job-sections-modal")) {
                 document.getElementById("job-sections-modal").style.display = "none";
+            } else if (event.target == document.getElementById("apply-modal")) {
+                document.getElementById("apply-modal").style.display = "none";
             }
         }
 
         document.getElementById('configure-tailoring-button').onclick = () => {
             document.getElementById("tailoring-modal").style.display = "block";
-        }
-
-        document.getElementById('close-tailoring-modal-button').onclick = function() {
-            document.getElementById("tailoring-modal").style.display = "none";
         }
 
         console.debug("Registered handlers");

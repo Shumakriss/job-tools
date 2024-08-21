@@ -11,9 +11,12 @@
 
 <div id="settings-modal" class="modal">
     <div class="modal-content-settings">
+        <h1>Configure Settings</h1>
 
-        <strong>LinkedIn Query</strong><br/>
+        <strong>Advanced Queries</strong><br/>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
+        <br/>
+        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
         <br/><br/>
 
         <strong>Google Sheet Name:</strong>
@@ -50,12 +53,12 @@
         <button id="google-signout-button" class="disabled-button button" disabled>Google Sign Out</button>
         <br/><br/>
 
-        <button id="close-settings-modal-button" class="big-button button">Close</button>
     </div>
 </div>
 
 <div id="tailoring-modal" class="modal">
     <div class="modal-content-tailoring">
+        <h1>Tailoring Options</h1>
         <strong>Company Name (Tailoring Only): </strong><br/>
         <input id="company-name-tailor" size="40"/>
         <br/><br/>
@@ -86,13 +89,13 @@
 
         <button class="big-button button disabled-button" disabled id="tailor-documents-button">Apply</button>
         <br/>
-        <button id="close-tailoring-modal-button" class="big-button button">Close</button>
     </div>
 </div>
 
 
 <div id="job-sections-modal" class="modal">
     <div class="modal-content-sections">
+        <h1>Configure Job Section Scanning</h1>
 
         <Strong>Minimum Requirements </Strong>:<br/>
         <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
@@ -111,7 +114,34 @@
         <br/><br/>
 
         <button class="big-button button disabled-button" disabled id="extract-sections-button">Auto Extract</button>
-        <button id="close-job-sections-modal-button" class="big-button button">Close</button>
+    </div>
+</div>
+
+<div id="apply-modal" class="modal">
+    <div class="modal-content-sections">
+        <h1>Apply</h1>
+
+        <h2>Downloads</h2>
+        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume PDF</button>
+        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter
+            PDF
+        </button>
+
+        <h2>Profile Links</h2>
+        <input id="profile-link-linkedin" size=50>
+        <button class="clipboard-button" id="clipboard-linkedin-profile">📋 Copy To Clipboard</button>
+        <br/>
+
+        <input id="profile-link-github" size=50>
+        <button class="clipboard-button" id="clipboard-github-profile">📋 Copy To Clipboard</button>
+        <br/>
+
+        <input id="profile-link-website" size=50>
+        <button class="clipboard-button" id="clipboard-website">📋 Copy To Clipboard</button>
+
+        <h2>Track On Google Sheets</h2>
+        <button id="log-application-button" class="disabled-button button big-button" disabled>Log Application</button>
+        <br/><br/>
     </div>
 </div>
 
@@ -126,18 +156,12 @@
 
         <strong>Job Search</strong><br/>
         <input id="search-terms" size="20"/><br/><br/>
-        <button id="idealist-search-button">Search Idealist.org</button><br/>
-        <button id="usajobs-search-button">Search Usajobs.gov</button><br/>
-        <button id="outerjoin-search-button">Search Outerjoin.us</button><br/>
-        <button id="linkedin-search-button">Search Linkedin.com</button><br/>
-        <button id="search-all-button">Search All</button><br/>
+        <button class="button big-button" id="linkedin-search-button">Search LinkedIn</button><br/>
+        <button class="button big-button" id="idealist-search-button">Search Idealist</button><br/>
+        <button class="button big-button" id="usajobs-search-button">Search UsaJobs</button><br/>
+        <button class="button big-button" id="outerjoin-search-button">Search OuterJoin</button><br/>
+        <button class="button big-button" id="search-all-button">Search All</button><br/>
         <br/>
-
-        <strong>LinkedIn Query</strong><br/>
-        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
-        <br/>
-        <a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a>
-        <br/><br/>
 
         <strong><a href="https://drive.google.com/drive/home">GDrive Documents</a></strong> <br/>
         <a id="tailored-resume-link" href="" target="_blank"></a>
@@ -152,8 +176,6 @@
         <div id="company-correspondence"></div>
         <br/>
 
-        <button id="log-application-button" class="disabled-button button" disabled>Log Application</button>
-        <br/><br/>
         <button class="button" id="reset-button">Reset Application</button>
         <br/><br/>
         <button id="configure-button" class="button">Configure</button>
@@ -208,41 +230,20 @@
         <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
         <br/><br/>
 
-
         <button class="big-button button" id="view-sections-button">View Sections</button>
-        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Docs</button>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button>
         <br/>
         <button id="configure-tailoring-button" class="big-button button">View Tailoring Options</button>
         <br/>
         <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
-        <br/><br/>
-        <a href="https://www.jobscan.co/" target="_blank">Jobscan.co</a>
+        <br/>
+        <button id="apply-button" class="big-button button">Apply</button>
         <br/><br/>
 
-        <strong>Downloads</strong><br/>
-        <button id="resume-download-button" class="disabled-button button fa fa-download" disabled> Resume PDF</button>
-        <br/>
-        <button id="cover-letter-download-button" class="disabled-button button fa fa-download" disabled> Cover Letter
-            PDF
-        </button>
-        <br/><br/>
 
         <strong>Messages</strong>
         <p id="status-message"></p>
 
-        <strong>Profile Links</strong><br/>
-        <input id="profile-link-linkedin" size=30>
-        <button class="clipboard-button" id="clipboard-linkedin-profile">📋</button>
-        <br/>
-
-        <input id="profile-link-github" size=30>
-        <button class="clipboard-button" id="clipboard-github-profile">📋</button>
-        <br/>
-
-        <input id="profile-link-website" size=30>
-        <button class="clipboard-button" id="clipboard-website">📋</button>
-        <br/>
-        <br/>
     </div>
 </div>
 

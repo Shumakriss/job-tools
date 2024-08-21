@@ -229,10 +229,10 @@ class View {
 
         if (this.model.isLogApplicationEnabled()) {
             document.getElementById("log-application-button").disabled = false;
-            document.getElementById("log-application-button").className = "button";
+            document.getElementById("log-application-button").className = "button big-button";
         } else {
             document.getElementById("log-application-button").disabled = true;
-            document.getElementById("log-application-button").className = "button disabled-button";
+            document.getElementById("log-application-button").className = "button disabled-button big-button";
         }
 
         if (this.model.isTailorApplyEnabled()) {
