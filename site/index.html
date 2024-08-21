@@ -13,12 +13,6 @@
     <div class="modal-content-settings">
         <h1>Configure Settings</h1>
 
-        <strong>Advanced Queries</strong><br/>
-        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea>
-        <br/>
-        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
-        <br/><br/>
-
         <strong>Google Sheet Name:</strong>
         <br/>
         <input id="application-log-sheet-name">
@@ -71,6 +65,10 @@
         <input id="hiring-manager-name" size="40"/>
         <br/><br/>
 
+        <Strong>Job Title: </Strong><br/>
+        <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
+        <br/><br/>
+
         <strong>Complete Job Title:</strong><br/>
         <input id="complete-job-title" size="40"/>
         <br/><br/>
@@ -87,7 +85,7 @@
         <textarea rows="5" cols="50" id="relevant-experience" class="textarea"></textarea>
         <br/><br/>
 
-        <button class="big-button button disabled-button" disabled id="tailor-documents-button">Apply</button>
+        <button class="big-button button disabled-button" disabled id="tailor-documents-button">Fill Template Values</button>
         <br/>
     </div>
 </div>
@@ -145,6 +143,26 @@
     </div>
 </div>
 
+<div id="search-modal" class="modal">
+    <div class="modal-content-sections">
+        <h1>Search</h1>
+
+        <strong>Query Template</strong><br/>
+        <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea><br/>
+        <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
+        <br/><br/>
+
+        <strong>Your Query</strong><br/>
+        <input id="search-terms" size="50"/><br/><br/>
+        <button class="button" id="search-all-button">Search All</button><br/><br/>
+
+        <button class="button" id="linkedin-search-button">LinkedIn</button>
+        <button class="button" id="idealist-search-button">Idealist</button>
+        <button class="button" id="usajobs-search-button">UsaJobs</button>
+        <button class="button" id="outerjoin-search-button">OuterJoin</button>
+    </div>
+</div>
+
 
 <div class="container">
 
@@ -154,34 +172,21 @@
         <input id="application-date" size="20"/>
         <br/><br/>
 
-        <strong>Job Search</strong><br/>
-        <input id="search-terms" size="20"/><br/><br/>
-        <button class="button big-button" id="linkedin-search-button">Search LinkedIn</button><br/>
-        <button class="button big-button" id="idealist-search-button">Search Idealist</button><br/>
-        <button class="button big-button" id="usajobs-search-button">Search UsaJobs</button><br/>
-        <button class="button big-button" id="outerjoin-search-button">Search OuterJoin</button><br/>
-        <button class="button big-button" id="search-all-button">Search All</button><br/>
+        <button class="button big-button" id="reset-button">Reset</button>
+        <button class="button big-button" id="search-button">Search</button><br/>
+        <button class="big-button button" id="view-sections-button">Job Sections</button>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button>
         <br/>
-
-        <strong><a href="https://drive.google.com/drive/home">GDrive Documents</a></strong> <br/>
-        <a id="tailored-resume-link" href="" target="_blank"></a>
+        <button id="configure-tailoring-button" class="big-button button">View Tailoring Options</button>
         <br/>
-        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
+        <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
+        <br/>
+        <button id="apply-button" class="big-button button">Apply</button>
         <br/><br/>
 
-        <strong>Correspondence</strong>
-        <br/>
-        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
-        <br/>
-        <div id="company-correspondence"></div>
-        <br/>
-
-        <button class="button" id="reset-button">Reset Application</button>
-        <br/><br/>
-        <button id="configure-button" class="button">Configure</button>
-        <br/>
     </div>
     <div class="container-page">
+        <h1>Scanning</h1>
         <strong>Scores</strong><br/>
         <div class="scan-result-container">
 
@@ -207,16 +212,18 @@
             </div>
         </div>
 
-        <strong>Scan Results:</strong>
-        <div id="scanned-job-description" class="scanned-job-description"></div>
-
         <strong>Enter Job Description:</strong>
         <br/>
         <textarea id="job-description-textarea" rows="25" class="job-section-text"></textarea>
         <br/><br/>
 
+        <strong>Scan Results:</strong>
+        <div id="scanned-job-description" class="scanned-job-description"></div>
+
     </div>
+
     <div class="container-sidebar-right">
+
 
         <Strong>Company Name: </Strong><br/>
         <input type="text" size=30 id="company-name" value="Example"/>
@@ -226,24 +233,24 @@
         <a href="" target="_blank" id="levels-fyi-link">Levels.fyi</a>
         <br/><br/>
 
-        <Strong>Job Title: </Strong><br/>
-        <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
+        <strong><a href="https://drive.google.com/drive/home">GDrive Documents</a></strong> <br/>
+        <a id="tailored-resume-link" href="" target="_blank"></a>
+        <br/>
+        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
         <br/><br/>
 
-        <button class="big-button button" id="view-sections-button">View Sections</button>
-        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button>
+        <strong>Correspondence</strong>
         <br/>
-        <button id="configure-tailoring-button" class="big-button button">View Tailoring Options</button>
+        <a id="application-log-sheet-link" href="" target="_blank">Sheets Link Not Ready</a>
         <br/>
-        <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
+        <div id="company-correspondence"></div>
         <br/>
-        <button id="apply-button" class="big-button button">Apply</button>
-        <br/><br/>
 
 
         <strong>Messages</strong>
         <p id="status-message"></p>
 
+        <button id="configure-button" class="button">Configure Settings</button><br/><br/>
     </div>
 </div>
 

@@ -155,6 +155,7 @@ class WebApp {
                 document.getElementById("tailoring-modal").style.display = "none";
                 document.getElementById("job-sections-modal").style.display = "none";
                 document.getElementById("apply-modal").style.display = "none";
+                document.getElementById("search-modal").style.display = "none";
             }
         });
 
@@ -251,6 +252,11 @@ class WebApp {
             document.getElementById("apply-modal").style.display = "block";
         }
 
+        document.getElementById('search-button').onclick = async () => {
+            document.getElementById("search-modal").style.display = "block";
+        }
+
+
         window.onclick = function(event) {
             if (event.target == document.getElementById("settings-modal")) {
                document.getElementById("settings-modal").style.display = "none";
@@ -260,6 +266,8 @@ class WebApp {
                 document.getElementById("job-sections-modal").style.display = "none";
             } else if (event.target == document.getElementById("apply-modal")) {
                 document.getElementById("apply-modal").style.display = "none";
+            } else if (event.target == document.getElementById("search-modal")) {
+                document.getElementById("search-modal").style.display = "none";
             }
         }
 
