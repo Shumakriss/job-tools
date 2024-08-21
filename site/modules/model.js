@@ -346,7 +346,7 @@ class Model {
 
     googleSheetLinkText() {
         if (this.googleSheetName && this.googleSheetId && this.googleSheetId != "undefined") {
-            return "Application Log";
+            return "View On Google Sheets";
         } else if (this.googleSheetName) {
             return "Application log not found";
         } else {

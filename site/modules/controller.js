@@ -522,7 +522,7 @@ class Controller {
             if (!this.model.resumeId) {
                 this.model.statusMessage = "All resume scans completed against resume template";
             } else {
-                this.model.statusMessage = "All resume scans completed against resume";
+                this.model.statusMessage = "All resume scans completed against company copy";
             }
 
             this.save();
