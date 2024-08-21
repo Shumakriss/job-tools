@@ -427,6 +427,13 @@ class Controller {
     }
 
     async scan() {
+        if (!this.model.resumeContent) {
+            this.model.statusMessage = "Skipping scan due to missing resume";
+            return;
+        } else if (!this.model.jobDescription) {
+            this.model.statusMessage = "Skipping scan due to missing job description";
+            return;
+        }
         this.model.statusMessage = "Scanning resume...";
         this.render();
 
