@@ -163,33 +163,33 @@
     </div>
 </div>
 
+<div id="reset-modal" class="modal">
+    <div class="modal-content-sections">
+        <h1>Reset Application</h1>
+        <p>Resetting your application will erase any progress you have made on this application.</p>
+        <h3>Are you sure you want to reset the application?</h3>
+        <button class="button big-button" id="reset-button">Yes, reset my application</button>
+    </div>
+</div>
+
 
 <div class="container">
 
     <div class="container-sidebar-left">
+        <h1>Activities</h1>
 
-        <strong>Date: </strong><br/>
-        <input id="application-date" size="20"/>
-        <br/><br/>
-
-        <button class="button big-button" id="reset-button">Reset</button>
+        <button class="button big-button" id="reset-modal-button">Reset</button>
         <button class="button big-button" id="search-button">Search</button><br/>
-        <button class="big-button button" id="view-sections-button">Job Sections</button>
-        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button>
-        <br/>
-        <button id="configure-tailoring-button" class="big-button button">View Tailoring Options</button>
-        <br/>
-        <button id="scan-button" class="disabled-button big-button button" disabled>Scan</button>
-        <br/>
+        <button id="configure-tailoring-button" class="button big-button">Tailor</button>
         <button id="apply-button" class="big-button button">Apply</button>
         <br/><br/>
 
     </div>
     <div class="container-page">
         <h1>Scanning</h1>
-        <strong>Scores</strong><br/>
-        <div class="scan-result-container">
 
+        <h2>Scores</h2>
+        <div class="scan-result-container">
             <div class="scan-result-score-container" id="regular-score-container">
                 <label class="scan-result-label">Full Job Description</label>
                 <strong id="regular-score" class="scan-result-score"></strong>
@@ -212,28 +212,36 @@
             </div>
         </div>
 
-        <strong>Enter Job Description:</strong>
-        <br/>
+        <h2>Job Description</h2>
         <textarea id="job-description-textarea" rows="25" class="job-section-text"></textarea>
-        <br/><br/>
+        <br/>
+        <button class="button" id="view-sections-button">Configure Scan Sections</button><br/>
 
-        <strong>Scan Results:</strong>
+        <h2>Results</h2>
         <div id="scanned-job-description" class="scanned-job-description"></div>
 
     </div>
 
     <div class="container-sidebar-right">
 
+        <h1>App Info</h1>
+        <strong>Date: </strong><br/>
+        <input id="application-date" size="20"/>
+        <br/><br/>
 
-        <Strong>Company Name: </Strong><br/>
+        <strong>Company Name: </strong><br/>
         <input type="text" size=30 id="company-name" value="Example"/>
-        <br/>
-        <a href="" target="_blank" id="glassdoor-search-link">Glassdoor Reviews</a>
+        <br/><br/>
+        <strong>Company Review:</strong><br/>
+        <a href="" target="_blank" id="glassdoor-search-link">Glassdoor</a>
         <br/>
         <a href="" target="_blank" id="levels-fyi-link">Levels.fyi</a>
         <br/><br/>
 
-        <strong><a href="https://drive.google.com/drive/home">GDrive Documents</a></strong> <br/>
+        <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button><br/>
+        <button id="scan-button" class="disabled-button button" disabled>Rescan</button><br/><br/>
+
+        <strong>Company Files</strong> <br/>
         <a id="tailored-resume-link" href="" target="_blank"></a>
         <br/>
         <a id="tailored-cover-letter-link" href="" target="_blank"></a>
@@ -246,11 +254,10 @@
         <div id="company-correspondence"></div>
         <br/>
 
+        <button id="configure-button" class="button">Manage Files</button><br/><br/>
 
         <strong>Messages</strong>
         <p id="status-message"></p>
-
-        <button id="configure-button" class="button">Configure Settings</button><br/><br/>
     </div>
 </div>
 

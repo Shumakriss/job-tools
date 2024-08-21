@@ -156,6 +156,7 @@ class WebApp {
                 document.getElementById("job-sections-modal").style.display = "none";
                 document.getElementById("apply-modal").style.display = "none";
                 document.getElementById("search-modal").style.display = "none";
+                document.getElementById("reset-modal").style.display = "none";
             }
         });
 
@@ -214,6 +215,7 @@ class WebApp {
         document.getElementById('reset-button').onclick = async () => {
             console.debug("Reset button click");
             this.controller.reset();
+            document.getElementById("reset-modal").style.display = "none";
         }
 
         document.getElementById('clipboard-linkedin-query').onclick = () => {
@@ -256,6 +258,9 @@ class WebApp {
             document.getElementById("search-modal").style.display = "block";
         }
 
+        document.getElementById('reset-modal-button').onclick = async () => {
+            document.getElementById("reset-modal").style.display = "block";
+        }
 
         window.onclick = function(event) {
             if (event.target == document.getElementById("settings-modal")) {
@@ -268,6 +273,8 @@ class WebApp {
                 document.getElementById("apply-modal").style.display = "none";
             } else if (event.target == document.getElementById("search-modal")) {
                 document.getElementById("search-modal").style.display = "none";
+            } else if (event.target == document.getElementById("reset-modal")) {
+                document.getElementById("reset-modal").style.display = "none";
             }
         }
 
