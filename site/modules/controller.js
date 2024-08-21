@@ -403,7 +403,7 @@ class Controller {
     }
 
     async updateResumeContent() {
-        this.model.statusMessage = "Fetching updated resume contents";
+        this.model.statusMessage = "Fetching resume or template contents";
         this.render();
 
         if (this.model.resumeId && this.model.resumeId != "" && this.model.resumeId != "undefined") {
@@ -519,7 +519,12 @@ class Controller {
         }
 
         Promise.all(promises).then( results =>{
-            this.model.statusMessage = "All resume scans complete";
+            if (!this.model.resumeId) {
+                this.model.statusMessage = "All resume scans completed against resume template";
+            } else {
+                this.model.statusMessage = "All resume scans completed against resume";
+            }
+
             this.save();
             this.render();
         });
