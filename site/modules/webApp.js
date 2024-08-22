@@ -38,7 +38,7 @@ class WebApp {
         this.controller = new Controller(this.model, this.view, gapi, google);
     }
 
-    start() {
+    async start() {
         this.model.load();
         this.view.render();
 
@@ -144,6 +144,11 @@ class WebApp {
             controller.setSearchTerms(event.target.value);
         }, 100));
 
+
+        document.getElementById("job-post-url").addEventListener("change", debounce( async (event) => {
+            controller.setJobPostUrl(event.target.value);
+        }, 100));
+
         document.addEventListener('keydown', e => {
             if (e.metaKey && e.key === 's') {
                 // Prevent the Save dialog to open
@@ -190,6 +195,10 @@ class WebApp {
 
         document.getElementById('google-authorize-button').onclick = async () => {
             this.controller.googleAuthorize();
+        }
+
+        document.getElementById('get-job-description-button').onclick = async () => {
+            this.controller.getJobDescription();
         }
 
         document.getElementById('extract-sections-button').onclick = async () => {

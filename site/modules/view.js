@@ -258,6 +258,8 @@ class View {
         document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription();
 
         document.getElementById("search-terms").value = this.model.searchTerms;
+
+        document.getElementById("job-post-url").value = this.model.jobPostUrl;
     }
 
     markupJobDescription() {

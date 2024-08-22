@@ -113,6 +113,55 @@ class Controller {
         this.save();
         this.render();
     }
+
+    async setJobPostUrl(jobPostUrl) {
+        this.model.jobPostUrl = jobPostUrl;
+        this.save();
+    }
+
+    async getJobDescription() {
+        console.debug("Fetching job description");
+
+        if (!this.model.jobPostUrl || this.model.jobPostUrl == "") {
+            this.model.statusMessage = "Provide a job post url first";
+        } else {
+            this.model.statusMessage = "Looking up job description";
+        }
+        this.save();
+        this.render();
+
+        let requestBody = { "job_post_url": this.model.jobPostUrl }
+        console.debug(requestBody);
+        console.debug(JSON.stringify(requestBody));
+
+        try {
+            const request = new Request("http://localhost:8080/job-post", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            console.debug(request);
+
+            const response = await fetch(request);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            this.model.statusMessage = "Job description found";
+
+            this.setJobDescription(text);
+            this.save();
+            this.render();
+
+        } catch (error) {
+            console.error(error.message);
+            this.model.statusMessage = "Unable to retrieve job description";
+        }
+    }
     
     async setJobDescription(jobDescription) {
         if (this.model.jobDescription == jobDescription) {
@@ -121,6 +170,8 @@ class Controller {
 
         this.model.jobDescription = jobDescription;
         this.save();
+
+        this.model.statusMessage = "Updated job description"
 
         if (this.model.jobDescription && this.model.jobDescription != "" && this.model.resumeContent && this.model.resumeContent != "") {
             this.scan();

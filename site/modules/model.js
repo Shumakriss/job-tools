@@ -120,6 +120,8 @@ class Model {
         this.statusMessage = "Start your application!";
 
         this.searchTerms = "";
+
+        this.jobPostUrl = "";
     }
 
     /* Save-load */
@@ -184,6 +186,8 @@ class Model {
         localStorage.setItem("statusMessage", this.statusMessage);
 
         localStorage.setItem("searchTerms", this.searchTerms);
+
+        localStorage.setItem("jobPostUrl", this.jobPostUrl);
 
         console.debug("Saved application state to local storage");
     }
@@ -265,6 +269,8 @@ class Model {
         this.statusMessage = getItemWithDefault("statusMessage", this.statusMessage);
 
         this.searchTerms = getItemWithDefault("searchTerms", this.searchTerms);
+
+        this.jobPostUrl = getItemWithDefault("jobPostUrl", this.jobPostUrl);
 
         // Excluded date so that it's always current
 //        this.date = localStorage.getItem("date");
