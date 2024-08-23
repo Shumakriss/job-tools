@@ -666,6 +666,7 @@ class Controller {
         this.model.resumePdfLink = "";
         this.model.coverLetterPdfLink = "";
         this.model.companyCorrespondence = "";
+        this.model.jobPostUrl = "";
 
         this.model.statusMessage = "Start your application!";
         this.save();

@@ -220,10 +220,6 @@
     <div class="container-page">
         <h1>Scanning</h1>
 
-        <h2>Job Post</h2>
-        <strong>Url: </strong><input id="job-post-url" size="80"/>
-        <button id="get-job-description-button" class="button">Get Job Description</button>
-
         <h2>Scores</h2>
         <div class="scan-result-container">
             <div class="scan-result-score-container score-neutral" id="regular-score-container">
@@ -249,9 +245,14 @@
         </div>
 
         <h2>Job Description</h2>
+        <strong>Url: </strong>
+        <input id="job-post-url" size="70"/>
+        <button id="get-job-description-button" class="button">Get Job Description</button>
+        <br/>
         <textarea id="job-description-textarea" rows="25" class="job-section-text"></textarea>
         <br/>
         <button class="button" id="view-sections-button">Configure Scan Sections</button><br/>
+
 
         <h2>Results</h2>
         <div id="scanned-job-description" class="scanned-job-description"></div>
