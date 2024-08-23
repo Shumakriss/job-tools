@@ -65,6 +65,10 @@ class WebApp {
             }
         );
 
+        document.getElementById("keyword-resume-name").addEventListener("change", debounce( async (event) => {
+            controller.setKeywordResumeName(event.target.value);
+        }, 100));
+
         document.getElementById("resume-template-name").addEventListener("change", debounce( async (event) => {
             console.debug("Invoked event listener for resume-template-name");
             controller.setResumeTemplateName(event.target.value);

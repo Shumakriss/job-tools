@@ -13,7 +13,9 @@ class Controller {
         this.view = view;
         this.model.load();
         this.workspace = new GoogleWorkspace(model, gapi, google);
-        this.workspace.setAuthenticatedCallback(this.onGoogleAuthorized)
+        this.workspace.setAuthenticatedCallback( () => {
+            this.onGoogleAuthorized();
+        });
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
     }
@@ -74,6 +76,7 @@ class Controller {
         this.updateResumeContent();
     }
 
+
     async updateCoverLetterId() {
         this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName());
         this.save();
@@ -99,6 +102,14 @@ class Controller {
         this.render();
         this.updateResumeTemplateId();
         this.updateResumeId();
+    }
+
+    setKeywordResumeName(keywordResumeName) {
+        this.model.keywordResumeName = keywordResumeName;
+        this.save();
+        this.render();
+
+        this.updateKeywordResumeId();
     }
     
     setCoverLetterTemplateName(coverLetterTemplateName) {
@@ -445,6 +456,16 @@ class Controller {
 
     }
 
+    async updateKeywordResumeId(){
+        if (this.model.keywordResumeName && this.model.keywordResumeName != "" && this.model.keywordResumeName != "undefined"){
+            this.model.keywordResumeId = await this.workspace.getDocumentIdByName(this.model.keywordResumeName);
+            this.model.statusMessage = "Updated keyword resume"
+            this.save();
+            this.render();
+        }
+
+    }
+
     async updateResumeTemplateId() {
         this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
         this.save();
@@ -464,6 +485,9 @@ class Controller {
         if (this.model.resumeId && this.model.resumeId != "" && this.model.resumeId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
             this.model.statusMessage = "Resume content updated based on company copy";
+        } else if (this.model.keywordResumeId && this.model.keywordResumeId != "" && this.model.keywordResumeId != "undefined") {
+            this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.keywordResumeId);
+            this.model.statusMessage = "Resume content updated based on keyword resume";
         } else if (this.model.resumeTemplateId && this.model.resumeTemplateId != "" && this.model.resumeTemplateId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
             this.model.statusMessage = "Resume content updated based on template";
@@ -574,8 +598,10 @@ class Controller {
         }
 
         Promise.all(promises).then( results =>{
-            if (!this.model.resumeId) {
+            if (!this.model.resumeId && !this.model.keywordResumeId) {
                 this.model.statusMessage = "All resume scans completed against resume template";
+            } else if (!this.model.resumeId) {
+                this.model.statusMessage = "All resume scans completed against keyword resume";
             } else {
                 this.model.statusMessage = "All resume scans completed against company copy";
             }

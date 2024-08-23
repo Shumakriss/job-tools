@@ -62,6 +62,10 @@ class Model {
 
         /* Globally visible Fields */
         this.linkedInQuery = DEFAULT_LINKEDIN_QUERY;
+
+        this.keywordResumeName = "";
+        this.keywordResumeId = null;
+
         this.resumeTemplateName = "";
         this.resumeTemplateId = null;
         this.coverLetterTemplateName = "";
@@ -145,7 +149,9 @@ class Model {
         localStorage.setItem("jobscanXsrfToken", this.jobscanXsrfToken);
         localStorage.setItem("chatgptApiKey", this.chatgptApiKey);
         localStorage.setItem("linkedInQuery", this.linkedInQuery);
+        localStorage.setItem("keywordResumeName", this.keywordResumeName);
         localStorage.setItem("resumeTemplateName", this.resumeTemplateName);
+        localStorage.setItem("keywordResumeId", this.keywordResumeId)
         localStorage.setItem("resumeTemplateId", this.resumeTemplateId);
         localStorage.setItem("coverLetterTemplateName", this.coverLetterTemplateName);
         localStorage.setItem("coverLetterTemplateId", this.coverLetterTemplateId);
@@ -232,6 +238,8 @@ class Model {
         this.jobscanCookie = getItemWithDefault("jobscanCookie", this.jobscanCookie);
         this.jobscanXsrfToken = getItemWithDefault("jobscanXsrfToken", this.jobscanXsrfToken);
         this.chatgptApiKey = getItemWithDefault("chatgptApiKey", this.chatgptApiKey);
+        this.keywordResumeName = getItemWithDefault("keywordResumeName", this.keywordResumeName);
+        this.keywordResumeId = getItemWithDefault("keywordResumeId", this.keywordResumeId);
         this.resumeTemplateName = getItemWithDefault("resumeTemplateName", this.resumeTemplateName);
         this.resumeTemplateId = getItemWithDefault("resumeTemplateId", this.resumeTemplateId);
         this.coverLetterTemplateName = getItemWithDefault("coverLetterTemplateName", this.coverLetterTemplateName);

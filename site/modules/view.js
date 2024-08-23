@@ -90,6 +90,7 @@ class View {
     render() {
         console.debug("Rendering");
 
+        document.getElementById("keyword-resume-name").value = this.model.keywordResumeName;
         document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
         document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;

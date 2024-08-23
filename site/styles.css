@@ -183,7 +183,7 @@ textarea {
   margin: 3% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 20%; /* Could be more or less, depending on screen size */
+  width: 80%; /* Could be more or less, depending on screen size */
 }
 
 .modal-content-settings {
@@ -191,7 +191,7 @@ textarea {
     margin: 3% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 20%; /* Could be more or less, depending on screen size */
+    width: 40%; /* Could be more or less, depending on screen size */
 }
 
 .modal-content-tailoring {
@@ -199,7 +199,7 @@ textarea {
     margin: 3% auto; /* 15% from the top and centered */
     padding: 30px;
     border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Could be more or less, depending on screen size */
 }
 
 .modal-content-sections {
