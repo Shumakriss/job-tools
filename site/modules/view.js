@@ -91,8 +91,41 @@ class View {
         console.debug("Rendering");
 
         document.getElementById("keyword-resume-name").value = this.model.keywordResumeName;
+        if (!this.model.keywordResumeName || this.model.keywordResumeName == "" || this.model.keywordResumeName == "undefined") {
+            document.getElementById("file-status-keyword-resume").src = "";
+            document.getElementById("file-status-keyword-resume").style = "display: none;";
+        } else if (this.model.keywordResumeId && this.model.keywordResumeId != "" && this.model.keywordResumeId != "undefined") {
+            document.getElementById("file-status-keyword-resume").src = "assets/Green_check.svg";
+            document.getElementById("file-status-keyword-resume").style = "";
+        } else {
+            document.getElementById("file-status-keyword-resume").src = "assets/Question_mark_alternate.svg";
+            document.getElementById("file-status-keyword-resume").style = "";
+        }
+
         document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
+        if (!this.model.resumeTemplateName || this.model.resumeTemplateName == "" || this.model.resumeTemplateName == "undefined") {
+            document.getElementById("file-status-resume-template").src = "";
+            document.getElementById("file-status-resume-template").style = "display: none;";
+        } else if (this.model.resumeTemplateId && this.model.resumeTemplateId != "" && this.model.resumeTemplateId != "undefined") {
+            document.getElementById("file-status-resume-template").src = "assets/Green_check.svg";
+            document.getElementById("file-status-resume-template").style = "";
+        } else {
+            document.getElementById("file-status-resume-template").src = "assets/Question_mark_alternate.svg";
+            document.getElementById("file-status-resume-template").style = "";
+        }
+
         document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
+        if (!this.model.coverLetterTemplateName || this.model.coverLetterTemplateName == "" || this.model.coverLetterTemplateName == "undefined") {
+            document.getElementById("file-status-cover-letter-template").src = "";
+            document.getElementById("file-status-cover-letter-template").style = "display: none;";
+        } else if (this.model.coverLetterTemplateId && this.model.coverLetterTemplateId != "" && this.model.coverLetterTemplateId != "undefined") {
+            document.getElementById("file-status-cover-letter-template").src = "assets/Green_check.svg";
+            document.getElementById("file-status-cover-letter-template").style = "";
+        } else {
+            document.getElementById("file-status-cover-letter-template").src = "assets/Question_mark_alternate.svg";
+            document.getElementById("file-status-cover-letter-template").style = "";
+        }
+
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;
         document.getElementById("company-name").value = this.model.companyName;
         document.getElementById("job-description-textarea").value = this.model.jobDescription;
@@ -218,6 +251,17 @@ class View {
         document.getElementById("application-log-sheet-name").value = this.model.googleSheetName;
         document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink();
         document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText();
+
+        if (!this.model.googleSheetName || this.model.googleSheetName == "" || this.model.googleSheetName == "undefined") {
+            document.getElementById("file-status-application-log-sheet").src = "";
+            document.getElementById("file-status-application-log-sheet").style = "display: none;";
+        } else if (this.model.googleSheetId && this.model.googleSheetId != "" && this.model.googleSheetId != "undefined") {
+            document.getElementById("file-status-application-log-sheet").src = "assets/Green_check.svg";
+            document.getElementById("file-status-application-log-sheet").style = "";
+        } else {
+            document.getElementById("file-status-application-log-sheet").src = "assets/Question_mark_alternate.svg";
+            document.getElementById("file-status-application-log-sheet").style = "";
+        }
 
         if (this.model.isLogApplicationEnabled()) {
             document.getElementById("log-application-button").disabled = false;
