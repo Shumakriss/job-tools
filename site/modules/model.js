@@ -358,13 +358,11 @@ class Model {
         }
     }
 
-    googleSheetLinkText() {
-        if (this.googleSheetName && this.googleSheetId && this.googleSheetId != "undefined") {
-            return "View On Google Sheets";
-        } else if (this.googleSheetName) {
-            return "Application log not found";
+    googleDocLink(fileid) {
+        if (fileid && fileid != "" && fileid != "undefined") {
+            return GDOC_PREFIX + fileid + GDOC_SUFFIX;
         } else {
-            return "Missing application log name";
+            return "";
         }
     }
 

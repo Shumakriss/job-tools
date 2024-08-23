@@ -38,6 +38,18 @@ function formatCorrespondence(companyCorrespondence) {
     return ul
 }
 
+function fileLinkText(filename, fileid) {
+    if (!filename || filename == "" || filename == "undefined") {
+        return "";
+    } else if (fileid && fileid != "undefined" && fileid != "") {
+        return "View File";
+    } else if (fileid) {
+        return "File not found";
+    } else {
+        return "Missing file name";
+    }
+}
+
 
 class View {
     constructor(model) {
@@ -101,6 +113,8 @@ class View {
             document.getElementById("file-status-keyword-resume").src = "assets/Question_mark_alternate.svg";
             document.getElementById("file-status-keyword-resume").style = "";
         }
+        document.getElementById("keyword-resume-link").href = this.model.googleDocLink(this.model.keywordResumeId);
+        document.getElementById("keyword-resume-link").innerHTML = fileLinkText(this.model.keywordResumeName, this.model.keywordResumeId);
 
         document.getElementById("resume-template-name").value = this.model.resumeTemplateName;
         if (!this.model.resumeTemplateName || this.model.resumeTemplateName == "" || this.model.resumeTemplateName == "undefined") {
@@ -113,6 +127,9 @@ class View {
             document.getElementById("file-status-resume-template").src = "assets/Question_mark_alternate.svg";
             document.getElementById("file-status-resume-template").style = "";
         }
+        document.getElementById("resume-template-link").href = this.model.googleDocLink(this.model.resumeTemplateId);
+        document.getElementById("resume-template-link").innerHTML = fileLinkText(this.model.resumeTemplateName, this.model.resumeTemplateId);
+
 
         document.getElementById("cover-letter-template-name").value = this.model.coverLetterTemplateName;
         if (!this.model.coverLetterTemplateName || this.model.coverLetterTemplateName == "" || this.model.coverLetterTemplateName == "undefined") {
@@ -125,6 +142,8 @@ class View {
             document.getElementById("file-status-cover-letter-template").src = "assets/Question_mark_alternate.svg";
             document.getElementById("file-status-cover-letter-template").style = "";
         }
+        document.getElementById("cover-letter-template-link").href = this.model.googleDocLink(this.model.coverLetterTemplateId);
+        document.getElementById("cover-letter-template-link").innerHTML = fileLinkText(this.model.coverLetterTemplateName, this.model.coverLetterTemplateId);
 
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;
         document.getElementById("company-name").value = this.model.companyName;
@@ -250,7 +269,7 @@ class View {
 
         document.getElementById("application-log-sheet-name").value = this.model.googleSheetName;
         document.getElementById("application-log-sheet-link").href = this.model.googleSheetLink();
-        document.getElementById("application-log-sheet-link").innerHTML = this.model.googleSheetLinkText();
+        document.getElementById("application-log-sheet-link").innerHTML = fileLinkText(this.model.googleSheetName, this.model.googleSheetId);
 
         if (!this.model.googleSheetName || this.model.googleSheetName == "" || this.model.googleSheetName == "undefined") {
             document.getElementById("file-status-application-log-sheet").src = "";
