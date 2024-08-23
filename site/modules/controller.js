@@ -13,6 +13,7 @@ class Controller {
         this.view = view;
         this.model.load();
         this.workspace = new GoogleWorkspace(model, gapi, google);
+        this.workspace.setAuthenticatedCallback(this.onGoogleAuthorized)
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
     }
@@ -286,9 +287,14 @@ class Controller {
         this.updateCompanyCorrespondence();
     }
 
-    /* Complex functions
-        - Handles
-    */
+    onGoogleAuthorized() {
+        this.updateGoogleSheetId();
+        this.updateResumeTemplateId();
+        this.updateResumeId();
+        this.updateCoverLetterTemplateId();
+        this.updateCoverLetterId();
+    }
+
     async googleAuthorize() {
         try {
             await this.workspace.init();
@@ -300,12 +306,10 @@ class Controller {
         this.save();
         this.render();
 
-        this.updateGoogleSheetId();
-        this.updateResumeTemplateId();
-        this.updateResumeId();
-        this.updateCoverLetterTemplateId();
-        this.updateCoverLetterId();
+        this.onGoogleAuthorized();
     }
+
+
 
     googleSignOut() {}
 

@@ -110,15 +110,6 @@ class View {
         if (this.model.isGoogleSignOutEnabled()) {
             this.enableGoogleSignOutButton();
         }
-
-        let extractButton = document.getElementById("extract-sections-button");
-        if (this.model.isExtractJobSectionsEnabled()) {
-            extractButton.className = "big-button button";
-            extractButton.disabled = false;
-        } else {
-            extractButton.className = "big-button button disabled-button";
-            extractButton.disabled = true;
-        }
     
         document.getElementById("application-date").value = this.model.date;
         document.getElementById("job-title").value = this.model.jobTitle;

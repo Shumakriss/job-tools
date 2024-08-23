@@ -201,10 +201,6 @@ class WebApp {
             this.controller.getJobDescription();
         }
 
-        document.getElementById('extract-sections-button').onclick = async () => {
-            this.controller.extractJobSections();
-        }
-    
         document.getElementById('create-resume-button').onclick = async () => {
             this.controller.createResumeAndCoverLetter();
         }

@@ -11,7 +11,7 @@
 
 <div id="settings-modal" class="modal">
     <div class="modal-content-settings">
-        <h1>Configure Settings</h1>
+        <h1>Manage Files</h1>
 
         <a href="https://www.drive.google.com/" target="_blank">Google Drive</a><br/><br/>
 
@@ -26,17 +26,6 @@
 
         <strong>Cover Letter Template:</strong><br/>
         <input id="cover-letter-template-name" type="text" size=35 value="Chris Shumaker Cover Letter"/>
-
-        <h3>Placeholders</h3>
-        <input value="{{date}}" size="30" disabled/><br/>
-        <input value="{{company-name}}" size="30" disabled/><br/>
-        <input value="{{company-name-possessive}}" size="30" disabled/><br/>
-        <input value="{{company-address}}" size="30" disabled/><br/>
-        <input value="{{hiring-manager-name}}" size="30" disabled/><br/>
-        <input value="{{complete-job-title}}" size="30" disabled/><br/>
-        <input value="{{short-job-title}}" size="30" disabled/><br/>
-        <input value="{{values}}" size="30" disabled/><br/>
-        <input value="{{experiences}}" size="30" disabled/><br/>
 
         <h3>Credentials</h3>
 
@@ -56,15 +45,24 @@
 <div id="tailoring-modal" class="modal">
     <div class="modal-content-tailoring">
         <h1>Tailoring Options</h1>
-        <strong>Company Name (Tailoring Only): </strong><br/>
+
+        <strong>Date: </strong>
+        <input value="{{date}}" size="30" disabled/><br/>
+        <input id="application-date" size="20"/>
+        <br/><br/>
+
+        <strong>Company Name (Tailoring Only): </strong>
+        <input value="{{company-name}}" size="30" disabled/><br/>
         <input id="company-name-tailor" size="40"/>
         <br/><br/>
 
-        <strong>Company Name (possessive): </strong><br/>
+        <strong>Company Name (possessive): </strong>
+        <input value="{{company-name-possessive}}" size="30" disabled/><br/>
         <input id="company-name-possessive" size="40"/>
         <br/><br/>
 
-        <strong>Hiring Manager Name: </strong><br/>
+        <strong>Hiring Manager Name: </strong>
+        <input value="{{hiring-manager-name}}" size="30" disabled/><br/>
         <input id="hiring-manager-name" size="40"/>
         <br/><br/>
 
@@ -72,19 +70,23 @@
         <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
         <br/><br/>
 
-        <strong>Complete Job Title:</strong><br/>
+        <strong>Complete Job Title:</strong>
+        <input value="{{complete-job-title}}" size="30" disabled/><br/>
         <input id="complete-job-title" size="40"/>
         <br/><br/>
 
-        <strong>Short Job Title:</strong><br/>
+        <strong>Short Job Title:</strong>
+        <input value="{{short-job-title}}" size="30" disabled/><br/>
         <input id="short-job-title" size="40"/>
         <br/><br/>
 
-        <strong>Values:</strong><br/>
+        <strong>Values:</strong>
+        <input value="{{values}}" size="30" disabled/><br/>
         <textarea rows="5" cols="50" id="company-values" class="textarea"></textarea>
         <br/><br/>
 
-        <strong>Relevant Experience:</strong><br/>
+        <strong>Relevant Experience:</strong>
+        <input value="{{experiences}}" size="30" disabled/><br/>
         <textarea rows="5" cols="50" id="relevant-experience" class="textarea"></textarea>
         <br/><br/>
 
@@ -99,7 +101,7 @@
         <h1>Configure Job Section Scanning</h1>
 
         <Strong>Minimum Requirements </Strong>:<br/>
-        <textarea id="minimum-requirements" rows="10" class="job-section-text"></textarea>
+        <textarea id="minimum-requirements" rows="15" class="job-section-text"></textarea>
         <br/>
 
         <Strong>Preferred Requirements:</Strong><br/>
@@ -107,14 +109,12 @@
         <br/>
 
         <Strong>Job Duties:</Strong><br/>
-        <textarea id="job-duties" rows="10" class="job-section-text"></textarea>
+        <textarea id="job-duties" rows="15" class="job-section-text"></textarea>
         <br/><br/>
 
         <Strong>Company Information:</Strong><br/>
-        <textarea id="company-information" rows="10" class="job-section-text"></textarea>
+        <textarea id="company-information" rows="15" class="job-section-text"></textarea>
         <br/><br/>
-
-        <button class="big-button button disabled-button" disabled id="extract-sections-button">Auto Extract</button>
     </div>
 </div>
 
@@ -245,9 +245,6 @@
     <div class="container-sidebar-right">
 
         <h1>App Info</h1>
-        <strong>Date: </strong><br/>
-        <input id="application-date" size="20"/>
-        <br/><br/>
 
         <strong>Company Name: </strong><br/>
         <input type="text" size=30 id="company-name" value="Example"/>
