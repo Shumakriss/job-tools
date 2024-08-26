@@ -46,8 +46,7 @@ class Controller {
         this.model.googleClientId = credentials.google.clientId;
         this.model.jobscanCookie = credentials.jobscan.cookie;
         this.model.jobscanXsrfToken = credentials.jobscan.xsrfToken;
-        this.save();
-        this.render();
+        this.displayMessage("Updated credentials");
     }
 
     updateCompanyNamePossessive() {
