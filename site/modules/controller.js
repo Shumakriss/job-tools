@@ -29,6 +29,7 @@ class Controller {
     }
 
     displayMessage(msg) {
+        console.log(msg);
         this.model.statusMessage = msg;
         this.save();
         this.render();
@@ -617,11 +618,10 @@ class Controller {
     }
 
     async logApplication() {
-        console.debug("Logging job application to Google Sheets");
+        this.displayMessage("Logging job application to Google Sheets...");
         await this.workspace.appendApplicationLog();
+        this.displayMessage("Logged job application to Google Sheets");
         this.updateCompanyCorrespondence();
-        this.save();
-        this.render();
     }
 
     reset() {
