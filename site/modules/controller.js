@@ -19,12 +19,6 @@ class Controller {
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
     }
-
-    handleSave() {
-        this.model.statusMessage = "Application saved to local storage";
-        this.save();
-        this.render();
-    }
     
     save() {
         this.model.save();
@@ -33,6 +27,17 @@ class Controller {
     render() {
         this.view.render();
     }
+
+    displayMessage(msg) {
+        this.model.statusMessage = msg;
+        this.save();
+        this.render();
+    }
+
+    handleUserSave() {
+        this.displayMessage("Application saved to local storage");
+    }
+
 
     setCredentials(credentials) {
         this.model.chatgptApiKey = credentials.chatGpt.apiKey;
@@ -135,12 +140,10 @@ class Controller {
         console.debug("Fetching job description");
 
         if (!this.model.jobPostUrl || this.model.jobPostUrl == "") {
-            this.model.statusMessage = "Provide a job post url first";
+            this.displayMessage("Provide a job post url first");
         } else {
-            this.model.statusMessage = "Looking up job description";
+            this.displayMessage("Looking up job description");
         }
-        this.save();
-        this.render();
 
         let requestBody = { "job_post_url": this.model.jobPostUrl }
         console.debug(requestBody);
@@ -163,15 +166,13 @@ class Controller {
             }
 
             const text = await response.text();
-            this.model.statusMessage = "Job description found";
+            this.displayMessage("Job description found");
 
             this.setJobDescription(text);
-            this.save();
-            this.render();
 
         } catch (error) {
             console.error(error.message);
-            this.model.statusMessage = "Unable to retrieve job description";
+            this.displayMessage("Unable to retrieve job description");
         }
     }
     
@@ -183,7 +184,7 @@ class Controller {
         this.model.jobDescription = jobDescription;
         this.save();
 
-        this.model.statusMessage = "Updated job description"
+        this.displayMessage("Updated job description");
 
         if (this.model.jobDescription && this.model.jobDescription != "" && this.model.resumeContent && this.model.resumeContent != "") {
             this.scan();
@@ -194,6 +195,10 @@ class Controller {
         if (!this.model.minimumRequirements && !this.model.preferredRequirements && !this.model.companyName && !this.model.jobDuties && !this.model.companyName){
             this.extractJobSections();
         }
+
+        this.save();
+        this.render();
+
     }
     
     setJobTitle(jobTitle) {
@@ -325,8 +330,7 @@ class Controller {
     googleSignOut() {}
 
     async extractJobSections() {
-        this.model.statusMessage = "Asking ChatGPT to split up job description...";
-        this.render();
+        this.displayMessage("Asking ChatGPT to split up job description...");
 
         let companyNamePromise = this.chatgpt.extractCompanyName(this.model.jobDescription);
         companyNamePromise.then( companyName => {
@@ -397,9 +401,7 @@ class Controller {
                 companyValuesPromise,
                 relevantExperiencePromise
             ]).then( results =>{
-                this.model.statusMessage = "Job description sections extracted";
-                this.save();
-                this.render();
+                this.displayMessage("Job description sections extracted");
                 this.scan();
         });
 
@@ -409,49 +411,49 @@ class Controller {
         this.model.resumeTemplateId = await this.workspace.getDocumentIdByName(this.model.resumeTemplateName);
         this.model.resumeId = await this.workspace.getDocumentIdByName(this.model.resumeName());
 
-        this.model.statusMessage = "Document not found, creating...";
+        this.save();
         this.render();
 
         if (this.model.resumeTemplateId && !this.model.resumeId) {
+            this.displayMessage("Document not found, creating from template...");
+
             this.model.resumeId = await this.workspace.copyFile(this.model.resumeTemplateId, this.model.resumeName());
         }
-        this.save();
-        this.render();
+
+        this.displayMessage("Document not found, creating from template...");
+
+        this.scan();
     }
 
     async createCoverLetter() {
         this.model.coverLetterTemplateId = await this.workspace.getDocumentIdByName(this.model.coverLetterTemplateName);
         this.model.coverLetterId = await this.workspace.getDocumentIdByName(this.model.coverLetterName());
 
-        this.model.statusMessage = "Document not found, creating...";
-        this.render();
+        this.displayMessage("Document not found, creating...");
 
         if (this.model.coverLetterTemplateId && !this.model.coverLetterId) {
             this.model.coverLetterId = await this.workspace.copyFile(this.model.coverLetterTemplateId, this.model.coverLetterName());
         }
-        this.save();
-        this.render();
+
+        this.displayMessage("Created cover letter");
     }
 
     async createResumeAndCoverLetter() {
         this.save();
 
-        this.model.statusMessage = "Checking for resume...";
-        this.render();
+        this.displayMessage("Checking for resume...");
 
         try {
             Promise.all([
                 this.createResume(),
                 this.createCoverLetter()
             ]).then( () => {
-                this.model.statusMessage = "Documents ready to scan and tailor";
-                this.render();
+                this.displayMessage("Documents ready to scan and tailor");
             });
 
         } catch(err) {
             console.error("Encountered error while creating resume and cover letter: " + err.message);
-            this.model.statusMessage = "Problem finding/creating documents";
-            this.render();
+            this.displayMessage("Problem finding/creating documents");
         }
 
     }
@@ -459,9 +461,7 @@ class Controller {
     async updateKeywordResumeId(){
         if (this.model.keywordResumeName && this.model.keywordResumeName != "" && this.model.keywordResumeName != "undefined"){
             this.model.keywordResumeId = await this.workspace.getDocumentIdByName(this.model.keywordResumeName);
-            this.model.statusMessage = "Updated keyword resume"
-            this.save();
-            this.render();
+            this.displayMessage("Updated keyword resume");
         }
 
     }
@@ -479,24 +479,18 @@ class Controller {
     }
 
     async updateResumeContent() {
-        this.model.statusMessage = "Fetching resume or template contents";
-        this.render();
+        this.displayMessage("Fetching resume or template contents");
 
         if (this.model.resumeId && this.model.resumeId != "" && this.model.resumeId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeId);
-            this.model.statusMessage = "Resume content updated based on company copy";
+            this.displayMessage("Resume content updated based on company copy");
         } else if (this.model.keywordResumeId && this.model.keywordResumeId != "" && this.model.keywordResumeId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.keywordResumeId);
-            this.model.statusMessage = "Resume content updated based on keyword resume";
+            this.displayMessage("Resume content updated based on keyword resume");
         } else if (this.model.resumeTemplateId && this.model.resumeTemplateId != "" && this.model.resumeTemplateId != "undefined") {
             this.model.resumeContent = await this.workspace.getPlaintextFileContents(this.model.resumeTemplateId);
-            this.model.statusMessage = "Resume content updated based on template";
+            this.displayMessage("Resume content updated based on template");
         }
-
-        this.render();
-
-        this.save();
-        this.render();
         this.scan();
     }
 
@@ -507,14 +501,13 @@ class Controller {
 
     async scan() {
         if (!this.model.resumeContent) {
-            this.model.statusMessage = "Skipping scan due to missing resume";
+            this.displayMessage("Skipping scan due to missing resume");
             return;
         } else if (!this.model.jobDescription) {
-            this.model.statusMessage = "Skipping scan due to missing job description";
+            this.displayMessage("Skipping scan due to missing job description");
             return;
         }
-        this.model.statusMessage = "Scanning resume...";
-        this.render();
+        this.displayMessage("Scanning resume...");
 
         let promises = [];
 
@@ -599,31 +592,25 @@ class Controller {
 
         Promise.all(promises).then( results =>{
             if (!this.model.resumeId && !this.model.keywordResumeId) {
-                this.model.statusMessage = "All resume scans completed against resume template";
+                this.displayMessage("All resume scans completed against resume template");
             } else if (!this.model.resumeId) {
-                this.model.statusMessage = "All resume scans completed against keyword resume";
+                this.displayMessage("All resume scans completed against keyword resume");
             } else {
-                this.model.statusMessage = "All resume scans completed against company copy";
+                this.displayMessage("All resume scans completed against company copy");
             }
-
-            this.save();
-            this.render();
         });
 
     }
 
     async tailorDocuments() {
         console.log("Tailoring documents");
-        this.model.statusMessage = "Tailoring documents...";
-        this.render();
+        this.displayMessage("Tailoring documents...");
 
         Promise.all([
             this.workspace.mergeTextInTemplate(this.model.resumeId),
             this.workspace.mergeTextInTemplate(this.model.coverLetterId)
         ]).then( () => {
-            this.model.statusMessage = "Finished tailoring documents";
-            this.save();
-            this.render();
+            this.displayMessage("Finished tailoring documents");
         });
 
         console.log("Document tailoring complete");
@@ -668,37 +655,27 @@ class Controller {
         this.model.companyCorrespondence = "";
         this.model.jobPostUrl = "";
 
-        this.model.statusMessage = "Start your application!";
-        this.save();
-        this.render();
+        this.displayMessage("Ready to go!");
     }
 
     copyLinkedInQueryToClipboard(){
-        this.model.statusMessage = "Query copied to clipboard";
+        this.displayMessage("Query copied to clipboard");
         navigator.clipboard.writeText(this.model.linkedInQuery);
-        this.save();
-        this.render();
     }
 
     copyLinkedInProfileLinkToClipboard() {
-        this.model.statusMessage = "LinkedIn profile copied to clipboard";
+        this.displayMessage("LinkedIn profile copied to clipboard");
         navigator.clipboard.writeText(this.model.linkedInProfileLink);
-        this.save();
-        this.render();
     }
 
     copyGithubProfileLinkToClipboard() {
-        this.model.statusMessage = "Github profile copied to clipboard";
+        this.displayMessage("Github profile copied to clipboard");
         navigator.clipboard.writeText(this.model.githubProfileLink);
-        this.save();
-        this.render();
     }
 
     copyWebsiteProfileLinkToClipboard() {
-        this.model.statusMessage = "Website link copied to clipboard";
+        this.displayMessage("Website link copied to clipboard");
         navigator.clipboard.writeText(this.model.websiteProfileLink);
-        this.save();
-        this.render();
     }
 
     setSearchTerms(searchTerms) {

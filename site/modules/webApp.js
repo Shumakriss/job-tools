@@ -158,7 +158,7 @@ class WebApp {
                 // Prevent the Save dialog to open
                 e.preventDefault();
 
-                this.controller.handleSave();
+                this.controller.handleUserSave();
             } else if (e.key === 'Escape') {
                 document.getElementById("settings-modal").style.display = "none";
                 document.getElementById("tailoring-modal").style.display = "none";
@@ -166,6 +166,8 @@ class WebApp {
                 document.getElementById("apply-modal").style.display = "none";
                 document.getElementById("search-modal").style.display = "none";
                 document.getElementById("reset-modal").style.display = "none";
+            } else if (e.key === 'r') {
+                this.controller.scan();
             }
         });
 
