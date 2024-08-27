@@ -537,6 +537,16 @@ class Model {
             this.companyName;
     }
 
+    activeScanningDocument() {
+        if (!this.resumeId && !this.keywordResumeId) {
+            return this.resumeTemplateName;
+        } else if (!this.resumeId) {
+            return this.keywordResumeName;
+        } else {
+            return this.resumeName();
+        }
+    }
+
 }
 
 export default Model;

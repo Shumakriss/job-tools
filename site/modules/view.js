@@ -99,6 +99,85 @@ class View {
         document.getElementById("google-signout-button").disabled = false;
     }
 
+    markupJobDescription() {
+        console.debug("Marking up job description");
+        let markedupJobDescription = this.model.jobDescription;
+        let alreadyMarked = [];
+
+        if (this.model.minimumRequirementsKeywords) {
+            for (let i=0; i< this.model.minimumRequirementsKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.minimumRequirementsKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.minimumRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-minimum">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+        if (this.model.preferredRequirementsKeywords) {
+            for (let i=0; i<this.model.preferredRequirementsKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.preferredRequirementsKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.preferredRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-preferred">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+        if (this.model.jobDutiesKeywords) {
+            for (let i=0; i<this.model.jobDutiesKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.jobDutiesKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.jobDutiesKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-duties">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+        if (this.model.companyInfoKeywords) {
+            for (let i=0; i<this.model.companyInfoKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.companyInfoKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.companyInfoKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-company">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+        if (this.model.regularKeywords) {
+            for (let i=0; i<this.model.regularKeywords['highValueSkills'].length; i++) {
+                let keyword = this.model.regularKeywords['highValueSkills'][i]['skill'];
+                if (alreadyMarked.includes(keyword) || this.model.regularKeywords['highValueSkills'][i].cvCount > 0) {
+                    continue;
+                } else {
+                    alreadyMarked.push(keyword);
+                    let regEx = new RegExp(keyword, 'ig');
+                    let replaceMask = `<span class="missing-keyword-regular">${keyword}</span>`;
+                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
+                }
+            }
+        }
+
+
+        return markedupJobDescription;
+    }
+
     render() {
         console.debug("Rendering");
 
@@ -315,86 +394,10 @@ class View {
         document.getElementById("search-terms").value = this.model.searchTerms;
 
         document.getElementById("job-post-url").value = this.model.jobPostUrl;
+
+        document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
     }
 
-    markupJobDescription() {
-        console.debug("Marking up job description");
-        let markedupJobDescription = this.model.jobDescription;
-        let alreadyMarked = [];
-
-        if (this.model.minimumRequirementsKeywords) {
-            for (let i=0; i< this.model.minimumRequirementsKeywords['highValueSkills'].length; i++) {
-                let keyword = this.model.minimumRequirementsKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || this.model.minimumRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="missing-keyword-minimum">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
-            }
-        }
-
-        if (this.model.preferredRequirementsKeywords) {
-            for (let i=0; i<this.model.preferredRequirementsKeywords['highValueSkills'].length; i++) {
-                let keyword = this.model.preferredRequirementsKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || this.model.preferredRequirementsKeywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="missing-keyword-preferred">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
-            }
-        }
-
-        if (this.model.jobDutiesKeywords) {
-            for (let i=0; i<this.model.jobDutiesKeywords['highValueSkills'].length; i++) {
-                let keyword = this.model.jobDutiesKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || this.model.jobDutiesKeywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="missing-keyword-duties">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
-            }
-        }
-
-        if (this.model.companyInfoKeywords) {
-            for (let i=0; i<this.model.companyInfoKeywords['highValueSkills'].length; i++) {
-                let keyword = this.model.companyInfoKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || this.model.companyInfoKeywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="missing-keyword-company">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
-            }
-        }
-
-        if (this.model.regularKeywords) {
-            for (let i=0; i<this.model.regularKeywords['highValueSkills'].length; i++) {
-                let keyword = this.model.regularKeywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || this.model.regularKeywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="missing-keyword-regular">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
-            }
-        }
-
-
-        return markedupJobDescription;
-    }
 }
 
 export default View;

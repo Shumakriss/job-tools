@@ -591,13 +591,20 @@ class Controller {
         }
 
         Promise.all(promises).then( results =>{
-            if (!this.model.resumeId && !this.model.keywordResumeId) {
-                this.displayMessage("All resume scans completed against resume template");
-            } else if (!this.model.resumeId) {
-                this.displayMessage("All resume scans completed against keyword resume");
-            } else {
-                this.displayMessage("All resume scans completed against company copy");
-            }
+            switch(this.model.activeScanningDocument()) {
+                case this.model.resumeTemplateName:
+                    this.displayMessage("All resume scans completed against resume template");
+                    break;
+                case this.model.keywordResumeName:
+                    this.displayMessage("All resume scans completed against keyword resume");
+                    break;
+                case this.model.resumeName:
+                    this.displayMessage("All resume scans completed against company copy");
+                    break;
+                default:
+                    this.displayMessage("No resume to scan");
+                    break;
+                }
         });
 
     }
