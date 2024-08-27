@@ -547,6 +547,14 @@ class Model {
         }
     }
 
+    weightedScore() {
+        return Math.round(90 * (this.minimumRequirementsScore / 100) +
+            5 * (this.preferredRequirementsScore / 100) +
+            3 * (this.jobDutiesScore / 100) +
+            1 * (this.companyInfoScore / 100) +
+            1 * (this.regularScore / 100));
+    }
+
 }
 
 export default Model;

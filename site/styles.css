@@ -49,7 +49,7 @@
     grid-column-start: 1;
     grid-column-end: 1;
     grid-row-start: 1;
-    grid-row-end: 5;
+    grid-row-end: 4;
 }
 
 .container-sidebar-right {
@@ -67,6 +67,10 @@
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+}
+
+.container-modal-buttons {
+    min-height: 80%;
 }
 
 .scanned-job-description {
@@ -105,6 +109,28 @@
 .scan-result-score-container {
     float: left;
     width: 15%;
+
+    padding-left: 5px;
+    padding-right: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 2px;
+
+    background: #EEEEEE;
+}
+
+.scan-result-score-container-side-pane {
+    float: left;
+    width: 50%;
 
     padding-left: 5px;
     padding-right: 12px;

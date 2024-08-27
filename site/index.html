@@ -209,23 +209,20 @@
 
     <div class="container-sidebar-left">
         <h1>Activities</h1>
-
-        <button class="button big-button" id="reset-modal-button">Reset</button>
-        <button class="button big-button" id="search-button">Search</button><br/>
-        <button id="configure-tailoring-button" class="button big-button">Tailor</button>
-        <button id="apply-button" class="big-button button">Apply</button>
-        <br/><br/>
-
+        <div class="container-modal-buttons">
+            <button class="button big-button" id="reset-modal-button">Reset</button>
+            <button class="button big-button" id="search-button">Search</button><br/>
+            <button id="configure-tailoring-button" class="button big-button">Tailor</button>
+            <button id="apply-button" class="big-button button">Apply</button>
+            <br/><br/>
+        </div>
     </div>
+
     <div class="container-page">
         <h1>Scanning</h1>
 
         <h2>Scores</h2>
         <div class="scan-result-container">
-            <div class="scan-result-score-container score-neutral" id="regular-score-container">
-                <label class="scan-result-label">Full Job Description</label>
-                <strong id="regular-score" class="scan-result-score"></strong>
-            </div>
             <div class="scan-result-score-container score-neutral" id="minimum-score-container">
                 <label class="scan-result-label">Minimum Requirements</label>
                 <strong id="minimum-score" class="scan-result-score"></strong>
@@ -242,46 +239,53 @@
                 <label class="scan-result-label">Company Info+</label>
                 <strong id="company-information-score" class="scan-result-score"></strong>
             </div>
+            <div class="scan-result-score-container score-neutral" id="regular-score-container">
+                <label class="scan-result-label">Full Job Description</label>
+                <strong id="regular-score" class="scan-result-score"></strong>
+            </div>
         </div>
 
         <h2>Job Description</h2>
-        <strong>Url: </strong>
-        <input id="job-post-url" size="70"/>
-        <button id="get-job-description-button" class="button">Get Job Description</button>
-        <br/>
+        <strong style="display: none;">Url: </strong>
+        <input id="job-post-url" size="70" style="display: none;"/>
+        <button id="get-job-description-button" class="button" style="display: none;">Get Job Description</button>
         <textarea id="job-description-textarea" rows="25" class="job-section-text"></textarea>
         <br/>
-        <button class="button" id="view-sections-button">Configure Scan Sections</button><br/>
-
 
         <h2>Results</h2>
+        <h3>Minimum Requirements</h3>
+        <div id="scanned-minimum-requirements" class="scanned-job-description"></div>
+        <h3>Preferred Requirements</h3>
+        <div id="scanned-preferred-requirements" class="scanned-job-description"></div>
+        <h3>Job Duties</h3>
+        <div id="scanned-job-duties" class="scanned-job-description"></div>
+        <h3>Company Info</h3>
+        <div id="scanned-company-info" class="scanned-job-description"></div>
+        <h3>Full Job Description</h3>
         <div id="scanned-job-description" class="scanned-job-description"></div>
 
     </div>
 
     <div class="container-sidebar-right">
 
-        <h1>App Info</h1>
-
-        <strong>Company Name: </strong><br/>
-        <input type="text" size=30 id="company-name" value="Example"/>
-        <br/><br/>
-        <strong>Company Review:</strong><br/>
-        <a href="" target="_blank" id="glassdoor-search-link">Glassdoor</a>
-        <br/>
-        <a href="" target="_blank" id="levels-fyi-link">Levels.fyi</a>
-        <br/><br/>
+        <h1>Docs & Info</h1>
 
         <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button><br/>
         <button id="scan-button" class="disabled-button button" disabled>Rescan</button><br/><br/>
+        <button class="button" id="view-sections-button">Configure Scan Sections</button><br/><br/>
+
         <strong>Currently Scanning:</strong><br/>
         <label id="active-scanning-document"></label>
         <br/><br/>
 
-        <strong>Company Files:</strong> <br/>
-        <a id="tailored-resume-link" href="" target="_blank"></a>
+        <strong>Company Name: </strong><br/>
+        <input type="text" size=30 id="company-name" value="Example"/>
+        <br/><br/>
+
+        <strong>Company Review:</strong><br/>
+        <a href="" target="_blank" id="glassdoor-search-link">Glassdoor</a>
         <br/>
-        <a id="tailored-cover-letter-link" href="" target="_blank"></a>
+        <a href="" target="_blank" id="levels-fyi-link">Levels.fyi</a>
         <br/><br/>
 
         <strong>Correspondence:</strong>
@@ -289,10 +293,16 @@
         <div id="company-correspondence"></div>
         <br/>
 
-        <button id="configure-button" class="button">Manage Files</button><br/><br/>
+        <strong>Company Files:</strong> <br/>
+        <a id="tailored-resume-link" href="" target="_blank"></a>
+        <br/>
+        <a id="tailored-cover-letter-link" href="" target="_blank"></a><br/><br/>
+        <button id="configure-button" class="button">Manage Files</button><br/>
+        <br/>
 
         <strong>Messages:</strong>
         <p id="status-message"></p>
+
     </div>
 </div>
 
