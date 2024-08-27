@@ -336,26 +336,35 @@ class View {
             this.model.minimumRequirements,
             this.model.minimumRequirementsKeywords,
             "missing-keyword-minimum");
+        document.getElementById("score-reminder-minimum").innerHTML = this.model.minimumRequirementsScore;
+
         document.getElementById("scanned-preferred-requirements").innerHTML = "";
         document.getElementById("scanned-preferred-requirements").innerHTML = this.markupJobDescription(
             this.model.preferredRequirements,
             this.model.preferredRequirementsKeywords,
             "missing-keyword-preferred");
+        document.getElementById("score-reminder-preferred").innerHTML = this.model.preferredRequirementsScore;
+
         document.getElementById("scanned-job-duties").innerHTML = "";
         document.getElementById("scanned-job-duties").innerHTML = this.markupJobDescription(
             this.model.jobDuties,
             this.model.jobDutiesKeywords,
             "missing-keyword-duties");
+        document.getElementById("score-reminder-duties").innerHTML = this.model.jobDutiesScore;
+
         document.getElementById("scanned-company-info").innerHTML = "";
         document.getElementById("scanned-company-info").innerHTML = this.markupJobDescription(
             this.model.companyInfo,
             this.model.companyInfoKeywords,
             "missing-keyword-company");
+        document.getElementById("score-reminder-company").innerHTML = this.model.companyInfoScore;
+
         document.getElementById("scanned-job-description").innerHTML = "";
         document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription(
             this.model.jobDescription,
             this.model.regularKeywords,
             "missing-keyword-regular");
+        document.getElementById("score-reminder-regular").innerHTML = this.model.regularScore;
 
         document.getElementById("search-terms").value = this.model.searchTerms;
 
