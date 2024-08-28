@@ -62,22 +62,22 @@
     <div class="modal-content-tailoring">
         <h1>Tailoring Options</h1>
 
-        <strong>Date: </strong>
+        <strong>Date: </strong><br/>
         <input value="{{date}}" size="30" disabled/><br/>
         <input id="application-date" size="20"/>
         <br/><br/>
 
-        <strong>Company Name (Tailoring Only): </strong>
+        <strong>Company Name (Tailoring Only): </strong><br/>
         <input value="{{company-name}}" size="30" disabled/><br/>
         <input id="company-name-tailor" size="40"/>
         <br/><br/>
 
-        <strong>Company Name (possessive): </strong>
+        <strong>Company Name (possessive): </strong><br/>
         <input value="{{company-name-possessive}}" size="30" disabled/><br/>
         <input id="company-name-possessive" size="40"/>
         <br/><br/>
 
-        <strong>Hiring Manager Name: </strong>
+        <strong>Hiring Manager Name: </strong><br/>
         <input value="{{hiring-manager-name}}" size="30" disabled/><br/>
         <input id="hiring-manager-name" size="40"/>
         <br/><br/>
@@ -86,22 +86,22 @@
         <input type="text" size=30 id="job-title" value="Staff Software Engineer"/>
         <br/><br/>
 
-        <strong>Complete Job Title:</strong>
+        <strong>Complete Job Title:</strong><br/>
         <input value="{{complete-job-title}}" size="30" disabled/><br/>
         <input id="complete-job-title" size="40"/>
         <br/><br/>
 
-        <strong>Short Job Title:</strong>
+        <strong>Short Job Title:</strong><br/>
         <input value="{{short-job-title}}" size="30" disabled/><br/>
         <input id="short-job-title" size="40"/>
         <br/><br/>
 
-        <strong>Values:</strong>
+        <strong>Values:</strong><br/>
         <input value="{{values}}" size="30" disabled/><br/>
         <textarea rows="5" cols="50" id="company-values" class="textarea"></textarea>
         <br/><br/>
 
-        <strong>Relevant Experience:</strong>
+        <strong>Relevant Experience:</strong><br/>
         <input value="{{experiences}}" size="30" disabled/><br/>
         <textarea rows="5" cols="50" id="relevant-experience" class="textarea"></textarea>
         <br/><br/>
@@ -180,17 +180,17 @@
         <button class="button" id="usajobs-search-button">UsaJobs</button>
         <button class="button" id="outerjoin-search-button">OuterJoin</button>
 
-        <h2>Other Links</h2>
+        <h2>Job Boards</h2>
         <ul>
-            <li><a href="https://www.ycombinator.com/jobs" target="_blank">YC Jobs</a></li>
-            <li><a href="https://www.glassdoor.com/Job/index.htm" target="_blank">Glassdoor Jobs</a></li>
-            <li><a href="https://www.dice.com/jobs?q=staff%20software%20engineer&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=20&filters.workplaceTypes=Remote&language=en" target="_blank">Dice Jobs</a></li>
-            <li><a href="https://www.indeed.com/jobs?q=staff+software+engineer&l=&from=searchOnDesktopSerp&vjk=077a024c8ea7279f" target="_blank">Indeed Jobs</a></li>
-            <li><a href="https://www.monster.com/jobs/search?q=Staff+Software+Engineer&where=remote&page=1&so=m.s.sh" target="_blank">Monster Jobs</a></li>
-            <li><a href="https://greenjobs.greenjobsearch.org/?s=software+engineer&location=&ptype=job_listing&lat=&lng=&radius=0" target="_blank">Green Jobs</a></li>
-            <li><a href="https://remote.co/" target="_blank">Remote.co Jobs</a></li>
-            <li><a href="https://remoteok.com/" target="_blank">Remoteok.com Jobs</a></li>
-            <li><a href="https://weworkremotely.com/" target="_blank">We Work Remotely Jobs</a></li>
+            <li><a href="https://www.ycombinator.com/jobs" target="_blank">YC</a></li>
+            <li><a href="https://www.glassdoor.com/Job/index.htm" target="_blank">Glassdoor</a></li>
+            <li><a href="https://www.dice.com/jobs?q=staff%20software%20engineer&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=20&filters.workplaceTypes=Remote&language=en" target="_blank">Dice</a></li>
+            <li><a href="https://www.indeed.com/jobs?q=staff+software+engineer&l=&from=searchOnDesktopSerp&vjk=077a024c8ea7279f" target="_blank">Indeed</a></li>
+            <li><a href="https://www.monster.com/jobs/search?q=Staff+Software+Engineer&where=remote&page=1&so=m.s.sh" target="_blank">Monster</a></li>
+            <li><a href="https://greenjobs.greenjobsearch.org/?s=software+engineer&location=&ptype=job_listing&lat=&lng=&radius=0" target="_blank">Green</a></li>
+            <li><a href="https://remote.co/" target="_blank">Remote.co</a></li>
+            <li><a href="https://remoteok.com/" target="_blank">Remoteok.com</a></li>
+            <li><a href="https://weworkremotely.com/" target="_blank">We Work Remotely</a></li>
         </ul>
     </div>
 </div>
@@ -223,6 +223,7 @@
 
         <h2>Scores</h2>
         <div class="scan-result-container">
+
             <div class="scan-result-score-container score-neutral" id="minimum-score-container">
                 <label class="scan-result-label">Minimum Requirements</label>
                 <strong id="minimum-score" class="scan-result-score"></strong>

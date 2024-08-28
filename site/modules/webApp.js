@@ -14,12 +14,17 @@ function debounce(callback, wait) {
 
 function downloadLink(url) {
     // Used to trigger a file download
-    const a = document.createElement('a')
-    a.href = url
-    a.download = url.split('/').pop()
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    if (url && url != "" && url != "undefined"){
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = url.split('/').pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } else {
+        console.log("Unable to download file due to empty link");
+    }
+
 }
 
 function openLinkInNewTab(url) {
@@ -84,7 +89,11 @@ class ModalCollection {
         this.modals.set(modal.id, modal);
     }
 
-    clear() {
+    clear(modalId) {
+        this.modals.get(elementId).clear();
+    }
+
+    clearAll() {
         this.modals.forEach((modal, id) => { modal.clear(); });
     }
 }
@@ -140,9 +149,7 @@ class WebApp {
                 e.preventDefault();
                 this.controller.handleUserSave();
             } else if (e.key === 'Escape') {
-                this.modals.clear();
-            } else if (e.key === 'r') {
-                this.controller.scan();
+                this.modals.clearAll();
             }
         });
 
@@ -226,6 +233,7 @@ class WebApp {
 
         document.getElementById('tailor-documents-button').onclick = async () => {
             this.controller.tailorDocuments();
+            this.modals.clickAway("tailoring-modal");
         }
 
         document.getElementById('log-application-button').onclick = async () => {
@@ -235,7 +243,7 @@ class WebApp {
         document.getElementById('reset-button').onclick = async () => {
             this.controller.reset();
             // Reset modal can be cleared immediately
-            document.getElementById("reset-modal").style.display = "none";
+            this.modals.clickAway("reset-modal");
         }
 
         document.getElementById('clipboard-linkedin-query').onclick = async () => {
