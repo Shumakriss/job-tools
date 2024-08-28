@@ -1,4 +1,5 @@
 class JobSection {
+// Describes a widget for storing job descriptions or pieces of job descriptions
 
     constructor(sectionName) {
         this.sectionName = sectionName;

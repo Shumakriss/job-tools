@@ -176,8 +176,7 @@ class View {
 
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;
         document.getElementById("company-name").value = this.model.companyName;
-//        document.getElementById("job-description-div").value = this.model.jobDescription;
-        document.getElementById("job-description-div-editable").innerText = this.model.jobDescription;
+        document.getElementById("job-description-div-editable").innerHTML = this.model.jobDescription;
 
         document.getElementById("glassdoor-search-link").href = this.model.glassdoorSearchLink();
         document.getElementById("levels-fyi-link").href = this.model.levelsFyiLink();

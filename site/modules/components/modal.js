@@ -44,3 +44,4 @@ class ModalCollection {
 }
 
 export default ModalCollection;
+
