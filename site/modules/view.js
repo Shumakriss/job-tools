@@ -378,7 +378,11 @@ class View {
     }
 
     showJobSectionKeywords() {
-        this.jobSections.map((section) => {section.showMarkup();});
+        this.jobSections.map((section) => {
+            if (section.sectionName != "job-description"){
+                section.showMarkup();
+            }
+        });
     }
 
     showJobSectionEdits() {
