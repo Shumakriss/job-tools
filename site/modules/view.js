@@ -54,6 +54,7 @@ function fileLinkText(filename, fileid) {
 class View {
     constructor(model) {
         this.model = model;
+        this.jobSections = [];
     }
 
     selectNavigationPage(buttonId) {
@@ -99,17 +100,17 @@ class View {
         document.getElementById("google-signout-button").disabled = false;
     }
 
-    markupJobDescription(jobDescription, keywords, className) {
+    markupJobDescription(text, keywords, className) {
         console.debug("Marking up job description");
-        if (!jobDescription || jobDescription == "" || jobDescription == "undefined"){
+        if (!text || text == "" || text == "undefined"){
             return "";
         }
 
         if (!keywords || keywords == "" || keywords == "undefined"){
-            return jobDescription;
+            return text;
         }
 
-        let markedupJobDescription = jobDescription;
+        let markedupJobDescription = text;
         let alreadyMarked = [];
 
         for (let i=0; i<keywords['highValueSkills'].length; i++) {
@@ -176,7 +177,7 @@ class View {
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;
         document.getElementById("company-name").value = this.model.companyName;
 //        document.getElementById("job-description-div").value = this.model.jobDescription;
-        document.getElementById("job-description-div").innerText = this.model.jobDescription;
+        document.getElementById("job-description-div-editable").innerText = this.model.jobDescription;
 
         document.getElementById("glassdoor-search-link").href = this.model.glassdoorSearchLink();
         document.getElementById("levels-fyi-link").href = this.model.levelsFyiLink();
@@ -195,10 +196,10 @@ class View {
     
         document.getElementById("application-date").value = this.model.date;
         document.getElementById("job-title").value = this.model.jobTitle;
-        document.getElementById("minimum-requirements").innerText = this.model.minimumRequirements;
-        document.getElementById("preferred-requirements").innerText = this.model.preferredRequirements;
-        document.getElementById("job-duties").innerText = this.model.jobDuties;
-        document.getElementById("company-information").innerText = this.model.companyInfo;
+        document.getElementById("job-minimum-requirements-div-editable").innerText = this.model.minimumRequirements;
+        document.getElementById("job-preferred-requirements-div-editable").innerText = this.model.preferredRequirements;
+        document.getElementById("job-duties-div-editable").innerText = this.model.jobDuties;
+        document.getElementById("job-company-info-div-editable").innerText = this.model.companyInfo;
         document.getElementById("company-name-tailor").value = this.model.companyName;
         document.getElementById("company-name-possessive").value = this.model.companyNamePossessive;
         document.getElementById("hiring-manager-name").value = this.model.hiringManager;
@@ -261,13 +262,13 @@ class View {
             document.getElementById("job-duties-score-container").className = "scan-result-score-container score-neutral"
         }
 
-        document.getElementById("company-information-score").innerHTML = this.model.companyInfoScore;
+        document.getElementById("company-info-score").innerHTML = this.model.companyInfoScore;
         if(this.model.companyInfoScore > 70) {
-            document.getElementById("company-information-score-container").className = "scan-result-score-container score-good"
+            document.getElementById("company-info-score-container").className = "scan-result-score-container score-good"
         } else if(this.model.jobDutiesScore > 0 && this.model.jobDutiesScore < 50) {
-            document.getElementById("company-information-score-container").className = "scan-result-score-container score-bad"
+            document.getElementById("company-info-score-container").className = "scan-result-score-container score-bad"
         } else {
-            document.getElementById("company-information-score-container").className = "scan-result-score-container score-neutral"
+            document.getElementById("company-info-score-container").className = "scan-result-score-container score-neutral"
         }
 
         document.getElementById("profile-link-linkedin").value = this.model.linkedInProfileLink;
@@ -338,40 +339,36 @@ class View {
             document.getElementById("company-correspondence").innerHTML = '';
         }
 
-        document.getElementById("scanned-minimum-requirements").innerHTML = "";
-        document.getElementById("scanned-minimum-requirements").innerHTML = this.markupJobDescription(
+        this.jobSections.map((section) => {section.markupDiv.innerHTML = ""});
+        document.getElementById("job-description-div-markup").innerHTML = this.markupJobDescription(
+            this.model.jobDescription,
+            this.model.regularKeywords,
+            "missing-keyword-regular");
+        document.getElementById("score-reminder-regular").innerHTML = this.model.regularScore;
+
+        document.getElementById("job-minimum-requirements-div-markup").innerHTML = this.markupJobDescription(
             this.model.minimumRequirements,
             this.model.minimumRequirementsKeywords,
             "missing-keyword-minimum");
         document.getElementById("score-reminder-minimum").innerHTML = this.model.minimumRequirementsScore;
 
-        document.getElementById("scanned-preferred-requirements").innerHTML = "";
-        document.getElementById("scanned-preferred-requirements").innerHTML = this.markupJobDescription(
+        document.getElementById("job-preferred-requirements-div-markup").innerHTML = this.markupJobDescription(
             this.model.preferredRequirements,
             this.model.preferredRequirementsKeywords,
             "missing-keyword-preferred");
         document.getElementById("score-reminder-preferred").innerHTML = this.model.preferredRequirementsScore;
 
-        document.getElementById("scanned-job-duties").innerHTML = "";
-        document.getElementById("scanned-job-duties").innerHTML = this.markupJobDescription(
+        document.getElementById("job-duties-div-markup").innerHTML = this.markupJobDescription(
             this.model.jobDuties,
             this.model.jobDutiesKeywords,
             "missing-keyword-duties");
         document.getElementById("score-reminder-duties").innerHTML = this.model.jobDutiesScore;
 
-        document.getElementById("scanned-company-info").innerHTML = "";
-        document.getElementById("scanned-company-info").innerHTML = this.markupJobDescription(
+        document.getElementById("job-company-info-div-markup").innerHTML = this.markupJobDescription(
             this.model.companyInfo,
             this.model.companyInfoKeywords,
             "missing-keyword-company");
         document.getElementById("score-reminder-company").innerHTML = this.model.companyInfoScore;
-
-        document.getElementById("scanned-job-description").innerHTML = "";
-        document.getElementById("scanned-job-description").innerHTML = this.markupJobDescription(
-            this.model.jobDescription,
-            this.model.regularKeywords,
-            "missing-keyword-regular");
-        document.getElementById("score-reminder-regular").innerHTML = this.model.regularScore;
 
         document.getElementById("search-terms").value = this.model.searchTerms;
 
@@ -379,27 +376,14 @@ class View {
 
         document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
 
-        if (this.model.showKeywords == true) {
-            document.getElementById('minimum-requirements').hidden = "hidden";
-            document.getElementById('scanned-minimum-requirements').hidden = "";
-            document.getElementById('preferred-requirements').hidden = "hidden";
-            document.getElementById('scanned-preferred-requirements').hidden = "";
-            document.getElementById('job-duties').hidden = "hidden";
-            document.getElementById('scanned-job-duties').hidden = "";
-            document.getElementById('company-information').hidden = "hidden";
-            document.getElementById('scanned-company-info').hidden = "";
+    }
 
-            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-inactive";
+    showJobSectionKeywords() {
+        this.jobSections.map((section) => {section.showMarkup();});
+    }
 
-            this.model.showKeywords = false;
-        }
+    showJobSectionEdits() {
+        this.jobSections.map((section) => {section.showEditable();});
     }
 
 }

@@ -607,7 +607,7 @@ class Controller {
                 }
         });
 
-        this.model.showKeywords = true;
+        this.view.showJobSectionKeywords();
     }
 
     async tailorDocuments() {
@@ -663,6 +663,7 @@ class Controller {
         this.model.jobPostUrl = "";
 
         this.displayMessage("Ready to go!");
+        this.view.showJobSectionEdits()
     }
 
     copyLinkedInQueryToClipboard(){

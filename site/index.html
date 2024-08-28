@@ -212,9 +212,9 @@
                 <label class="scan-result-label">Job Duties+</label>
                 <strong id="job-duties-score" class="scan-result-score"></strong>
             </div>
-            <div class="scan-result-score-container score-neutral" id="company-information-score-container">
+            <div class="scan-result-score-container score-neutral" id="company-info-score-container">
                 <label class="scan-result-label">Company Info+</label>
-                <strong id="company-information-score" class="scan-result-score"></strong>
+                <strong id="company-info-score" class="scan-result-score"></strong>
             </div>
             <div class="scan-result-score-container score-neutral" id="regular-score-container">
                 <label class="scan-result-label">Full Job Description</label>
@@ -230,56 +230,56 @@
         <h3>Job Description</h3>
         <div class="container-keyword-section">
             <div class="container-keyword-section-buttons">
-                <button id="button-edit-job-description" class="button-keyword-toggle-active">Edit Job Description</button>
-                <button id="button-show-keywords-job-description" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                <button id="job-description-button-edit" class="button-keyword-toggle-active">Edit Job Description</button>
+                <button id="job-description-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
             </div>
-            <div id="job-description-div" class="job-section-text" contentEditable="true"></div>
-            <div id="scanned-job-description" class="job-section-text" hidden="hidden"></div>
+            <div id="job-description-div-editable" class="job-section-text" contentEditable="true"></div>
+            <div id="job-description-div-markup" class="job-section-text" hidden="hidden"></div>
             <strong>Score: </strong><label id="score-reminder-regular"></label>
         </div>
 
         <h3>Minimum Requirements</h3>
         <div class="container-keyword-section">
             <div class="container-keyword-section-buttons">
-                <button id="button-edit-minimum-requirements" class="button-keyword-toggle-active">Edit Minimum Requirements</button>
-                <button id="button-show-keywords-minimum-requirements" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                <button id="job-minimum-requirements-button-edit" class="button-keyword-toggle-active">Edit Minimum Requirements</button>
+                <button id="job-minimum-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
             </div>
-            <div id="minimum-requirements" class="job-section-text" contentEditable="true"></div>
-            <div id="scanned-minimum-requirements" class="job-section-text" hidden="hidden"></div>
+            <div id="job-minimum-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
+            <div id="job-minimum-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
             <strong>Score: </strong><label id="score-reminder-minimum"></label>
         </div>
 
         <h3>Preferred Requirements</h3>
         <div class="container-keyword-section">
             <div class="container-keyword-section-buttons">
-                <button id="button-edit-preferred-requirements" class="button-keyword-toggle-active">Edit Preferred Requirements</button>
-                <button id="button-show-keywords-preferred-requirements" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                <button id="job-preferred-requirements-button-edit" class="button-keyword-toggle-active">Edit Preferred Requirements</button>
+                <button id="job-preferred-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
             </div>
-            <div id="preferred-requirements" class="job-section-text" contentEditable="true"></div>
-            <div id="scanned-preferred-requirements" class="job-section-text" hidden="hidden"></div>
-            <strong>Score: </strong><label id="score-reminder-preferred"></label>
+            <div id="job-preferred-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
+            <div id="job-preferred-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
+            <strong>Score (including above sections): </strong><label id="score-reminder-preferred"></label>
         </div>
 
         <h3>Job Duties</h3>
         <div class="container-keyword-section">
             <div class="container-keyword-section-buttons">
-                <button id="button-edit-job-duties" class="button-keyword-toggle-active">Edit Job Duties</button>
-                <button id="button-show-keywords-job-duties" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                <button id="job-duties-button-edit" class="button-keyword-toggle-active">Edit Job Duties</button>
+                <button id="job-duties-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
             </div>
-            <div id="scanned-job-duties" class="job-section-text" hidden="hidden"></div>
-            <div id="job-duties" class="job-section-text" contentEditable="true"></div>
-            <strong>Score: </strong><label id="score-reminder-duties"></label>
+            <div id="job-duties-div-editable" class="job-section-text" contentEditable="true"></div>
+            <div id="job-duties-div-markup" class="job-section-text" hidden="hidden"></div>
+            <strong>Score (including above sections): </strong><label id="score-reminder-duties"></label>
         </div>
 
         <h3>Company Info</h3>
         <div class="container-keyword-section">
             <div class="container-keyword-section-buttons">
-                <button id="button-edit-company-info" class="button-keyword-toggle-active">Edit Company Info</button>
-                <button id="button-show-keywords-company-info" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                <button id="job-company-info-button-edit" class="button-keyword-toggle-active">Edit Company Info</button>
+                <button id="job-company-info-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
             </div>
-            <div id="scanned-company-info" class="job-section-text" hidden="hidden"></div>
-            <div id="company-information" class="job-section-text" contentEditable="true"></div>
-            <strong>Score: </strong><label id="score-reminder-company"></label>
+            <div id="job-company-info-div-editable" class="job-section-text" contentEditable="true"></div>
+            <div id="job-company-info-div-markup" class="job-section-text" hidden="hidden"></div>
+            <strong>Score (including above sections): </strong><label id="score-reminder-company"></label>
         </div>
     </div>
 

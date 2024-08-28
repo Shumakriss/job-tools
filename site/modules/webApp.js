@@ -1,6 +1,8 @@
 import View from './view.js'
 import Model from './model.js'
 import Controller from './controller.js'
+import ModalCollection from './components/modal.js'
+import JobSection from './components/jobSection.js'
 
 function debounce(callback, wait) {
     // Invoke a function after some time period
@@ -53,51 +55,6 @@ function addLinkButton(elementId, links) {
     }
 }
 
-class Modal {
-// Stores a modal together with its id, button Id, and its DOM elements with helper functions
-    constructor(id, buttonId) {
-        this.id = id;
-        this.buttonId = buttonId;
-        this.element = document.getElementById(id);
-        this.buttonElement = document.getElementById(buttonId);
-        this.buttonElement.onclick = async () => { this.show(); };
-    }
-
-    show() {
-        this.element.style.display = "block";
-    }
-
-    clear() {
-        this.element.style.display = "none";
-    }
-}
-
-class ModalCollection {
-// Stores several modals together so they can added concisely and cleared together
-    constructor() {
-        this.modals = new Map();
-    }
-
-    clickAway(elementId){
-        if (this.modals.has(elementId)) {
-            this.modals.get(elementId).clear();
-        }
-    }
-
-    add(modalId, modalButtonId) {
-        let modal = new Modal(modalId, modalButtonId);
-        this.modals.set(modal.id, modal);
-    }
-
-    clear(modalId) {
-        this.modals.get(elementId).clear();
-    }
-
-    clearAll() {
-        this.modals.forEach((modal, id) => { modal.clear(); });
-    }
-}
-
 class WebApp {
 
     constructor(gapi, google) {
@@ -105,6 +62,7 @@ class WebApp {
         this.view = new View(this.model);
         this.controller = new Controller(this.model, this.view, gapi, google);
         this.modals = new ModalCollection();
+        this.jobSections = [];
     }
 
     async start() {
@@ -112,6 +70,7 @@ class WebApp {
         this.view.render();
 
         this.addModals();
+        this.addJobSections();
         this.addEventListeners();
         this.addHandlers();
     }
@@ -122,6 +81,15 @@ class WebApp {
         this.modals.add("search-modal", "search-button");
         this.modals.add("reset-modal", "reset-modal-button");
         this.modals.add("tailoring-modal", "configure-tailoring-button");
+    }
+
+    async addJobSections() {
+        this.jobSections.push(new JobSection("job-description"));
+        this.jobSections.push(new JobSection("job-minimum-requirements"));
+        this.jobSections.push(new JobSection("job-preferred-requirements"));
+        this.jobSections.push(new JobSection("job-duties"));
+        this.jobSections.push(new JobSection("job-company-info"));
+        this.view.jobSections = this.jobSections;
     }
 
     async addEventListeners() {
@@ -186,11 +154,11 @@ class WebApp {
         }
 
         let veryLongListeners = [
-            ["job-description-div", async (event) => { this.controller.setJobDescription(event.target.innerText); }],
-            ['minimum-requirements', async (event) => { this.controller.setMinimumRequirements(event.target.innerText); }],
-            ['preferred-requirements', async (event) => { this.controller.setPreferredRequirements(event.target.innerText); }],
-            ['job-duties', async (event) => { this.controller.setJobDuties(event.target.innerText); }],
-            ['company-information', async (event) => { this.controller.setCompanyInfo(event.target.innerText); }]
+            ["job-description-div-editable", async (event) => { this.controller.setJobDescription(event.target.innerText); }],
+            ['job-minimum-requirements-div-editable', async (event) => { this.controller.setMinimumRequirements(event.target.innerText); }],
+            ['job-preferred-requirements-div-editable', async (event) => { this.controller.setPreferredRequirements(event.target.innerText); }],
+            ['job-duties-div-editable', async (event) => { this.controller.setJobDuties(event.target.innerText); }],
+            ['job-company-info-div-editable', async (event) => { this.controller.setCompanyInfo(event.target.innerText); }]
         ]
 
         for (let i=0; i<veryLongListeners.length; i++) {
@@ -199,7 +167,7 @@ class WebApp {
             document.getElementById(elementId).addEventListener("keydown", debounce(handler, 3000));
         }
 
-        document.getElementById("job-description-div").addEventListener("paste",
+        document.getElementById("job-description-div-editable").addEventListener("paste",
             debounce(
                 async (event) => {
                     if (!this.model.jobDescription || this.model.jobDescription == ""){
@@ -289,75 +257,7 @@ class WebApp {
             downloadLink(this.model.coverLetterPdfLink);
         }
 
-        document.getElementById("button-edit-job-description").onclick = async () => {
-            document.getElementById('job-description-div').hidden = "";
-            document.getElementById('scanned-job-description').hidden = "hidden";
-            document.getElementById("button-show-keywords-job-description").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-edit-job-description").className = "button-keyword-toggle-active";
-        }
-
-        document.getElementById("button-show-keywords-job-description").onclick = async () => {
-            document.getElementById('job-description-div').hidden = "hidden";
-            document.getElementById('scanned-job-description').hidden = "";
-            document.getElementById("button-show-keywords-job-description").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-job-description").className = "button-keyword-toggle-inactive";
-        }
-
-        document.getElementById("button-edit-minimum-requirements").onclick = async () => {
-            document.getElementById('minimum-requirements').hidden = "";
-            document.getElementById('scanned-minimum-requirements').hidden = "hidden";
-            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-active";
-        }
-
-        document.getElementById("button-show-keywords-minimum-requirements").onclick = async () => {
-            document.getElementById('minimum-requirements').hidden = "hidden";
-            document.getElementById('scanned-minimum-requirements').hidden = "";
-            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-inactive";
-        }
-
-        document.getElementById("button-edit-preferred-requirements").onclick = async () => {
-            document.getElementById('preferred-requirements').hidden = "";
-            document.getElementById('scanned-preferred-requirements').hidden = "hidden";
-            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-active";
-        }
-
-        document.getElementById("button-show-keywords-preferred-requirements").onclick = async () => {
-            document.getElementById('preferred-requirements').hidden = "hidden";
-            document.getElementById('scanned-preferred-requirements').hidden = "";
-            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-inactive";
-        }
-        
-        document.getElementById("button-edit-job-duties").onclick = async () => {
-            document.getElementById('job-duties').hidden = "";
-            document.getElementById('scanned-job-duties').hidden = "hidden";
-            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-active";
-        }
-
-        document.getElementById("button-show-keywords-job-duties").onclick = async () => {
-            document.getElementById('job-duties').hidden = "hidden";
-            document.getElementById('scanned-job-duties').hidden = "";
-            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-inactive";
-        }
-        
-        document.getElementById("button-edit-company-info").onclick = async () => {
-            document.getElementById('company-information').hidden = "";
-            document.getElementById('scanned-company-info').hidden = "hidden";
-            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-inactive";
-            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-active";
-        }
-
-        document.getElementById("button-show-keywords-company-info").onclick = async () => {
-            document.getElementById('company-information').hidden = "hidden";
-            document.getElementById('scanned-company-info').hidden = "";
-            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-active";
-            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-inactive";
-        }
+        this.jobSections.map( (jobSection) => {jobSection.registerHandlers();});
 
         console.debug("Registered handlers");
     }
