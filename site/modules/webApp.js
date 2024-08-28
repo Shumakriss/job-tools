@@ -118,7 +118,6 @@ class WebApp {
 
     async addModals() {
         this.modals.add("settings-modal", "configure-button");
-        this.modals.add("job-sections-modal", "view-sections-button");
         this.modals.add("apply-modal", "apply-button");
         this.modals.add("search-modal", "search-button");
         this.modals.add("reset-modal", "reset-modal-button");
@@ -174,11 +173,6 @@ class WebApp {
         }
 
         let delayedListeners = [
-            ["job-description-textarea", async (event) => { this.controller.setJobDescription(event.target.value); }],
-            ['minimum-requirements', async (event) => { this.controller.setMinimumRequirements(event.target.value); }],
-            ['preferred-requirements', async (event) => { this.controller.setPreferredRequirements(event.target.value); }],
-            ['job-duties', async (event) => { this.controller.setJobDuties(event.target.value); }],
-            ['company-information', async (event) => { this.controller.setCompanyInfo(event.target.value); }],
             ['profile-link-linkedin', async (event) => { this.controller.setLinkedInProfileLink(event.target.value); }],
             ['profile-link-github', async (event) => { this.controller.setGithubProfileLink(event.target.value); }],
             ['profile-link-website', async (event) => { this.controller.setWebsiteProfileLink(event.target.value); }],
@@ -190,6 +184,31 @@ class WebApp {
             [elementId, handler] = delayedListeners[i];
             document.getElementById(elementId).addEventListener("keydown", debounce(handler, 200));
         }
+
+        let veryLongListeners = [
+            ["job-description-div", async (event) => { this.controller.setJobDescription(event.target.innerText); }],
+            ['minimum-requirements', async (event) => { this.controller.setMinimumRequirements(event.target.innerText); }],
+            ['preferred-requirements', async (event) => { this.controller.setPreferredRequirements(event.target.innerText); }],
+            ['job-duties', async (event) => { this.controller.setJobDuties(event.target.innerText); }],
+            ['company-information', async (event) => { this.controller.setCompanyInfo(event.target.innerText); }]
+        ]
+
+        for (let i=0; i<veryLongListeners.length; i++) {
+            let elementId, handler;
+            [elementId, handler] = veryLongListeners[i];
+            document.getElementById(elementId).addEventListener("keydown", debounce(handler, 3000));
+        }
+
+        document.getElementById("job-description-div").addEventListener("paste",
+            debounce(
+                async (event) => {
+                    if (!this.model.jobDescription || this.model.jobDescription == ""){
+                        await this.controller.pasteJobDescription(event.target.innerText);
+                    } else {
+                        this.controller.setJobDescription(event.target.innerText);
+                    }
+                },
+                200));
 
         console.debug("Registered listeners");
     }
@@ -268,6 +287,76 @@ class WebApp {
 
         document.getElementById('cover-letter-download-button').onclick = async () => {
             downloadLink(this.model.coverLetterPdfLink);
+        }
+
+        document.getElementById("button-edit-job-description").onclick = async () => {
+            document.getElementById('job-description-div').hidden = "";
+            document.getElementById('scanned-job-description').hidden = "hidden";
+            document.getElementById("button-show-keywords-job-description").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-edit-job-description").className = "button-keyword-toggle-active";
+        }
+
+        document.getElementById("button-show-keywords-job-description").onclick = async () => {
+            document.getElementById('job-description-div').hidden = "hidden";
+            document.getElementById('scanned-job-description').hidden = "";
+            document.getElementById("button-show-keywords-job-description").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-job-description").className = "button-keyword-toggle-inactive";
+        }
+
+        document.getElementById("button-edit-minimum-requirements").onclick = async () => {
+            document.getElementById('minimum-requirements').hidden = "";
+            document.getElementById('scanned-minimum-requirements').hidden = "hidden";
+            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-active";
+        }
+
+        document.getElementById("button-show-keywords-minimum-requirements").onclick = async () => {
+            document.getElementById('minimum-requirements').hidden = "hidden";
+            document.getElementById('scanned-minimum-requirements').hidden = "";
+            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-inactive";
+        }
+
+        document.getElementById("button-edit-preferred-requirements").onclick = async () => {
+            document.getElementById('preferred-requirements').hidden = "";
+            document.getElementById('scanned-preferred-requirements').hidden = "hidden";
+            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-active";
+        }
+
+        document.getElementById("button-show-keywords-preferred-requirements").onclick = async () => {
+            document.getElementById('preferred-requirements').hidden = "hidden";
+            document.getElementById('scanned-preferred-requirements').hidden = "";
+            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-inactive";
+        }
+        
+        document.getElementById("button-edit-job-duties").onclick = async () => {
+            document.getElementById('job-duties').hidden = "";
+            document.getElementById('scanned-job-duties').hidden = "hidden";
+            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-active";
+        }
+
+        document.getElementById("button-show-keywords-job-duties").onclick = async () => {
+            document.getElementById('job-duties').hidden = "hidden";
+            document.getElementById('scanned-job-duties').hidden = "";
+            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-inactive";
+        }
+        
+        document.getElementById("button-edit-company-info").onclick = async () => {
+            document.getElementById('company-information').hidden = "";
+            document.getElementById('scanned-company-info').hidden = "hidden";
+            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-active";
+        }
+
+        document.getElementById("button-show-keywords-company-info").onclick = async () => {
+            document.getElementById('company-information').hidden = "hidden";
+            document.getElementById('scanned-company-info').hidden = "";
+            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-inactive";
         }
 
         console.debug("Registered handlers");

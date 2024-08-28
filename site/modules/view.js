@@ -101,20 +101,26 @@ class View {
 
     markupJobDescription(jobDescription, keywords, className) {
         console.debug("Marking up job description");
+        if (!jobDescription || jobDescription == "" || jobDescription == "undefined"){
+            return "";
+        }
+
+        if (!keywords || keywords == "" || keywords == "undefined"){
+            return jobDescription;
+        }
+
         let markedupJobDescription = jobDescription;
         let alreadyMarked = [];
 
-        if (keywords && keywords != "" && keywords != "undefined") {
-            for (let i=0; i<keywords['highValueSkills'].length; i++) {
-                let keyword = keywords['highValueSkills'][i]['skill'];
-                if (alreadyMarked.includes(keyword) || keywords['highValueSkills'][i].cvCount > 0) {
-                    continue;
-                } else {
-                    alreadyMarked.push(keyword);
-                    let regEx = new RegExp(keyword, 'ig');
-                    let replaceMask = `<span class="${className}">${keyword}</span>`;
-                    markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
-                }
+        for (let i=0; i<keywords['highValueSkills'].length; i++) {
+            let keyword = keywords['highValueSkills'][i]['skill'];
+            if (alreadyMarked.includes(keyword) || keywords['highValueSkills'][i].cvCount > 0) {
+                continue;
+            } else {
+                alreadyMarked.push(keyword);
+                let regEx = new RegExp(keyword, 'ig');
+                let replaceMask = `<span class="${className}">${keyword}</span>`;
+                markedupJobDescription = markedupJobDescription.replaceAll(regEx, replaceMask)
             }
         }
 
@@ -169,7 +175,8 @@ class View {
 
         document.getElementById("linkedin-query").value = this.model.linkedInQuery;
         document.getElementById("company-name").value = this.model.companyName;
-        document.getElementById("job-description-textarea").value = this.model.jobDescription;
+//        document.getElementById("job-description-div").value = this.model.jobDescription;
+        document.getElementById("job-description-div").innerText = this.model.jobDescription;
 
         document.getElementById("glassdoor-search-link").href = this.model.glassdoorSearchLink();
         document.getElementById("levels-fyi-link").href = this.model.levelsFyiLink();
@@ -188,10 +195,10 @@ class View {
     
         document.getElementById("application-date").value = this.model.date;
         document.getElementById("job-title").value = this.model.jobTitle;
-        document.getElementById("minimum-requirements").value = this.model.minimumRequirements;
-        document.getElementById("preferred-requirements").value = this.model.preferredRequirements;
-        document.getElementById("job-duties").value = this.model.jobDuties;
-        document.getElementById("company-information").value = this.model.companyInfo;
+        document.getElementById("minimum-requirements").innerText = this.model.minimumRequirements;
+        document.getElementById("preferred-requirements").innerText = this.model.preferredRequirements;
+        document.getElementById("job-duties").innerText = this.model.jobDuties;
+        document.getElementById("company-information").innerText = this.model.companyInfo;
         document.getElementById("company-name-tailor").value = this.model.companyName;
         document.getElementById("company-name-possessive").value = this.model.companyNamePossessive;
         document.getElementById("hiring-manager-name").value = this.model.hiringManager;
@@ -371,6 +378,28 @@ class View {
         document.getElementById("job-post-url").value = this.model.jobPostUrl;
 
         document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
+
+        if (this.model.showKeywords == true) {
+            document.getElementById('minimum-requirements').hidden = "hidden";
+            document.getElementById('scanned-minimum-requirements').hidden = "";
+            document.getElementById('preferred-requirements').hidden = "hidden";
+            document.getElementById('scanned-preferred-requirements').hidden = "";
+            document.getElementById('job-duties').hidden = "hidden";
+            document.getElementById('scanned-job-duties').hidden = "";
+            document.getElementById('company-information').hidden = "hidden";
+            document.getElementById('scanned-company-info').hidden = "";
+
+            document.getElementById("button-show-keywords-minimum-requirements").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-minimum-requirements").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-show-keywords-preferred-requirements").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-preferred-requirements").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-show-keywords-job-duties").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-job-duties").className = "button-keyword-toggle-inactive";
+            document.getElementById("button-show-keywords-company-info").className = "button-keyword-toggle-active";
+            document.getElementById("button-edit-company-info").className = "button-keyword-toggle-inactive";
+
+            this.model.showKeywords = false;
+        }
     }
 
 }

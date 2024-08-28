@@ -73,31 +73,17 @@
     min-height: 80%;
 }
 
-.scanned-job-description {
-    font-family: Verdana, sans-serif;
-    font-size: 14px;
-    padding-top: 2px;
-    padding-right: 2px;
-    padding-bottom: 2px;
-    padding-left: 2px;
-    
-    margin-top: 2px;
-    margin-right: 50px;
-    margin-bottom: 10px;
-    margin-left: 0px;
-
-    white-space: pre-wrap;
-
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    border-radius: 2px;
-
-}
-
 .job-section-text {
+    font-family: Verdana, sans-serif;
+    font-size: 13px;
     width: 95%;
     white-space: pre-wrap;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #BBBBBB;
+    border-radius: 3px;
+    overflow-y: auto;
+    min-height: 100px;
 }
 
 .scan-result-container {
@@ -294,4 +280,37 @@ textarea {
     border-width: 1px;
     border-color: #BBBBBB;
     border-radius: 3px;
+}
+
+.container-keyword-section {
+}
+
+.container-keyword-section-buttons {
+
+}
+
+.button-keyword-toggle-active {
+    background-color: #DDDDFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    border-radius: 0px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-width: 0px;
+    min-width: 75px;
+    margin: 0;
+}
+
+.button-keyword-toggle-inactive {
+    background-color: #EEEEFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    border-radius: 0px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-width: 0px;
+    min-width: 75px;
+    margin: 0;
 }

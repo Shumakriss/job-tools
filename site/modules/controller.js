@@ -176,7 +176,7 @@ class Controller {
         }
     }
     
-    async setJobDescription(jobDescription) {
+    async pasteJobDescription(jobDescription) {
         if (this.model.jobDescription == jobDescription) {
             return;
         }
@@ -198,9 +198,13 @@ class Controller {
 
         this.save();
         this.render();
-
     }
-    
+
+    setJobDescription(jobDescription){
+        this.model.jobDescription = jobDescription;
+        this.save();
+    }
+
     setJobTitle(jobTitle) {
         this.model.jobTitle = jobTitle;
         this.model.completeJobTitle = jobTitle;
@@ -224,25 +228,21 @@ class Controller {
     setMinimumRequirements(minimumRequirements) {
         this.model.minimumRequirements = minimumRequirements;
         this.save();
-        this.render();
     }
 
     setPreferredRequirements(preferredRequirements) {
         this.model.preferredRequirements = preferredRequirements;
         this.save();
-        this.render();
     }
 
     setJobDuties(jobDuties) {
         this.model.jobDuties = jobDuties;
         this.save();
-        this.render();
     }
 
     setCompanyInfo(companyInfo) {
         this.model.companyInfo = companyInfo;
         this.save();
-        this.render();
     }
 
     setLinkedInProfileLink(linkedInProfileLink) {
@@ -607,6 +607,7 @@ class Controller {
                 }
         });
 
+        this.model.showKeywords = true;
     }
 
     async tailorDocuments() {
