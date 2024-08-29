@@ -165,14 +165,11 @@
         <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
         <br/><br/>
 
-        <strong>Your Query</strong><br/>
-        <input id="search-terms" size="50"/><br/><br/>
-        <button class="button" id="search-all-button">Search All</button><br/><br/>
-
         <button class="button" id="linkedin-search-button">LinkedIn</button>
         <button class="button" id="idealist-search-button">Idealist</button>
         <button class="button" id="usajobs-search-button">UsaJobs</button>
         <button class="button" id="outerjoin-search-button">OuterJoin</button>
+        <button class="button" id="search-all-button">Search All</button><br/><br/>
 
         <h2>Job Boards</h2>
         <ul>
@@ -215,7 +212,19 @@
         </div>
     </div>
 
-    <div class="container-page">
+    <div class="container-navbar">
+        <button id="button-navbar-search" class="button">Search</button>
+        <button id="button-navbar-scan" class="button">Scan</button>
+    </div>
+
+    <div class="container-page" id="container-page-search">
+        <h1>Search</h1>
+        <input id="search-terms" size="50"/>
+        <button>Search</button>
+        <div id="search-results-container" class="search-results-container"></div>
+    </div>
+
+    <div class="container-page" id="container-page-scan" hidden="hidden">
         <h1>Scanning</h1>
 
         <div class="scan-result-container">
@@ -246,6 +255,7 @@
         <strong style="display: none;">Url: </strong>
         <input id="job-post-url" size="70" style="display: none;"/>
         <button id="get-job-description-button" class="button" style="display: none;">Get Job Description</button>
+
 
         <h3>Job Description</h3>
         <div class="container-keyword-section">

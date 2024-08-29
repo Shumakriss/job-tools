@@ -375,6 +375,7 @@ class View {
 
         document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
 
+        document.getElementById("search-results-container").innerHTML = this.model.searchResults;
     }
 
     showJobSectionKeywords() {

@@ -124,6 +124,7 @@ class Model {
         this.statusMessage = "Start your application!";
 
         this.searchTerms = "";
+        this.searchResults = "";
 
         this.jobPostUrl = "";
     }
@@ -192,6 +193,7 @@ class Model {
         localStorage.setItem("statusMessage", this.statusMessage);
 
         localStorage.setItem("searchTerms", this.searchTerms);
+        localStorage.setItem("searchResults", this.searchResults);
 
         localStorage.setItem("jobPostUrl", this.jobPostUrl);
 
@@ -277,6 +279,7 @@ class Model {
         this.statusMessage = getItemWithDefault("statusMessage", this.statusMessage);
 
         this.searchTerms = getItemWithDefault("searchTerms", this.searchTerms);
+        this.searchResults = getItemWithDefault("searchResults", this.searchResults);
 
         this.jobPostUrl = getItemWithDefault("jobPostUrl", this.jobPostUrl);
 

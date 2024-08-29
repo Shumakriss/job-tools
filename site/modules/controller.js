@@ -18,6 +18,118 @@ class Controller {
         });
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
+
+        this.getSearchResults();
+    }
+
+    async search() {
+        this.displayMessage("Getting search results");
+
+        let requestBody = { "job_post_url": "https://www.levels.fyi/jobs/location/united-states?searchText=software+engineer&standardLevels=mid_staff%2Cprincipal&workArrangements=remote&jobId=103126329490055878" };
+        console.debug(requestBody);
+        console.debug(JSON.stringify(requestBody));
+
+        try {
+            const request = new Request("http://localhost:8080/job-post", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            console.debug(request);
+
+            const response = await fetch(request);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            this.displayMessage("Search results found");
+
+            return text;
+        } catch (error) {
+            console.error(error.message);
+            this.displayMessage("Unable to retrieve search results");
+        }
+
+    }
+
+   async scrapeJobDescription(link) {
+        this.displayMessage("Scraping job description");
+
+        let requestBody = { "job_post_url": link };
+        console.debug(requestBody);
+        console.debug(JSON.stringify(requestBody));
+
+        try {
+            const request = new Request("http://localhost:8080/job-post", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            console.debug(request);
+
+            const response = await fetch(request);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            this.displayMessage("Scraped a job description");
+
+            return text;
+        } catch (error) {
+            console.error(error.message);
+            this.displayMessage("Unable to retrieve job description");
+        }
+
+    }
+
+
+    async getSearchResults() {
+        this.displayMessage("Getting search results");
+
+        let searchResults = await this.search();
+
+        if (!searchResults || searchResults == "") {
+            this.displayMessage("Didn't receive any search results");
+            return;
+        }
+
+        searchResults = searchResults.split(",");
+        console.log(searchResults);
+
+        for (let i=0; i< searchResults.length; i++) {
+
+            let jobDescription = await this.scrapeJobDescription("https://www.levels.fyi" + searchResults[i]);
+
+            if (!this.model.resumeContent) {
+                this.displayMessage("Skipping scan due to missing resume");
+                return;
+            } else if (!jobDescription) {
+                this.displayMessage("Skipping scan due to missing job description");
+                return;
+            }
+
+            this.model.searchResults = "";
+            let scanPromise = this.jobscan.scan(this.model.resumeContent, jobDescription);
+            scanPromise.then( results => {
+
+                if (!results) {
+                    return;
+                }
+                let resultString = "https://www.levels.fyi" + searchResults[i] + " "+ results['matchRate']['score'] + "\n";
+                this.model.searchResults += resultString;
+                this.save();
+                this.render();
+            });
+        }
+
     }
     
     save() {

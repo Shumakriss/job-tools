@@ -257,6 +257,16 @@ class WebApp {
             downloadLink(this.model.coverLetterPdfLink);
         }
 
+        document.getElementById('button-navbar-search').onclick = async () => {
+            document.getElementById("container-page-scan").hidden = "hidden";
+            document.getElementById("container-page-search").hidden = "";
+        }
+
+        document.getElementById('button-navbar-scan').onclick = async () => {
+            document.getElementById("container-page-scan").hidden = "";
+            document.getElementById("container-page-search").hidden = "hidden";
+        }
+
         this.jobSections.map( (jobSection) => {jobSection.registerHandlers();});
 
         console.debug("Registered handlers");
