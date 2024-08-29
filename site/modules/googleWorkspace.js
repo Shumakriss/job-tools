@@ -14,6 +14,7 @@ const DOCS_DISCOVERY_DOC = 'https://docs.googleapis.com/$discovery/rest?version=
 const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/documents';
 
 class GoogleWorkspace {
+// Manages the gapi and google.auth libraries to obtain user consent, authorize and execute requests to google API's
 
     constructor (model, gapi, google) {
         console.debug("GoogleWorkspace.constructor");
@@ -31,6 +32,32 @@ class GoogleWorkspace {
         if (this.model.googleToken) {    // TODO: Can be passed
             this.init();
         }
+    }
+
+    async init() {
+        console.debug("GoogleWorkspace.init - Initializing Google Drive Class");
+
+        // Error handling for improper page load or recovery
+        if (!this.model.googleApiKey) {
+            console.log("GoogleWorkspace.init - Skipping due to missing API Key");
+            return;
+        }
+
+        if (!this.model.googleClientId) {
+            console.log("GoogleWorkspace.init - Skipping due to missing Client Id");
+            return;
+        }
+        if (!this.gapi) {
+            console.warn("Gapi is not initialized");
+            return;
+        }
+
+        // Tell GAPI to load the API client object and give it a handler for when it's done
+        // Note: A loaded client is not ready until it's also initialized via its 'init()' method and supplied a token
+        await this.gapi.load('client',  async () => {
+            console.log("GoogleWorkspace.init:gapi.load callback");
+            await this.onGapiLoaded();
+            });
     }
 
     setApiInitCallback(callback) {
@@ -62,12 +89,16 @@ class GoogleWorkspace {
     }
 
     async onGapiLoaded() {
+        // Invoked when GAPI is done loading the client
+
         console.debug("GoogleWorkspace.onGapiLoaded - Invoked");
+
         if (!this.gapi) {
             throw new Error("Gapi is not loaded");
         }
         this.isApiReady = true;
 
+        // Invoke any external callbacks to this class
         if (this.apiInitCallback) {
             console.log("API callback invoked");
             this.apiInitCallback();
@@ -75,6 +106,7 @@ class GoogleWorkspace {
             console.log("No Api Init callback to invoke");
         }
 
+        // Initialize the gapi client and invoke any external callbacks
         await this.gapi.client.init({
             apiKey: this.model.googleApiKey,
             discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC, DOCS_DISCOVERY_DOC]
@@ -87,6 +119,7 @@ class GoogleWorkspace {
             console.log("No client init callback to be invoked");
         }
 
+        // Reuse a saved token and invoke external callback
         if (this.model.googleToken) {
             console.debug("GoogleWorkspace.onGapiLoaded - Found token, will reuse");
             this.gapi.client.setToken(this.model.googleToken);
@@ -98,6 +131,7 @@ class GoogleWorkspace {
             }
         }
 
+        // Initialize the token client for getting new tokens anyway (we usually need a refresh)
         this.tokenClient = await this.google.accounts.oauth2.initTokenClient({
             client_id: this.model.googleClientId,
             scope: SCOPES,
@@ -106,11 +140,15 @@ class GoogleWorkspace {
 
         console.debug("GoogleWorkspace.onGapiLoaded - Done initializing tokenClient");
 
+        // Tell google tokenClient what to do when its read
         this.tokenClient.callback = async (resp) => {
             console.debug("GoogleWorkspace.onGapiLoaded - tokenClient callback");
             if (resp.error !== undefined) {
                 throw (resp);
             }
+
+            // Displays a prompt to the user in a popup window requesting the user to approve/deny the application scopes
+            // Alternatively, skip this if already done.
             console.debug("Token client callback invoked");
             if (this.consentRequested) {
                 this.tokenClient.requestAccessToken({prompt: ''});
@@ -118,9 +156,11 @@ class GoogleWorkspace {
                 this.tokenClient.requestAccessToken({prompt: 'consent'});
             }
 
+            // Save the refreshed token(?)
             this.model.googleToken = await this.gapi.client.getToken();
             this.model.save();
 
+            // Handle external callbacks
             if (this.authenticatedCallback) {
                 console.log("Authenticated callback invoked");
                 this.authenticatedCallback();
@@ -137,30 +177,9 @@ class GoogleWorkspace {
         };
     }
 
-    async init() {
-        console.debug("GoogleWorkspace.init - Initializing Google Drive Class");
-        if (!this.model.googleApiKey) {
-            console.log("GoogleWorkspace.init - Skipping due to missing API Key");
-            return;
-        }
-
-        if (!this.model.googleClientId) {
-            console.log("GoogleWorkspace.init - Skipping due to missing Client Id");
-            return;
-        }
-        if (!this.gapi) {
-
-            console.warn("Gapi is not initialized");
-            return;
-        }
-
-        await this.gapi.load('client',  async () => {
-            console.log("GoogleWorkspace.init:gapi.load callback");
-            await this.onGapiLoaded();
-            });
-    }
 
     async authorize() {
+        // Useful when user needs a refreshed token
         console.debug("GoogleWorkspace.authorize - Authorizing Google Drive client");
 
         if (this.model.googleConsentRequested) {
@@ -302,6 +321,7 @@ class GoogleWorkspace {
     }
 
     createTemplateRequests() {
+        // Creates the required payload for google API to do a batch text merge
         let requests = [];
 
         const templateUpdate = new Map();
@@ -351,6 +371,8 @@ class GoogleWorkspace {
     }
 
     async appendApplicationLog() {
+        // Add an entry to a Google Sheet
+        // Google Sheets guesses where the last row is based on the range supplied
         let values = [[ this.model.companyName, "Applied", this.model.date ]];
         let rowData = {
                 spreadsheetId: this.model.googleSheetId,
@@ -364,6 +386,7 @@ class GoogleWorkspace {
     }
 
     async getCompanyCorrespondence(companyName) {
+        // Find any rows where first column matches the parameter
         let request = {
             spreadsheetId: this.model.googleSheetId,
             range: "Sheet1!A:D"

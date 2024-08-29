@@ -60,7 +60,7 @@ class WebApp {
     constructor(gapi, google) {
         this.model = new Model();
         this.view = new View(this.model);
-        this.controller = new Controller(this.model, this.view, gapi, google);
+        this.controller = new Controller(this.model, this.view, gapi, google);  // Controller initializes gapi automatically
         this.modals = new ModalCollection();
         this.jobSections = [];
     }
