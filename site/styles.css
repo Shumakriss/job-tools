@@ -326,3 +326,13 @@ textarea {
     min-width: 75px;
     margin: 0;
 }
+
+.search-results-card {
+    margin: 3px;
+    padding: 5px;
+    white-space: pre-wrap;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #BBBBBB;
+    border-radius: 5px;
+}

@@ -269,6 +269,10 @@ class WebApp {
 
         this.jobSections.map( (jobSection) => {jobSection.registerHandlers();});
 
+        document.getElementById("button-search").onclick = async () => {
+            this.controller.search()
+        }
+
         console.debug("Registered handlers");
     }
 

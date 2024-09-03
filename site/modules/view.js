@@ -1,24 +1,27 @@
+function formatSearchResults(searchResults) {
 
-function formatScanResults(jobscanResults) {
-
-    let ul = document.createElement('ul');
-
-    if (!jobscanResults || typeof jobscanResults != 'object' || !('highValueSkills' in jobscanResults)) {
-       return ul;
+    if (!searchResults || typeof searchResults != "object") {
+       return;
     }
 
-    let highValueSkills = jobscanResults['highValueSkills'];
+    document.getElementById('search-results-container').innerHTML = "";
 
-    for (let i=0; i< highValueSkills.length; i++){
-        if (highValueSkills[i].cvCount == 0){
-            let li = document.createElement("li");
-            let text = highValueSkills[i]['skill'] + " (" + highValueSkills[i]['type'] + ")"
-            li.appendChild(document.createTextNode(text));
-            ul.appendChild(li);
-        }
+    for (let i=0; i< searchResults["results"].length; i++){
+        let card = document.createElement("div");
+        card.className = "search-results-card";
+
+        let strong = document.createElement("strong");
+        strong.innerHTML = "Score: " + searchResults["results"][i]["score"];
+
+        let body = document.createElement("div");
+        body.innerHTML = searchResults["results"][i]["job_description"];
+
+        card.appendChild(strong);
+        card.appendChild(body);
+
+        document.getElementById('search-results-container').appendChild(card);
     }
 
-    return ul
 }
 
 function formatCorrespondence(companyCorrespondence) {
@@ -375,7 +378,7 @@ class View {
 
         document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
 
-        document.getElementById("search-results-container").innerHTML = this.model.searchResults;
+        formatSearchResults(this.model.searchResults);
     }
 
     showJobSectionKeywords() {

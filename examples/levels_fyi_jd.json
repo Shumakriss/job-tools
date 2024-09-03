@@ -1,0 +1,806 @@
+{
+  'assetPrefix': 'https://www.levels.fyi',
+  'buildId': 'mVUt24l3ggjZ0cLbur5HY',
+  'customServer': True,
+  'dynamicIds': [
+    66027
+  ],
+  'gssp': True,
+  'isFallback': False,
+  'page': '/jobs',
+  'props': {
+    '__N_SSP': True,
+    'pageProps': {
+      '_sentryBaggage': 'sentry-environment=production,sentry-release=mVUt24l3ggjZ0cLbur5HY,sentry-transaction=%2Fjobs,sentry-public_key=c895cb024b0c407c966bffb65e6592b5,sentry-trace_id=435abcffa67c46b6aee68229469b5ba9,sentry-sample_rate=0',
+      '_sentryTraceData': '435abcffa67c46b6aee68229469b5ba9-81f85bd949bcd427-0',
+      'initialFilters': {
+        'limit': 5,
+        'limitPerCompany': 3,
+        'offset': 0,
+        'sortBy': 'relevance'
+      },
+      'initialJobDetails': None,
+      'initialJobId': None,
+      'initialJobsData': {
+        'results': [
+          {
+            'companyIcon': 'https://img.logo.dev/cloudkitchens.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'CloudKitchens',
+            'companySlug': 'cloudkitchens',
+            'companyType': 'private',
+            'employeeCount': 2500,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://job-boards.greenhouse.io/citystoragesystems/jobs/7596373002',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T04:19:00.000Z',
+                'id': '103126329490055878',
+                'locations': [
+                  'Los '
+                  'Angeles, '
+                  'CA'
+                ],
+                'maxBaseSalary': 180000,
+                'maxTotalSalary': 380000,
+                'minBaseSalary': 180000,
+                'minTotalSalary': 380000,
+                'postingDate': '2024-08-28T16:48:15.000Z',
+                'title': 'Senior/Staff '
+                'Full-Stack '
+                'Software '
+                'Engineer '
+                '- '
+                'Los '
+                'Angeles, '
+                'CA',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://job-boards.greenhouse.io/css/jobs/7601355002',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T04:18:58.000Z',
+                'id': '138583440055247558',
+                'locations': [
+                  'Beijing, '
+                  'China'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-28T16:48:16.000Z',
+                'title': 'Product '
+                'Program '
+                'Manager '
+                '- '
+                'Beijing, '
+                'China',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://job-boards.greenhouse.io/css/jobs/7497125002',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T04:18:58.000Z',
+                'id': '84862094880449222',
+                'locations': [],
+                'maxBaseSalary': 200000,
+                'maxTotalSalary': 426000,
+                'minBaseSalary': 160000,
+                'minTotalSalary': 265000,
+                'postingDate': '2024-08-28T16:48:16.000Z',
+                'title': 'Senior/Staff '
+                'Front-End '
+                'Engineer, '
+                'CloudKitchens '
+                '- '
+                'New '
+                'York, '
+                'NY',
+                'workArrangement': 'office'
+              }
+            ],
+            'shortDescription': 'Smart '
+            'kitchens '
+            'for '
+            'delivery-only '
+            'restaurants.'
+          },
+          {
+            'companyIcon': 'https://imgur.com/qxUIXKv.png',
+            'companyName': 'Omnea',
+            'companySlug': 'omnea',
+            'companyType': 'private',
+            'employeeCount': 36,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://jobs.ashbyhq.com/omnea/de108e39-e5f1-4b88-b623-fc95bdfecca7?utm_source=bBqEGnoMX0',
+                'baseSalaryCurrency': 'GBP',
+                'expiryDate': '2024-09-29T18:07:16.000Z',
+                'id': '127179719513645766',
+                'locations': [],
+                'maxBaseSalary': 80000,
+                'maxTotalSalary': 110000,
+                'minBaseSalary': 60000,
+                'minTotalSalary': 85000,
+                'postingDate': '2024-08-14T15:00:21.000Z',
+                'title': 'Full '
+                'Stack '
+                'Software '
+                'Engineer',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://jobs.ashbyhq.com/omnea/e44e93ce-1f1c-4f06-9663-daa7623d9072?utm_source=bBqEGnoMX0',
+                'baseSalaryCurrency': 'GBP',
+                'expiryDate': '2024-09-28T18:07:07.000Z',
+                'id': '128425939439624902',
+                'locations': [],
+                'maxBaseSalary': 135000,
+                'maxTotalSalary': 185000,
+                'minBaseSalary': 120000,
+                'minTotalSalary': 155000,
+                'postingDate': '2024-07-21T19:47:38.000Z',
+                'title': 'Principal '
+                'Software '
+                'Engineer',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://jobs.ashbyhq.com/omnea/51c9d0f6-6a53-47d7-9943-72546dd0c651?utm_source=bBqEGnoMX0',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-29T06:07:01.000Z',
+                'id': '115492131966984902',
+                'locations': [],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-07-04T13:15:00.000Z',
+                'title': 'Head '
+                'of '
+                'Product',
+                'workArrangement': 'office'
+              }
+            ],
+            'shortDescription': 'Spend '
+            'control '
+            'platform '
+            'for '
+            'businesses.'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/nebius.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'Nebius',
+            'companySlug': 'nebius',
+            'companyType': 'private',
+            'employeeCount': 600,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://careers.nebius.com/jobs/3188391-senior-backend-engineer-c?ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-22T14:41:37.000Z',
+                'id': '81041137355104966',
+                'locations': [
+                  'Amsterdam, '
+                  'Netherlands'
+                ],
+                'maxBaseSalary': 104280,
+                'maxTotalSalary': 126989,
+                'minBaseSalary': 104280,
+                'minTotalSalary': 126989,
+                'postingDate': '2024-08-23T00:03:00.000Z',
+                'title': 'Senior '
+                'Backend '
+                'Engineer '
+                '(C++)',
+                'workArrangement': 'hybrid'
+              },
+              {
+                'applicationUrl': 'https://careers.nebius.com/jobs/3650464-lead-machine-learning-engineer-model-architectures-capabilities-team?ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T17:52:42.000Z',
+                'id': '120309707662336710',
+                'locations': [
+                  'Greater '
+                  'London, '
+                  'England, '
+                  'United '
+                  'Kingdom'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-08T17:52:40.000Z',
+                'title': 'Lead '
+                'machine '
+                'learning '
+                'engineer '
+                '(Model '
+                'Architectures '
+                '& '
+                'Capabilities '
+                'Team)'
+              },
+              {
+                'applicationUrl': 'https://careers.nebius.com/jobs/3211786-senior-site-reliability-engineer?ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T18:54:02.000Z',
+                'id': '104313197934060230',
+                'locations': [
+                  'Amsterdam, '
+                  'North '
+                  'Holland, '
+                  'Netherlands',
+                  'Belgrade, '
+                  'Serbia'
+                ],
+                'maxBaseSalary': 104280,
+                'maxTotalSalary': 126989,
+                'minBaseSalary': 104280,
+                'minTotalSalary': 126989,
+                'postingDate': '2024-08-01T18:54:00.000Z',
+                'title': 'Senior '
+                'Site '
+                'Reliability '
+                'Engineer'
+              }
+            ],
+            'shortDescription': 'Country-scale '
+            'B2B '
+            'cloud '
+            'platform '
+            'provider.'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/tryotter.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'Otter',
+            'companySlug': 'otter',
+            'companyType': 'private',
+            'employeeCount': None,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://boards.greenhouse.io/otter/jobs/7481204002',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T04:42:20.000Z',
+                'id': '117468839192470214',
+                'locations': [
+                  'Mountain '
+                  'View, '
+                  'CA'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-28T16:48:15.000Z',
+                'title': 'Principal '
+                'Software '
+                'Engineer',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://boards.greenhouse.io/otter/jobs/7612422002',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T04:42:21.000Z',
+                'id': '104128946655634118',
+                'locations': [],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-28T16:48:15.000Z',
+                'title': 'Full-Stack '
+                'Engineer '
+                '- '
+                'Menu '
+                'Platform '
+                'team',
+                'workArrangement': 'office'
+              },
+              {
+                'applicationUrl': 'https://boards.greenhouse.io/otter/jobs/7476636002',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T04:42:21.000Z',
+                'id': '135272325816689350',
+                'locations': [],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-28T16:48:15.000Z',
+                'title': 'Senior/Staff '
+                'Frontend '
+                'Software '
+                'Engineer- '
+                'Otter- '
+                'Los '
+                'Angeles',
+                'workArrangement': 'office'
+              }
+            ],
+            'shortDescription': 'Restaurant '
+            'operating '
+            'system '
+            'for '
+            'efficiency.'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/hennge.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'HENNGE',
+            'companySlug': 'hennge',
+            'companyType': 'private',
+            'employeeCount': 210,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://recruit.hennge.com/en/mid-career/apply/?gh_jid=4708751&ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-29T13:37:32.000Z',
+                'id': '113772375522058950',
+                'locations': [
+                  'Tokyo, '
+                  'Tokyo, '
+                  'Japan'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2023-10-30T13:37:31.000Z',
+                'title': 'Senior '
+                'Front '
+                'end '
+                'Developer '
+                '(Vue)',
+                'workArrangement': 'hybrid'
+              },
+              {
+                'applicationUrl': 'https://challenge.hennge.com/?entry-code=LEVELS-REACT-SR&ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-07T06:49:35.000Z',
+                'id': '123111261276644038',
+                'locations': [
+                  'Tokyo, '
+                  'Japan'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-08-08T06:45:24.000Z',
+                'title': 'Senior '
+                'Front-end '
+                'Engineer '
+                '(React)',
+                'workArrangement': 'hybrid'
+              },
+              {
+                'applicationUrl': 'https://recruit.hennge.com/en/mid-career/apply/?gh_jid=2457231&ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-29T13:46:27.000Z',
+                'id': '101322467921797830',
+                'locations': [
+                  'Greater '
+                  'Tokyo '
+                  'Area'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-03-30T13:46:25.000Z',
+                'title': 'UI/UX '
+                'Designer',
+                'workArrangement': 'remote'
+              }
+            ],
+            'shortDescription': 'Japanese '
+            'cloud '
+            'security '
+            'provider '
+            'for '
+            'businesses.'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/hightouch.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'Hightouch',
+            'companySlug': 'hightouch',
+            'companyType': 'private',
+            'employeeCount': 100,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://grnh.se/3a9a05534us',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T19:07:36.000Z',
+                'id': '82520403615851206',
+                'locations': [
+                  'San '
+                  'Francisco '
+                  'Bay '
+                  'Area, '
+                  'California, '
+                  'United '
+                  'States'
+                ],
+                'maxBaseSalary': 240000,
+                'maxTotalSalary': 402300,
+                'minBaseSalary': 170000,
+                'minTotalSalary': 332300,
+                'postingDate': '2024-06-11T22:06:47.000Z',
+                'title': 'Software '
+                'Engineer, '
+                'AI '
+                'R&D',
+                'workArrangement': 'remote'
+              },
+              {
+                'applicationUrl': 'https://grnh.se/ac15e0b54us',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T07:07:43.000Z',
+                'id': '132704239175508678',
+                'locations': [
+                  'San '
+                  'Francisco, '
+                  'California, '
+                  'United '
+                  'States'
+                ],
+                'maxBaseSalary': 240000,
+                'maxTotalSalary': 402300,
+                'minBaseSalary': 170000,
+                'minTotalSalary': 332300,
+                'postingDate': '2024-06-11T22:06:55.000Z',
+                'title': 'Software '
+                'Engineer, '
+                'Customer '
+                'Studio '
+                'Backend',
+                'workArrangement': 'remote'
+              },
+              {
+                'applicationUrl': 'https://grnh.se/cc75e82a4us',
+                'baseSalaryCurrency': None,
+                'expiryDate': '2024-09-28T19:07:39.000Z',
+                'id': '135704107267564230',
+                'locations': [
+                  'San '
+                  'Francisco '
+                  'Bay '
+                  'Area, '
+                  'California, '
+                  'United '
+                  'States'
+                ],
+                'maxBaseSalary': None,
+                'maxTotalSalary': None,
+                'minBaseSalary': None,
+                'minTotalSalary': None,
+                'postingDate': '2024-07-23T22:33:08.000Z',
+                'title': 'Product '
+                'Manager, '
+                'Customer '
+                'Studio',
+                'workArrangement': 'office'
+              }
+            ],
+            'shortDescription': 'Data '
+            'syncing '
+            'platform '
+            'for '
+            'businesses.'
+          },
+          {
+            'companyIcon': 'https://i.imgur.com/V3tAdQc.png',
+            'companyName': 'Thoughtful',
+            'companySlug': 'thoughtful',
+            'companyType': 'private',
+            'employeeCount': None,
+            'estimatedValuation': None,
+            'isPromoted': True,
+            'jobs': [
+              {
+                'applicationUrl': 'https://jobs.ashbyhq.com/thoughtful/3514de55-4112-48c0-82ce-88de1e3212bd?utm_source=R9nyGKkYkG',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-27T21:23:59.000Z',
+                'id': '129548885616927430',
+                'locations': [],
+                'maxBaseSalary': 125000,
+                'maxTotalSalary': 125000,
+                'minBaseSalary': 90000,
+                'minTotalSalary': 90000,
+                'postingDate': '2024-07-09T20:48:38.000Z',
+                'title': 'Software '
+                'Engineer',
+                'workArrangement': 'hybrid'
+              },
+              {
+                'applicationUrl': 'https://jobs.ashbyhq.com/thoughtful/60c24113-5bdd-4cf7-85cb-075af2d22259?utm_source=R9nyGKkYkG',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-27T21:24:05.000Z',
+                'id': '98445900690399942',
+                'locations': [],
+                'maxBaseSalary': 150000,
+                'maxTotalSalary': 150000,
+                'minBaseSalary': 105000,
+                'minTotalSalary': 105000,
+                'postingDate': '2024-07-09T20:42:17.000Z',
+                'title': 'Senior '
+                'Software '
+                'Engineer',
+                'workArrangement': 'hybrid'
+              }
+            ],
+            'shortDescription': 'Content-focused '
+            'social '
+            'media '
+            'alternative '
+            'app.'
+          },
+          {
+            'companyIcon': 'https://static.levels.fyi/microsoftlogo.png',
+            'companyName': 'Microsoft',
+            'companySlug': 'microsoft',
+            'companyType': 'public',
+            'employeeCount': 182268,
+            'estimatedValuation': 1680000000000,
+            'isPromoted': False,
+            'jobs': [
+              {
+                'applicationUrl': 'https://careers.microsoft.com/us/en/job/1727520/Senior-Software-Engineer?jobsource=levels.fyi&utm_source=levels.fyi&utm_campaign=levels.fyi-feed&ref=levels.fyi&src=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T14:13:04.000Z',
+                'id': '76715672570077894',
+                'locations': [
+                  'Hyderabad, '
+                  'Telangana, '
+                  'India'
+                ],
+                'maxBaseSalary': 90328,
+                'maxTotalSalary': 174999,
+                'minBaseSalary': 29945,
+                'minTotalSalary': 47642,
+                'postingDate': '2024-08-29T14:13:03.000Z',
+                'title': 'Senior '
+                'Software '
+                'Engineer',
+                'workArrangement': 'hybrid'
+              },
+              {
+                'applicationUrl': 'https://careers.microsoft.com/us/en/job/1762644/Software-Quality-Engineering-IC3?jobsource=levels.fyi&utm_source=levels.fyi&utm_campaign=levels.fyi-feed&ref=levels.fyi&src=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T10:30:51.000Z',
+                'id': '108721597061178054',
+                'locations': [
+                  'Pune, '
+                  'Maharashtra, '
+                  'India'
+                ],
+                'maxBaseSalary': 93438,
+                'maxTotalSalary': 175222,
+                'minBaseSalary': 17952,
+                'minTotalSalary': 27545,
+                'postingDate': '2024-08-29T12:21:31.000Z',
+                'title': 'Software '
+                'Quality '
+                'Engineering '
+                'IC3'
+              }
+            ],
+            'shortDescription': 'Software '
+            'for '
+            'devices '
+            'and '
+            'the '
+            'cloud'
+          },
+          {
+            'companyIcon': 'https://static.levels.fyi/amazonlogo.png',
+            'companyName': 'Amazon',
+            'companySlug': 'amazon',
+            'companyType': 'public',
+            'employeeCount': 865406,
+            'estimatedValuation': 911620000000,
+            'isPromoted': False,
+            'jobs': [
+              {
+                'applicationUrl': 'https://www.amazon.jobs/jobs/2737723/principal-product-manager-technical?cmpid=SPLICX0248M&utm_source=levels.fyi&utm_campaign=cxro&utm_medium=social_media&utm_content=job_posting&ss=paid&ref=levels.fyi&src=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T13:24:20.000Z',
+                'id': '125944012191212230',
+                'locations': [
+                  'Bellevue, '
+                  'WA',
+                  'Irvine, '
+                  'CA'
+                ],
+                'maxBaseSalary': 224000,
+                'maxTotalSalary': 534000,
+                'minBaseSalary': 224000,
+                'minTotalSalary': 534000,
+                'postingDate': '2024-08-29T13:24:18.000Z',
+                'title': 'Principal '
+                'Product '
+                'Manager '
+                'Technical'
+              },
+              {
+                'applicationUrl': 'https://www.amazon.jobs/jobs/2580094/sr-product-manager--technical--device-technologies-product-manager-opstech-it?cmpid=SPLICX0248M&utm_medium=jobboard&utm_source=levels.fyi&utm_campaign=cxro&utm_medium=social_media&utm_content=job_posting&ss=paid&ref=levels.fyi&src=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T16:47:34.000Z',
+                'id': '134142313411551942',
+                'locations': [
+                  'Austin, '
+                  'TX',
+                  'Bellevue, '
+                  'WA'
+                ],
+                'maxBaseSalary': 150000,
+                'maxTotalSalary': 190000,
+                'minBaseSalary': 150000,
+                'minTotalSalary': 190000,
+                'postingDate': '2024-08-28T16:47:33.000Z',
+                'title': 'Sr '
+                'Product '
+                'Manager '
+                '- '
+                'Technical, '
+                'Device '
+                'Technologies, '
+                'Product '
+                'Manager, '
+                'OpsTech '
+                'IT'
+              }
+            ],
+            'shortDescription': 'E-Commerce '
+            'and '
+            'cloud '
+            'services.'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/accenture.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'Accenture',
+            'companySlug': 'accenture',
+            'companyType': 'public',
+            'employeeCount': 492185,
+            'estimatedValuation': 167360000000,
+            'isPromoted': False,
+            'jobs': [
+              {
+                'applicationUrl': 'https://www.accenture.com/in-en/careers/jobdetails?src=levels.fyi&id=ATCI-4536063-S1761140_en&ref=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T13:15:36.000Z',
+                'id': '114410428347359942',
+                'locations': [
+                  'Bengaluru, '
+                  'Karnataka, '
+                  'India'
+                ],
+                'maxBaseSalary': 19505,
+                'maxTotalSalary': 20530,
+                'minBaseSalary': 6839,
+                'minTotalSalary': 7197,
+                'postingDate': '2024-08-29T13:15:33.000Z',
+                'title': 'Application '
+                'Developer'
+              },
+              {
+                'applicationUrl': 'https://www.accenture.com/in-en/careers/jobdetails?src=levels.fyi&id=ATCI-4582159-S1770768_en&ref=levels.fyi&utm_source=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T11:54:40.000Z',
+                'id': '100847634591163078',
+                'locations': [
+                  'Chennai, '
+                  'Tamil '
+                  'Nadu, '
+                  'India'
+                ],
+                'maxBaseSalary': 12889,
+                'maxTotalSalary': 13069,
+                'minBaseSalary': 7275,
+                'minTotalSalary': 7275,
+                'postingDate': '2024-08-29T11:54:37.000Z',
+                'title': 'Application '
+                'Developer'
+              }
+            ],
+            'shortDescription': 'Professional '
+            'services '
+            'company '
+            'offering '
+            'strategy, '
+            'consulting, '
+            'digital'
+          },
+          {
+            'companyIcon': 'https://img.logo.dev/ansys.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw',
+            'companyName': 'Ansys',
+            'companySlug': 'ansys',
+            'companyType': 'public',
+            'employeeCount': 5250,
+            'estimatedValuation': 19100000000,
+            'isPromoted': False,
+            'jobs': [
+              {
+                'applicationUrl': 'https://careers.ansys.com/job/Canonsburg-DevOps-Engineer-PA-15317/1206767300/?utm_source=levels.fyi&utm_medium=referrer&ref=levels.fyi&src=levels.fyi',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-29T15:12:53.000Z',
+                'id': '93586347058438854',
+                'locations': [
+                  'Canonsburg, '
+                  'PA'
+                ],
+                'maxBaseSalary': 99000,
+                'maxTotalSalary': 109500,
+                'minBaseSalary': 80000,
+                'minTotalSalary': 87000,
+                'postingDate': '2024-08-29T15:12:51.000Z',
+                'title': 'DevOps '
+                'Engineer'
+              }
+            ],
+            'shortDescription': 'Engineering '
+            'simulation '
+            'software '
+            'development.'
+          },
+          {
+            'companyIcon': 'https://static.levels.fyi/flexportlogo.webp',
+            'companyName': 'Flexport',
+            'companySlug': 'flexport',
+            'companyType': 'private',
+            'employeeCount': 2750,
+            'estimatedValuation': 8000000000,
+            'isPromoted': False,
+            'jobs': [
+              {
+                'applicationUrl': 'https://grnh.se/f24dcbe91us',
+                'baseSalaryCurrency': 'USD',
+                'expiryDate': '2024-09-28T19:07:37.000Z',
+                'id': '115407661771432646',
+                'locations': [
+                  'Chicago, '
+                  'Illinois, '
+                  'United '
+                  'States'
+                ],
+                'maxBaseSalary': 140000,
+                'maxTotalSalary': 214000,
+                'minBaseSalary': 140000,
+                'minTotalSalary': 214000,
+                'postingDate': '2024-08-29T17:45:33.000Z',
+                'title': 'Software '
+                'Engineer '
+                'II, '
+                'Trucking',
+                'workArrangement': 'hybrid'
+              }
+            ],
+            'shortDescription': 'Global '
+            'freight '
+            'forwarder '
+            'and '
+            'logistics.'
+          }
+        ],
+        'total': 200,
+        'totalMatchingJobs': 73600
+      },
+      'initialLocation': None
+    }
+  },
+  'query': {},
+  'scriptLoader': []
+}
