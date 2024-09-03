@@ -160,7 +160,138 @@
     <div class="modal-content-sections">
         <h1>Search</h1>
 
-        <strong>Query Template</strong><br/>
+
+    </div>
+</div>
+
+<div id="reset-modal" class="modal">
+    <div class="modal-content-sections">
+        <h1>Reset Application</h1>
+        <p>Resetting your application will erase any progress you have made on this application.</p>
+        <h3>Are you sure you want to reset the application?</h3>
+        <button class="button big-button" id="reset-button">Yes, reset my application</button>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="container-sidebar-left">
+        <div class="container-modal-buttons">
+<!--            <button class="button big-button" id="search-button">Search</button><br/>-->
+
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="container-home">
+        <h1>Maker Consulting</h1>
+    </div>
+
+    <div class="container-navbar">
+        <input id="search-terms" size="50"/>
+        <button id="button-search">Search</button>
+
+        <button id="button-navbar-search" class="button button button-nav-active">Search</button>
+        <button id="button-navbar-scan" class="button button button-nav-inactive">Scan</button>
+    </div>
+
+    <div class="container-page" id="container-page-search">
+        <div id="search-results-container" class="search-results-container"></div>
+    </div>
+
+    <div class="container-page" id="container-page-scan" hidden="hidden">
+        <div class="scan-result-container">
+
+            <div class="scan-result-score-container score-neutral" id="minimum-score-container">
+                <label class="scan-result-label">Minimum Requirements</label>
+                <strong id="minimum-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container score-neutral" id="preferred-score-container">
+                <label class="scan-result-label">Preferred Requirements+</label>
+                <strong id="preferred-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container score-neutral" id="job-duties-score-container">
+                <label class="scan-result-label">Job Duties+</label>
+                <strong id="job-duties-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container score-neutral" id="company-info-score-container">
+                <label class="scan-result-label">Company Info+</label>
+                <strong id="company-info-score" class="scan-result-score"></strong>
+            </div>
+            <div class="scan-result-score-container score-neutral" id="regular-score-container">
+                <label class="scan-result-label">Full Job Description</label>
+                <strong id="regular-score" class="scan-result-score"></strong>
+            </div>
+        </div>
+
+        <div class="container-scan-job-description">
+            <!--        Fetching job descriptions by url is hidden for now-->
+            <strong style="display: none;">Url: </strong>
+            <input id="job-post-url" size="70" style="display: none;"/>
+            <button id="get-job-description-button" class="button" style="display: none;">Get Job Description</button>
+
+
+            <h3>Job Description</h3>
+            <div class="container-keyword-section">
+                <div class="container-keyword-section-buttons">
+                    <button id="job-description-button-edit" class="button-keyword-toggle-active">Edit Job Description</button>
+                    <button id="job-description-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                </div>
+                <div id="job-description-div-editable" class="job-section-text" contentEditable="true"></div>
+                <div id="job-description-div-markup" class="job-section-text" hidden="hidden"></div>
+                <strong>Score: </strong><label id="score-reminder-regular"></label>
+            </div>
+
+            <h3>Minimum Requirements</h3>
+            <div class="container-keyword-section">
+                <div class="container-keyword-section-buttons">
+                    <button id="job-minimum-requirements-button-edit" class="button-keyword-toggle-active">Edit Minimum Requirements</button>
+                    <button id="job-minimum-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                </div>
+                <div id="job-minimum-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
+                <div id="job-minimum-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
+                <strong>Score: </strong><label id="score-reminder-minimum"></label>
+            </div>
+
+            <h3>Preferred Requirements</h3>
+            <div class="container-keyword-section">
+                <div class="container-keyword-section-buttons">
+                    <button id="job-preferred-requirements-button-edit" class="button-keyword-toggle-active">Edit Preferred Requirements</button>
+                    <button id="job-preferred-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                </div>
+                <div id="job-preferred-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
+                <div id="job-preferred-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
+                <strong>Score (including above sections): </strong><label id="score-reminder-preferred"></label>
+            </div>
+
+            <h3>Job Duties</h3>
+            <div class="container-keyword-section">
+                <div class="container-keyword-section-buttons">
+                    <button id="job-duties-button-edit" class="button-keyword-toggle-active">Edit Job Duties</button>
+                    <button id="job-duties-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                </div>
+                <div id="job-duties-div-editable" class="job-section-text" contentEditable="true"></div>
+                <div id="job-duties-div-markup" class="job-section-text" hidden="hidden"></div>
+                <strong>Score (including above sections): </strong><label id="score-reminder-duties"></label>
+            </div>
+
+            <h3>Company Info</h3>
+            <div class="container-keyword-section">
+                <div class="container-keyword-section-buttons">
+                    <button id="job-company-info-button-edit" class="button-keyword-toggle-active">Edit Company Info</button>
+                    <button id="job-company-info-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
+                </div>
+                <div id="job-company-info-div-editable" class="job-section-text" contentEditable="true"></div>
+                <div id="job-company-info-div-markup" class="job-section-text" hidden="hidden"></div>
+                <strong>Score (including above sections): </strong><label id="score-reminder-company"></label>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="container-search-info" class="container-sidebar-right">
+               <strong>Query Template</strong><br/>
         <textarea rows="5" cols="30" id="linkedin-query" class="textarea"></textarea><br/>
         <button class="clipboard-button" id="clipboard-linkedin-query">📋 Copy to clipboard</button>
         <br/><br/>
@@ -187,138 +318,15 @@
             <li><a href="https://www.ziprecruiter.com/jobs-search?search=Software+Engineer&location=Arlington%2C+MA&refine_by_location_type=only_remote&radius=25&days=&refine_by_employment=employment_type%3Aall&refine_by_salary=&refine_by_salary_ceil=&lvk=XNXlnP9lGemiHp3oVNeFZw.--NVj3r7sTV" target="_blank">ZipRecruiter</a></li>
         </ul>
     </div>
-</div>
 
-<div id="reset-modal" class="modal">
-    <div class="modal-content-sections">
-        <h1>Reset Application</h1>
-        <p>Resetting your application will erase any progress you have made on this application.</p>
-        <h3>Are you sure you want to reset the application?</h3>
-        <button class="button big-button" id="reset-button">Yes, reset my application</button>
-    </div>
-</div>
-
-
-<div class="container">
-
-    <div class="container-sidebar-left">
-        <h1>Activities</h1>
-        <div class="container-modal-buttons">
-            <button class="button big-button" id="reset-modal-button">Reset</button>
-            <button class="button big-button" id="search-button">Search</button><br/>
-            <button id="configure-tailoring-button" class="button big-button">Tailor</button>
-            <button id="apply-button" class="big-button button">Apply</button>
-            <br/><br/>
-        </div>
-    </div>
-
-    <div class="container-navbar">
-        <button id="button-navbar-search" class="button">Search</button>
-        <button id="button-navbar-scan" class="button">Scan</button>
-    </div>
-
-    <div class="container-page" id="container-page-search">
-        <h1>Search</h1>
-        <input id="search-terms" size="50"/>
-        <button id="button-search">Search</button>
-        <div id="search-results-container" class="search-results-container"></div>
-    </div>
-
-    <div class="container-page" id="container-page-scan" hidden="hidden">
-        <h1>Scanning</h1>
-
-        <div class="scan-result-container">
-
-            <div class="scan-result-score-container score-neutral" id="minimum-score-container">
-                <label class="scan-result-label">Minimum Requirements</label>
-                <strong id="minimum-score" class="scan-result-score"></strong>
-            </div>
-            <div class="scan-result-score-container score-neutral" id="preferred-score-container">
-                <label class="scan-result-label">Preferred Requirements+</label>
-                <strong id="preferred-score" class="scan-result-score"></strong>
-            </div>
-            <div class="scan-result-score-container score-neutral" id="job-duties-score-container">
-                <label class="scan-result-label">Job Duties+</label>
-                <strong id="job-duties-score" class="scan-result-score"></strong>
-            </div>
-            <div class="scan-result-score-container score-neutral" id="company-info-score-container">
-                <label class="scan-result-label">Company Info+</label>
-                <strong id="company-info-score" class="scan-result-score"></strong>
-            </div>
-            <div class="scan-result-score-container score-neutral" id="regular-score-container">
-                <label class="scan-result-label">Full Job Description</label>
-                <strong id="regular-score" class="scan-result-score"></strong>
-            </div>
-        </div>
-
-<!--        Fetching job descriptions by url is hidden for now-->
-        <strong style="display: none;">Url: </strong>
-        <input id="job-post-url" size="70" style="display: none;"/>
-        <button id="get-job-description-button" class="button" style="display: none;">Get Job Description</button>
-
-
-        <h3>Job Description</h3>
-        <div class="container-keyword-section">
-            <div class="container-keyword-section-buttons">
-                <button id="job-description-button-edit" class="button-keyword-toggle-active">Edit Job Description</button>
-                <button id="job-description-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
-            </div>
-            <div id="job-description-div-editable" class="job-section-text" contentEditable="true"></div>
-            <div id="job-description-div-markup" class="job-section-text" hidden="hidden"></div>
-            <strong>Score: </strong><label id="score-reminder-regular"></label>
-        </div>
-
-        <h3>Minimum Requirements</h3>
-        <div class="container-keyword-section">
-            <div class="container-keyword-section-buttons">
-                <button id="job-minimum-requirements-button-edit" class="button-keyword-toggle-active">Edit Minimum Requirements</button>
-                <button id="job-minimum-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
-            </div>
-            <div id="job-minimum-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
-            <div id="job-minimum-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
-            <strong>Score: </strong><label id="score-reminder-minimum"></label>
-        </div>
-
-        <h3>Preferred Requirements</h3>
-        <div class="container-keyword-section">
-            <div class="container-keyword-section-buttons">
-                <button id="job-preferred-requirements-button-edit" class="button-keyword-toggle-active">Edit Preferred Requirements</button>
-                <button id="job-preferred-requirements-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
-            </div>
-            <div id="job-preferred-requirements-div-editable" class="job-section-text" contentEditable="true"></div>
-            <div id="job-preferred-requirements-div-markup" class="job-section-text" hidden="hidden"></div>
-            <strong>Score (including above sections): </strong><label id="score-reminder-preferred"></label>
-        </div>
-
-        <h3>Job Duties</h3>
-        <div class="container-keyword-section">
-            <div class="container-keyword-section-buttons">
-                <button id="job-duties-button-edit" class="button-keyword-toggle-active">Edit Job Duties</button>
-                <button id="job-duties-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
-            </div>
-            <div id="job-duties-div-editable" class="job-section-text" contentEditable="true"></div>
-            <div id="job-duties-div-markup" class="job-section-text" hidden="hidden"></div>
-            <strong>Score (including above sections): </strong><label id="score-reminder-duties"></label>
-        </div>
-
-        <h3>Company Info</h3>
-        <div class="container-keyword-section">
-            <div class="container-keyword-section-buttons">
-                <button id="job-company-info-button-edit" class="button-keyword-toggle-active">Edit Company Info</button>
-                <button id="job-company-info-button-show" class="button-keyword-toggle-inactive">Show Missing Keywords</button>
-            </div>
-            <div id="job-company-info-div-editable" class="job-section-text" contentEditable="true"></div>
-            <div id="job-company-info-div-markup" class="job-section-text" hidden="hidden"></div>
-            <strong>Score (including above sections): </strong><label id="score-reminder-company"></label>
-        </div>
-    </div>
-
-    <div class="container-sidebar-right">
-
-        <h1>Docs & Info</h1>
-
+    <div id="container-docs-info" class="container-sidebar-right" hidden="hidden">
+        <button class="button big-button" id="reset-modal-button">Reset</button><br/>
         <button id="create-resume-button" class="big-button disabled-button button" disabled>Create Company Docs</button><br/>
         <button id="scan-button" class="disabled-button button" disabled>Rescan</button><br/><br/>
+
+        <button id="configure-tailoring-button" class="button">Tailor</button>
+        <button id="apply-button" class="button">Apply</button>
+        <br/><br/>
 
         <strong>Currently Scanning:</strong><br/>
         <label id="active-scanning-document"></label>

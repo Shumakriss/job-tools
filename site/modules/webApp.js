@@ -78,7 +78,7 @@ class WebApp {
     async addModals() {
         this.modals.add("settings-modal", "configure-button");
         this.modals.add("apply-modal", "apply-button");
-        this.modals.add("search-modal", "search-button");
+//        this.modals.add("search-modal", "search-button");
         this.modals.add("reset-modal", "reset-modal-button");
         this.modals.add("tailoring-modal", "configure-tailoring-button");
     }
@@ -260,11 +260,19 @@ class WebApp {
         document.getElementById('button-navbar-search').onclick = async () => {
             document.getElementById("container-page-scan").hidden = "hidden";
             document.getElementById("container-page-search").hidden = "";
+            document.getElementById("button-navbar-search").className = "button button-nav-active";
+            document.getElementById("button-navbar-scan").className = "button button-nav-inactive";
+            document.getElementById("container-docs-info").hidden = "hidden";
+            document.getElementById("container-search-info").hidden = "";
         }
 
         document.getElementById('button-navbar-scan').onclick = async () => {
             document.getElementById("container-page-scan").hidden = "";
             document.getElementById("container-page-search").hidden = "hidden";
+            document.getElementById("button-navbar-search").className = "button button-nav-inactive";
+            document.getElementById("button-navbar-scan").className = "button button-nav-active";
+            document.getElementById("container-docs-info").hidden = "";
+            document.getElementById("container-search-info").hidden = "hidden";
         }
 
         this.jobSections.map( (jobSection) => {jobSection.registerHandlers();});

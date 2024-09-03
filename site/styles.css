@@ -11,6 +11,14 @@
     border-radius: 10px;
 }
 
+.button-nav-active {
+    background-color: #333f71; /* maker blue */
+}
+
+.button-nav-inactive {
+    background-color: #AABBFF; /* maker blue */
+}
+
 .button:hover {
   background-color: #222255; /* dark blue */
 }
@@ -43,21 +51,28 @@
     height: 1080px;
     overflow: hidden;
     grid-template-columns: [first] 200px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
-    grid-template-rows: [first] 25px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
+    grid-template-rows: [first] 50px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
 }
 
 .container-sidebar-left {
     grid-column-start: 1;
     grid-column-end: 1;
-    grid-row-start: 1;
+    grid-row-start: 3;
     grid-row-end: 4;
 }
 
 .container-sidebar-right {
     grid-column-start: 5;
     grid-column-end: 5;
-    grid-row-start: 1;
+    grid-row-start: 3;
     grid-row-end:5;
+}
+
+.container-home {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end:1;
 }
 
 .container-navbar {
@@ -74,11 +89,19 @@
     grid-row-end:5;
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
+}
+
+.container-scan-job-description {
+    height: 800px;
+    margin-bottom: 1000px;
+    overflow-y: auto;
 }
 
 .search-results-container {
     white-space: pre-wrap;
+    height: 1000px;
+    margin-bottom: 1200px;
+    overflow-y: auto;
 }
 
 .container-modal-buttons {
@@ -101,7 +124,6 @@
 .scan-result-container {
     padding: 5px;
     min-height: 175px;
-    overflow: hidden
 }
 
 .scan-result-score-container {

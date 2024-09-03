@@ -20,6 +20,7 @@ class Controller {
         this.jobscan = new Jobscan(model);
         this.chatgpt = new ChatGpt(model);
         this.services = new Services();
+        this.search();
     }
     
     save() {
