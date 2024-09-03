@@ -13,8 +13,7 @@ class Services {
             const request = new Request(SERVER + "/search", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(requestBody)
             });

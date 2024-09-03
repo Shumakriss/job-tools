@@ -2,14 +2,14 @@ import threading
 
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 import jobscan
 import levels_fyi
 
 app = Flask(__name__)
+cors = CORS(app, origins=["http://localhost:63342"])
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 @app.route("/job")
 @cross_origin()
