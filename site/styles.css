@@ -328,6 +328,7 @@ textarea {
 }
 
 .search-results-card {
+    background: #AEDDFF;
     margin: 3px;
     padding: 5px;
     white-space: pre-wrap;

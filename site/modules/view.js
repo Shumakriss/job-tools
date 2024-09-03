@@ -1,3 +1,14 @@
+function jdCompare(a, b) {
+    if (a["score"] < b["score"]) {
+        return -1;
+    }
+    if (a["score"] > b["score"]) {
+        return 1;
+    }
+
+    return 0;
+}
+
 function formatSearchResults(searchResults) {
 
     if (!searchResults || typeof searchResults != "object") {
@@ -6,18 +17,42 @@ function formatSearchResults(searchResults) {
 
     document.getElementById('search-results-container').innerHTML = "";
 
-    for (let i=0; i< searchResults["results"].length; i++){
+    let jds = searchResults["results"];
+    jds = jds.sort(jdCompare).reverse();
+
+    for (let i=0; i< jds.length; i++){
+        let jd = jds[i];
+        let score = jd["score"];
+        let descText = jd["summary"];
+        let link = jd["link"];
+        
         let card = document.createElement("div");
         card.className = "search-results-card";
 
-        let strong = document.createElement("strong");
-        strong.innerHTML = "Score: " + searchResults["results"][i]["score"];
+        let scoreLabel = document.createElement("strong");
+        scoreLabel.innerHTML = "Score: " + score;
+
+        let descLabel = document.createElement("strong");
+        descLabel.innerHTML = "Description: ";
 
         let body = document.createElement("div");
-        body.innerHTML = searchResults["results"][i]["job_description"];
+        body.innerHTML = descText;
 
-        card.appendChild(strong);
+        let linkEl = document.createElement("a");
+        linkEl.href = link;
+        linkEl.target = "_blank";
+        linkEl.innerHTML = "View Job";
+
+        let button = document.createElement("button");
+        button.innerHTML = "Apply";
+
+        card.appendChild(scoreLabel);
+        card.appendChild(document.createElement("br"));
+        card.appendChild(descLabel);
         card.appendChild(body);
+        card.appendChild(document.createElement("br"));
+        card.appendChild(linkEl);
+        card.appendChild(button);
 
         document.getElementById('search-results-container').appendChild(card);
     }

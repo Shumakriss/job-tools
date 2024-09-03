@@ -1,3 +1,4 @@
+import json
 import urllib
 
 from bs4 import BeautifulSoup
@@ -41,20 +42,35 @@ def _scrape_search_results(html: str):
     for div in divs:
         if "class" in div.attrs:
             for className in div['class']:
-                if className.startswith("company-jobs-preview-card_companyJobsContainer"):
-                    results.append(div.get_text())
+                if className.startswith("company-jobs-preview-card_companyJobContainer"):
+                    jd = {
+                        "summary": div.get_text(),
+                        "link": URL + div.parent.attrs["href"]
+                    }
+                    results.append(jd)
 
     return results
+
+
+def get_text_recursive(element):
+    child_text = ""
+    for child in element.contents:
+        child_text += get_text_recursive(child)
+
+    return element.get_text() + child_text
 
 
 def _scrape_job_description(html: str):
     soup = BeautifulSoup(html, 'html.parser')
 
-    sections = soup.find_all("section")
-    for section in sections:
-        if "class" in section.attrs:
-            for className in section['class']:
-                if className.startswith("job-details-about_aboutContainer"):
-                    return section.get_text()
+    script = soup.find("script", {"id": "__NEXT_DATA__"})
+    json_obj = json.loads(script.get_text())
+    jd = json_obj["props"]["pageProps"]["initialJobDetails"]
+    return {
+        "title": jd["title"],
+        "description": jd["description"],
+        "applicationUrl": jd["applicationUrl"],
+        "postingDate": jd["postingDate"]
+    }
 
-    raise Exception("Failed to scrape job description")
+    # raise Exception("Failed to scrape job description")

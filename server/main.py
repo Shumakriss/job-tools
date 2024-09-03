@@ -2,14 +2,14 @@ import threading
 
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 import jobscan
 import levels_fyi
 
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 @app.route("/job")
 @cross_origin()
@@ -29,15 +29,21 @@ def job_detail():
 
 
 def scan_async(resume, jd, results):
+    job_description = levels_fyi.job_description(jd["link"])
+    summary = jd["summary"]
+    link = job_description["applicationUrl"]
+    desc = job_description["description"]
+
     record = {
-        "job_description": jd,
-        "score": jobscan.scan(resume, jd).matchRate.score
+        "summary": summary,
+        "link": link,
+        "score": jobscan.scan(resume, desc).matchRate.score
     }
     results.append(record)
 
 
 # TODO: Paginating
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["POST", "OPTIONS"])
 @cross_origin()
 def search():
     query = request.json["query"]
