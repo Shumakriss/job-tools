@@ -30,11 +30,14 @@ def job_detail():
 
 def scan_async(resume, jd, results):
     job_description = levels_fyi.job_description(jd["link"])
+
     summary = jd["summary"]
+    company = job_description["company"]
     link = job_description["applicationUrl"]
     desc = job_description["description"]
 
     record = {
+        "company": company,
         "summary": summary,
         "link": link,
         "score": jobscan.scan(resume, desc).matchRate.score

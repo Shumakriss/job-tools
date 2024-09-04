@@ -1,3 +1,14 @@
+function openLinkInNewTab(url) {
+    // Pop-under a link
+    const a = document.createElement('a')
+    a.href = url
+    a.target = "_blank"
+    a.download = url.split('/').pop()
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
+
 function jdCompare(a, b) {
     if (a["score"] < b["score"]) {
         return -1;
@@ -9,70 +20,6 @@ function jdCompare(a, b) {
     return 0;
 }
 
-function formatSearchResults(searchResults) {
-
-    if (!searchResults || typeof searchResults != "object") {
-       return;
-    }
-
-    document.getElementById('search-results-container').innerHTML = "";
-
-    let jds = searchResults["results"];
-    jds = jds.sort(jdCompare).reverse();
-
-    for (let i=0; i< jds.length; i++){
-        let jd = jds[i];
-        let score = jd["score"];
-        let descText = jd["summary"];
-        let link = jd["link"];
-        
-        let card = document.createElement("div");
-        card.className = "search-results-card";
-
-        let scoreLabel = document.createElement("strong");
-        scoreLabel.innerHTML = "Score: " + score;
-
-        let descLabel = document.createElement("strong");
-        descLabel.innerHTML = "Description: ";
-
-        let body = document.createElement("div");
-        body.innerHTML = descText;
-
-        let cardLeft = document.createElement("div");
-        cardLeft.className = "container-search-result-card-left";
-
-        let cardCenter = document.createElement("div");
-        cardCenter.className = "container-search-result-card-center";
-
-        let cardRight = document.createElement("div");
-        cardRight.className = "container-search-result-card-right";
-
-        let linkEl = document.createElement("a");
-        linkEl.href = link;
-        linkEl.target = "_blank";
-        linkEl.innerHTML = "View Job";
-
-        let button = document.createElement("button");
-        button.className = "button big-button";
-        button.innerHTML = "Apply";
-
-        cardLeft.appendChild(scoreLabel);
-
-        cardCenter.appendChild(linkEl);
-        cardCenter.appendChild(document.createElement("br"));
-        cardCenter.appendChild(document.createElement("br"));
-        cardCenter.appendChild(body);
-
-        cardRight.appendChild(button);
-
-        card.appendChild(cardLeft);
-        card.appendChild(cardCenter);
-        card.appendChild(cardRight);
-
-        document.getElementById('search-results-container').appendChild(card);
-    }
-
-}
 
 function formatCorrespondence(companyCorrespondence) {
 
@@ -428,7 +375,7 @@ class View {
 
         document.getElementById("active-scanning-document").innerText = this.model.activeScanningDocument();
 
-        formatSearchResults(this.model.searchResults);
+        this.formatSearchResults(this.model.searchResults);
     }
 
     showJobSectionKeywords() {
@@ -443,6 +390,90 @@ class View {
         this.jobSections.map((section) => {section.showEditable();});
     }
 
+
+    formatSearchResults(searchResults) {
+
+        if (!searchResults || typeof searchResults != "object") {
+           return;
+        }
+
+        document.getElementById('search-results-container').innerHTML = "";
+
+        let jds = searchResults["results"];
+        jds = jds.sort(jdCompare).reverse();
+
+        for (let i=0; i< jds.length; i++){
+            let jd = jds[i];
+            let score = jd["score"];
+            let company = jd["company"];
+            let summary = jd["summary"];
+            let link = jd["link"];
+            let fullDescription = jd["job_description"];
+
+
+            let card = document.createElement("div");
+            card.className = "search-results-card";
+
+            let scoreLabel = document.createElement("strong");
+            scoreLabel.innerHTML = "Jobscan Score: " + score;
+
+            let companyLabel = document.createElement("strong");
+            companyLabel.innerHTML = company;
+
+            let body = document.createElement("div");
+            body.innerHTML = summary;
+
+            let cardLeft = document.createElement("div");
+            cardLeft.className = "container-search-result-card-left";
+
+            let cardCenter = document.createElement("div");
+            cardCenter.className = "container-search-result-card-center";
+
+            let cardRight = document.createElement("div");
+            cardRight.className = "container-search-result-card-right";
+
+            let linkEl = document.createElement("a");
+            linkEl.href = link;
+            linkEl.target = "_blank";
+            linkEl.innerHTML = "View Job";
+
+            let applyButton = document.createElement("button");
+            applyButton.className = "button big-button";
+            applyButton.innerHTML = "Apply";
+            applyButton.onclick = async () => {
+                this.model.jobDescription = fullDescription;
+                this.model.save();
+                document.getElementById("container-page-scan").hidden = "";
+                document.getElementById("container-page-search").hidden = "hidden";
+                document.getElementById("button-navbar-search").className = "button button-nav-inactive";
+                document.getElementById("button-navbar-scan").className = "button button-nav-active";
+                document.getElementById("container-docs-info").hidden = "";
+                document.getElementById("container-search-info").hidden = "hidden";
+            }
+            
+            let viewButton = document.createElement("button");
+            viewButton.className = "button big-button";
+            viewButton.innerHTML = "View";
+            viewButton.onclick = async () => {
+                openLinkInNewTab(link)
+            }
+
+            cardLeft.appendChild(scoreLabel);
+
+            cardCenter.appendChild(companyLabel);
+            cardCenter.appendChild(body);
+            
+            cardRight.appendChild(viewButton);
+//            cardRight.appendChild(applyButton);
+
+            card.appendChild(cardLeft);
+            card.appendChild(cardCenter);
+            card.appendChild(cardRight);
+
+            document.getElementById('search-results-container').appendChild(card);
+        }
+
+    }
 }
 
 export default View;

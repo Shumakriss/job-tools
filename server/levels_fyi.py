@@ -69,8 +69,13 @@ def _scrape_job_description(html: str):
     script = soup.find("script", {"id": "__NEXT_DATA__"})
     json_obj = json.loads(script.get_text())
     jd = json_obj["props"]["pageProps"]["initialJobDetails"]
+
     return {
         "title": jd["title"],
+        "locations": jd["locations"],
+        "company": jd["companyInfo"]["name"],
+        "companyDescription": jd["companyInfo"]["description"],
+        "employeeCount": jd["companyInfo"]["empCount"],
         "description": jd["description"],
         "applicationUrl": jd["applicationUrl"],
         "postingDate": jd["postingDate"]
