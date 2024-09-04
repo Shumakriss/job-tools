@@ -38,21 +38,36 @@ function formatSearchResults(searchResults) {
         let body = document.createElement("div");
         body.innerHTML = descText;
 
+        let cardLeft = document.createElement("div");
+        cardLeft.className = "container-search-result-card-left";
+
+        let cardCenter = document.createElement("div");
+        cardCenter.className = "container-search-result-card-center";
+
+        let cardRight = document.createElement("div");
+        cardRight.className = "container-search-result-card-right";
+
         let linkEl = document.createElement("a");
         linkEl.href = link;
         linkEl.target = "_blank";
         linkEl.innerHTML = "View Job";
 
         let button = document.createElement("button");
+        button.className = "button big-button";
         button.innerHTML = "Apply";
 
-        card.appendChild(scoreLabel);
-        card.appendChild(document.createElement("br"));
-        card.appendChild(descLabel);
-        card.appendChild(body);
-        card.appendChild(document.createElement("br"));
-        card.appendChild(linkEl);
-        card.appendChild(button);
+        cardLeft.appendChild(scoreLabel);
+
+        cardCenter.appendChild(linkEl);
+        cardCenter.appendChild(document.createElement("br"));
+        cardCenter.appendChild(document.createElement("br"));
+        cardCenter.appendChild(body);
+
+        cardRight.appendChild(button);
+
+        card.appendChild(cardLeft);
+        card.appendChild(cardCenter);
+        card.appendChild(cardRight);
 
         document.getElementById('search-results-container').appendChild(card);
     }

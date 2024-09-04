@@ -50,7 +50,7 @@
     display: grid;
     height: 1080px;
     overflow: hidden;
-    grid-template-columns: [first] 200px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
+    grid-template-columns: [first] 200px [line2] 50px [line3] auto [col4-start] 50px [five] 200px [end];
     grid-template-rows: [first] 50px [line2] 50px [line3] auto [col4-start] 50px [five] 250px [end];
 }
 
@@ -353,9 +353,32 @@ textarea {
     background: #AEDDFF;
     margin: 3px;
     padding: 5px;
-    white-space: pre-wrap;
     border-style: solid;
     border-width: 2px;
     border-color: #BBBBBB;
     border-radius: 5px;
+    width: 90%;
+    height: 100px;
+    overflow: hidden;
+}
+
+.container-search-result-card-left {
+    vertical-align: top;
+    display: table-cell;
+    min-width: 100px;
+    margin: 0px;
+}
+
+.container-search-result-card-center {
+    vertical-align: top;
+    display: table-cell;
+    width: 90%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container-search-result-card-right {
+    display: table-cell;
+    vertical-align: middle;
+    min-width: 100px;
 }

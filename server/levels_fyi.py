@@ -43,8 +43,11 @@ def _scrape_search_results(html: str):
         if "class" in div.attrs:
             for className in div['class']:
                 if className.startswith("company-jobs-preview-card_companyJobContainer"):
+                    summary = ""
+                    for child in div.children:
+                        summary += child.get_text() + "\n"
                     jd = {
-                        "summary": div.get_text(),
+                        "summary": summary,
                         "link": URL + div.parent.attrs["href"]
                     }
                     results.append(jd)
