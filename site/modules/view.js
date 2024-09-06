@@ -397,6 +397,8 @@ class View {
            return;
         }
 
+//        debugger;
+
         document.getElementById('search-results-container').innerHTML = "";
 
         let jds = searchResults["results"];
@@ -407,9 +409,10 @@ class View {
             let score = jd["score"];
             let company = jd["company"];
             let summary = jd["summary"];
-            let link = jd["link"];
-            let fullDescription = jd["job_description"];
-
+            let title = jd["title"]
+            let link = jd["application_url"];
+            let fullDescription = jd["description"];
+            let postedDate = jd["posted_date"]
 
             let card = document.createElement("div");
             card.className = "search-results-card";
@@ -421,7 +424,7 @@ class View {
             companyLabel.innerHTML = company;
 
             let body = document.createElement("div");
-            body.innerHTML = summary;
+            body.innerHTML = title;
 
             let cardLeft = document.createElement("div");
             cardLeft.className = "container-search-result-card-left";

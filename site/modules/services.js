@@ -1,4 +1,4 @@
-const SERVER = "http://127.0.0.1:5000"
+const SERVER = "http://127.0.0.1:3000"
 
 class Services {
 
@@ -19,12 +19,11 @@ class Services {
             });
 
             console.debug(request);
-            const response = await fetch(request);
+            const response = await fetch(request, {cache: "no-store"});
 
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-
             const text = await response.json();
 
             return text;

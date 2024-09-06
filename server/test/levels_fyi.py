@@ -1,6 +1,5 @@
 import unittest
-from server import levels_fyi
-
+from server.scrape import levels_fyi
 
 EXPECTED_JD = """At City Storage Systems, we're
                                             building Infrastructure for Better Food. We help restaurateurs around the
