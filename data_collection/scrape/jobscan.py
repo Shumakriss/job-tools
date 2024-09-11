@@ -1,7 +1,7 @@
 import json
 import requests
 
-from server.model.scan import *
+from database.scan import *
 
 URL = "https://api.jobscan.co/v4/scan"
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"

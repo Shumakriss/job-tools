@@ -397,8 +397,6 @@ class View {
            return;
         }
 
-//        debugger;
-
         document.getElementById('search-results-container').innerHTML = "";
 
         let jds = searchResults["results"];

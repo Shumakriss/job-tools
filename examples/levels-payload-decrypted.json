@@ -1,0 +1,141 @@
+{
+  "results": [
+    {
+      "companyIcon": "https://img.logo.dev/klook.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw",
+      "companyName": "Klook",
+      "companySlug": "klook",
+      "companyType": "private",
+      "shortDescription": "Travel booking platform for experiences.",
+      "employeeCount": 920,
+      "estimatedValuation": 1350000000,
+      "isPromoted": false,
+      "jobs": [
+        {
+          "id": "102464702663008966",
+          "title": "Business Analyst/Senior Business Analyst",
+          "locations": [
+            "Singapore"
+          ],
+          "applicationUrl": "https://klook.wd3.myworkdayjobs.com/KlookCareers/job/Singapore/Senior-Business-Analyst_R-3704?utm_medium=jobboard&source=JobBoard_Linked_In&utm_source=levels.fyi&ref=levels.fyi&src=levels.fyi",
+          "postingDate": "2024-08-15T15:25:39.000Z",
+          "expiryDate": "2024-09-28T15:25:41.000Z",
+          "minBaseSalary": null,
+          "maxBaseSalary": null,
+          "baseSalaryCurrency": null,
+          "minTotalSalary": null,
+          "maxTotalSalary": null
+        }
+      ]
+    },
+    {
+      "companyIcon": "https://img.logo.dev/tsmc.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw",
+      "companyName": "TSMC",
+      "companySlug": "tsmc",
+      "companyType": "public",
+      "shortDescription": "Semiconductor manufacturer, wafer production.",
+      "employeeCount": 57000,
+      "estimatedValuation": 324360000000,
+      "isPromoted": false,
+      "jobs": [
+        {
+          "id": "102670099810263750",
+          "title": "Senior Full-Stack Engineer",
+          "locations": [
+            "Hsinchu City, Taiwan, Taiwan"
+          ],
+          "applicationUrl": "https://careers.tsmc.com/careers/JobDetail?jobId=509&source=levels.fyi&ref=levels.fyi&src=levels.fyi&utm_source=levels.fyi",
+          "postingDate": "2024-08-01T15:30:12.000Z",
+          "expiryDate": "2024-09-28T15:30:14.000Z",
+          "minBaseSalary": null,
+          "maxBaseSalary": null,
+          "baseSalaryCurrency": null,
+          "minTotalSalary": null,
+          "maxTotalSalary": null
+        }
+      ]
+    },
+    {
+      "companyIcon": "https://img.logo.dev/generalmills.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw",
+      "companyName": "General Mills",
+      "companySlug": "general-mills",
+      "companyType": "public",
+      "shortDescription": "Branded food manufacturer and marketer.",
+      "employeeCount": 20980,
+      "estimatedValuation": 47000000000,
+      "isPromoted": false,
+      "jobs": [
+        {
+          "id": "128077143937557190",
+          "title": "Sr. Business Analyst \xe2\x80\x93 Sales Strategy & Intelligence",
+          "locations": [
+            "Kurla, Maharashtra, India"
+          ],
+          "applicationUrl": "https://eng-referral-generalmills2.icims.com/jobs/27941/job?utm_medium=jobboard&utm_source=levels.fyi&ref=levels.fyi&src=levels.fyi",
+          "postingDate": "2024-08-10T11:13:28.000Z",
+          "expiryDate": "2024-10-10T11:13:29.000Z",
+          "workArrangement": "hybrid",
+          "minBaseSalary": null,
+          "maxBaseSalary": null,
+          "baseSalaryCurrency": null,
+          "minTotalSalary": null,
+          "maxTotalSalary": null
+        }
+      ]
+    },
+    {
+      "companyIcon": "https://img.logo.dev/shield.ai?token=pk_Ez-J4YOpSS-Bjtug_T41Dw",
+      "companyName": "Shield AI",
+      "companySlug": "shield-ai",
+      "companyType": "private",
+      "shortDescription": "AI company protecting people.",
+      "employeeCount": 180,
+      "estimatedValuation": 1000000000,
+      "isPromoted": false,
+      "jobs": [
+        {
+          "id": "91358317204382406",
+          "title": "Staff Vibrations Test Engineer, Aerostructures (R2784)",
+          "locations": [],
+          "applicationUrl": "https://jobs.lever.co/shieldai/1ecdd7dc-f0e0-460c-aa49-4a3629298442/apply",
+          "postingDate": "2024-08-22T17:29:53.000Z",
+          "expiryDate": "2024-09-21T22:09:26.000Z",
+          "minBaseSalary": 127720,
+          "maxBaseSalary": 191580,
+          "baseSalaryCurrency": "USD",
+          "minTotalSalary": 142720,
+          "maxTotalSalary": 206580
+        }
+      ]
+    },
+    {
+      "companyIcon": "https://img.logo.dev/cloudbees.com?token=pk_Ez-J4YOpSS-Bjtug_T41Dw",
+      "companyName": "CloudBees",
+      "companySlug": "cloudbees",
+      "companyType": "private",
+      "shortDescription": "Cloud-based software delivery platform.",
+      "employeeCount": 510,
+      "estimatedValuation": 1150000000,
+      "isPromoted": false,
+      "jobs": [
+        {
+          "id": "139250962463105734",
+          "title": "Java Software Engineer (CBCI/TA-240)",
+          "locations": [
+            "Greater Bengaluru Area"
+          ],
+          "applicationUrl": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/2106190?utm_medium=jobboard&utm_source=levels.fyi&ref=levels.fyi&src=levels.fyi",
+          "postingDate": "2024-08-22T19:13:52.000Z",
+          "expiryDate": "2024-09-28T19:13:54.000Z",
+          "workArrangement": "hybrid",
+          "minBaseSalary": null,
+          "maxBaseSalary": null,
+          "baseSalaryCurrency": null,
+          "minTotalSalary": null,
+          "maxTotalSalary": null
+        }
+      ]
+    }
+  ],
+  "total": 200,
+  "totalMatchingJobs": 73600
+}

@@ -1,5 +1,7 @@
+import json
 import unittest
-from server.scrape import levels_fyi
+
+from data_collection.scrape import levels_fyi
 
 EXPECTED_JD = """At City Storage Systems, we're
                                             building Infrastructure for Better Food. We help restaurateurs around the
@@ -8,6 +10,7 @@ EXPECTED_JD = """At City Storage Systems, we're
                                             game for restaurateurs, whether they’re entrepreneurs opening their first
                                             restaurant all the way through to your favorite global quick-service
                                             restaurant chains"""
+
 
 class TestLevelsFyi(unittest.TestCase):
 
@@ -22,13 +25,20 @@ class TestLevelsFyi(unittest.TestCase):
         if type(output) != dict:
             raise Exception("Job description is not a string")
 
-
     def test_scrape_search(self):
         with open("../../examples/levels_search.html", "r") as file:
             self.html = file.read()
         output = levels_fyi._scrape_search_results(self.html)
+
+        found_links = []
+        for job in output:
+            if job.details_url in found_links:
+                raise Exception("Duplicate job scraped")
+            else:
+                found_links.append(job.details_url)
+
         if len(output) == 0:
-            raise Exception("")
+            raise Exception("Empty output")
 
     # # TODO: Tag for integration
     # def test_fetch_jd(self):
@@ -53,3 +63,15 @@ class TestLevelsFyi(unittest.TestCase):
     #     output = levels_fyi.search("software engineer")
     #     if len(output) == 0:
     #         raise Exception("")
+
+    def test_parse_payload(self):
+        # Get our payload
+        with open("../../examples/levels-payload.json", "r") as file:
+            payload_file = file.read()
+
+        payload = json.loads(payload_file)["payload"]
+
+        obj = levels_fyi._decrypt_api_response(payload)
+
+        if len(obj) != 5:
+            raise Exception("Missing jobs from payload")

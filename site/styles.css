@@ -82,6 +82,13 @@
     grid-row-end:1;
 }
 
+.container-footer {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 3;
+    grid-row-end:3;
+}
+
 .container-page {
     grid-column-start: 2;
     grid-column-end: 4;

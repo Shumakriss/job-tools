@@ -703,6 +703,25 @@ class Controller {
             this.model.searchResults = await this.services.search(this.model.searchTerms, this.model.resumeContent);
             this.save();
             this.render();
+            this.displayMessage("Resume scan data incoming...");
+
+            let results = this.model.searchResults.results;
+            let completed = 0;
+            let promises = [];
+            for (let i=0; i<results.length; i++){
+                let result = results[i];
+                let promise = this.jobscan.scan(this.model.resumeContent, result.description);
+                promise.then(response => {
+                    result.score = response['matchRate']['score'];
+                    this.save();
+                    this.render();
+                    completed += 1;
+                    if (completed == results.length){
+                        this.displayMessage("All scans complete");
+                    }
+                });
+            }
+
         } else {
             this.displayMessage("Enter a search query");
         }
