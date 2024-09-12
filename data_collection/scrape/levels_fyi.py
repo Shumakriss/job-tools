@@ -1,27 +1,25 @@
 import base64
 from base64 import b64decode
 import json
-from random import randrange
-import requests
-import time
+
 import zlib
 
 from bs4 import BeautifulSoup
 from Crypto.Hash import MD5
 from Crypto.Cipher import AES
-from fake_useragent import UserAgent
 
 from database.job import *
+from data_collection.scrape.helpers import random_request
 
 URL = "https://www.levels.fyi/jobs"
 API_URL = "https://api.levels.fyi/v1/job/search"
 
 
-def job_description(job: Job):
-    details = _scrape_job_description(_fetch_job_description(job.details_url))
-    job.description = details["description"]
-    job.application_url = details["applicationUrl"]
-    return job
+def job_description(job_part: Job):
+    job_details = _scrape_job_description(_fetch_job_description(job_part.details_url))
+    job_part.description = job_details.description
+    job_part.application_url = job_details.application_url
+    return job_part
 
 
 def search(query: str, soft_limit: int = 100, hard_limit: int = None, skip_description: bool = False):
@@ -39,19 +37,20 @@ def search(query: str, soft_limit: int = 100, hard_limit: int = None, skip_descr
 
         print(f"Retrieved {len(partial_jobs)} job posts so far")
         offset += offset_increment
-        wait_time = randrange(5)
-        print(f"Waiting {wait_time} seconds before next call")
-        time.sleep(wait_time)
 
     if hard_limit:
         partial_jobs = partial_jobs[0:hard_limit]
 
     if skip_description:
+        print(f"Collected links for {len(partial_jobs)} jobs")
         return partial_jobs
 
+    print(f"Fetching job details for {len(partial_jobs)} jobs")
+
     jobs = []
-    for partial_job in partial_jobs:
+    for i, partial_job in enumerate(partial_jobs):
         try:
+            print(f"Fetching details for {partial_job.details_url} ({i+1} / {len(partial_jobs)})")
             scraped_job = _scrape_job_description(_fetch_job_description(partial_job.details_url))
             scraped_job.details_url = partial_job.details_url
         except Exception:
@@ -63,8 +62,6 @@ def search(query: str, soft_limit: int = 100, hard_limit: int = None, skip_descr
 
 
 def _fetch_search_results(query: str, offset: int = 0) -> list[Job]:
-    ua = UserAgent()
-    headers = {"User-Agent": ua.random}
     params = {
         "limitPerCompany": 3,
         "limit": 5,
@@ -72,7 +69,8 @@ def _fetch_search_results(query: str, offset: int = 0) -> list[Job]:
         "searchText": query,
         "offset": offset
     }
-    response = requests.get(API_URL, params=params, headers=headers)
+
+    response = random_request("GET", API_URL, params=params)
     decoded = response.content.decode("utf-8")
     payload = json.loads(decoded)["payload"]
     jobs = _decrypt_api_response(payload)
@@ -80,7 +78,7 @@ def _fetch_search_results(query: str, offset: int = 0) -> list[Job]:
 
 
 def _fetch_job_description(url: str):
-    response = requests.get(url)
+    response = random_request("GET", url=url)
     return response.content.decode("utf-8")
 
 
