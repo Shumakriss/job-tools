@@ -9,7 +9,7 @@ SEED_QUERY = "software engineer"
 if __name__ == "__main__":
     print("Scraping new jobs and writing to ingest table")
 
-    jobs = levels_fyi.search(SEED_QUERY, soft_limit=1000)
+    jobs = levels_fyi.search(SEED_QUERY, soft_limit=100)
 
     with ConfigurableConnection("../database/secrets.json") as conn:
         with JobCursor(conn) as cur:
