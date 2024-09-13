@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html class="h-full antialiased">
+<head>
+    <title>Keeper: Team Lead, Threat Analytics | Outer Join</title>
+    <meta name="description"
+          content="Keeper is the top-rated password and secrets manager for protecting businesses and families from cyberthreats."/>
+    <meta name="apple-mobile-web-app-title" content="Outer Join"/>
+    <meta name="application-name" content="Outer Join"/>
+
+    <link rel="preconnect dns-prefetch" href="https://https://d1ynemccxcw76g.cloudfront.net" crossorigin>
+    <link rel="preconnect dns-prefetch" href="https://logo.clearbit.com" crossorigin>
+
+    <meta name="csrf-param" content="authenticity_token"/>
+    <meta name="csrf-token"
+          content="Z30T2pRy+eKjiK5+l1DC17OWaEWo8zoLI6aJHiN4BT/JvwBsqKyOfZAACRm4uQzdd/++YxR9+RZz+FdVLHsHIw=="/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "https://d1ynemccxcw76g.cloudfront.net/assets/application-db59e1ffcef5743e7938112593fd4d6bd502549988bafbe35a436b9f79cba2dc.js",
+    "@hotwired/turbo-rails": "https://d1ynemccxcw76g.cloudfront.net/assets/turbo.min-66ea9c4f552192fe5c17100a792899059616042f003bb7f4e791917fb940934d.js",
+    "@hotwired/stimulus": "https://d1ynemccxcw76g.cloudfront.net/assets/stimulus.min-1aa40bf4d933a950b927d937a19d9d9fc1dcc46b33c2ebd0996199681496be8a.js",
+    "@hotwired/stimulus-loading": "https://d1ynemccxcw76g.cloudfront.net/assets/stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js",
+    "controllers/application": "https://d1ynemccxcw76g.cloudfront.net/assets/controllers/application-368d98631bccbf2349e0d4f8269afb3fe9625118341966de054759d96ea86c7e.js",
+    "controllers/dropdown_controller": "https://d1ynemccxcw76g.cloudfront.net/assets/controllers/dropdown_controller-64e111bbf6f82b855beee3cb322e4f1678cb3a2b401adfa5619e037df88ee739.js",
+    "controllers/hello_controller": "https://d1ynemccxcw76g.cloudfront.net/assets/controllers/hello_controller-549135e8e7c683a538c3d6d517339ba470fcfb79d62f738a0a089ba41851a554.js",
+    "controllers": "https://d1ynemccxcw76g.cloudfront.net/assets/controllers/index-2db729dddcc5b979110e98de4b6720f83f91a123172e87281d5a58410fc43806.js",
+    "controllers/toggle_controller": "https://d1ynemccxcw76g.cloudfront.net/assets/controllers/toggle_controller-0b835765ee229e2590c4701a088f5a2daefe8a20671aaac5bd67673d99744238.js"
+  }
+}
+    </script>
+    <link rel="modulepreload"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/application-db59e1ffcef5743e7938112593fd4d6bd502549988bafbe35a436b9f79cba2dc.js">
+    <link rel="modulepreload"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/turbo.min-66ea9c4f552192fe5c17100a792899059616042f003bb7f4e791917fb940934d.js">
+    <link rel="modulepreload"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/stimulus.min-1aa40bf4d933a950b927d937a19d9d9fc1dcc46b33c2ebd0996199681496be8a.js">
+    <link rel="modulepreload"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js">
+    <script src="https://d1ynemccxcw76g.cloudfront.net/assets/es-module-shims.min-ac852199c20b9da5d8e3c40f59ec9794ec5ebd6aa65d7e44ecab7b435a75f875.js"
+            async="async" data-turbo-track="reload"></script>
+    <script type="module">import "application"</script>
+    <link rel="stylesheet"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/tailwind-1798cab73293a56556764bbb5150448e82e29e96654a9995d115b0deca1570e2.css"
+          media="all" data-turbo-track="reload"/>
+    <script>
+        // TODO: Certainly there's a better place for this.
+        function cancelPropagation(event) {
+          event.cancelBubble = true;
+
+          if (event.stopPropagation) {
+            event.stopPropagation();
+          }
+        }
+    </script>
+
+
+    <link rel="icon" type="image/x-icon"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/favicon-outer-join-03bb114d9c0a392931cf7edea12aa5845398b9870fd4b326699b725fb1070c53.png"/>
+    <link rel="apple-touch-icon" type="image/x-icon"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/favicon-outer-join-03bb114d9c0a392931cf7edea12aa5845398b9870fd4b326699b725fb1070c53.png"/>
+    <link rel="icon" type="image/x-icon"
+          href="https://d1ynemccxcw76g.cloudfront.net/assets/favicon-outer-join-03bb114d9c0a392931cf7edea12aa5845398b9870fd4b326699b725fb1070c53.png"/>
+
+    <meta property="og:title" content="Keeper: Team Lead, Threat Analytics"/>
+    <meta property="og:site_name" content="Outer Join"/>
+    <meta property="og:description"
+          content="Keeper is the top-rated password and secrets manager for protecting businesses and families from cyberthreats."/>
+    <meta property="og:image"
+          content="https://d1ynemccxcw76g.cloudfront.net/assets/outer-join-og-image-5729d9165981a7b7f133dd42aa861aad781840c44ead4e8ca6419007b8522c75.jpg"/>
+    <meta name="og:image:width" content="1200">
+    <meta name="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image"
+          content="https://d1ynemccxcw76g.cloudfront.net/organizations/2787/logos/400/c64387c94ab45515689aa17f30b7.png">
+    <meta name="twitter:image:alt" content="Outer Join logo">
+    <meta name="twitter:image:width" content="512">
+    <meta name="twitter:image:height" content="512">
+
+    <style>
+        :root {
+          --color-primary-text-color: #ffffff;
+          --color-primary-200: 255, 204, 211;
+          --color-primary-500: 255, 84, 106;
+          --color-primary-600: 233, 46, 72;
+          --color-secondary-text-color: #ffffff;
+          --color-secondary-200: 169, 214, 255;
+          --color-secondary-500: 7, 130, 227;
+          --color-secondary-600: 0, 110, 202;
+          --color-tertiary-text-color: #ffffff;
+          --color-tertiary-200: 135, 171, 199;
+          --color-tertiary-500: 25, 74, 108;
+          --color-tertiary-600: 13, 59, 91;
+        }
+    </style>
+
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "JobPosting",
+            "title": "Team Lead, Threat Analytics",
+            "description": "<p>Keeper Security is hiring an experienced cybersecurity engineering leader to establish and lead our Threat Analytics team.</p><p>Keeper’s cybersecurity software is trusted by millions of users and thousands of organizations, globally. Join one of the fastest-growing cybersecurity companies and be responsible for designing and developing our threat detection and analytics product.</p><p></p><p>About Keeper</p><p>Keeper Security is transforming cybersecurity for people and organizations around the world. Keeper’s affordable and easy-to-use solutions are built on a foundation of zero-trust and zero-knowledge security to protect every user on every device. Our next-generation privileged access management solution deploys in minutes and seamlessly integrates with any tech stack to prevent breaches, reduce help desk costs and ensure compliance. Trusted by millions of individuals and thousands of organizations, Keeper is the leader for best-in-class password management, secrets management, privileged access, secure remote access and encrypted messaging. Learn more at KeeperSecurity.com.</p><p></p><p>About the Job</p><p></p><p>The Team Lead, Threat Analytics will report to the CTO and Co-Founder, serving as the primary driver of Keeper’s Threat Analytics vision and development.</p><p></p><ul> <li>Manage the development and operations of a cloud-based, zero-knowledge analytics component of the Keeper platform for both internal use and for Keeper customers</li> <li>Lead prototyping and development of AI/ML models and systems, including large language models, natural language processing, predictive analytics and other data modeling techniques and technologies</li> <li>Lead a team of engineers and individually perform all aspects of software development including development, QA, DevOps, documentation and deployment for any related components</li> <li>Design and develop advanced security products to be performant, reliable and cost-effective</li> <li>Create user behavior analytics</li> <li>Perform data science on a variety of network and security data sets to identify intrusions and recommendations</li> <li>Use Amazon Web Services (AWS) to perform big data analysis using a variety of back-end technologies</li> </ul><p></p><ul> <li>10+ years progressive software engineering and data and analytics experience</li> <li>Extensive experience developing successful cybersecurity products</li> <li>Experience developing AI and ML models and applications</li> <li>Experience serving as a individual contributor and team leader</li> <li>Ability to build cross-functional relationships, influence and collaborate at all organizational levels</li> <li>Strong verbal and written communications skills for a global audience</li> <li>Strong business acumen, analytical and detail oriented</li> <li>Passionate about data and analytics as a lever to improve business performance</li> <li>BS in computer science, engineering or relevant field is a plus</li> </ul><ul><li>Keeper is FedRAMP authorized, therefore, all applicants must be a “U.S. Person,” defined as a U.S. citizen or a lawful permanent resident (Green Card holder)]</li></ul><p></p><ul> <li>Medical, Dental &amp; Vision (inclusive of domestic partnerships)</li> <li>Employer Paid Life Insurance &amp; Employee/Spouse/Child Supplemental life</li> <li>Voluntary Short/Long Term Disability Insurance</li> <li>401K (Roth/Traditional)</li> <li>A generous PTO plan that celebrates your commitment and seniority (including paid Bereavement/Jury Duty, etc)</li> <li>Above market annual bonuses</li> </ul><p></p><p>Keeper Security, Inc. is an equal opportunity employer and participant in the U.S. Federal E-Verify program. We celebrate diversity and are committed to creating an inclusive environment for all employees.</p><p></p><p><strong>Classification: Exempt</strong></p>",
+            "identifier": {
+                "@type": "PropertyValue",
+                "name": "Keeper",
+                "value": "team-lead-threat-analytics-at-keeper"
+            },
+            "applicantLocationRequirements": {
+                "@type": "Country",
+                "name": "USA"
+            },
+            "jobLocationType": "TELECOMMUTE",
+            "datePosted": "",
+            "validThrough": "2024-09-14 00:00:00 UTC",
+            "employmentType": "full_time",
+            "hiringOrganization": {
+                "@type": "Organization",
+                "name": "Keeper",
+                "sameAs": "https://keepersecurity.com",
+                "logo": "https://logo.clearbit.com/keepersecurity.com"
+            }
+        }
+    </script>
+
+
+</head>
+
+<body class="flex flex-col h-full min-h-screen font-sans antialiased font-normal leading-normal bg-opacity-75 bg-gray-100 text-gray-800 outerjoin jobs-show avif-unsupported webp-unsupported">
+
+
+<div class="flex-1 main">
+    <header class="hero-primary"
+            style="background-image: url('https://d1ynemccxcw76g.cloudfront.net/assets/waves-6c0df46f276a15044562657a17fd44a3bef060ac279bbca8537a866b0132db00.png')">
+        <div class="mx-auto px-2
+            md:px-4
+            lg:container lg:px-8">
+
+            <nav class="relative flex flex-wrap items-center justify-between px-4 py-4 text-gray-800"
+                 data-controller="toggle" data-turbo-permanent="true">
+                <div class="flex items-center flex-shrink-0 mr-6">
+                    <a href="/">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1072" viewBox="0 0 6436 1072" width="6436"
+                             role="img" aria-labelledby="a9qh3ghly726snd93108gmfkvz46cgum"
+                             class="fill-current h-8 w-auto text-gray-800 "><title
+                                id="a9qh3ghly726snd93108gmfkvz46cgum">Logos/outerjoin logo full</title>
+                            <path d="m6435.9 971.165c-.01 6.492-.59 12.984-.88 19.143-15.45 3.151-99 3.805-122.52 1.181-4.43-5-2.71-11.245-2.73-16.98-.16-43.926-.09-87.854-.09-131.781q-.015-106.822-.07-213.645c-.05-29.4-3.21-58.455-11.66-86.738-5.17-17.328-12.61-33.626-23.5-48.2-20.7-27.732-48.2-44.015-82.87-45.641-69.41-3.256-126.1 22.822-169.29 77.077-24.62 30.924-37.28 67.174-44.19 105.719-4.02 22.4-4.76 44.964-4.76 67.61q-.015 134.777-.04 269.553c-.01 7.208-.44 14.416-.71 22.749-21.27 3.514-41.79 1.41-62.16 1.545-20.5.136-41.08 1.4-62.62-1.047-.52-4.358-1.18-8.144-1.36-11.952-.24-4.648-.08-9.315-.08-13.974v-613.691c3.68-1.039 6.69-2.619 9.71-2.631 36.65-.134 73.31-.047 109.96.039 1.29 0 2.58.584 5.22 1.218.62 3.856 1.92 8.229 1.95 12.612.2 25.288.11 50.58.12 75.87v19.788l3.87.445c1.24-2.22 2.62-4.37 3.69-6.669 25.05-54.159 67.62-88.215 123.87-105.293 56.95-17.294 114.32-17.014 171.11 1.392 50.94 16.511 89.75 48.506 116.97 94.469 19.93 33.676 31.02 70.442 37.36 108.827 4.47 27.022 5.64 54.271 5.67 81.565q.195 168.72.03 337.44zm-777.22-741.165c-41.72 1.311-86.7-30.876-86.45-87.364.21-49.4 38.7-88.048 87.2-87.348 56.47.816 88.32 46.586 87.94 89.1-.43 46.829-39.28 86.931-88.69 85.612zm-810.27 530.467a334.4 334.4 0 0 1 -11.86-88.741c-.6-166.974 123.09-304.51 279.64-331.416 172.02-29.564 337.56 75.112 384.67 241.164 47.18 166.314-41.26 336.83-197.88 400.552-189.95 77.284-401.05-28.726-454.57-221.559zm480.46-242.215c-41.14-46.066-92.78-70.209-155.01-70.55-46.4-.092-87.67 14.709-124.03 43.056-100.96 78.693-116.42 232.016-33.42 329.686 84.57 99.507 232.17 99.52 316.68.025 73.23-86.201 71.65-217.283-4.22-302.217zm-572.28 65.959c-.07 54.062-4.89 107.685-18.59 160.215-8.25 31.653-19.49 62.161-34.84 91.14-39.62 74.8-99.53 126.239-180.16 151.613-86.72 27.291-174.71 28.541-261.88 2.225-108.03-32.608-174.2-106.052-202.75-214.3-6.82-25.867-10.08-52.338-10.96-78.955-1.21-36.244 5.16-71.569 16.27-106.024 1.81-5.639 4.72-10.928 7.28-16.724 23.77-2.638 107.17-2.171 122.67.585-1.04 4.44-2.09 8.821-3.09 13.215-4.54 20.1-9.92 40.047-13.44 60.322-8.1 46.663-.83 91.645 19 134.285 23.55 50.639 63.23 83.452 116.89 98.368 49.87 13.864 100.29 13.5 150.03-.748 48.75-13.968 86.42-43.478 113.61-86.208 22.14-34.812 34.55-73.249 41.61-113.587 5.64-32.21 7.93-64.673 7.9-97.381q-.21-231.675-.03-463.352c0-7.851.38-15.7.55-21.942 1.83-2.014 2.21-2.633 2.75-2.962a3.949 3.949 0 0 1 1.91-.5q55.965-.37 111.94-.657c3.28-.015 6.56.483 10.88.824.86 3.892 2.01 7.524 2.4 11.235a113.756 113.756 0 0 1 .14 11.974q0 233.665-.09 467.339zm-917.91-113.226c-5.9-2.1-11.37-4.049-16.84-6a141.543 141.543 0 0 0 -74.76-6.107c-29.93 5.607-54.27 21.156-74.12 43.978-15.02 17.267-26.03 36.93-34.49 58.06-13.2 32.96-20.05 67.432-24.46 102.521-3.91 31.111-4.45 62.346-4.46 93.62q-.045 105.774-.05 211.55c0 7.194-.43 14.387-.71 22.764-23.36 2.472-109.04 2-124.4-.533-3.24-6.593-1.71-14.021-1.72-21.129q-.18-129.724-.08-259.449 0-168.642.03-337.283c.01-7.163.51-14.325.77-21.4 3.06-.976 4.88-2.062 6.7-2.067q55.95-.146 111.9 0c1.82 0 3.64 1.1 6.75 2.092 1.51 12.977.6 26.187.76 39.326.15 13.3.03 26.61.03 39.915v40.541c6.76-1.938 6.67-7.165 8.08-10.989 7.4-20.108 17.02-39.021 29.91-56.156 24.88-33.071 56.93-55.679 97.62-64.973 29.29-6.692 58.19-5.288 86.18 6.475 3.02 1.27 5.76 3.21 9.65 5.421 0 37.608.03 75.46-.08 113.31 0 1.757-1.15 3.506-2.21 6.513zm-521.47 213.009c-22.66.28-45.32.061-67.99.061h-406.81c-5.93 7.179-4.04 14.061-3.52 20.4 4.91 58.992 30.61 106.763 78.16 142.409 32.71 24.52 70.02 38.323 110.05 44.448 58.56 8.959 115.63 2.873 170.48-20.171 26.55-11.154 50.94-26.087 73.72-43.669 5.21-4.023 10.48-7.968 16.75-12.73 23.96 23.118 45.71 47.279 69.43 71.141-2.51 3.493-4.39 6.8-6.92 9.508-51.19 54.875-114.11 89.112-187.46 103.525-77.33 15.192-154.07 11.762-228.68-14.572-101.74-35.91-173.6-103.528-206.18-207.211-59.37-188.908 48.1-387.585 247.13-432.467 65.72-14.82 131.07-13.041 195.32 7.777 96.56 31.287 161.36 95.5 195.19 190.85 14.36 40.488 20.83 82.486 21.34 125.393.05 4.444-.94 8.9-1.53 14.138-23.41 2.457-45.98.892-68.48 1.17zm-62.79-105.4c-19.23-59.456-56.51-101.97-117.07-121.2-49.55-15.733-99.7-15.288-149.59-.891-62.17 17.939-105.29 57.663-131.65 116.157-1.54 3.4-2 7.284-3.22 11.936h401.58c0-3.407.34-4.823-.05-6.007zm-562.42-179.531c.31 15.813 1.65 31.787-1.56 48.92-6.89.306-13.35.833-19.81.841q-78.975.1-157.96.038h-22.69c-1 4.659-2.41 8.338-2.48 12.041-.28 14.639-.14 29.285-.15 43.929q0 140.779.1 281.558c.03 12.611 1.26 25.231 2.26 37.821a76.339 76.339 0 0 0 2.63 13.681c11.76 43.243 49.58 66.216 93.57 56.749 25.2-5.423 47.5-17.058 67.91-32.524 3.57-2.7 6.96-5.635 10.37-8.407 12.66 13.366 51.36 67.154 58.81 81.574-2.99 7.5-8.99 12.838-14.83 18.224-28.17 25.98-61.62 41.647-98.88 49.272a236.671 236.671 0 0 1 -124.29-7.4c-61.33-20.55-97.84-64.406-114.39-125.8a275.592 275.592 0 0 1 -9.22-73.073c.11-31.284.03-62.568.09-93.853q.465-255.6.99-511.2c.01-7.887.32-15.772.52-24.789 19.74-2.8 105.12-2.651 122.65.029 2.83 6.5 1.63 13.874 1.65 20.978.12 46.594.03 93.187.1 139.781.01 6.527.56 13.053.89 20.422 22.85 2.736 44.71 1.014 66.48 1.32 22.66.319 45.32.071 67.98.071h66.57c5.6 16.939 2.36 33.543 2.69 49.797zm-449.9 566.891v24.261c-3.42 1.055-5.82 2.436-8.22 2.445q-54.975.206-109.96.046c-1.94 0-3.88-.745-6.86-1.354-.56-4.293-1.62-8.758-1.65-13.231-.17-25.291-.04-50.584-.13-75.877-.02-5.833-.49-11.665-.73-17.183-4.75-1.283-5.43 1.962-6.41 4.021-34.19 71.777-94.25 105.4-170.32 115.818a279.634 279.634 0 0 1 -112.86-7.489c-61.21-16.747-106.19-53.646-135.61-109.679-16.26-30.976-25.55-64.138-31.22-98.473-3.92-23.722-5.15-47.629-5.16-71.608q-.1-174.717-.06-349.435v-17.609c5.17-.641 7.72-1.236 10.26-1.232q54.975.093 109.94.4c1.15.007 2.3 1.074 4.51 2.18 2.1 7.01 1.18 14.98 1.18 22.8q.1 166.731.03 333.462c0 25.365 2 50.532 7.37 75.344 3.96 18.292 10.06 35.842 19.54 52.108 24.56 42.109 62.15 62.368 109.88 59.035 84.58-5.906 144.9-48.346 178.65-126.71 11.69-27.131 17.54-55.83 19.64-85.193 1.14-15.915 1.33-31.922 1.35-47.888q.18-130.788.09-261.577c.01-7.2.48-14.393.72-21.2 15.44-3.546 86.32-4.531 123.58-1.908.76 3.35 2.02 6.993 2.31 10.712.42 5.293.14 10.641.14 15.966zm-1276.852 103.516c-62.338-5.92-121.786-21.63-178.46-48.08-3.6-1.68-7.305-3.12-9.835-4.19-24.662 9.49-47.922 19.53-71.877 27.47-71.112 23.57-143.931 31.33-218.8 24.69-215.92-19.14-413.89-174.149-470.461-403.888-72.815-295.711 109.45-576.98 385.785-648.014 122.372-31.458 241.765-20.971 357.38 30.38a25.181 25.181 0 0 1 3.621 1.679c8.736 5.709 16.878 4.538 26.213.142a515.1 515.1 0 0 1 131.06-41.248 542.191 542.191 0 0 1 163.246-3.774q168.81 21.509 294.22 136.512c92.15 84.448 148.75 188.937 167.78 312.332 41.12 266.552-119.85 519.6-378.25 596.229a527.13 527.13 0 0 1 -201.622 19.76zm-187.739-192.325c32.156-22.854 61.516-49.392 85.858-81.281.822-1.078-.13-3.507-.251-5.23-34.54-2.351-159.788-1.451-176.689 1.507 18.822 29.473 64.561 72.125 91.082 85.004zm158.691-288.606q-161.958-.117-323.914.014c-3.756 0-7.511 1.052-12.02 1.727 3.181 32.985 11.565 63.519 22.8 92.672 2.333.855 3.546 1.592 4.816 1.709 3.31.306 6.645.469 9.969.464q142.949-.225 285.891-.525a4.83 4.83 0 0 0 1.881-.551c.6-.274 1.134-.695 2.97-1.858 10.708-28.806 19.53-59.182 22.246-92.135-5.607-.607-10.122-1.514-14.639-1.517zm-9.188-198.991c-3.485-.265-7.407-.823-11.33-.825q-140.739-.071-281.478.033c-3.807 0-7.613.972-10.834 1.411-13.488 30.868-22.619 71-20.882 92.034 3.612.533 7.411 1.486 11.237 1.6 84.454 2.564 317.726 1.1 334.959-2.017 2.381-19.384-8.215-64.898-21.67-92.236zm-633.57 485.514a413.642 413.642 0 0 0 149.919 67.518c53.851 12.378 108.136 13.652 162.535 4.8 15.841-2.577 32.365-4.132 48.15-12.864-11.8-12.018-22.751-22.591-33.02-33.788-10.327-11.263-20.382-22.829-29.81-34.847s-18.241-24.546-26.743-37.238c-8.451-12.615-16.181-25.713-23.761-37.854-31.685-2.4-315.284-1.544-333.438 1.431a408.867 408.867 0 0 0 86.168 82.842zm-144.424-189.915h165.031q82.9 0 165.807-.064c5.6-.01 11.628 1.265 16.377-1.981-6.1-31.676-11.973-62.191-17.808-92.5-17.859-3.127-261.081-4.575-343.646-2.055-3.831.117-7.636 1.078-11.38 1.635 1.857 31.773 13.615 75.691 25.619 94.965zm-24.254-202.964c1.8.491 3.693 1.458 5.586 1.459q170.763.09 341.527-.036c1.862 0 3.723-.983 5.109-1.373.851-.907 1.608-1.332 1.718-1.885q8.355-41.934 16.557-83.9a31.122 31.122 0 0 0 .047-5.851c-15.029-2.475-312.869-3.354-348.369-.95-12.875 25.102-24.31 73.13-22.175 92.536zm526.028-347.36a58.2 58.2 0 0 0 -5.678-1.814c-59.437-15.839-119.463-18.72-180.063-7.921-102.5 18.266-186.472 68.167-252.775 148.072-1.892 2.28-3 5.215-4.242 7.444a17.742 17.742 0 0 0 2.364 2.448 4.49 4.49 0 0 0 1.916.511c2.654.164 5.312.362 7.968.359q157.834-.159 315.67-.383a5.432 5.432 0 0 0 1.879-.64 3.985 3.985 0 1 0 .671-.315c17.885-26.066 33.974-52.176 52.773-76.168s40.3-45.849 61.263-69.376c-.994-1.301-1.266-2.035-1.746-2.217zm125.177 59.912a17.6 17.6 0 0 0 -3.67 1.448c-32.088 21.874-59.668 48.566-83.944 78.736-1.374 1.708-1.578 4.355-2.4 6.771 13.581 2.263 153.164 3.771 174.2 1.949 1.743-.151 3.378-1.554 5.074-2.38-6.012-11.6-19.93-27.988-36.359-43.987l-.256-.249q-.539-.523-1.081-1.046-.179-.174-.359-.346-.52-.5-1.045-1l-.385-.367q-.525-.5-1.052-1c-.092-.087-.186-.174-.278-.262q-1.074-1.014-2.16-2.022l-.36-.336q-.414-.384-.829-.765-.35-.324-.7-.645-.378-.348-.758-.694l-.793-.723-.7-.637q-.442-.4-.887-.8l-.627-.562q-.534-.479-1.069-.954l-.454-.4q-1.582-1.4-3.174-2.781l-.23-.2q-.687-.6-1.376-1.186l-.3-.258q-.67-.575-1.344-1.145l-.265-.224q-.738-.624-1.476-1.242l-.109-.091a264.9 264.9 0 0 0 -30.834-22.602zm588.421 112.882c-108.89-165.275-306.01-220.59-467.572-171.243 16.191 17.065 31.38 31.859 45.116 47.894a582.822 582.822 0 0 1 39.015 50.521 535.335 535.335 0 0 1 88.9 236.636 527.167 527.167 0 0 1 3.85 63.664 560.588 560.588 0 0 1 -3.88 65.659 527.472 527.472 0 0 1 -11.49 62.7 537.319 537.319 0 0 1 -18.78 60.917 534.247 534.247 0 0 1 -58.749 112.985 588.545 588.545 0 0 1 -39.1 50.456c-13.74 16.039-28.877 30.883-43.607 46.468 39.2 18.643 127.855 24.017 189.545 12.508 94.96-17.717 175.09-62.065 239.44-133.971 125.542-140.304 140.852-348.027 37.312-505.194zm-559.377-91.764q-.511-.422-1.023-.84.51.42 1.023.84zm-2.146-1.756q-.432-.351-.864-.7.432.348.864.703zm-1.6-1.289-.831-.665zm-1.565-1.248-.836-.661q.423.329.84.661zm-1.554-1.224c-.291-.229-.582-.455-.874-.682.296.227.587.453.878.682zm-1.547-1.205q-.505-.39-1.01-.776.509.387 1.014.776zm-1.542-1.184q-.751-.575-1.5-1.139.751.564 1.504 1.139zm-2-1.509q-.525-.393-1.046-.781.529.387 1.053.781zm-1.652-1.229-.935-.687zm-1.562-1.144-.92-.666zm-1.531-1.1q-.484-.346-.968-.689.49.339.975.684zm-1.514-1.075q-.617-.433-1.227-.859.619.421 1.234.854zm-1.5-1.049q-.746-.516-1.484-1.019.747.499 1.491 1.014zm-1.93-1.32q-.519-.352-1.036-.7.523.342 1.043.695zm-1.586-1.063q-.465-.31-.929-.614.471.298.936.609zm-1.5-.986q-.457-.3-.914-.59.465.288.923.585zm-1.463-.942q-.489-.312-.975-.616.495.3.984.611zm-1.439-.908q-.712-.444-1.419-.876.714.425 1.428.871zm29.164 21.516-.722-.6zm22.164 19.992-.015-.014zm-1.3-1.257-.108-.1zm-1.385-1.329-.049-.046zm-5.365-5.044-.166-.152zm-1.308-1.2-.352-.317zm-1.435-1.3-.411-.37zm-1.482-1.331-.382-.341zm-4.066-3.584-.3-.259zm-1.27-1.1-.575-.5zm-1.485-1.274-.644-.548zm-1.522-1.292-.682-.573zm4913.028 132.481c.52 3.371 1.37 7.085 1.61 10.838.3 4.637.1 9.306.1 13.961v615.249c-22.65 2.9-108.44 2.526-124.24-.246-.51-1.6-1.6-3.407-1.6-5.217q-.18-313.231-.14-626.463c0-2.52.9-5.04 1.34-7.3 14.97-3.057 98.61-3.637 122.93-.822z"
+                                  fill-rule="evenodd"></path>
+                        </svg>
+
+                    </a></div>
+
+                <div class="block lg:hidden">
+                    <button type="button" id="sidebar-open"
+                            class="flex items-center px-2 text-gray-800 opacity-75 lg:px-6 lg:hidden focus:outline-none focus:text-gray-700"
+                            data-action="click->toggle#toggle touch->toggle#toggle">
+                        <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>
+                            Menu</title>
+                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="absolute left-0 right-0 z-50 flex-grow hidden w-full px-2 pb-2 bg-gray-100 rounded-b-lg shadow-lg lg:bg-transparent lg:static lg:flex lg:items-center lg:w-auto lg:px-0 top-15 lg:pb-0 lg:rounded-none lg:shadow-none"
+                     data-target="toggle.toggleable">
+                    <div class="text-sm lg:flex-grow lg:mt-0">
+                    </div>
+
+                    <div data-controller="dropdown" class="relative" data-dropdown-class="dropdown-active">
+                        <a class="nav-link nav-link-toggle"
+                           data-action="mouseenter-&gt;dropdown#toggle mouseleave-&gt;dropdown#toggle touch-&gt;dropdown#toggle touch@window-&gt;dropdown#hide"
+                           href="https://outerjoin.us/">Remote Jobs</a>
+
+                        <div class="dropdown-menu" data-target="dropdown.menu"
+                             data-action="mouseleave->dropdown#toggle">
+                            <div class="dropdown-content">
+                                <a class="nav-link" href="/">All Open Roles</a>
+                                <span class="hidden w-full h-px bg-gray-200 lg:block"></span>
+
+                                <a class="nav-link" href="/remote-data-science-jobs">Data Science</a>
+                                <a class="nav-link" href="/remote-data-analytics-jobs">Data Analytics</a>
+                                <a class="nav-link" href="/remote-data-engineering-jobs">Data Engineering</a>
+                                <a class="nav-link" href="/remote-ml-engineering-jobs">ML Engineering</a>
+                                <a class="nav-link" href="/remote-other-jobs">Other</a>
+
+                                <div class="hidden lg:block">
+                                    <span class="block w-full h-px bg-gray-200"></span>
+                                    <a class="nav-link" href="/entry-level-and-junior-data-science-jobs">Entry Level
+                                        &amp; Junior</a>
+                                    <a class="nav-link" href="/remote-management-jobs">Management</a>
+                                    <a class="nav-link" href="/remote-nonprofit-jobs">Nonprofit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-controller="dropdown" class="relative" data-dropdown-class="dropdown-active">
+
+                        <a class="nav-link nav-link-toggle"
+                           data-action="mouseenter-&gt;dropdown#toggle mouseleave-&gt;dropdown#toggle touch-&gt;dropdown#toggle touch@window-&gt;dropdown#hide"
+                           href="https://outerjoin.us/remote-teams">Remote Teams</a>
+
+                        <div class="dropdown-menu" data-target="dropdown.menu"
+                             data-action="mouseleave->dropdown#toggle">
+                            <div class="dropdown-content">
+                                <a class="nav-link" href="/remote-teams">All Teams Hiring</a>
+                                <div class="hidden lg:block">
+                                    <a class="nav-link" href="/remote-teams-with-nonprofit-jobs">Nonprofits Hiring</a>
+                                    <span class="block w-full h-px bg-gray-200"></span>
+                                </div>
+
+                                <a class="nav-link" href="/remote-teams-with-data-science-jobs">Hiring for Data
+                                    Science</a>
+                                <a class="nav-link" href="/remote-teams-with-data-analytics-jobs">Hiring for Data
+                                    Analytics</a>
+                                <a class="nav-link" href="/remote-teams-with-data-engineering-jobs">Hiring for Data
+                                    Engineering</a>
+                                <a class="nav-link" href="/remote-teams-with-ml-engineering-jobs">Hiring for ML
+                                    Engineering</a>
+                                <a class="nav-link" href="/remote-teams-with-other-jobs">Hiring for Other</a>
+
+                                <div class="hidden lg:block">
+                                    <span class="block w-full h-px bg-gray-200"></span>
+                                    <a class="nav-link" href="/remote-teams-with-management-jobs">Hiring for
+                                        Management</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-controller="dropdown" class="relative" data-dropdown-class="dropdown-active">
+                        <a rel="nofollow" target="_blank" class="nav-link nav-link-toggle"
+                           data-action="mouseenter-&gt;dropdown#toggle mouseleave-&gt;dropdown#toggle touch-&gt;dropdown#toggle touch@window-&gt;dropdown#hide"
+                           href="/remote-teams/outer-join/click/twitter?utm_source=outerjoin.us">Follow Us</a>
+
+                        <div class="dropdown-menu" data-target="dropdown.menu"
+                             data-action="mouseleave->dropdown#toggle">
+                            <div class="dropdown-content">
+
+                                <a rel="nofollow" target="_blank" class="nav-link block"
+                                   href="/remote-teams/outer-join/click/twitter?utm_source=outerjoin.us">
+                                    <div class="inline-flex items-center ">
+                                        <svg class="inline w-4 h-4 fill-current opacity-80 lg:h-6 lg:w-6"
+                                             aria-hidden="true" viewBox="0 0 24 24">
+                                            <title>Twitter icon</title>
+                                            <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/>
+                                        </svg>
+
+                                        <span class="ml-2">Twitter</span>
+                                    </div>
+                                </a>
+
+                                <a rel="nofollow" target="_blank" class="nav-link block"
+                                   href="/remote-teams/outer-join/click/linkedin?utm_source=outerjoin.us">
+                                    <div class="inline-flex items-center">
+                                        <svg class="inline w-4 h-4 opacity-80 lg:h-6 lg:w-6" aria-hidden="true"
+                                             fill="currentColor" viewBox="0 0 24 24">
+                                            <title>LinkedIn icon</title>
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                        </svg>
+
+                                        <span class="ml-2">LinkedIn</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="block w-full h-px bg-gray-200 lg:hidden"></span>
+
+                    <a class="lg:ml-3 btn-navbar" href="/hire">Post a job</a>
+
+
+                </div>
+            </nav>
+        </div>
+
+
+    </header>
+
+    <div class="mx-auto px-2
+                  md:px-4
+                  lg:container lg:px-8">
+        <div class="page-offset">
+            <div class="grid grid-cols-1 gap-6 px-2 lg:grid-cols-12 lg:px-0">
+                <div class="lg:col-span-3 order-2 lg:order-1">
+                    <div class="bg-white p-4 rounded-lg border shadow-sm text-center">
+                        <div class="flex justify-center my-4">
+                            <a href="/remote-teams/keeper">
+                                <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 lg:w-32 w-24 lg:h-32 h-24">
+                                    <img class="rounded object-contain lg:w-32 w-24 lg:h-32 h-24"
+                                         src="https://logo.clearbit.com/keepersecurity.com"/>
+                                </div>
+
+                            </a></div>
+
+                        <h1 class="mb-2">
+                            <a class="text-3xl font-bold hover:underline" href="/remote-teams/keeper">Keeper</a>
+                        </h1>
+
+                        <div class="text-lg mt-1">
+                            Chicago
+                        </div>
+
+                        <div class="mt-1 text-sm">
+                            201-500 employees
+                        </div>
+
+                        <div class="mt-4 leading-snug text-gray-800">
+                            Keeper is the top-rated password and secrets manager for protecting businesses and families
+                            from cyberthreats.
+                        </div>
+
+                        <div class="flex justify-center items-center mt-6">
+
+                            <a rel="nofollow" target="_blank" class="px-3 inline-flex items-center"
+                               href="/remote-teams/keeper/click?utm_source=outerjoin.us">
+                                <svg class="w-5 h-5 stroke-current opacity-70 lg:w-6 lg:h-6"
+                                     xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                    <path d="M7.8 24c0-3.42 2.78-6.2 6.2-6.2h8V14h-8C8.48 14 4 18.48 4 24s4.48 10 10 10h8v-3.8h-8c-3.42 0-6.2-2.78-6.2-6.2zm8.2 2h16v-4H16v4zm18-12h-8v3.8h8c3.42 0 6.2 2.78 6.2 6.2s-2.78 6.2-6.2 6.2h-8V34h8c5.52 0 10-4.48 10-10s-4.48-10-10-10z"></path>
+                                </svg>
+
+                            </a>
+
+                            <a rel="nofollow" target="_blank" class="px-3"
+                               href="/remote-teams/keeper/click/linkedin?utm_source=outerjoin.us">
+                                <div class="inline-flex items-center">
+                                    <svg class="inline w-4 h-4 opacity-80 lg:h-6 lg:w-6" aria-hidden="true"
+                                         fill="currentColor" viewBox="0 0 24 24">
+                                        <title>LinkedIn icon</title>
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+
+                                </div>
+                            </a>
+
+                            <a rel="nofollow" target="_blank" class="px-3"
+                               href="/remote-teams/keeper/click/twitter?utm_source=outerjoin.us">
+                                <div class="inline-flex items-center ">
+                                    <svg class="inline w-4 h-4 fill-current opacity-80 lg:h-6 lg:w-6" aria-hidden="true"
+                                         viewBox="0 0 24 24">
+                                        <title>Twitter icon</title>
+                                        <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/>
+                                    </svg>
+
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border shadow-sm mt-4 px-6">
+                        <h2 class="mt-4 mb-4 text-center heading-small-caps">
+                            <a class="hover:underline" href="/remote-teams/keeper">Other Open Roles</a>
+                        </h2>
+
+                        <ul>
+                            <li>
+                                <a class="block -mx-2 -my-2 px-2 py-3 hover:bg-gray-100"
+                                   href="/remote-jobs/tableau-analyst-at-keeper">Tableau Analyst</a>
+                            </li>
+                            <li>
+                                <a class="block -mx-2 -my-2 px-2 py-3 hover:bg-gray-100"
+                                   href="/remote-jobs/sales-commission-analyst-at-keeper">Sales Commission Analyst</a>
+                            </li>
+                            <li>
+                                <a class="block -mx-2 -my-2 px-2 py-3 hover:bg-gray-100"
+                                   href="/remote-jobs/data-scientist-at-keeper-security-inc">Data Scientist</a>
+                            </li>
+                            <li>
+                                <a class="block -mx-2 -my-2 px-2 py-3 hover:bg-gray-100"
+                                   href="/remote-jobs/data-engineer-team-lead-at-keeper">Data Engineer - Team Lead</a>
+                            </li>
+                            <li>
+                                <a class="block -mx-2 -my-2 px-2 py-3 hover:bg-gray-100"
+                                   href="/remote-jobs/senior-data-engineer-1-at-keeper">Senior Data Engineer</a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border shadow-sm text-center mt-4">
+                        <h2 class="mt-4 heading-small-caps">
+                            Other Jobs in Data Science
+                        </h2>
+
+                        <ul class="text-left">
+                            <li class="p-1">
+                                <a class="flex items-start px-2 py-3 hover:bg-gray-100 bg-opacity-25 rounded transition ease-in-out duration-200"
+                                   href="/remote-jobs/data-science-analytics-manager-at-mediavine">
+                                    <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 w-10 h-10">
+                                        <img class="rounded object-contain w-10 h-10"
+                                             src="https://logo.clearbit.com/www.mediavine.com"/>
+                                    </div>
+
+                                    <div class="pl-3 leading-tight">
+                                        <p>
+                                            Mediavine
+                                        </p>
+                                        <p class="text-xs text-left text-gray-600">
+                                            Data Science &amp; Analytics Manager
+                                        </p>
+                                    </div>
+                                </a></li>
+                            <li class="p-1">
+                                <a class="flex items-start px-2 py-3 hover:bg-gray-100 bg-opacity-25 rounded transition ease-in-out duration-200"
+                                   href="/remote-jobs/sr-data-scientist-monetization-at-pinterest">
+                                    <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 w-10 h-10">
+                                        <img class="rounded object-contain w-10 h-10"
+                                             src="https://outerjoin.s3.amazonaws.com/organizations/895/logos/400/4ff6568bb5425ffc9bc005f7c0c1.png"/>
+                                    </div>
+
+                                    <div class="pl-3 leading-tight">
+                                        <p>
+                                            Pinterest
+                                        </p>
+                                        <p class="text-xs text-left text-gray-600">
+                                            Sr. Data Scientist, Monetization
+                                        </p>
+                                    </div>
+                                </a></li>
+                            <li class="p-1">
+                                <a class="flex items-start px-2 py-3 hover:bg-gray-100 bg-opacity-25 rounded transition ease-in-out duration-200"
+                                   href="/remote-jobs/sr-data-scientist-16-at-pinterest">
+                                    <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 w-10 h-10">
+                                        <img class="rounded object-contain w-10 h-10"
+                                             src="https://outerjoin.s3.amazonaws.com/organizations/895/logos/400/4ff6568bb5425ffc9bc005f7c0c1.png"/>
+                                    </div>
+
+                                    <div class="pl-3 leading-tight">
+                                        <p>
+                                            Pinterest
+                                        </p>
+                                        <p class="text-xs text-left text-gray-600">
+                                            Sr. Data Scientist
+                                        </p>
+                                    </div>
+                                </a></li>
+                            <li class="p-1">
+                                <a class="flex items-start px-2 py-3 hover:bg-gray-100 bg-opacity-25 rounded transition ease-in-out duration-200"
+                                   href="/remote-jobs/senior-data-scientist-returns-at-quince">
+                                    <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 w-10 h-10">
+                                        <img class="rounded object-contain w-10 h-10"
+                                             src="https://logo.clearbit.com/www.onequince.com"/>
+                                    </div>
+
+                                    <div class="pl-3 leading-tight">
+                                        <p>
+                                            Quince
+                                        </p>
+                                        <p class="text-xs text-left text-gray-600">
+                                            Senior Data Scientist - Returns
+                                        </p>
+                                    </div>
+                                </a></li>
+                            <li class="p-1">
+                                <a class="flex items-start px-2 py-3 hover:bg-gray-100 bg-opacity-25 rounded transition ease-in-out duration-200"
+                                   href="/remote-jobs/staff-data-scientist-growth-at-quince">
+                                    <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 w-10 h-10">
+                                        <img class="rounded object-contain w-10 h-10"
+                                             src="https://logo.clearbit.com/www.onequince.com"/>
+                                    </div>
+
+                                    <div class="pl-3 leading-tight">
+                                        <p>
+                                            Quince
+                                        </p>
+                                        <p class="text-xs text-left text-gray-600">
+                                            Staff Data Scientist - Growth
+                                        </p>
+                                    </div>
+                                </a></li>
+                        </ul>
+
+                        <div class="text-center">
+                            <a class="btn btn-default mt-4" href="/remote-data-science-jobs">See all</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-9 lg:order-2 order-1">
+                    <div class="p-6 bg-white border rounded-lg">
+
+
+                        <div class="flex items-center lg:hidden">
+                            <div class="flex flex-shrink-0 items-center justify-center bg-white rounded p-1 lg:w-32 w-24 lg:h-32 h-24">
+                                <img class="rounded object-contain lg:w-32 w-24 lg:h-32 h-24"
+                                     src="https://logo.clearbit.com/keepersecurity.com"/>
+                            </div>
+
+                            <div class="w-full ml-4">
+                                <h2 class="mb-px text-xl leading-tight text-gray-900">Team Lead, Threat Analytics</h2>
+                                <div class="w-full">
+                                    <a class="font-semibold m-0 text-gray-800" href="/remote-teams/keeper">Keeper</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h1 class="hidden text-2xl font-semibold leading-tight text-gray-800 lg:text-4xl lg:block">
+                            Team Lead, Threat Analytics
+                        </h1>
+
+                        <div class="hidden lg:block lg:pt-2">
+
+
+                            <a class="text-base lg:text-lg text-gray-500 hover:underline"
+                               href="/remote-data-science-jobs">Data Science</a>
+
+                        </div>
+
+
+                        <div class="flex flex-wrap items-center justify-between mt-2 mb-2 lg:mt-6 lg:mb-8">
+                            <div class="flex items-center justify-start lg:justify-between lg:w-auto">
+
+                                <a rel="nofollow" target="_blank"
+                                   class="text-gray-700 font-semibold text-sm border rounded shadow-sm hover:bg-gray-100 transition ease duration-300 lg:px-4 px-3 inline-flex items-center lg:h-10 h-8 justify-center"
+                                   href="https://www.linkedin.com/sharing/share-offsite/?url=https://outerjoin.us/remote-jobs/team-lead-threat-analytics-at-keeper&amp;utm_source=outerjoin.us">
+                                    <div class="inline-flex items-center">
+                                        <svg class="inline w-4 h-4 opacity-80 lg:h-6 lg:w-6" aria-hidden="true"
+                                             fill="currentColor" viewBox="0 0 24 24">
+                                            <title>LinkedIn icon</title>
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                        </svg>
+
+                                        <span class="ml-2">Share</span>
+                                    </div>
+                                </a>
+
+
+                                <a rel="nofollow" target="_blank"
+                                   class="text-gray-700 font-semibold text-sm border rounded shadow-sm hover:bg-gray-100 transition ease duration-300 lg:ml-2 ml-1 lg:px-4 px-3 inline-flex items-center lg:h-10 h-8 justify-center"
+                                   href="https://twitter.com/intent/tweet?text=Keeper+is+hiring+a+Team+Lead%2C+Threat+Analytics%3A%0A%0Ahttps%3A%2F%2Fouterjoin.us%2Fremote-jobs%2Fteam-lead-threat-analytics-at-keeper&amp;utm_source=outerjoin.us">
+                                    <div class="inline-flex items-center ">
+                                        <svg class="inline w-4 h-4 fill-current opacity-80 lg:h-6 lg:w-6"
+                                             aria-hidden="true" viewBox="0 0 24 24">
+                                            <title>Twitter icon</title>
+                                            <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/>
+                                        </svg>
+
+                                        <span class="ml-2">Tweet</span>
+                                    </div>
+                                </a>
+
+
+                                <a rel="nofollow"
+                                   class="text-gray-700 copy-link font-semibold text-sm border rounded shadow-sm hover:bg-gray-100 transition ease duration-300 lg:ml-2 ml-1 lg:px-4 px-3 inline-flex items-center lg:h-10 h-8 justify-center inline-flex items-center"
+                                   href="#?utm_source=outerjoin.us">
+                                    <svg class="w-5 h-5 stroke-current opacity-70 lg:w-6 lg:h-6"
+                                         xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                        <path d="M7.8 24c0-3.42 2.78-6.2 6.2-6.2h8V14h-8C8.48 14 4 18.48 4 24s4.48 10 10 10h8v-3.8h-8c-3.42 0-6.2-2.78-6.2-6.2zm8.2 2h16v-4H16v4zm18-12h-8v3.8h8c3.42 0 6.2 2.78 6.2 6.2s-2.78 6.2-6.2 6.2h-8V34h8c5.52 0 10-4.48 10-10s-4.48-10-10-10z"></path>
+                                    </svg>
+
+                                    <span class="ml-2">Copy</span>
+                                </a>
+                            </div>
+
+                            <div class="w-full mt-4 lg:mt-0 lg:w-auto">
+                                <a rel="nofollow" target="_blank" class="btn btn-tertiary px-16 py-4 w-full lg:w-auto"
+                                   href="/remote-jobs/team-lead-threat-analytics-at-keeper/click?utm_source=outerjoin.us">Apply</a>
+                            </div>
+                        </div>
+
+                        <div class="job-description">
+                            <p>Keeper Security is hiring an experienced cybersecurity engineering leader to establish
+                                and lead our Threat Analytics team.</p>
+                            <p>Keeper’s cybersecurity software is trusted by millions of users and thousands of
+                                organizations, globally. Join one of the fastest-growing cybersecurity companies and be
+                                responsible for designing and developing our threat detection and analytics product.</p>
+                            <p></p>
+                            <p>About Keeper</p>
+                            <p>Keeper Security is transforming cybersecurity for people and organizations around the
+                                world. Keeper’s affordable and easy-to-use solutions are built on a foundation of
+                                zero-trust and zero-knowledge security to protect every user on every device. Our
+                                next-generation privileged access management solution deploys in minutes and seamlessly
+                                integrates with any tech stack to prevent breaches, reduce help desk costs and ensure
+                                compliance. Trusted by millions of individuals and thousands of organizations, Keeper is
+                                the leader for best-in-class password management, secrets management, privileged access,
+                                secure remote access and encrypted messaging. Learn more at KeeperSecurity.com.</p>
+                            <p></p>
+                            <p>About the Job</p>
+                            <p></p>
+                            <p>The Team Lead, Threat Analytics will report to the CTO and Co-Founder, serving as the
+                                primary driver of Keeper’s Threat Analytics vision and development.</p>
+                            <p></p>
+                            <ul>
+                                <li>Manage the development and operations of a cloud-based, zero-knowledge analytics
+                                    component of the Keeper platform for both internal use and for Keeper customers
+                                </li>
+                                <li>Lead prototyping and development of AI/ML models and systems, including large
+                                    language models, natural language processing, predictive analytics and other data
+                                    modeling techniques and technologies
+                                </li>
+                                <li>Lead a team of engineers and individually perform all aspects of software
+                                    development including development, QA, DevOps, documentation and deployment for any
+                                    related components
+                                </li>
+                                <li>Design and develop advanced security products to be performant, reliable and
+                                    cost-effective
+                                </li>
+                                <li>Create user behavior analytics</li>
+                                <li>Perform data science on a variety of network and security data sets to identify
+                                    intrusions and recommendations
+                                </li>
+                                <li>Use Amazon Web Services (AWS) to perform big data analysis using a variety of
+                                    back-end technologies
+                                </li>
+                            </ul>
+                            <p></p>
+                            <ul>
+                                <li>10+ years progressive software engineering and data and analytics experience</li>
+                                <li>Extensive experience developing successful cybersecurity products</li>
+                                <li>Experience developing AI and ML models and applications</li>
+                                <li>Experience serving as a individual contributor and team leader</li>
+                                <li>Ability to build cross-functional relationships, influence and collaborate at all
+                                    organizational levels
+                                </li>
+                                <li>Strong verbal and written communications skills for a global audience</li>
+                                <li>Strong business acumen, analytical and detail oriented</li>
+                                <li>Passionate about data and analytics as a lever to improve business performance</li>
+                                <li>BS in computer science, engineering or relevant field is a plus</li>
+                            </ul>
+                            <ul>
+                                <li>Keeper is FedRAMP authorized, therefore, all applicants must be a “U.S. Person,”
+                                    defined as a U.S. citizen or a lawful permanent resident (Green Card holder)]
+                                </li>
+                            </ul>
+                            <p></p>
+                            <ul>
+                                <li>Medical, Dental & Vision (inclusive of domestic partnerships)</li>
+                                <li>Employer Paid Life Insurance & Employee/Spouse/Child Supplemental life</li>
+                                <li>Voluntary Short/Long Term Disability Insurance</li>
+                                <li>401K (Roth/Traditional)</li>
+                                <li>A generous PTO plan that celebrates your commitment and seniority (including paid
+                                    Bereavement/Jury Duty, etc)
+                                </li>
+                                <li>Above market annual bonuses</li>
+                            </ul>
+                            <p></p>
+                            <p>Keeper Security, Inc. is an equal opportunity employer and participant in the U.S.
+                                Federal E-Verify program. We celebrate diversity and are committed to creating an
+                                inclusive environment for all employees.</p>
+                            <p></p>
+                            <p><strong>Classification: Exempt</strong></p>
+                        </div>
+
+                        <div class="mt-6 mb-2 text-center">
+                            <a rel="nofollow" target="_blank" class="btn btn-tertiary py-6 lg:w-1/2 w-full text-lg"
+                               href="/remote-jobs/team-lead-threat-analytics-at-keeper/click?utm_source=outerjoin.us">Apply</a>
+                        </div>
+
+                        <script>
+                            document.querySelector('a.copy-link').addEventListener('click', function(event) {
+                              var tempInput = document.createElement("input");
+
+                              tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+                              tempInput.value = window.location.href;
+                              document.body.appendChild(tempInput);
+                              tempInput.select();
+                              document.execCommand("copy");
+                              document.body.removeChild(tempInput);
+
+                              event.preventDefault();
+                              console.log('Should be success?!')
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="w-full h-auto px-4 pt-8 pb-2 mt-8 text-lg text-gray-200 bg-tertiary-600">
+    <div class="lg:container mx-auto">
+        <a href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1072" viewBox="0 0 6436 1072" width="6436" role="img"
+                 aria-labelledby="asm3b10wi8eoyj6n9pnnbjdb0hbqctke" class="fill-current w-auto h-8 text-white"><title
+                    id="asm3b10wi8eoyj6n9pnnbjdb0hbqctke">Logos/outerjoin logo full</title>
+                <path d="m6435.9 971.165c-.01 6.492-.59 12.984-.88 19.143-15.45 3.151-99 3.805-122.52 1.181-4.43-5-2.71-11.245-2.73-16.98-.16-43.926-.09-87.854-.09-131.781q-.015-106.822-.07-213.645c-.05-29.4-3.21-58.455-11.66-86.738-5.17-17.328-12.61-33.626-23.5-48.2-20.7-27.732-48.2-44.015-82.87-45.641-69.41-3.256-126.1 22.822-169.29 77.077-24.62 30.924-37.28 67.174-44.19 105.719-4.02 22.4-4.76 44.964-4.76 67.61q-.015 134.777-.04 269.553c-.01 7.208-.44 14.416-.71 22.749-21.27 3.514-41.79 1.41-62.16 1.545-20.5.136-41.08 1.4-62.62-1.047-.52-4.358-1.18-8.144-1.36-11.952-.24-4.648-.08-9.315-.08-13.974v-613.691c3.68-1.039 6.69-2.619 9.71-2.631 36.65-.134 73.31-.047 109.96.039 1.29 0 2.58.584 5.22 1.218.62 3.856 1.92 8.229 1.95 12.612.2 25.288.11 50.58.12 75.87v19.788l3.87.445c1.24-2.22 2.62-4.37 3.69-6.669 25.05-54.159 67.62-88.215 123.87-105.293 56.95-17.294 114.32-17.014 171.11 1.392 50.94 16.511 89.75 48.506 116.97 94.469 19.93 33.676 31.02 70.442 37.36 108.827 4.47 27.022 5.64 54.271 5.67 81.565q.195 168.72.03 337.44zm-777.22-741.165c-41.72 1.311-86.7-30.876-86.45-87.364.21-49.4 38.7-88.048 87.2-87.348 56.47.816 88.32 46.586 87.94 89.1-.43 46.829-39.28 86.931-88.69 85.612zm-810.27 530.467a334.4 334.4 0 0 1 -11.86-88.741c-.6-166.974 123.09-304.51 279.64-331.416 172.02-29.564 337.56 75.112 384.67 241.164 47.18 166.314-41.26 336.83-197.88 400.552-189.95 77.284-401.05-28.726-454.57-221.559zm480.46-242.215c-41.14-46.066-92.78-70.209-155.01-70.55-46.4-.092-87.67 14.709-124.03 43.056-100.96 78.693-116.42 232.016-33.42 329.686 84.57 99.507 232.17 99.52 316.68.025 73.23-86.201 71.65-217.283-4.22-302.217zm-572.28 65.959c-.07 54.062-4.89 107.685-18.59 160.215-8.25 31.653-19.49 62.161-34.84 91.14-39.62 74.8-99.53 126.239-180.16 151.613-86.72 27.291-174.71 28.541-261.88 2.225-108.03-32.608-174.2-106.052-202.75-214.3-6.82-25.867-10.08-52.338-10.96-78.955-1.21-36.244 5.16-71.569 16.27-106.024 1.81-5.639 4.72-10.928 7.28-16.724 23.77-2.638 107.17-2.171 122.67.585-1.04 4.44-2.09 8.821-3.09 13.215-4.54 20.1-9.92 40.047-13.44 60.322-8.1 46.663-.83 91.645 19 134.285 23.55 50.639 63.23 83.452 116.89 98.368 49.87 13.864 100.29 13.5 150.03-.748 48.75-13.968 86.42-43.478 113.61-86.208 22.14-34.812 34.55-73.249 41.61-113.587 5.64-32.21 7.93-64.673 7.9-97.381q-.21-231.675-.03-463.352c0-7.851.38-15.7.55-21.942 1.83-2.014 2.21-2.633 2.75-2.962a3.949 3.949 0 0 1 1.91-.5q55.965-.37 111.94-.657c3.28-.015 6.56.483 10.88.824.86 3.892 2.01 7.524 2.4 11.235a113.756 113.756 0 0 1 .14 11.974q0 233.665-.09 467.339zm-917.91-113.226c-5.9-2.1-11.37-4.049-16.84-6a141.543 141.543 0 0 0 -74.76-6.107c-29.93 5.607-54.27 21.156-74.12 43.978-15.02 17.267-26.03 36.93-34.49 58.06-13.2 32.96-20.05 67.432-24.46 102.521-3.91 31.111-4.45 62.346-4.46 93.62q-.045 105.774-.05 211.55c0 7.194-.43 14.387-.71 22.764-23.36 2.472-109.04 2-124.4-.533-3.24-6.593-1.71-14.021-1.72-21.129q-.18-129.724-.08-259.449 0-168.642.03-337.283c.01-7.163.51-14.325.77-21.4 3.06-.976 4.88-2.062 6.7-2.067q55.95-.146 111.9 0c1.82 0 3.64 1.1 6.75 2.092 1.51 12.977.6 26.187.76 39.326.15 13.3.03 26.61.03 39.915v40.541c6.76-1.938 6.67-7.165 8.08-10.989 7.4-20.108 17.02-39.021 29.91-56.156 24.88-33.071 56.93-55.679 97.62-64.973 29.29-6.692 58.19-5.288 86.18 6.475 3.02 1.27 5.76 3.21 9.65 5.421 0 37.608.03 75.46-.08 113.31 0 1.757-1.15 3.506-2.21 6.513zm-521.47 213.009c-22.66.28-45.32.061-67.99.061h-406.81c-5.93 7.179-4.04 14.061-3.52 20.4 4.91 58.992 30.61 106.763 78.16 142.409 32.71 24.52 70.02 38.323 110.05 44.448 58.56 8.959 115.63 2.873 170.48-20.171 26.55-11.154 50.94-26.087 73.72-43.669 5.21-4.023 10.48-7.968 16.75-12.73 23.96 23.118 45.71 47.279 69.43 71.141-2.51 3.493-4.39 6.8-6.92 9.508-51.19 54.875-114.11 89.112-187.46 103.525-77.33 15.192-154.07 11.762-228.68-14.572-101.74-35.91-173.6-103.528-206.18-207.211-59.37-188.908 48.1-387.585 247.13-432.467 65.72-14.82 131.07-13.041 195.32 7.777 96.56 31.287 161.36 95.5 195.19 190.85 14.36 40.488 20.83 82.486 21.34 125.393.05 4.444-.94 8.9-1.53 14.138-23.41 2.457-45.98.892-68.48 1.17zm-62.79-105.4c-19.23-59.456-56.51-101.97-117.07-121.2-49.55-15.733-99.7-15.288-149.59-.891-62.17 17.939-105.29 57.663-131.65 116.157-1.54 3.4-2 7.284-3.22 11.936h401.58c0-3.407.34-4.823-.05-6.007zm-562.42-179.531c.31 15.813 1.65 31.787-1.56 48.92-6.89.306-13.35.833-19.81.841q-78.975.1-157.96.038h-22.69c-1 4.659-2.41 8.338-2.48 12.041-.28 14.639-.14 29.285-.15 43.929q0 140.779.1 281.558c.03 12.611 1.26 25.231 2.26 37.821a76.339 76.339 0 0 0 2.63 13.681c11.76 43.243 49.58 66.216 93.57 56.749 25.2-5.423 47.5-17.058 67.91-32.524 3.57-2.7 6.96-5.635 10.37-8.407 12.66 13.366 51.36 67.154 58.81 81.574-2.99 7.5-8.99 12.838-14.83 18.224-28.17 25.98-61.62 41.647-98.88 49.272a236.671 236.671 0 0 1 -124.29-7.4c-61.33-20.55-97.84-64.406-114.39-125.8a275.592 275.592 0 0 1 -9.22-73.073c.11-31.284.03-62.568.09-93.853q.465-255.6.99-511.2c.01-7.887.32-15.772.52-24.789 19.74-2.8 105.12-2.651 122.65.029 2.83 6.5 1.63 13.874 1.65 20.978.12 46.594.03 93.187.1 139.781.01 6.527.56 13.053.89 20.422 22.85 2.736 44.71 1.014 66.48 1.32 22.66.319 45.32.071 67.98.071h66.57c5.6 16.939 2.36 33.543 2.69 49.797zm-449.9 566.891v24.261c-3.42 1.055-5.82 2.436-8.22 2.445q-54.975.206-109.96.046c-1.94 0-3.88-.745-6.86-1.354-.56-4.293-1.62-8.758-1.65-13.231-.17-25.291-.04-50.584-.13-75.877-.02-5.833-.49-11.665-.73-17.183-4.75-1.283-5.43 1.962-6.41 4.021-34.19 71.777-94.25 105.4-170.32 115.818a279.634 279.634 0 0 1 -112.86-7.489c-61.21-16.747-106.19-53.646-135.61-109.679-16.26-30.976-25.55-64.138-31.22-98.473-3.92-23.722-5.15-47.629-5.16-71.608q-.1-174.717-.06-349.435v-17.609c5.17-.641 7.72-1.236 10.26-1.232q54.975.093 109.94.4c1.15.007 2.3 1.074 4.51 2.18 2.1 7.01 1.18 14.98 1.18 22.8q.1 166.731.03 333.462c0 25.365 2 50.532 7.37 75.344 3.96 18.292 10.06 35.842 19.54 52.108 24.56 42.109 62.15 62.368 109.88 59.035 84.58-5.906 144.9-48.346 178.65-126.71 11.69-27.131 17.54-55.83 19.64-85.193 1.14-15.915 1.33-31.922 1.35-47.888q.18-130.788.09-261.577c.01-7.2.48-14.393.72-21.2 15.44-3.546 86.32-4.531 123.58-1.908.76 3.35 2.02 6.993 2.31 10.712.42 5.293.14 10.641.14 15.966zm-1276.852 103.516c-62.338-5.92-121.786-21.63-178.46-48.08-3.6-1.68-7.305-3.12-9.835-4.19-24.662 9.49-47.922 19.53-71.877 27.47-71.112 23.57-143.931 31.33-218.8 24.69-215.92-19.14-413.89-174.149-470.461-403.888-72.815-295.711 109.45-576.98 385.785-648.014 122.372-31.458 241.765-20.971 357.38 30.38a25.181 25.181 0 0 1 3.621 1.679c8.736 5.709 16.878 4.538 26.213.142a515.1 515.1 0 0 1 131.06-41.248 542.191 542.191 0 0 1 163.246-3.774q168.81 21.509 294.22 136.512c92.15 84.448 148.75 188.937 167.78 312.332 41.12 266.552-119.85 519.6-378.25 596.229a527.13 527.13 0 0 1 -201.622 19.76zm-187.739-192.325c32.156-22.854 61.516-49.392 85.858-81.281.822-1.078-.13-3.507-.251-5.23-34.54-2.351-159.788-1.451-176.689 1.507 18.822 29.473 64.561 72.125 91.082 85.004zm158.691-288.606q-161.958-.117-323.914.014c-3.756 0-7.511 1.052-12.02 1.727 3.181 32.985 11.565 63.519 22.8 92.672 2.333.855 3.546 1.592 4.816 1.709 3.31.306 6.645.469 9.969.464q142.949-.225 285.891-.525a4.83 4.83 0 0 0 1.881-.551c.6-.274 1.134-.695 2.97-1.858 10.708-28.806 19.53-59.182 22.246-92.135-5.607-.607-10.122-1.514-14.639-1.517zm-9.188-198.991c-3.485-.265-7.407-.823-11.33-.825q-140.739-.071-281.478.033c-3.807 0-7.613.972-10.834 1.411-13.488 30.868-22.619 71-20.882 92.034 3.612.533 7.411 1.486 11.237 1.6 84.454 2.564 317.726 1.1 334.959-2.017 2.381-19.384-8.215-64.898-21.67-92.236zm-633.57 485.514a413.642 413.642 0 0 0 149.919 67.518c53.851 12.378 108.136 13.652 162.535 4.8 15.841-2.577 32.365-4.132 48.15-12.864-11.8-12.018-22.751-22.591-33.02-33.788-10.327-11.263-20.382-22.829-29.81-34.847s-18.241-24.546-26.743-37.238c-8.451-12.615-16.181-25.713-23.761-37.854-31.685-2.4-315.284-1.544-333.438 1.431a408.867 408.867 0 0 0 86.168 82.842zm-144.424-189.915h165.031q82.9 0 165.807-.064c5.6-.01 11.628 1.265 16.377-1.981-6.1-31.676-11.973-62.191-17.808-92.5-17.859-3.127-261.081-4.575-343.646-2.055-3.831.117-7.636 1.078-11.38 1.635 1.857 31.773 13.615 75.691 25.619 94.965zm-24.254-202.964c1.8.491 3.693 1.458 5.586 1.459q170.763.09 341.527-.036c1.862 0 3.723-.983 5.109-1.373.851-.907 1.608-1.332 1.718-1.885q8.355-41.934 16.557-83.9a31.122 31.122 0 0 0 .047-5.851c-15.029-2.475-312.869-3.354-348.369-.95-12.875 25.102-24.31 73.13-22.175 92.536zm526.028-347.36a58.2 58.2 0 0 0 -5.678-1.814c-59.437-15.839-119.463-18.72-180.063-7.921-102.5 18.266-186.472 68.167-252.775 148.072-1.892 2.28-3 5.215-4.242 7.444a17.742 17.742 0 0 0 2.364 2.448 4.49 4.49 0 0 0 1.916.511c2.654.164 5.312.362 7.968.359q157.834-.159 315.67-.383a5.432 5.432 0 0 0 1.879-.64 3.985 3.985 0 1 0 .671-.315c17.885-26.066 33.974-52.176 52.773-76.168s40.3-45.849 61.263-69.376c-.994-1.301-1.266-2.035-1.746-2.217zm125.177 59.912a17.6 17.6 0 0 0 -3.67 1.448c-32.088 21.874-59.668 48.566-83.944 78.736-1.374 1.708-1.578 4.355-2.4 6.771 13.581 2.263 153.164 3.771 174.2 1.949 1.743-.151 3.378-1.554 5.074-2.38-6.012-11.6-19.93-27.988-36.359-43.987l-.256-.249q-.539-.523-1.081-1.046-.179-.174-.359-.346-.52-.5-1.045-1l-.385-.367q-.525-.5-1.052-1c-.092-.087-.186-.174-.278-.262q-1.074-1.014-2.16-2.022l-.36-.336q-.414-.384-.829-.765-.35-.324-.7-.645-.378-.348-.758-.694l-.793-.723-.7-.637q-.442-.4-.887-.8l-.627-.562q-.534-.479-1.069-.954l-.454-.4q-1.582-1.4-3.174-2.781l-.23-.2q-.687-.6-1.376-1.186l-.3-.258q-.67-.575-1.344-1.145l-.265-.224q-.738-.624-1.476-1.242l-.109-.091a264.9 264.9 0 0 0 -30.834-22.602zm588.421 112.882c-108.89-165.275-306.01-220.59-467.572-171.243 16.191 17.065 31.38 31.859 45.116 47.894a582.822 582.822 0 0 1 39.015 50.521 535.335 535.335 0 0 1 88.9 236.636 527.167 527.167 0 0 1 3.85 63.664 560.588 560.588 0 0 1 -3.88 65.659 527.472 527.472 0 0 1 -11.49 62.7 537.319 537.319 0 0 1 -18.78 60.917 534.247 534.247 0 0 1 -58.749 112.985 588.545 588.545 0 0 1 -39.1 50.456c-13.74 16.039-28.877 30.883-43.607 46.468 39.2 18.643 127.855 24.017 189.545 12.508 94.96-17.717 175.09-62.065 239.44-133.971 125.542-140.304 140.852-348.027 37.312-505.194zm-559.377-91.764q-.511-.422-1.023-.84.51.42 1.023.84zm-2.146-1.756q-.432-.351-.864-.7.432.348.864.703zm-1.6-1.289-.831-.665zm-1.565-1.248-.836-.661q.423.329.84.661zm-1.554-1.224c-.291-.229-.582-.455-.874-.682.296.227.587.453.878.682zm-1.547-1.205q-.505-.39-1.01-.776.509.387 1.014.776zm-1.542-1.184q-.751-.575-1.5-1.139.751.564 1.504 1.139zm-2-1.509q-.525-.393-1.046-.781.529.387 1.053.781zm-1.652-1.229-.935-.687zm-1.562-1.144-.92-.666zm-1.531-1.1q-.484-.346-.968-.689.49.339.975.684zm-1.514-1.075q-.617-.433-1.227-.859.619.421 1.234.854zm-1.5-1.049q-.746-.516-1.484-1.019.747.499 1.491 1.014zm-1.93-1.32q-.519-.352-1.036-.7.523.342 1.043.695zm-1.586-1.063q-.465-.31-.929-.614.471.298.936.609zm-1.5-.986q-.457-.3-.914-.59.465.288.923.585zm-1.463-.942q-.489-.312-.975-.616.495.3.984.611zm-1.439-.908q-.712-.444-1.419-.876.714.425 1.428.871zm29.164 21.516-.722-.6zm22.164 19.992-.015-.014zm-1.3-1.257-.108-.1zm-1.385-1.329-.049-.046zm-5.365-5.044-.166-.152zm-1.308-1.2-.352-.317zm-1.435-1.3-.411-.37zm-1.482-1.331-.382-.341zm-4.066-3.584-.3-.259zm-1.27-1.1-.575-.5zm-1.485-1.274-.644-.548zm-1.522-1.292-.682-.573zm4913.028 132.481c.52 3.371 1.37 7.085 1.61 10.838.3 4.637.1 9.306.1 13.961v615.249c-22.65 2.9-108.44 2.526-124.24-.246-.51-1.6-1.6-3.407-1.6-5.217q-.18-313.231-.14-626.463c0-2.52.9-5.04 1.34-7.3 14.97-3.057 98.61-3.637 122.93-.822z"
+                      fill-rule="evenodd"></path>
+            </svg>
+
+        </a>
+        <p class="mt-3 text-xl font-light text-gray-400">
+            Outer Join is the premier job board for remote jobs in data science, analytics, and engineering.
+        </p>
+
+        <div class="flex justify-between mt-6">
+            <ul class="flex-wrap items-center justify-start text-base lg:flex">
+                <li class="mb-2 mr-8 lg:mb-0">
+                    <a class="hover:underline" href="/">Remote Jobs</a>
+                </li>
+                <li class="mb-2 mr-8 lg:mb-0">
+                    <a class="hover:underline" href="/remote-teams">Remote Teams</a>
+                </li>
+                <li class="mb-2 lg:mb-0">
+                    <a class="hover:underline" href="mailto:support@outerjoin.us">Contact</a>
+                </li>
+            </ul>
+
+            <div>
+                <a class="btn btn-primary" href="/hire">Post a job</a>
+            </div>
+        </div>
+
+        <div class="px-4 pt-4 pb-2 mt-6 text-sm text-gray-400 border-t border-gray-600 lg:px-0">
+            <div class="flex flex-col-reverse py-4 md:py-1 md:flex-row md:justify-between">
+                <div class="flex flex-col-reverse md:flex-row md:justify-between">
+                    <div class="flex items-center justify-center pt-4 md:pt-0">
+                        &copy; 2024 Loop Hug LLC
+                    </div>
+
+                    <div class="flex flex-col items-center pt-4 md:flex-row md:pt-0">
+
+                        <a class="hover:underline no-underline block my-1 md:pl-8" href="/privacy">Privacy Policy</a>
+                        <a class="hover:underline no-underline block my-1 md:pl-8" href="/terms">Terms of Service</a>
+                        <a class="hover:underline no-underline block my-1 md:pl-8 hidden md:block"
+                           href="https://clearbit.com">Logos provided by Clearbit</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center">
+
+                    <a rel="nofollow" target="_blank" class="block"
+                       href="/remote-teams/outer-join/click/linkedin?utm_source=outerjoin.us">
+                        <div class="inline-flex items-center">
+                            <svg class="inline w-4 h-4 opacity-80 lg:h-6 lg:w-6" aria-hidden="true" fill="currentColor"
+                                 viewBox="0 0 24 24">
+                                <title>LinkedIn icon</title>
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+
+                        </div>
+                    </a>
+
+                    <a rel="nofollow" target="_blank" class="block pl-4"
+                       href="/remote-teams/outer-join/click/twitter?utm_source=outerjoin.us">
+                        <div class="inline-flex items-center ">
+                            <svg class="inline w-4 h-4 fill-current opacity-80 lg:h-6 lg:w-6" aria-hidden="true"
+                                 viewBox="0 0 24 24">
+                                <title>Twitter icon</title>
+                                <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/>
+                            </svg>
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async defer data-domain="outerjoin.us" src="https://plausible.io/js/plausible.js"></script>
+
+</body>
+</html>
+
