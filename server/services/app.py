@@ -1,3 +1,6 @@
+# Configure routes in Flask
+# Provides handling for CORS and resource management of db connections
+
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from psycopg_pool import ConnectionPool
@@ -5,7 +8,7 @@ from psycopg_pool import ConnectionPool
 from server.services import job_search, job_detail
 from database.postgres import get_pg_connection_string, get_credentials
 
-SECRETS_FILE = f"../database/secrets.json"  # Running from ./server/
+SECRETS_FILE = f"../database/secrets.json"
 CONNINFO = get_pg_connection_string(get_credentials(SECRETS_FILE))
 POOL = ConnectionPool(conninfo=CONNINFO)
 

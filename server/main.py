@@ -1,3 +1,5 @@
+# Set up the flask app
+
 from server.services.app import app
 
 if __name__ == '__main__':

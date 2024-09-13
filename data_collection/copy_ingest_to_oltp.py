@@ -1,4 +1,4 @@
-# Loads data from various sites into the database
+# Moves data from staging area to transactional tables for web server
 
 from database.postgres import *
 from database.job import *

@@ -1,3 +1,5 @@
+# Retrieve search results from the database for the web response
+
 from flask import Request
 from psycopg import Connection
 
