@@ -45,7 +45,7 @@ class Job:
             self.posted_date = posted_date
             self.score = score
 
-    def serializable(self):
+    def serializable(self) -> dict:
         return {
             "title": self.title,
             "location": self.location,
@@ -58,7 +58,7 @@ class Job:
             "score": self.score
         }
 
-    def as_tuple(self):
+    def as_tuple(self) -> tuple:
         return (self.title,
                 self.location,
                 self.company,
@@ -117,7 +117,7 @@ class JobCursor:
         )
         self.cur.execute(q)
 
-    def batch_insert_table_job_ingest(self, jobs: list[Job]):
+    def batch_insert_job_ingest(self, jobs: list[Job]):
         tuples = [job.as_tuple() for job in jobs]
         q = (
             f"INSERT INTO job_ingest "

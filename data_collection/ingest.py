@@ -39,4 +39,4 @@ if __name__ == "__main__":
         with JobCursor(conn) as cur:
             cur.create_table_job_ingest()
             cur.truncate_table_job_ingest()
-            cur.batch_insert_table_job_ingest(jobs)
+            cur.batch_insert_job_ingest(jobs)
